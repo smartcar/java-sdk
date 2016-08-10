@@ -100,7 +100,8 @@ final public class Util {
 
     String joinedString = "";
     for (int i=0; i<strings.length - 1; i++){
-       joinedString += strings[i] + " ";
+      if (strings[i] != null)
+        joinedString += strings[i] + " ";
     }
     joinedString += strings[strings.length - 1];
     return joinedString;
