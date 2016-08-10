@@ -1,69 +1,96 @@
 package com.smartcar.sdk;
 
+import java.io.IOException;
 import okhttp3.Request;
 import okhttp3.Response;
-import okhttp3.ResponseBody;
 import okhttp3.OkHttpClient;
+import java.util.ArrayList;
+import org.json.JSONObject;
+import org.json.JSONArray;
 
 final public class Util {
 
-  private final static String API = "https://api.smartcar.com";
-  private final static String VERSION = "1.0";
   private final static OkHttpClient client = new OkHttpClient();
 
-
   /**
-   * Returns a URL that can be used in requests to the Smartcar API
-   * @return A Smartcar API URL
+   * Calls the request, and returns the response on success. 
+   * If the call fails, the code from the error is used to throw 
+   * an appropriate exception from Exceptions. 
+   * 
+   * @param  request        
+   *     
+   * @return The response body from the API, which is a JSON string.
+   * 
+   *         If the request is a POST to /oauth/token, the response 
+   *         is an access object that looks something like this:
+   *         
+   *         {
+   *           "access_token": "...",
+   *           "token_type": "Bearer",
+   *           "expires_in": 7200,
+   *           "refresh_token": "...",
+   *         }
+   *         
+   *         If the request is a GET from /vehicles/:id/endpoint, 
+   *         the response is a vehicle data object that looks 
+   *         something like this:
+   *         
+   *         { "isTriggered": false }
+   *
+   *         If the request is a POST to /vehicles/:id/endpoint 
+   *         with a payload specific to the endpoint, the response 
+   *         is a simple status message that always looks like this:
+   *         
+   *         { "status": "success" }
+   *                                
+   * @throws SmartcarException    
    */
-  static String makeApiUrl() {
-    return String.format("%s/v%s/vehicles", API, VERSION);
-  }
+  static String call(Request request) 
+    throws Exceptions.SmartcarException {
+    Response response;
+    String body;
+    try {
+      response = client.newCall(request).execute();
+      body = response.body().string();
+    } catch (IOException e){
+      throw new Exceptions.SmartcarException(e.getMessage());
+    }
 
-  /**
-   * Returns a URL that can be used in requests to the Smartcar API
-   * @param  vehicleId Id of the vehicle to append to the URL
-   * @param  endpoint  Endpoint to append to the url
-   * @return           A Smartcar API URL
-   */
-  static String makeApiUrl(String vehicleId, String endpoint) {
-    return makeApiUrl() + '/' + vehicleId + '/' + endpoint;
-  }
-
-  /**
-   * calls the api, and returns the response on success, or 
-   * throws an appropriate error
-   * @param  request Request to send
-   * @return the response body
-   * @throws SmartcarError
-   */
-  static String call(Request request){
-    Response response = client.newCall(request).execute();
     if (!response.isSuccessful()){
-      // throw appropriate error based on response.code()
+      response.close();
       switch(response.code()) {
-        case 400: throw new ValidationException();
-        case 401: throw new AuthenticationException();
-        case 403: throw new PermissionException();
-        case 404: throw new ResourceNotFoundException();
-        case 409: throw new StateException();
-        case 429: throw new RateLimitingException();
-        case 430: throw new MonthlyLimitExceeded();
-        case 500: throw new ServerException();
-        case 501: throw new NotCapableException();
-        case 504: throw new GatewayTimeoutException();
+        case 400: 
+          throw new Exceptions.ValidationException(body);
+        case 401: 
+          throw new Exceptions.AuthenticationException(body);
+        case 403: 
+          throw new Exceptions.PermissionException(body);
+        case 404: 
+          throw new Exceptions.ResourceNotFoundException(body);
+        case 409: 
+          throw new Exceptions.StateException(body);
+        case 429: 
+          throw new Exceptions.RateLimitingException(body);
+        case 430: 
+          throw new Exceptions.MonthlyLimitExceeded(body);
+        case 500: 
+          throw new Exceptions.ServerException(body);
+        case 501: 
+          throw new Exceptions.NotCapableException(body);
+        case 504: 
+          throw new Exceptions.GatewayTimeoutException(body);
       }
     } else {
-      ResponseBody body = response.body();
       response.close();
-      return body.string();
+      return body;
     }
+    return null;
   }
 
   /**
-   * join an array of strings with spaces
-   * @param  strings Array of strings to join
-   * @return         Joined array
+   * Join an array of strings with spaces
+   * @param  strings
+   * @return Joined array
    */
   static String join(String[] strings) {
     if (strings.length == 0) 
@@ -79,4 +106,20 @@ final public class Util {
     return joinedString;
   }
 
+  /**
+   * Returns the list of strings at `key` in `response`
+   * @param  response a JSON object in a string
+   * @param  key      key of the list of strings
+   * @return          ArrayList<String> containing the list at `key`
+   */
+  static ArrayList<String> getArray(String response, String key){
+    ArrayList<String> list = new ArrayList<String>();
+    JSONObject object = new JSONObject(response);
+    JSONArray jsonArray = object.getJSONArray(key);
+    for (int i = 0; i < jsonArray.length(); i++){
+      String value = jsonArray.getString(i);
+      list.add(value);
+    }
+    return list;
+  }
 }
