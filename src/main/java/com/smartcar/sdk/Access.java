@@ -2,13 +2,15 @@ package com.smartcar.sdk;
 
 public final class Access {
 
-  private final String accessToken, refreshToken;
+  private final String accessToken, refreshToken, tokenType;
   private final long createdAt;
   private final int expiresIn;
 
-  public Access(String accessToken, String refreshToken, int expiresIn){
+  public Access(String accessToken, String refreshToken, 
+                String tokenType, int expiresIn){
     this.accessToken = accessToken;
     this.refreshToken = refreshToken;
+    this.tokenType = tokenType;
     this.expiresIn = expiresIn;
     this.createdAt = this.now();
   }
@@ -27,5 +29,8 @@ public final class Access {
 
   public String getRefreshToken(){
     return this.refreshToken;
+  }
+  public String getTokenType(){
+    return this.tokenType;
   }
 }
