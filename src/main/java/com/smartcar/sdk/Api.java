@@ -1,6 +1,18 @@
 package com.smartcar.sdk;
 
 public final class Api {
+  static class Paging {
+    int count;
+    int offset;
+  }
+  static class Permissions {
+    String[] permissions;
+    Paging paging;
+  }
+  static class Vehicles {
+    String[] vehicles;
+    Paging paging;
+  }
   static class Info {
     String id, make, model;
     int year;
