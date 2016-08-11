@@ -2,7 +2,6 @@ package com.smartcar.sdk;
 
 import okhttp3.HttpUrl;
 import com.google.gson.Gson;
-import java.util.ArrayList;
 
 public final class Smartcar {
 
@@ -21,26 +20,25 @@ public final class Smartcar {
     this.access = new AccessRequest(id, secret);
   }
 
-  void setAccessUrl(String url){
-    this.access.setUrl(url);
+  void setBaseAccessUrl(String url){
+    this.access.setBaseUrl(url);
   }
 
-  void setVehicleUrl(String url){
+  void setBaseVehicleUrl(String url){
     this.vehicleUrl = url;
   }
 
   private VehicleRequest getVehicleRequest(String token){
     VehicleRequest vehicleRequest = new VehicleRequest(token);
-    vehicleRequest.setUrl(this.vehicleUrl);
+    vehicleRequest.setBaseUrl(this.vehicleUrl);
     return vehicleRequest;
   }
 
-  private ArrayList<Vehicle> getVehicleArray(String token, String json){
-    ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>();
-    ArrayList<String> vehicleIds = Util.getArray(json, "vehicles");
-    for (String vehicleId : vehicleIds){
-      Vehicle vehicle = getVehicle(token, vehicleId);
-      vehicles.add(vehicle);
+  private Vehicle[] getVehicleArray(String token, String json){
+    String[] vehicleIds = gson.fromJson(json, Api.Vehicles.class).vehicles;
+    Vehicle[] vehicles = new Vehicle[vehicleIds.length];
+    for (int i=0; i<vehicleIds.length; i++){
+      vehicles[i] = getVehicle(token, vehicleIds[i]);
     }
     return vehicles;
   }
@@ -96,7 +94,6 @@ public final class Smartcar {
    */
   public Access exchangeToken(String refreshToken) 
   throws Exceptions.SmartcarException {
-
     String json = this.access.token(refreshToken);
     return gson.fromJson(json, Access.class);
   }
@@ -107,9 +104,8 @@ public final class Smartcar {
    * @return The user's vehicles
    * @throws Exceptions.SmartcarException
    */
-  public ArrayList<Vehicle> getVehicles(String token)
+  public Vehicle[] getVehicles(String token)
   throws Exceptions.SmartcarException {
-
     String json = getVehicleRequest(token).vehicles();
     return getVehicleArray(token, json);
   }
@@ -121,7 +117,7 @@ public final class Smartcar {
    *                [default: 10, maximum: 50]
    * @param  offset Set the index to start the vehicle list at [default: 0]
    */
-  public ArrayList<Vehicle> getVehicles(String token, int limit, int offset)
+  public Vehicle[] getVehicles(String token, int limit, int offset)
   throws Exceptions.SmartcarException {
 
     String json = getVehicleRequest(token).vehicles(limit, offset);
@@ -136,7 +132,8 @@ public final class Smartcar {
    */
   public Vehicle getVehicle(String token, String vehicleId){
     Vehicle vehicle = new Vehicle(token, vehicleId);
-    if (this.vehicleUrl != null) vehicle.setUrl(this.vehicleUrl);
+    if (this.vehicleUrl != null) 
+      vehicle.setBaseUrl(this.vehicleUrl);
     return vehicle;
   }
 }
