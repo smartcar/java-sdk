@@ -1,17 +1,17 @@
 package com.smartcar.sdk;
 
-/* Smartcar packages */
-import okhttp3.Credentials;
-import java.util.ArrayList;
-import com.google.gson.Gson;
-
-/* Test packages */
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import okhttp3.mockwebserver.MockWebServer;
+import org.testng.annotations.AfterGroups;
+
+import com.google.gson.Gson;
+
+import okhttp3.Credentials;
 import okhttp3.mockwebserver.MockResponse;
+import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
 import okhttp3.HttpUrl;
+
 import java.io.IOException;
 
 public class TestSmartcar {
@@ -19,17 +19,15 @@ public class TestSmartcar {
   String CLIENT_ID = "client-id";
   String CLIENT_SECRET = "client-secret";
   String REDIRECT_URI = "https://redirect.uri";
-  String[] scope = {
-    "read_vehicle_info",
-    "open_sunroof"
-  };
+  String[] scope = { "read_vehicle_info", "open_sunroof" };
 
   String API_PATH = "/v1.0/vehicles";
   String AUTH_PATH = "/oauth/token";
-  String AUTHORIZATION = Credentials.basic(CLIENT_ID, CLIENT_SECRET);
+  String BASIC_AUTH = Credentials.basic(CLIENT_ID, CLIENT_SECRET);
   String ACCESS_TOKEN = "access-token";
   String REFRESH_TOKEN = "refresh-token";
   String TOKEN_TYPE = "Bearer";
+  String BEARER_AUTH = TOKEN_TYPE + " " + ACCESS_TOKEN;
   int EXPIRES_IN = 7200;
   String CODE = "code";
 
@@ -40,6 +38,34 @@ public class TestSmartcar {
   
   Smartcar client = new Smartcar(CLIENT_ID, CLIENT_SECRET, 
                                  REDIRECT_URI, scope);
+  MockWebServer server;
+  RecordedRequest request;
+
+  private void setup(MockResponse response, String path){
+    server = new MockWebServer();
+    server.enqueue(response);
+    try {
+      server.start();
+    } catch (IOException e){
+      System.out.println(e);
+    }
+    client.setBaseAccessUrl(server.url(path).toString());
+    client.setBaseVehicleUrl(server.url(path).toString());
+  }
+
+  private void verify(String authentication){
+    try {
+      request = server.takeRequest();
+    } catch (InterruptedException e){
+      System.out.println(e);
+    }
+    Assert.assertEquals(request.getHeader("Authorization"), authentication);
+  }
+
+  @AfterGroups(groups = {"mocked"})
+  private void shutdown() throws IOException {
+    server.shutdown();
+  }
 
   @Test
   public void testGetAuthUrl() {
@@ -84,35 +110,28 @@ public class TestSmartcar {
     Assert.assertNull(client.getAuthUrl("http:/oem .smartcar .com"));
   }
 
-  @Test
-  public void testExchangeCode()
-  throws Exceptions.SmartcarException, IOException, InterruptedException {
+  @Test(groups = {"mocked"})
+  public void testExchangeCode() throws Exceptions.SmartcarException {
 
     /*
     accept:    
       POST https://auth.smartcar.com/oauth/token
-      Authorization AUTHORIZATION
+      Authorization BASIC_AUTH
       grant_type=authorization_code
       code=CODE
       redirect_uri=REDIRECT_URI
 
-    reply:
-      {
+    reply: {
         "access_token": ACCESS_TOKEN,
         "token_type": TOKEN_TYPE,
         "expires_in": EXPIRES_IN,
         "refresh_token": REFRESH_TOKEN
-      }
-    */
-    MockWebServer server = new MockWebServer();
-    server.enqueue(ACCESS_RESPONSE);
-    server.start();
-    client.setAccessUrl(server.url(AUTH_PATH).toString());
+    }*/
+    setup(ACCESS_RESPONSE, AUTH_PATH);
     Access access = client.exchangeCode(CODE);
-    RecordedRequest request = server.takeRequest();
+    verify(BASIC_AUTH);
 
     /* begin assertions */
-    Assert.assertEquals(request.getHeader("Authorization"), AUTHORIZATION);
     Assert.assertEquals(
       request.getBody().readUtf8(),
       String.format("grant_type=%s&code=%s&redirect_uri=%s",
@@ -122,41 +141,30 @@ public class TestSmartcar {
     Assert.assertEquals(access.getRefreshToken(), REFRESH_TOKEN);
     Assert.assertEquals(access.getTokenType(), TOKEN_TYPE);
     Assert.assertFalse(access.expired());
-
-    server.shutdown();
   }
   
-  @Test
+  @Test(groups = {"mocked"})
   public void testExchangeToken() 
-  throws Exceptions.SmartcarException, IOException, InterruptedException {
+  throws Exceptions.SmartcarException {
 
     /* 
     accept:
       POST https://auth.smartcar.com/oauth/token
-      Authorization AUTHORIZATION
+      Authorization BASIC_AUTH
       grant_type=refresh_token
       refresh_token=REFRESH_TOKEN
 
-    reply:
-      {
+    reply: {
         "access_token": ACCESS_TOKEN,
         "token_type": TOKEN_TYPE,
         "expires_in": EXPIRES_IN,
         "refresh_token": REFRESH_TOKEN
-      }
-    */
-    MockWebServer server = new MockWebServer();
-    server.enqueue(ACCESS_RESPONSE);
-    server.start();
-    client.setAccessUrl(server.url(AUTH_PATH).toString());
+    }*/
+    setup(ACCESS_RESPONSE, AUTH_PATH);
     Access access = client.exchangeToken(REFRESH_TOKEN);
-    RecordedRequest request = server.takeRequest();
+    verify(BASIC_AUTH);
 
     /* begin assertions */
-    Assert.assertEquals(
-      request.getHeader("Authorization"), 
-      AUTHORIZATION
-    );
     Assert.assertEquals(
       request.getBody().readUtf8(),
       "grant_type=refresh_token&refresh_token=" + REFRESH_TOKEN
@@ -165,116 +173,84 @@ public class TestSmartcar {
     Assert.assertEquals(access.getRefreshToken(), REFRESH_TOKEN);
     Assert.assertEquals(access.getTokenType(), TOKEN_TYPE);
     Assert.assertFalse(access.expired());
-
-    server.shutdown();
   }
 
-  @Test
-  public void testExpiredToken()
-  throws Exceptions.SmartcarException, IOException, InterruptedException {
-    MockWebServer server = new MockWebServer();
-    server.enqueue(new MockResponse().setBody(gson.toJson(
+  @Test(groups = {"mocked"})
+  public void testExpiredToken() throws Exceptions.SmartcarException {
+
+    setup(new MockResponse().setBody(gson.toJson(
     new Access(ACCESS_TOKEN, REFRESH_TOKEN, TOKEN_TYPE, -100)
-    )));
-    server.start();
-    client.setAccessUrl(server.url(AUTH_PATH).toString());
+    )), AUTH_PATH);
+
     Access access = client.exchangeToken(REFRESH_TOKEN);
-    RecordedRequest request = server.takeRequest();
+    verify(BASIC_AUTH);
 
     /* begin assertions */
     Assert.assertTrue(access.expired());
-    Assert.assertEquals(request.getHeader("Authorization"), AUTHORIZATION);
-
-    server.shutdown();
   }
 
-  @Test
-  public void testGetVehicles()
-  throws Exceptions.SmartcarException, IOException, InterruptedException {
+  @Test(groups = {"mocked"})
+  public void testGetVehicles() throws Exceptions.SmartcarException {
 
     /* 
     accept:
       GET https://api.smartcar.com/v1.0/vehicles/
       Authorization Bearer ACCESS_TOKEN
 
-    reply:
-      {
+    reply: {
         "vehicles": [
           "36ab27d0-fd9d-4455-823a-ce30af709ffc",
           "3cd4ffb8-b0f6-45cf-9a4c-47d2102bb6b1"
         ]
-      }    
-    */
-    MockWebServer server = new MockWebServer();
-    server.enqueue(new MockResponse().setBody(
+    }*/
+    setup(new MockResponse().setBody(
       "{\"vehicles\":[\"36ab27d0-fd9d-4455-823a-ce30af709ffc\"," +
       "\"3cd4ffb8-b0f6-45cf-9a4c-47d2102bb6b1\"]}"
-    ));
-    server.start();
-    client.setVehicleUrl(server.url(API_PATH).toString());
-    ArrayList<Vehicle> vehicles = client.getVehicles(ACCESS_TOKEN);
-    RecordedRequest request = server.takeRequest();
+    ), API_PATH);
+
+    Vehicle[] vehicles = client.getVehicles(ACCESS_TOKEN);
+    verify(BEARER_AUTH);
 
     /* begin assertions */
-    Assert.assertEquals(
-      request.getHeader("Authorization"),
-      TOKEN_TYPE + " " + ACCESS_TOKEN
-    );
+    Assert.assertEquals(request.getPath(), API_PATH);
 
     Assert.assertEquals(
-      request.getPath(),
-      API_PATH
-    );
-
-    Assert.assertEquals(
-      vehicles.get(0).getVid(),
+      vehicles[0].getVid(),
       "36ab27d0-fd9d-4455-823a-ce30af709ffc"
     );
 
     Assert.assertEquals(
-      vehicles.get(1).getVid(),
+      vehicles[1].getVid(),
       "3cd4ffb8-b0f6-45cf-9a4c-47d2102bb6b1"
     );
-
-    server.shutdown();
   }
 
-  @Test
-  public void testGetVehiclesWithPaging()
-  throws Exceptions.SmartcarException, IOException, InterruptedException {
+  @Test(groups = {"mocked"})
+  public void testGetVehiclesWithPaging() throws Exceptions.SmartcarException {
     int LIMIT = 10;
     int OFFSET = 0;
-    MockWebServer server = new MockWebServer();
-    server.enqueue(new MockResponse().setBody(
+
+    setup(new MockResponse().setBody(
       "{\"vehicles\":[\"36ab27d0-fd9d-4455-823a-ce30af709ffc\"," +
       "\"3cd4ffb8-b0f6-45cf-9a4c-47d2102bb6b1\"]}"
-    ));
-    server.start();
-    client.setVehicleUrl(server.url(API_PATH).toString());
-    ArrayList<Vehicle> vehicles = client.getVehicles(
-      ACCESS_TOKEN, LIMIT, OFFSET);
-    RecordedRequest request = server.takeRequest();
+    ), API_PATH);
+
+    Vehicle[] vehicles = client.getVehicles(ACCESS_TOKEN, LIMIT, OFFSET);
+    verify(BEARER_AUTH);
 
     /* begin assertions */
-    Assert.assertEquals(
-      request.getHeader("Authorization"),
-      TOKEN_TYPE + " " + ACCESS_TOKEN
-    );
-
     Assert.assertEquals(
       request.getPath(),
       String.format(API_PATH + "?limit=%s&offset=%s",LIMIT,OFFSET)
     );
     Assert.assertEquals(
-      vehicles.get(0).getVid(),
+      vehicles[0].getVid(),
       "36ab27d0-fd9d-4455-823a-ce30af709ffc"
     );
 
     Assert.assertEquals(
-      vehicles.get(1).getVid(),
+      vehicles[1].getVid(),
       "3cd4ffb8-b0f6-45cf-9a4c-47d2102bb6b1"
     );
-
-    server.shutdown(); 
   }
 }
