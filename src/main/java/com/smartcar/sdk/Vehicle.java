@@ -1,9 +1,7 @@
 package com.smartcar.sdk;
 
-import java.util.ArrayList;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import okhttp3.Request;
+import com.google.gson.Gson;
 
 public class Vehicle {
 
@@ -14,33 +12,38 @@ public class Vehicle {
   public Vehicle(String token, String vehicleId) {
       this.token = token;
       this.vehicleId = vehicleId;
-      this.api = new VehicleRequest(token).vehicleId(vehicleId);
+      this.api = new VehicleRequest(token, vehicleId);
   }
 
-  String makeAction(String action){
-    return gson.toJson(new Api.GenericAction(action));
-  }
-
-  String getVid(){
+  public String getVid(){
     return this.vehicleId;
   }
 
-  void setUrl(String url){
-    this.api.setUrl(url).vehicleId(this.vehicleId);
-  }  
+  public String getToken(){
+    return this.token;
+  }
+
+  private String makeAction(String action){
+    return gson.toJson(new Api.GenericAction(action));
+  }
+
+  void setBaseUrl(String url){
+    this.api.setBaseUrl(url);
+  }
 
   /*
   Get Intents: These request data from the API and return json
   */
 
-  public ArrayList<String> permissions() 
+  public String[] permissions() 
   throws Exceptions.SmartcarException {
-    return Util.getArray(api.permissions(), "permissions");
+    String json = api.permissions();
+    return gson.fromJson(json, Api.Permissions.class).permissions;
   }
-  public ArrayList<String> permissions(int limit, int offset)
+  public String[] permissions(int limit, int offset)
   throws Exceptions.SmartcarException {
     String json = api.permissions(limit, offset);
-    return Util.getArray(json, "permissions");
+    return gson.fromJson(json, Api.Permissions.class).permissions;
   }
   public Api.Info info() 
   throws Exceptions.SmartcarException {
