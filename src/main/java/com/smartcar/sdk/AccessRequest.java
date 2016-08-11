@@ -17,7 +17,7 @@ class AccessRequest {
       this.auth = Credentials.basic(id, secret);
     }
 
-    void setUrl(String url){
+    void setBaseUrl(String url){
       this.url = url;
     }
 
@@ -29,21 +29,6 @@ class AccessRequest {
         .build();
     }
 
-    /**
-     * Exchange a code for an access object
-     * @param  code
-     *    
-     * @param  redirectUri the redirect uri used to obtain the
-     *                     authorization code
-     * @return The response body from the API, which is a JSON string 
-     *         containing an access object. It should look like this:
-     *          {
-     *            "access_token": "...",
-     *            "token_type": "Bearer",
-     *            "expires_in": 7200,
-     *            "refresh_token": "...",
-     *          }     
-     */
     String code(String code, String redirectUri)
     throws Exceptions.SmartcarException {
       this.body = new FormBody.Builder()
@@ -54,13 +39,6 @@ class AccessRequest {
       return Util.call(request());
     }
 
-    /**
-     * Exchange a refresh token for an access object
-     * 
-     * @param  refreshToken 
-     * 
-     * @return JSON string containing new access object
-     */
     String token(String refreshToken)
     throws Exceptions.SmartcarException {
       this.body = new FormBody.Builder()
