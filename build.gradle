@@ -1,5 +1,49 @@
 apply plugin: 'java'
 apply plugin: 'jacoco'
+/*
+apply plugin: 'com.bmuschko.nexus'
+
+buildscript {
+  repositories {
+     jcenter()
+  }
+  dependencies {
+     classpath 'com.bmuschko:gradle-nexus-plugin:2.3.1'
+  }
+}
+
+modifyPom {
+  project {
+    name 'java-sdk'
+    description 'Java SDK for the Smartcar API'
+    url 'https://github.com/smartcar/java-sdk'
+
+    licenses {
+      license {
+        name 'MIT'
+        url 'http://choosealicense.com/licenses/mit/'
+        distribution 'repo'
+      }
+    }
+
+    scm {
+      url 'https://github.com/smartcar/java-sdk'
+      connecton 'scm:https://smartcar@github.com/smartcar/java-sdk.git'
+      developerConnection 'scm:git://github.com/smartcar/java-sdk.git'
+    }
+  }
+}
+
+extraArchive {
+  javadoc = true
+  sources = false
+  tests = false
+}
+nexus {
+  sign = true
+  configuration = archives
+  // repositoryUrl and snapshotRepositoryUrl have defaults
+}
 
 repositories {
   mavenCentral()
@@ -12,18 +56,25 @@ dependencies {
   testCompile 'org.testng:testng:6.4'
   testCompile 'com.squareup.okhttp3:mockwebserver:3.4.1'
 }
+*/
 
 jar {
   baseName = 'smartcar-sdk'
   version = '0.0.1'
 }
 
-task wrapper(type: Wrapper) {
-  gradleVersion = '2.3'
-}
-
 test {
   useTestNG()
+  testLogging {
+    // force logging the results on every run
+    outputs.upToDateWhen {false}
+    showExceptions = true
+    exceptionFormat = 'full'
+    showStackTraces = true
+  }
+  afterTest { desc, result -> 
+      println "${result.resultType} ${desc.name}"
+  }
 }
 
 jacoco {
