@@ -48,6 +48,7 @@ nexus {
 repositories {
   mavenCentral()
 }
+
 dependencies {
   compile 'com.squareup.okhttp3:okhttp:3.4.1'
   compile 'com.google.code.gson:gson:2.7'
