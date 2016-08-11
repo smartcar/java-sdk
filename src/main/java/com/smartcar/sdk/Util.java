@@ -1,12 +1,10 @@
 package com.smartcar.sdk;
 
-import java.io.IOException;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.OkHttpClient;
-import java.util.ArrayList;
-import org.json.JSONObject;
-import org.json.JSONArray;
+
+import java.io.IOException;
 
 public final class Util {
 
@@ -105,22 +103,5 @@ public final class Util {
     }
     joinedString += strings[strings.length - 1];
     return joinedString;
-  }
-
-  /**
-   * Returns the list of strings at `key` in `response`
-   * @param  response a JSON object in a string
-   * @param  key      key of the list of strings
-   * @return          ArrayList<String> containing the list at `key`
-   */
-  static ArrayList<String> getArray(String response, String key){
-    ArrayList<String> list = new ArrayList<String>();
-    JSONObject object = new JSONObject(response);
-    JSONArray jsonArray = object.getJSONArray(key);
-    for (int i = 0; i < jsonArray.length(); i++){
-      String value = jsonArray.getString(i);
-      list.add(value);
-    }
-    return list;
   }
 }
