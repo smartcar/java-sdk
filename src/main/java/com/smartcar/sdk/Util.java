@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import org.json.JSONObject;
 import org.json.JSONArray;
 
-final public class Util {
+public final class Util {
 
-  private final static OkHttpClient client = new OkHttpClient();
+  private static final OkHttpClient client = new OkHttpClient();
 
   /**
    * Calls the request, and returns the response on success. 

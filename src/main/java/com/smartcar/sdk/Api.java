@@ -1,6 +1,6 @@
 package com.smartcar.sdk;
 
-final public class Api {
+public final class Api {
   static class Info {
     String id, make, model;
     int year;

@@ -4,7 +4,7 @@ import okhttp3.HttpUrl;
 import com.google.gson.Gson;
 import java.util.ArrayList;
 
-final public class Smartcar {
+public final class Smartcar {
 
   private final String id, secret, redirectUri;
   private final String[] scope;

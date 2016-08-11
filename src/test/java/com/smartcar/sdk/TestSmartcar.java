@@ -153,11 +153,13 @@ public class TestSmartcar {
     RecordedRequest request = server.takeRequest();
 
     /* begin assertions */
-    Assert.assertEquals(request.getHeader("Authorization"), AUTHORIZATION);
+    Assert.assertEquals(
+      request.getHeader("Authorization"), 
+      AUTHORIZATION
+    );
     Assert.assertEquals(
       request.getBody().readUtf8(),
-      String.format("grant_type=%s&refresh_token=%s",
-        "refresh_token", REFRESH_TOKEN)
+      "grant_type=refresh_token&refresh_token=" + REFRESH_TOKEN
     );
     Assert.assertEquals(access.getAccessToken(), ACCESS_TOKEN);
     Assert.assertEquals(access.getRefreshToken(), REFRESH_TOKEN);
