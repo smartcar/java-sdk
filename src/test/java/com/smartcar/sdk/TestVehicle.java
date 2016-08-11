@@ -1,17 +1,20 @@
 package com.smartcar.sdk;
 
-import java.util.ArrayList;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.AfterMethod;
-import okhttp3.mockwebserver.MockWebServer;
-import okhttp3.mockwebserver.MockResponse;
-import okhttp3.mockwebserver.RecordedRequest;
-import java.io.IOException;
-import org.json.JSONObject;
-import org.json.JSONArray;
+import org.testng.annotations.BeforeMethod;
+
 import com.google.gson.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import okhttp3.mockwebserver.MockResponse;
+import okhttp3.mockwebserver.MockWebServer;
+import okhttp3.mockwebserver.RecordedRequest;
+
+import java.io.IOException;
 
 public class TestVehicle {
 
@@ -48,7 +51,7 @@ public class TestVehicle {
     } catch (IOException e) {
       System.out.println(e);
     }
-    vehicle.setUrl(server.url(API_PATH).toString());
+    vehicle.setBaseUrl(server.url(API_PATH).toString());
   }
 
   /* set the global request object to the next request */
@@ -67,10 +70,7 @@ public class TestVehicle {
       request.getHeader("Authorization"), 
       AUTHORIZATION
     );
-    Assert.assertEquals(
-      request.getMethod(), 
-      method
-    );
+    Assert.assertEquals(request.getMethod(), method);
     Assert.assertEquals(
       request.getPath(), 
       API_PATH + '/' + VEHICLE_ID + '/' + path
@@ -93,18 +93,18 @@ public class TestVehicle {
   @Test public void testPermissions()
   throws Exceptions.SmartcarException {
     setup("{\"permissions\":[\"read_vehicle_info\"]}");
-    ArrayList<String> permissions = vehicle.permissions();
+    String[] permissions = vehicle.permissions();
     verify("GET", "permissions");
-    Assert.assertEquals(permissions.get(0), "read_vehicle_info");
+    Assert.assertEquals(permissions[0], "read_vehicle_info");
   }
 
   @Test public void testPermissionsWithPaging()
   throws Exceptions.SmartcarException {
     setup("{\"permissions\":[\"read_vehicle_info\"]}");
-    ArrayList<String> permissions = vehicle.permissions(10, 0);
+    String[] permissions = vehicle.permissions(10, 0);
     verify("GET", "permissions?limit=10&offset=0");
     Assert.assertEquals(
-      permissions.get(0), 
+      permissions[0], 
       "read_vehicle_info"
     );    
   }
