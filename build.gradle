@@ -48,14 +48,14 @@ nexus {
 */
 
 repositories {
-  mavenCentral()
+  jcenter()
 }
 
 dependencies {
   compile 'com.squareup.okhttp3:okhttp:3.4.1'
   compile 'com.google.code.gson:gson:2.7'
-  compile 'org.json:json:20160212'
-  testCompile 'org.testng:testng:6.4'
+  testCompile 'org.json:json:20160810'
+  testCompile 'org.testng:testng:6.9.12'
   testCompile 'com.squareup.okhttp3:mockwebserver:3.4.1'
 }
 
