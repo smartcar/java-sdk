@@ -837,10 +837,10 @@ public class TestVehicle {
 
   /* Action Intent Tests */
 
-  @Test public void testDisconnectApplication() 
+  @Test public void testDisconnect() 
   throws Exceptions.SmartcarException {
     setup(SUCCESS);
-    vehicle.disconnectApplication();
+    vehicle.disconnect();
     verify("DELETE", "application");
     Assert.assertEquals(request.getBody().readUtf8(), "");
   }
