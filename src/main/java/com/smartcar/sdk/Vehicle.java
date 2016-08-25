@@ -311,7 +311,7 @@ public class Vehicle {
   return a status code
   */
  
-  public void disconnectApplication() 
+  public void disconnect() 
   throws Exceptions.SmartcarException {
     api.disconnect();
   }

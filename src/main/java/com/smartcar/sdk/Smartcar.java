@@ -1,6 +1,5 @@
 package com.smartcar.sdk;
 
-import okhttp3.HttpUrl;
 import com.google.gson.Gson;
 
 public final class Smartcar {
@@ -44,31 +43,14 @@ public final class Smartcar {
   }
 
   /**
-   * TODO add oauth state, and approval_prompt=[force|auto], and
-   * maybe change the parameter to just the OEM name
+   * Generate a OAuth authentication URL for the specified OEM
    * 
-   * This link is what allows the user to login to their OEM account
-   * and accept your permissions defined in scope. If they accept, a
-   * GET request will be sent to your redirectUri with code and 
-   * state parameters
-   * 
-   * @param  baseUri 
+   * @param  oem name of an OEM
    * 
    * @return oem authentication url
    */
-  public String getAuthUrl(String baseUri) {
-    HttpUrl parsed = HttpUrl.parse(baseUri);
-    if (parsed != null){
-      return parsed.newBuilder()
-        .addPathSegments("oauth/authorize")
-        .addQueryParameter("response_type", "code")
-        .addQueryParameter("client_id", this.id)
-        .addQueryParameter("redirect_uri", this.redirectUri)
-        .addQueryParameter("scope", Util.join(this.scope))
-        .build()
-        .toString();
-    }
-    return null;
+  public AuthUrl getAuthUrl(String oem) {
+    return new AuthUrl(oem, this.id, this.redirectUri, Util.join(this.scope));
   }
 
   /**
