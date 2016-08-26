@@ -35,15 +35,15 @@ public class Vehicle {
   Get Intents: These request data from the API and return json
   */
 
-  public String[] permissions() 
+  public Api.Permissions permissions() 
   throws Exceptions.SmartcarException {
     String json = api.permissions();
-    return gson.fromJson(json, Api.Permissions.class).permissions;
+    return gson.fromJson(json, Api.Permissions.class);
   }
-  public String[] permissions(int limit, int offset)
+  public Api.Permissions permissions(int limit, int offset)
   throws Exceptions.SmartcarException {
     String json = api.permissions(limit, offset);
-    return gson.fromJson(json, Api.Permissions.class).permissions;
+    return gson.fromJson(json, Api.Permissions.class);
   }
   public Api.Info info() 
   throws Exceptions.SmartcarException {
@@ -55,10 +55,10 @@ public class Vehicle {
     String json = api.get("accelerometer");
     return gson.fromJson(json, Api.Accelerometer.class);
   }
-  public Api.Airbag[] airbags() 
+  public Api.Airbags airbags() 
   throws Exceptions.SmartcarException {
     String json = api.get("airbags");
-    return gson.fromJson(json, Api.Airbags.class).airbags;
+    return gson.fromJson(json, Api.Airbags.class);
   }
   public Api.Barometer barometer() 
   throws Exceptions.SmartcarException {
@@ -105,20 +105,20 @@ public class Vehicle {
     String json = api.get("cruise_control");
     return gson.fromJson(json, Api.CruiseControl.class);
   }
-  public Api.Dimension dimension() 
+  public Api.Dimensions dimensions() 
   throws Exceptions.SmartcarException {
     String json = api.get("dimension");
-    return gson.fromJson(json, Api.Dimension.class);
+    return gson.fromJson(json, Api.Dimensions.class);
   } 
   public Api.Door[] doors() 
   throws Exceptions.SmartcarException {
     String json = api.get("doors");
     return gson.fromJson(json, Api.Doors.class).doors;
   }
-  public Api.SafetyLock[] safetyLocks() 
+  public Api.SafetyLocks safetyLocks() 
   throws Exceptions.SmartcarException {
     String json = api.get("safety_locks");
-    return gson.fromJson(json, Api.SafetyLocks.class).safetyLocks;
+    return gson.fromJson(json, Api.SafetyLocks.class);
   }
   public Api.DriveMode driveMode() 
   throws Exceptions.SmartcarException {
@@ -155,7 +155,7 @@ public class Vehicle {
     String json = api.get("fuel");
     return gson.fromJson(json, Api.Fuel.class);
   }
-  public Api.HazardLight hazardLights() 
+  public Api.HazardLight hazardLight() 
   throws Exceptions.SmartcarException {
     String json = api.get("lights/hazard");
     return gson.fromJson(json, Api.HazardLight.class);
@@ -165,10 +165,10 @@ public class Vehicle {
     String json = api.get("lights/headlight");
     return gson.fromJson(json, Api.Headlight.class);
   }
-  public Api.InteriorLight[] interiorLights() 
+  public Api.InteriorLights interiorLights() 
   throws Exceptions.SmartcarException {
     String json = api.get("lights/interior");
-    return gson.fromJson(json, Api.InteriorLights.class).lights;
+    return gson.fromJson(json, Api.InteriorLights.class);
   }
   public Api.TurnIndicator turnIndicator() 
   throws Exceptions.SmartcarException {
@@ -180,20 +180,20 @@ public class Vehicle {
     String json = api.get("location");
     return gson.fromJson(json, Api.Location.class);
   }
-  public Api.Mirror[] mirrors() 
+  public Api.Mirrors mirrors() 
   throws Exceptions.SmartcarException {
     String json = api.get("mirrors");
-    return gson.fromJson(json, Api.Mirrors.class).mirrors;
+    return gson.fromJson(json, Api.Mirrors.class);
   }
   public Api.Odometer odometer() 
   throws Exceptions.SmartcarException {
     String json = api.get("odometer");
     return gson.fromJson(json, Api.Odometer.class);
   }
-  public Api.TripOdometer[] tripOdometers() 
+  public Api.TripOdometers tripOdometers() 
   throws Exceptions.SmartcarException {
     String json = api.get("odometer/trip");
-    return gson.fromJson(json, Api.TripOdometers.class).trips;
+    return gson.fromJson(json, Api.TripOdometers.class);
   }
   public Api.Pedal acceleratorPedal() 
   throws Exceptions.SmartcarException {
@@ -210,10 +210,10 @@ public class Vehicle {
     String json = api.get("rain_sensor");
     return gson.fromJson(json, Api.RainSensor.class);
   }
-  public Api.Seat[] seats() 
+  public Api.Seats seats() 
   throws Exceptions.SmartcarException {
     String json = api.get("seats");
-    return gson.fromJson(json, Api.Seats.class).seats;
+    return gson.fromJson(json, Api.Seats.class);
   }
   public Api.Security security() 
   throws Exceptions.SmartcarException {
@@ -250,10 +250,10 @@ public class Vehicle {
     String json = api.get("temperature");
     return gson.fromJson(json, Api.Temperature.class);
   }
-  public Api.Tire[] tires() 
+  public Api.Tires tires() 
   throws Exceptions.SmartcarException {
     String json = api.get("tires");
-    return gson.fromJson(json, Api.Tires.class).tires;
+    return gson.fromJson(json, Api.Tires.class);
   }
   public Api.Transmission transmission() 
   throws Exceptions.SmartcarException {
@@ -290,15 +290,15 @@ public class Vehicle {
     String json = api.get("wheels");
     return gson.fromJson(json, Api.Wheels.class).wheels;
   }
-  public Api.WheelSpeed[] wheelSpeeds() 
+  public Api.WheelSpeeds wheelSpeeds() 
   throws Exceptions.SmartcarException {
     String json = api.get("wheels/speed");
-    return gson.fromJson(json, Api.WheelSpeeds.class).wheelSpeed;
+    return gson.fromJson(json, Api.WheelSpeeds.class);
   }
-  public Api.Window[] windows() 
+  public Api.Windows windows() 
   throws Exceptions.SmartcarException {
     String json = api.get("windows");
-    return gson.fromJson(json, Api.Windows.class).windows;
+    return gson.fromJson(json, Api.Windows.class);
   }
   public Api.Yaw yaw() 
   throws Exceptions.SmartcarException {
@@ -306,197 +306,238 @@ public class Vehicle {
     return gson.fromJson(json, Api.Yaw.class);
   }
 
-  /*
-  Action Intents: These send data to the API, and only 
-  return a status code
+  /* 
+  Action Intents: These send data to the API, 
+  and only return a status code 
   */
  
-  public void disconnect() 
+  public Api.Success disconnect() 
   throws Exceptions.SmartcarException {
-    api.disconnect();
+    String json = api.disconnect();
+    return gson.fromJson(json, Api.Success.class);
   }
-  public void startCharging() 
+  public Api.Success startCharging() 
   throws Exceptions.SmartcarException {
-    api.action("charge", makeAction("START"));
+    String json = api.action("charge", makeAction("START"));
+    return gson.fromJson(json, Api.Success.class);
   }
-  public void stopCharging() 
+  public Api.Success stopCharging() 
   throws Exceptions.SmartcarException {
-    api.action("charge", makeAction("STOP"));
+    String json = api.action("charge", makeAction("STOP"));
+    return gson.fromJson(json, Api.Success.class);
   }
-  public void enableChargeLimit() 
+  public Api.Success enableChargeLimit() 
   throws Exceptions.SmartcarException {
-    api.action("charge/limit", makeAction("ENABLE"));
+    String json = api.action("charge/limit", makeAction("ENABLE"));
+    return gson.fromJson(json, Api.Success.class);
   }
-  public void enableChargeLimit(double limit) 
+  public Api.Success enableChargeLimit(double limit) 
   throws Exceptions.SmartcarException {
     String body = gson.toJson(
       new Api.ChargeLimitAction("ENABLE", limit)
     );
-    api.action("charge/limit", body);
+    String json = api.action("charge/limit", body);
+    return gson.fromJson(json, Api.Success.class);
   }
-  public void disableChargeLimit() 
+  public Api.Success disableChargeLimit() 
   throws Exceptions.SmartcarException {
-    api.action("charge/limit", makeAction("DISABLE"));
+    String json = api.action("charge/limit", makeAction("DISABLE"));
+    return gson.fromJson(json, Api.Success.class);
   }
-  public void enableChargeSchedule() 
+  public Api.Success enableChargeSchedule() 
   throws Exceptions.SmartcarException {
-    api.action("charge/schedule", makeAction("ENABLE"));
+    String json = api.action("charge/schedule", makeAction("ENABLE"));
+    return gson.fromJson(json, Api.Success.class);
   }
-  public void enableChargeSchedule(String time) 
+  public Api.Success enableChargeSchedule(String time) 
   throws Exceptions.SmartcarException {
     String body = gson.toJson(
       new Api.ChargeScheduleAction("ENABLE", time)
     );
-    api.action("charge/schedule", body);
+    String json = api.action("charge/schedule", body);
+    return gson.fromJson(json, Api.Success.class);
   }
-  public void disableChargeSchedule() 
+  public Api.Success disableChargeSchedule() 
   throws Exceptions.SmartcarException {
-    api.action("charge/schedule", makeAction("DISABLE"));
+    String json = api.action("charge/schedule", makeAction("DISABLE"));
+    return gson.fromJson(json, Api.Success.class);
   }
-  public void startClimate() 
+  public Api.Success startClimate() 
   throws Exceptions.SmartcarException {
-    api.action("climate", makeAction("START"));
+    String json = api.action("climate", makeAction("START"));
+    return gson.fromJson(json, Api.Success.class);
   }
-  public void startClimate(double temp) 
+  public Api.Success startClimate(double temp) 
   throws Exceptions.SmartcarException {
     String body = gson.toJson(
       new Api.ClimateAction("START", temp)
     );
-    api.action("climate", body);
+    String json = api.action("climate", body);
+    return gson.fromJson(json, Api.Success.class);
   }
-  public void stopClimate() 
+  public Api.Success stopClimate() 
   throws Exceptions.SmartcarException {
-    api.action("climate", makeAction("STOP"));
+    String json = api.action("climate", makeAction("STOP"));
+    return gson.fromJson(json, Api.Success.class);
   }
-  public void startEngine() 
+  public Api.Success startEngine() 
   throws Exceptions.SmartcarException {
-    api.action("engine", makeAction("START"));
+    String json = api.action("engine", makeAction("START"));
+    return gson.fromJson(json, Api.Success.class);
   }
-  public void stopEngine() 
+  public Api.Success stopEngine() 
   throws Exceptions.SmartcarException {
-    api.action("engine", makeAction("STOP"));
+    String json = api.action("engine", makeAction("STOP"));
+    return gson.fromJson(json, Api.Success.class);
   }
-  public void turnEngineOn() 
+  public Api.Success turnEngineOn() 
   throws Exceptions.SmartcarException {
-    api.action("engine", makeAction("ON"));
+    String json = api.action("engine", makeAction("ON"));
+    return gson.fromJson(json, Api.Success.class);
   }
-  public void turnEngineAC1() 
+  public Api.Success turnEngineAC1() 
   throws Exceptions.SmartcarException {
-    api.action("engine", makeAction("ACCESSORY_1"));
+    String json = api.action("engine", makeAction("ACCESSORY_1"));
+    return gson.fromJson(json, Api.Success.class);
   }
-  public void turnEngineAC2() 
+  public Api.Success turnEngineAC2() 
   throws Exceptions.SmartcarException {
-    api.action("engine", makeAction("ACCESSORY_2"));
+    String json = api.action("engine", makeAction("ACCESSORY_2"));
+    return gson.fromJson(json, Api.Success.class);
   }
-  public void openHood() 
+  public Api.Success openHood() 
   throws Exceptions.SmartcarException {
-    api.action("engine/hood", makeAction("OPEN"));
+    String json = api.action("engine/hood", makeAction("OPEN"));
+    return gson.fromJson(json, Api.Success.class);
   }
-  public void closeHood()
+  public Api.Success closeHood()
   throws Exceptions.SmartcarException {
-    api.action("engine/hood", makeAction("CLOSE"));
+    String json = api.action("engine/hood", makeAction("CLOSE"));
+    return gson.fromJson(json, Api.Success.class);
   }
-  public void honkHorn() 
+  public Api.Success honkHorn() 
   throws Exceptions.SmartcarException {
-    api.action("horn", makeAction("HONK"));
+    String json = api.action("horn", makeAction("HONK"));
+    return gson.fromJson(json, Api.Success.class);
   }
-  public void flashHeadlights() 
+  public Api.Success flashHeadlights() 
   throws Exceptions.SmartcarException {
-    api.action("lights/headlights", makeAction("FLASH"));
+    String json = api.action("lights/headlights", makeAction("FLASH"));
+    return gson.fromJson(json, Api.Success.class);
   }
-  public void adjustMirrors(Api.Mirror[] mirrors) 
+  public Api.Success adjustMirrors(Api.Mirror[] mirrors) 
   throws Exceptions.SmartcarException {
     String body = gson.toJson(
       new Api.MirrorAction("TILT", mirrors)
     );
-    api.action("mirrors", body);
+    String json = api.action("mirrors", body);
+    return gson.fromJson(json, Api.Success.class);
   }
-  public void startPanic() 
+  public Api.Success startPanic() 
   throws Exceptions.SmartcarException {
-    api.action("panic", makeAction("START"));
+    String json = api.action("panic", makeAction("START"));
+    return gson.fromJson(json, Api.Success.class);
   }
-  public void stopPanic() 
+  public Api.Success stopPanic() 
   throws Exceptions.SmartcarException {
-    api.action("panic", makeAction("STOP"));
+    String json = api.action("panic", makeAction("STOP"));
+    return gson.fromJson(json, Api.Success.class);
   }
-  public void openChargePort() 
+  public Api.Success openChargePort() 
   throws Exceptions.SmartcarException {
-    api.action("ports/charge", makeAction("OPEN"));
+    String json = api.action("ports/charge", makeAction("OPEN"));
+    return gson.fromJson(json, Api.Success.class);
   }
-  public void closeChargePort() 
+  public Api.Success closeChargePort() 
   throws Exceptions.SmartcarException {
-    api.action("ports/charge", makeAction("CLOSE"));
+    String json = api.action("ports/charge", makeAction("CLOSE"));
+    return gson.fromJson(json, Api.Success.class);
   }
-  public void openFuelPort() 
+  public Api.Success openFuelPort() 
   throws Exceptions.SmartcarException {
-    api.action("ports/fuel", makeAction("OPEN"));
+    String json = api.action("ports/fuel", makeAction("OPEN"));
+    return gson.fromJson(json, Api.Success.class);
   }
-  public void closeFuelPort() 
+  public Api.Success closeFuelPort() 
   throws Exceptions.SmartcarException {
-    api.action("ports/fuel", makeAction("CLOSE"));
+    String json = api.action("ports/fuel", makeAction("CLOSE"));
+    return gson.fromJson(json, Api.Success.class);
   }
-  public void lock() 
+  public Api.Success lock() 
   throws Exceptions.SmartcarException {
-    api.action("security", makeAction("LOCK"));
+    String json = api.action("security", makeAction("LOCK"));
+    return gson.fromJson(json, Api.Success.class);
   }
-  public void unlock() 
+  public Api.Success unlock() 
   throws Exceptions.SmartcarException {
-    api.action("security", makeAction("UNLOCK"));
+    String json = api.action("security", makeAction("UNLOCK"));
+    return gson.fromJson(json, Api.Success.class);
   }
-  public void openSunroof() 
+  public Api.Success openSunroof() 
   throws Exceptions.SmartcarException {
-    api.action("sunroof", makeAction("OPEN"));
+    String json = api.action("sunroof", makeAction("OPEN"));
+    return gson.fromJson(json, Api.Success.class);
   }
-  public void ventSunroof() 
+  public Api.Success ventSunroof() 
   throws Exceptions.SmartcarException {
-    api.action("sunroof", makeAction("VENT"));
+    String json = api.action("sunroof", makeAction("VENT"));
+    return gson.fromJson(json, Api.Success.class);
   }
-  public void closeSunroof() 
+  public Api.Success closeSunroof() 
   throws Exceptions.SmartcarException {
-    api.action("sunroof", makeAction("CLOSE"));
+    String json = api.action("sunroof", makeAction("CLOSE"));
+    return gson.fromJson(json, Api.Success.class);
   }
-  public void openFrontTrunk() 
+  public Api.Success openFrontTrunk() 
   throws Exceptions.SmartcarException {
-    api.action("trunks/front", makeAction("OPEN"));
+    String json = api.action("trunks/front", makeAction("OPEN"));
+    return gson.fromJson(json, Api.Success.class);
   }
-  public void closeFrontTrunk() 
+  public Api.Success closeFrontTrunk() 
   throws Exceptions.SmartcarException {
-    api.action("trunks/front", makeAction("CLOSE"));
+    String json = api.action("trunks/front", makeAction("CLOSE"));
+    return gson.fromJson(json, Api.Success.class);
   }
-  public void openRearTrunk() 
+  public Api.Success openRearTrunk() 
   throws Exceptions.SmartcarException {
-    api.action("trunks/rear", makeAction("OPEN"));
+    String json = api.action("trunks/rear", makeAction("OPEN"));
+    return gson.fromJson(json, Api.Success.class);
   }
-  public void closeRearTrunk() 
+  public Api.Success closeRearTrunk() 
   throws Exceptions.SmartcarException {
-    api.action("trunks/rear", makeAction("CLOSE"));
+    String json = api.action("trunks/rear", makeAction("CLOSE"));
+    return gson.fromJson(json, Api.Success.class);
   }
-  public void openWindows(Api.Window[] windows) 
+  public Api.Success openWindows(Api.Window[] windows) 
   throws Exceptions.SmartcarException {
     String body = gson.toJson(
       new Api.WindowAction("OPEN", windows)
     );
-    api.action("windows", body);
+    String json = api.action("windows", body);
+    return gson.fromJson(json, Api.Success.class);
   }
-  public void closeWindows(Api.Window[] windows) 
+  public Api.Success closeWindows(Api.Window[] windows) 
   throws Exceptions.SmartcarException {
     String body = gson.toJson(
       new Api.WindowAction("CLOSE", windows)
     );
-    api.action("windows", body);
+    String json = api.action("windows", body);
+    return gson.fromJson(json, Api.Success.class);
   }
-  public void lockWindows(Api.Window[] windows) 
+  public Api.Success lockWindows(Api.Window[] windows) 
   throws Exceptions.SmartcarException {
     String body = gson.toJson(
       new Api.WindowAction("LOCK", windows)
     );
-    api.action("windows", body);
+    String json = api.action("windows", body);
+    return gson.fromJson(json, Api.Success.class);
   }
-  public void unlockWindows(Api.Window[] windows) 
+  public Api.Success unlockWindows(Api.Window[] windows) 
   throws Exceptions.SmartcarException {
     String body = gson.toJson(
       new Api.WindowAction("UNLOCK", windows)
     );
-    api.action("windows", body);
+    String json = api.action("windows", body);
+    return gson.fromJson(json, Api.Success.class);
   }
 }

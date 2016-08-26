@@ -93,7 +93,7 @@ public class TestVehicle {
   @Test public void testPermissions()
   throws Exceptions.SmartcarException {
     setup("{\"permissions\":[\"read_vehicle_info\"]}");
-    String[] permissions = vehicle.permissions();
+    String[] permissions = vehicle.permissions().permissions;
     verify("GET", "permissions");
     Assert.assertEquals(permissions[0], "read_vehicle_info");
   }
@@ -101,7 +101,7 @@ public class TestVehicle {
   @Test public void testPermissionsWithPaging()
   throws Exceptions.SmartcarException {
     setup("{\"permissions\":[\"read_vehicle_info\"]}");
-    String[] permissions = vehicle.permissions(10, 0);
+    String[] permissions = vehicle.permissions(10, 0).permissions;
     verify("GET", "permissions?limit=10&offset=0");
     Assert.assertEquals(
       permissions[0], 
@@ -155,7 +155,7 @@ public class TestVehicle {
         )
       )
       .toString());
-    Api.Airbag[] data = vehicle.airbags();
+    Api.Airbag[] data = vehicle.airbags().airbags;
     verify("GET", "airbags");
     Assert.assertEquals(data[0].location, "FRONT_RIGHT");
     Assert.assertEquals(data[0].isActive, true);
@@ -267,7 +267,7 @@ public class TestVehicle {
     Assert.assertEquals(data.isOn, false);
   }
 
-  @Test public void testDimension() 
+  @Test public void testDimensions() 
   throws Exceptions.SmartcarException {
     setup(new JSONObject()
       .put("height", 11.1)
@@ -275,7 +275,7 @@ public class TestVehicle {
       .put("length", 13.3)
       .put("weight", 1234.5)
       .toString());
-    Api.Dimension data = vehicle.dimension();
+    Api.Dimensions data = vehicle.dimensions();
     verify("GET", "dimension");
     Assert.assertEquals(data.height, 11.1);
     Assert.assertEquals(data.width, 12.2);
@@ -319,7 +319,7 @@ public class TestVehicle {
         )
       )
       .toString());
-    Api.SafetyLock[] data = vehicle.safetyLocks();
+    Api.SafetyLock[] data = vehicle.safetyLocks().safetyLocks;
     verify("GET", "safety_locks");
     Assert.assertEquals(data[0].location, "FRONT_LEFT");
     Assert.assertEquals(data[0].isLocked, false);
@@ -409,10 +409,10 @@ public class TestVehicle {
     Assert.assertEquals(data.percentRemaining, 0.7);
   }
 
-  @Test public void testHazardLights() 
+  @Test public void testHazardLight() 
   throws Exceptions.SmartcarException {
     setup(new JSONObject().put("isOn", false).toString());
-    Api.HazardLight data = vehicle.hazardLights();
+    Api.HazardLight data = vehicle.hazardLight();
     verify("GET", "lights/hazard");
     Assert.assertEquals(data.isOn, false);
   }
@@ -438,7 +438,7 @@ public class TestVehicle {
           .put("isOn", false)
         )
       ).toString());
-    Api.InteriorLight[] data = vehicle.interiorLights();
+    Api.InteriorLight[] data = vehicle.interiorLights().lights;
     verify("GET", "lights/interior");
     Assert.assertEquals(data[0].location, "FRONT_LEFT");
     Assert.assertEquals(data[0].isOn, true);
@@ -499,7 +499,7 @@ public class TestVehicle {
         )
       )
       .toString());
-    Api.Mirror[] data = vehicle.mirrors();
+    Api.Mirror[] data = vehicle.mirrors().mirrors;
     verify("GET", "mirrors");
     Assert.assertEquals(data[0].location, "LEFT");
     Assert.assertEquals(data[1].location, "RIGHT");
@@ -533,7 +533,7 @@ public class TestVehicle {
         )
       )
       .toString());
-    Api.TripOdometer[] data = vehicle.tripOdometers();
+    Api.TripOdometer[] data = vehicle.tripOdometers().trips;
     verify("GET", "odometer/trip");
     Assert.assertEquals(data[0].label, "a");
     Assert.assertEquals(data[0].distance, 101.12);
@@ -586,7 +586,7 @@ public class TestVehicle {
           .put("isBuckled", true)
         )
       ).toString());
-    Api.Seat[] data = vehicle.seats();
+    Api.Seat[] data = vehicle.seats().seats;
     verify("GET", "seats");
     Assert.assertEquals(data[0].location, "FRONT_LEFT");
     Assert.assertEquals(data[0].isOccupied, true);
@@ -689,7 +689,7 @@ public class TestVehicle {
           .put("pressure", 200.5)
         )
       ).toString());
-    Api.Tire[] data = vehicle.tires();
+    Api.Tire[] data = vehicle.tires().tires;
     verify("GET", "tires");
     Assert.assertEquals(data[0].location, "FRONT_LEFT");
     Assert.assertEquals(data[1].location, "FRONT_RIGHT");
@@ -793,7 +793,7 @@ public class TestVehicle {
           .put("speed", 20.52)
         )
       ).toString());
-    Api.WheelSpeed[] data = vehicle.wheelSpeeds();
+    Api.WheelSpeed[] data = vehicle.wheelSpeeds().wheelSpeed;
     verify("GET", "wheels/speed");
     Assert.assertEquals(data[0].location, "FRONT_RIGHT");
     Assert.assertEquals(data[1].location, "FRONT_LEFT");
@@ -815,7 +815,7 @@ public class TestVehicle {
           .put("percentOpen", 0.0)
         )
       ).toString());
-    Api.Window[] data = vehicle.windows();
+    Api.Window[] data = vehicle.windows().windows;
     verify("GET", "windows");
     Assert.assertEquals(data[0].location, "FRONT_RIGHT");
     Assert.assertEquals(data[0].isLocked, true);

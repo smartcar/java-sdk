@@ -1,6 +1,9 @@
 package com.smartcar.sdk;
 
 public final class Api {
+  static class Success {
+    String status;
+  }
   static class Paging {
     int count;
     int offset;
@@ -58,7 +61,7 @@ public final class Api {
     double speed, followDistance;
     boolean isOn;
   }
-  static class Dimension {
+  static class Dimensions {
     double height, width, length, weight;
   }
   static class Doors {

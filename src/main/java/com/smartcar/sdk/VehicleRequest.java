@@ -43,12 +43,12 @@ class VehicleRequest {
     return Util.call(request(url).build());
   }
 
-  void action(String endpoint, String body) 
+  String action(String endpoint, String body) 
   throws Exceptions.SmartcarException {
     MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     RequestBody formBody = RequestBody.create(JSON, body);
     String url = formatUrl(endpoint);
-    Util.call(request(url).post(formBody).build());
+    return Util.call(request(url).post(formBody).build());
   }
 
   String permissions()
@@ -63,10 +63,10 @@ class VehicleRequest {
     return Util.call(request(url).build());
   }
 
-  void disconnect()
+  String disconnect()
   throws Exceptions.SmartcarException {
     String url = formatUrl("application");
-    Util.call(request(url).delete().build());
+    return Util.call(request(url).delete().build());
   }
 
   String vehicles()
