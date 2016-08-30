@@ -1,125 +1,125 @@
 package com.smartcar.sdk;
 
 public final class Api {
-  static class Paging {
+  public static class Paging {
     int count;
     int offset;
   }
-  static class Permissions {
+  public static class Permissions {
     String[] permissions;
     Paging paging;
   }
-  static class Vehicles {
+  public static class Vehicles {
     String[] vehicles;
     Paging paging;
   }
-  static class Info {
+  public static class Info {
     String id, make, model;
     int year;
   }
-  static class Accelerometer {
+  public static class Accelerometer {
     double x, y, z;
   }
-  static class Airbags {
+  public static class Airbags {
     Airbag[] airbags;
   }
-  static class Airbag {
+  public static class Airbag {
     String location;
     boolean isActive, isDeployed;
   }
-  static class Barometer {
+  public static class Barometer {
     double pressure;
   }
-  static class Battery {
+  public static class Battery {
     double range, percentRemaining;
   }
-  static class Charge {
+  public static class Charge {
     boolean isPluggedIn;
     String state;
   }
-  static class ChargeLimit {
+  public static class ChargeLimit {
     double limit;
     String state;
   }
-  static class ChargeSchedule {
+  public static class ChargeSchedule {
     String startTime, state;
   }
-  static class Climate {
+  public static class Climate {
     double temperature;
     boolean isOn;
   }
-  static class CollisionSensor {
+  public static class CollisionSensor {
     boolean isTriggered;
   }
-  static class Compass {
+  public static class Compass {
     double heading;
   }
-  static class CruiseControl {
+  public static class CruiseControl {
     double speed, followDistance;
     boolean isOn;
   }
-  static class Dimension {
+  public static class Dimension {
     double height, width, length, weight;
   }
-  static class Doors {
+  public static class Doors {
     Door[] doors;
   }
-  static class Door {
+  public static class Door {
     String location;
     boolean isOpen;
   }
-  static class SafetyLocks {
+  public static class SafetyLocks {
     SafetyLock[] safetyLocks;
   }
-  static class SafetyLock {
+  public static class SafetyLock {
     String location;
     boolean isLocked;
   }
-  static class DriveMode {
+  public static class DriveMode {
     String mode;
   }
-  static class Engine {
+  public static class Engine {
     String state;
   }
-  static class EngineCoolant {
+  public static class EngineCoolant {
     double level, temperature;
   }
-  static class EngineHood {
+  public static class EngineHood {
     boolean isOpen;
   }
-  static class EngineOil {
+  public static class EngineOil {
     boolean changeIndicator;
     double percentRemaining, lifeRemaining, pressure, temperature;
   }
-  static class EngineThrottle {
+  public static class EngineThrottle {
     double percentOpen;
   }
-  static class Fuel {
+  public static class Fuel {
     double range, percentRemaining;
   }
-  static class HazardLight {
+  public static class HazardLight {
     boolean isOn;
   }
-  static class Headlight {
+  public static class Headlight {
     String state;
   }
-  static class InteriorLights {
+  public static class InteriorLights {
     InteriorLight[] lights;
   }
-  static class InteriorLight {
+  public static class InteriorLight {
     String location;
     boolean isOn;
   }
-  static class TurnIndicator {
+  public static class TurnIndicator {
     String state;
   }
-  static class Location {
+  public static class Location {
     double latitude, longitude, accuracy;
   }
-  static class Mirrors {
+  public static class Mirrors {
     Mirror[] mirrors;
   }
-  static class Mirror {
+  public static class Mirror {
     String location;
     double xTilt, yTilt;
     public Mirror(String location, double xTilt, double yTilt){
@@ -128,92 +128,92 @@ public final class Api {
       this.yTilt = yTilt;
     }
   }
-  static class Odometer {
+  public static class Odometer {
     double distance;
   }
-  static class TripOdometers {
+  public static class TripOdometers {
     TripOdometer[] trips;
   }
-  static class TripOdometer {
+  public static class TripOdometer {
     String label;
     double distance;
   }
   /* pedals/{accelerator,brake} */
-  static class Pedal {
+  public static class Pedal {
     double percentDepressed;
   }
-  static class RainSensor {
+  public static class RainSensor {
     boolean isRaining;
   }
-  static class Seats {
+  public static class Seats {
     Seat[] seats;
   }
-  static class Seat {
+  public static class Seat {
     String location;
     boolean isOccupied, isBuckled;
   }
-  static class Security {
+  public static class Security {
     boolean isLocked;
   }
-  static class SliBattery {
+  public static class SliBattery {
     double current, voltage, percentRemaining;
   }
   /* speedometer, tachometer */
-  static class Gauge {
+  public static class Gauge {
     double speed;
   }
-  static class SteeringWheel {
+  public static class SteeringWheel {
     String location;
     double angle;
   }
-  static class Sunroof {
+  public static class Sunroof {
     String state;
     double percentOpen;
   }
-  static class Temperature {
+  public static class Temperature {
     double inside, outside;
   }
-  static class Tires {
+  public static class Tires {
     Tire[] tires;
   }
-  static class Tire {
+  public static class Tire {
     String location;
     double pressure;
   }
-  static class Transmission {
+  public static class Transmission {
     String type, state;
   }
-  static class TransmissionFluid {
+  public static class TransmissionFluid {
     double temperature, wear;
   }
   /* trunks/{front,rear} */
-  static class Trunk {
+  public static class Trunk {
     boolean isOpen;
   }
-  static class Vin {
+  public static class Vin {
     String vin;
   }
-  static class WasherFluid {
+  public static class WasherFluid {
     double percentRemaining;
   }
-  static class Wheels {
+  public static class Wheels {
     Wheel[] wheels;
   }
-  static class Wheel {
+  public static class Wheel {
     String location;
     double diameter;
   }
-  static class WheelSpeeds {
+  public static class WheelSpeeds {
     WheelSpeed[] wheelSpeed;
   }
-  static class WheelSpeed {
+  public static class WheelSpeed {
     String location;
     double speed;
   }
-  static class Windows {
+  public static class Windows {
     Window[] windows;
   }
-  static class Window {
+  public static class Window {
     String location;
     boolean isLocked;
     double percentOpen;
@@ -223,16 +223,16 @@ public final class Api {
       this.percentOpen = percentOpen;
     }
   }
-  static class Yaw {
+  public static class Yaw {
     double rate;
   }
-  static class GenericAction {
+  public static class GenericAction {
     String action;
     public GenericAction(String action){
       this.action = action;
     }
   }
-  static class ChargeLimitAction {
+  public static class ChargeLimitAction {
     String action;
     double limit;
     public ChargeLimitAction(String action, double limit){
@@ -240,7 +240,7 @@ public final class Api {
       this.limit = limit;
     }
   }
-  static class ChargeScheduleAction {
+  public static class ChargeScheduleAction {
     String action;
     String startTime;
     public ChargeScheduleAction(String action, String startTime){
@@ -248,7 +248,7 @@ public final class Api {
       this.startTime = startTime;
     }
   }
-  static class ClimateAction {
+  public static class ClimateAction {
     String action;
     double temperature;
     public ClimateAction(String action, double temperature){
@@ -256,7 +256,7 @@ public final class Api {
       this.temperature = temperature;
     }
   }
-  static class MirrorAction {
+  public static class MirrorAction {
     String action;
     Mirror[] mirrors;
     public MirrorAction(String action, Mirror[] mirrors){
@@ -264,7 +264,7 @@ public final class Api {
       this.mirrors = mirrors;
     }
   }
-  static class WindowAction {
+  public static class WindowAction {
     String action;
     Window[] windows;
     public WindowAction(String action, Window[] windows){

@@ -29,7 +29,8 @@ public final class Smartcar {
 
   private VehicleRequest getVehicleRequest(String token){
     VehicleRequest vehicleRequest = new VehicleRequest(token);
-    vehicleRequest.setBaseUrl(this.vehicleUrl);
+    if (this.vehicleUrl != null)
+      vehicleRequest.setBaseUrl(this.vehicleUrl);
     return vehicleRequest;
   }
 
@@ -44,9 +45,9 @@ public final class Smartcar {
 
   /**
    * Generate a OAuth authentication URL for the specified OEM
-   * 
+   *
    * @param  oem name of an OEM
-   * 
+   *
    * @return oem authentication url
    */
   public AuthUrl getAuthUrl(String oem) {
@@ -55,14 +56,14 @@ public final class Smartcar {
 
   /**
    * Exchange an authentication code for an Access object.
-   * 
+   *
    * @param  code the retrieved authorization code
-   * 
+   *
    * @return an <Access> containing an access_token and refresh_token
-   * 
+   *
    * @throws <Exceptions.SmartcarException>
    */
-  public Access exchangeCode(String code) 
+  public Access exchangeCode(String code)
   throws Exceptions.SmartcarException {
     String json = this.access.code(code, this.redirectUri);
     return gson.fromJson(json, Access.class);
@@ -74,12 +75,12 @@ public final class Smartcar {
    * @return an <Access> containing an access_token and refresh_token
    * @throws <Exceptions.SmartcarException>
    */
-  public Access exchangeToken(String refreshToken) 
+  public Access exchangeToken(String refreshToken)
   throws Exceptions.SmartcarException {
     String json = this.access.token(refreshToken);
     return gson.fromJson(json, Access.class);
   }
-  
+
   /**
    * Get a list of the user's vehicles
    * @param  token A valid Access Token
@@ -114,7 +115,7 @@ public final class Smartcar {
    */
   public Vehicle getVehicle(String token, String vehicleId){
     Vehicle vehicle = new Vehicle(token, vehicleId);
-    if (this.vehicleUrl != null) 
+    if (this.vehicleUrl != null)
       vehicle.setBaseUrl(this.vehicleUrl);
     return vehicle;
   }
