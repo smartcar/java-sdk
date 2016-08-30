@@ -1,230 +1,721 @@
 package com.smartcar.sdk;
 
+import java.util.Arrays;
+
 public final class Api {
   public static class Paging {
-    int count;
-    int offset;
+    public int count;
+    public int offset;
+
+    @Override
+    public String toString() {
+      return "Paging{" +
+              "count=" + count +
+              ", offset=" + offset +
+              '}';
+    }
   }
   public static class Permissions {
-    String[] permissions;
-    Paging paging;
+    public String[] permissions;
+    public Paging paging;
+
+    @Override
+    public String toString() {
+      return "Permissions{" +
+              "permissions=" + Arrays.toString(permissions) +
+              ", paging=" + paging +
+              '}';
+    }
   }
   public static class Vehicles {
-    String[] vehicles;
-    Paging paging;
+    public String[] vehicles;
+    public Paging paging;
+
+    @Override
+    public String toString() {
+      return "Vehicles{" +
+              "vehicles=" + Arrays.toString(vehicles) +
+              ", paging=" + paging +
+              '}';
+    }
   }
   public static class Info {
-    String id, make, model;
-    int year;
+    public String id, make, model;
+    public int year;
+
+    @Override
+    public String toString() {
+      return "Info{" +
+              "id='" + id + '\'' +
+              ", make='" + make + '\'' +
+              ", model='" + model + '\'' +
+              ", year=" + year +
+              '}';
+    }
   }
   public static class Accelerometer {
-    double x, y, z;
+    public double x, y, z;
+
+    @Override
+    public String toString() {
+      return "Accelerometer{" +
+              "x=" + x +
+              ", y=" + y +
+              ", z=" + z +
+              '}';
+    }
   }
   public static class Airbags {
-    Airbag[] airbags;
+    public Airbag[] airbags;
+
+    @Override
+    public String toString() {
+      return "Airbags{" +
+              "airbags=" + Arrays.toString(airbags) +
+              '}';
+    }
   }
   public static class Airbag {
-    String location;
-    boolean isActive, isDeployed;
+    public String location;
+    public boolean isActive, isDeployed;
+
+    @Override
+    public String toString() {
+      return "Airbag{" +
+              "location='" + location + '\'' +
+              ", isActive=" + isActive +
+              ", isDeployed=" + isDeployed +
+              '}';
+    }
   }
   public static class Barometer {
-    double pressure;
+    public double pressure;
+
+    @Override
+    public String toString() {
+      return "Barometer{" +
+              "pressure=" + pressure +
+              '}';
+    }
   }
   public static class Battery {
-    double range, percentRemaining;
+    public double range, percentRemaining;
+
+    @Override
+    public String toString() {
+      return "Battery{" +
+              "range=" + range +
+              ", percentRemaining=" + percentRemaining +
+              '}';
+    }
   }
   public static class Charge {
-    boolean isPluggedIn;
-    String state;
+    public boolean isPluggedIn;
+    public String state;
+
+    @Override
+    public String toString() {
+      return "Charge{" +
+              "isPluggedIn=" + isPluggedIn +
+              ", state='" + state + '\'' +
+              '}';
+    }
   }
   public static class ChargeLimit {
-    double limit;
-    String state;
+    public double limit;
+    public String state;
+
+    @Override
+    public String toString() {
+      return "ChargeLimit{" +
+              "limit=" + limit +
+              ", state='" + state + '\'' +
+              '}';
+    }
   }
   public static class ChargeSchedule {
-    String startTime, state;
+    public String startTime, state;
+
+    @Override
+    public String toString() {
+      return "ChargeSchedule{" +
+              "startTime='" + startTime + '\'' +
+              ", state='" + state + '\'' +
+              '}';
+    }
   }
   public static class Climate {
-    double temperature;
-    boolean isOn;
+    public double temperature;
+    public boolean isOn;
+
+    @Override
+    public String toString() {
+      return "Climate{" +
+              "temperature=" + temperature +
+              ", isOn=" + isOn +
+              '}';
+    }
   }
   public static class CollisionSensor {
-    boolean isTriggered;
+    public boolean isTriggered;
+
+    @Override
+    public String toString() {
+      return "CollisionSensor{" +
+              "isTriggered=" + isTriggered +
+              '}';
+    }
   }
   public static class Compass {
-    double heading;
+    public double heading;
+
+    @Override
+    public String toString() {
+      return "Compass{" +
+              "heading=" + heading +
+              '}';
+    }
   }
   public static class CruiseControl {
-    double speed, followDistance;
-    boolean isOn;
+    public double speed, followDistance;
+    public boolean isOn;
+
+    @Override
+    public String toString() {
+      return "CruiseControl{" +
+              "speed=" + speed +
+              ", followDistance=" + followDistance +
+              ", isOn=" + isOn +
+              '}';
+    }
   }
   public static class Dimension {
-    double height, width, length, weight;
+    public double height, width, length, weight;
+
+    @Override
+    public String toString() {
+      return "Dimension{" +
+              "height=" + height +
+              ", width=" + width +
+              ", length=" + length +
+              ", weight=" + weight +
+              '}';
+    }
   }
   public static class Doors {
-    Door[] doors;
+    public Door[] doors;
+
+    @Override
+    public String toString() {
+      return "Doors{" +
+              "doors=" + Arrays.toString(doors) +
+              '}';
+    }
   }
   public static class Door {
-    String location;
-    boolean isOpen;
+    public String location;
+    public boolean isOpen;
+
+    @Override
+    public String toString() {
+      return "Door{" +
+              "location='" + location + '\'' +
+              ", isOpen=" + isOpen +
+              '}';
+    }
   }
   public static class SafetyLocks {
-    SafetyLock[] safetyLocks;
+    public SafetyLock[] safetyLocks;
+
+    @Override
+    public String toString() {
+      return "SafetyLocks{" +
+              "safetyLocks=" + Arrays.toString(safetyLocks) +
+              '}';
+    }
   }
   public static class SafetyLock {
-    String location;
-    boolean isLocked;
+    public String location;
+    public boolean isLocked;
+
+    @Override
+    public String toString() {
+      return "SafetyLock{" +
+              "location='" + location + '\'' +
+              ", isLocked=" + isLocked +
+              '}';
+    }
   }
   public static class DriveMode {
-    String mode;
+    public String mode;
+
+    @Override
+    public String toString() {
+      return "DriveMode{" +
+              "mode='" + mode + '\'' +
+              '}';
+    }
   }
   public static class Engine {
-    String state;
+    public String state;
+
+    @Override
+    public String toString() {
+      return "Engine{" +
+              "state='" + state + '\'' +
+              '}';
+    }
   }
   public static class EngineCoolant {
-    double level, temperature;
+    public double level, temperature;
+
+    @Override
+    public String toString() {
+      return "EngineCoolant{" +
+              "level=" + level +
+              ", temperature=" + temperature +
+              '}';
+    }
   }
   public static class EngineHood {
-    boolean isOpen;
+    public boolean isOpen;
+
+    @Override
+    public String toString() {
+      return "EngineHood{" +
+              "isOpen=" + isOpen +
+              '}';
+    }
   }
   public static class EngineOil {
-    boolean changeIndicator;
-    double percentRemaining, lifeRemaining, pressure, temperature;
+    public boolean changeIndicator;
+    public double percentRemaining, lifeRemaining, pressure, temperature;
+
+    @Override
+    public String toString() {
+      return "EngineOil{" +
+              "changeIndicator=" + changeIndicator +
+              ", percentRemaining=" + percentRemaining +
+              ", lifeRemaining=" + lifeRemaining +
+              ", pressure=" + pressure +
+              ", temperature=" + temperature +
+              '}';
+    }
   }
   public static class EngineThrottle {
-    double percentOpen;
+    public double percentOpen;
+
+    @Override
+    public String toString() {
+      return "EngineThrottle{" +
+              "percentOpen=" + percentOpen +
+              '}';
+    }
   }
   public static class Fuel {
-    double range, percentRemaining;
+    public double range, percentRemaining;
+
+    @Override
+    public String toString() {
+      return "Fuel{" +
+              "range=" + range +
+              ", percentRemaining=" + percentRemaining +
+              '}';
+    }
   }
   public static class HazardLight {
-    boolean isOn;
+    public boolean isOn;
+
+    @Override
+    public String toString() {
+      return "HazardLight{" +
+              "isOn=" + isOn +
+              '}';
+    }
   }
   public static class Headlight {
-    String state;
+    public String state;
+
+    @Override
+    public String toString() {
+      return "Headlight{" +
+              "state='" + state + '\'' +
+              '}';
+    }
   }
   public static class InteriorLights {
-    InteriorLight[] lights;
+    public InteriorLight[] lights;
+
+    @Override
+    public String toString() {
+      return "InteriorLights{" +
+              "lights=" + Arrays.toString(lights) +
+              '}';
+    }
   }
   public static class InteriorLight {
-    String location;
-    boolean isOn;
+    public String location;
+    public boolean isOn;
+
+    @Override
+    public String toString() {
+      return "InteriorLight{" +
+              "location='" + location + '\'' +
+              ", isOn=" + isOn +
+              '}';
+    }
   }
   public static class TurnIndicator {
-    String state;
+    public String state;
+
+    @Override
+    public String toString() {
+      return "TurnIndicator{" +
+              "state='" + state + '\'' +
+              '}';
+    }
   }
   public static class Location {
-    double latitude, longitude, accuracy;
+    public double latitude, longitude, accuracy;
+
+    @Override
+    public String toString() {
+      return "Location{" +
+              "latitude=" + latitude +
+              ", longitude=" + longitude +
+              ", accuracy=" + accuracy +
+              '}';
+    }
   }
   public static class Mirrors {
-    Mirror[] mirrors;
+    public Mirror[] mirrors;
+
+    @Override
+    public String toString() {
+      return "Mirrors{" +
+              "mirrors=" + Arrays.toString(mirrors) +
+              '}';
+    }
   }
   public static class Mirror {
-    String location;
-    double xTilt, yTilt;
+    public String location;
+    public double xTilt, yTilt;
     public Mirror(String location, double xTilt, double yTilt){
       this.location = location;
       this.xTilt = xTilt;
       this.yTilt = yTilt;
     }
+
+    @Override
+    public String toString() {
+      return "Mirror{" +
+              "location='" + location + '\'' +
+              ", xTilt=" + xTilt +
+              ", yTilt=" + yTilt +
+              '}';
+    }
   }
   public static class Odometer {
-    double distance;
+    public double distance;
+
+    @Override
+    public String toString() {
+      return "Odometer{" +
+              "distance=" + distance +
+              '}';
+    }
   }
   public static class TripOdometers {
-    TripOdometer[] trips;
+    public TripOdometer[] trips;
+
+    @Override
+    public String toString() {
+      return "TripOdometers{" +
+              "trips=" + Arrays.toString(trips) +
+              '}';
+    }
   }
   public static class TripOdometer {
-    String label;
-    double distance;
+    public String label;
+    public double distance;
+
+    @Override
+    public String toString() {
+      return "TripOdometer{" +
+              "label='" + label + '\'' +
+              ", distance=" + distance +
+              '}';
+    }
   }
   /* pedals/{accelerator,brake} */
   public static class Pedal {
-    double percentDepressed;
+    public double percentDepressed;
+
+    @Override
+    public String toString() {
+      return "Pedal{" +
+              "percentDepressed=" + percentDepressed +
+              '}';
+    }
   }
   public static class RainSensor {
-    boolean isRaining;
+    public boolean isRaining;
+
+    @Override
+    public String toString() {
+      return "RainSensor{" +
+              "isRaining=" + isRaining +
+              '}';
+    }
   }
   public static class Seats {
-    Seat[] seats;
+    public Seat[] seats;
+
+    @Override
+    public String toString() {
+      return "Seats{" +
+              "seats=" + Arrays.toString(seats) +
+              '}';
+    }
   }
   public static class Seat {
-    String location;
-    boolean isOccupied, isBuckled;
+    public String location;
+    public boolean isOccupied, isBuckled;
+
+    @Override
+    public String toString() {
+      return "Seat{" +
+              "location='" + location + '\'' +
+              ", isOccupied=" + isOccupied +
+              ", isBuckled=" + isBuckled +
+              '}';
+    }
   }
   public static class Security {
-    boolean isLocked;
+    public boolean isLocked;
+
+    @Override
+    public String toString() {
+      return "Security{" +
+              "isLocked=" + isLocked +
+              '}';
+    }
   }
   public static class SliBattery {
-    double current, voltage, percentRemaining;
+    public double current, voltage, percentRemaining;
+
+    @Override
+    public String toString() {
+      return "SliBattery{" +
+              "current=" + current +
+              ", voltage=" + voltage +
+              ", percentRemaining=" + percentRemaining +
+              '}';
+    }
   }
   /* speedometer, tachometer */
   public static class Gauge {
-    double speed;
+    public double speed;
+
+    @Override
+    public String toString() {
+      return "Gauge{" +
+              "speed=" + speed +
+              '}';
+    }
   }
   public static class SteeringWheel {
-    String location;
-    double angle;
+    public String location;
+    public double angle;
+
+    @Override
+    public String toString() {
+      return "SteeringWheel{" +
+              "location='" + location + '\'' +
+              ", angle=" + angle +
+              '}';
+    }
   }
   public static class Sunroof {
-    String state;
-    double percentOpen;
+    public String state;
+    public double percentOpen;
+
+    @Override
+    public String toString() {
+      return "Sunroof{" +
+              "state='" + state + '\'' +
+              ", percentOpen=" + percentOpen +
+              '}';
+    }
   }
   public static class Temperature {
-    double inside, outside;
+    public double inside, outside;
+
+    @Override
+    public String toString() {
+      return "Temperature{" +
+              "inside=" + inside +
+              ", outside=" + outside +
+              '}';
+    }
   }
   public static class Tires {
-    Tire[] tires;
+    public Tire[] tires;
+
+    @Override
+    public String toString() {
+      return "Tires{" +
+              "tires=" + Arrays.toString(tires) +
+              '}';
+    }
   }
   public static class Tire {
-    String location;
-    double pressure;
+    public String location;
+    public double pressure;
+
+    @Override
+    public String toString() {
+      return "Tire{" +
+              "location='" + location + '\'' +
+              ", pressure=" + pressure +
+              '}';
+    }
   }
   public static class Transmission {
-    String type, state;
+    public String type, state;
+
+    @Override
+    public String toString() {
+      return "Transmission{" +
+              "type='" + type + '\'' +
+              ", state='" + state + '\'' +
+              '}';
+    }
   }
   public static class TransmissionFluid {
-    double temperature, wear;
+    public double temperature, wear;
+
+    @Override
+    public String toString() {
+      return "TransmissionFluid{" +
+              "temperature=" + temperature +
+              ", wear=" + wear +
+              '}';
+    }
   }
   /* trunks/{front,rear} */
   public static class Trunk {
-    boolean isOpen;
+    public boolean isOpen;
+
+    @Override
+    public String toString() {
+      return "Trunk{" +
+              "isOpen=" + isOpen +
+              '}';
+    }
   }
   public static class Vin {
-    String vin;
+    public String vin;
+
+    @Override
+    public String toString() {
+      return "Vin{" +
+              "vin='" + vin + '\'' +
+              '}';
+    }
   }
   public static class WasherFluid {
-    double percentRemaining;
+    public double percentRemaining;
+
+    @Override
+    public String toString() {
+      return "WasherFluid{" +
+              "percentRemaining=" + percentRemaining +
+              '}';
+    }
   }
   public static class Wheels {
     Wheel[] wheels;
+
+    @Override
+    public String toString() {
+      return "Wheels{" +
+              "wheels=" + Arrays.toString(wheels) +
+              '}';
+    }
   }
   public static class Wheel {
-    String location;
-    double diameter;
+    public String location;
+    public double diameter;
+
+    @Override
+    public String toString() {
+      return "Wheel{" +
+              "location='" + location + '\'' +
+              ", diameter=" + diameter +
+              '}';
+    }
   }
   public static class WheelSpeeds {
-    WheelSpeed[] wheelSpeed;
+    public WheelSpeed[] wheelSpeed;
+
+    @Override
+    public String toString() {
+      return "WheelSpeeds{" +
+              "wheelSpeed=" + Arrays.toString(wheelSpeed) +
+              '}';
+    }
   }
   public static class WheelSpeed {
-    String location;
-    double speed;
+    public String location;
+    public double speed;
+
+    @Override
+    public String toString() {
+      return "WheelSpeed{" +
+              "location='" + location + '\'' +
+              ", speed=" + speed +
+              '}';
+    }
   }
   public static class Windows {
-    Window[] windows;
+    public Window[] windows;
+
+    @Override
+    public String toString() {
+      return "Windows{" +
+              "windows=" + Arrays.toString(windows) +
+              '}';
+    }
   }
   public static class Window {
-    String location;
-    boolean isLocked;
-    double percentOpen;
+    public String location;
+    public boolean isLocked;
+    public double percentOpen;
     public Window(String location, boolean isLocked, double percentOpen){
       this.location = location;
       this.isLocked = isLocked;
       this.percentOpen = percentOpen;
     }
+
+    @Override
+    public String toString() {
+      return "Window{" +
+              "location='" + location + '\'' +
+              ", isLocked=" + isLocked +
+              ", percentOpen=" + percentOpen +
+              '}';
+    }
   }
   public static class Yaw {
-    double rate;
+    public double rate;
+
+    @Override
+    public String toString() {
+      return "Yaw{" +
+              "rate=" + rate +
+              '}';
+    }
   }
   public static class GenericAction {
     String action;
