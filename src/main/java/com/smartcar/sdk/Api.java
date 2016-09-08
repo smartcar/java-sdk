@@ -15,6 +15,9 @@ public final class Api {
               '}';
     }
   }
+  public static class Success {
+    public String status;
+  }
   public static class Permissions {
     public String[] permissions;
     public Paging paging;
@@ -189,12 +192,12 @@ public final class Api {
               '}';
     }
   }
-  public static class Dimension {
+  public static class Dimensions {
     public double height, width, length, weight;
 
     @Override
     public String toString() {
-      return "Dimension{" +
+      return "Dimensions{" +
               "height=" + height +
               ", width=" + width +
               ", length=" + length +
@@ -202,6 +205,7 @@ public final class Api {
               '}';
     }
   }
+
   public static class Doors {
     public Door[] doors;
 
@@ -513,7 +517,7 @@ public final class Api {
               '}';
     }
   }
-  /* speedometer, tachometer */
+
   public static class Gauge {
     public double speed;
 
@@ -603,7 +607,7 @@ public final class Api {
               '}';
     }
   }
-  /* trunks/{front,rear} */
+
   public static class Trunk {
     public boolean isOpen;
 
@@ -692,10 +696,14 @@ public final class Api {
     public String location;
     public boolean isLocked;
     public double percentOpen;
-    public Window(String location, boolean isLocked, double percentOpen){
+
+    public Window(String location, double percentOpen){
       this.location = location;
-      this.isLocked = isLocked;
       this.percentOpen = percentOpen;
+    }
+
+    public Window(String location) {
+      this.location = location;
     }
 
     @Override
@@ -705,6 +713,7 @@ public final class Api {
               ", isLocked=" + isLocked +
               ", percentOpen=" + percentOpen +
               '}';
+    
     }
   }
   public static class Yaw {
