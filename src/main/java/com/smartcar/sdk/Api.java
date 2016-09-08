@@ -220,10 +220,12 @@ public final class Api {
     String location;
     boolean isLocked;
     double percentOpen;
-    public Window(String location, boolean isLocked, double percentOpen){
+    public Window(String location, double percentOpen){
       this.location = location;
-      this.isLocked = isLocked;
       this.percentOpen = percentOpen;
+    }
+    public Window(String location) {
+      this.location = location;
     }
   }
   static class Yaw {
