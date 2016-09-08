@@ -773,11 +773,11 @@ public class TestVehicle {
           .put("diameter", 48.26)
         )
       ).toString());
-    Api.Wheel[] data = vehicle.wheels();
+    Api.Wheels data = vehicle.wheels();
     verify("GET", "wheels");
-    Assert.assertEquals(data[0].location, "FRONT_RIGHT");
-    Assert.assertEquals(data[1].location, "FRONT_LEFT");
-    Assert.assertEquals(data[0].diameter, data[1].diameter);
+    Assert.assertEquals(data.wheels[0].location, "FRONT_RIGHT");
+    Assert.assertEquals(data.wheels[1].location, "FRONT_LEFT");
+    Assert.assertEquals(data.wheels[0].diameter, data.wheels[1].diameter);
   }
 
   @Test public void testWheelSpeeds() 
@@ -793,11 +793,11 @@ public class TestVehicle {
           .put("speed", 20.52)
         )
       ).toString());
-    Api.WheelSpeed[] data = vehicle.wheelSpeeds().wheelSpeed;
+    Api.WheelSpeeds data = vehicle.wheelSpeeds();
     verify("GET", "wheels/speed");
-    Assert.assertEquals(data[0].location, "FRONT_RIGHT");
-    Assert.assertEquals(data[1].location, "FRONT_LEFT");
-    Assert.assertEquals(data[0].speed, data[1].speed); 
+    Assert.assertEquals(data.wheelSpeed[0].location, "FRONT_RIGHT");
+    Assert.assertEquals(data.wheelSpeed[1].location, "FRONT_LEFT");
+    Assert.assertEquals(data.wheelSpeed[0].speed, data.wheelSpeed[1].speed); 
   }
 
   @Test public void testWindows() 

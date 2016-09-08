@@ -34,15 +34,6 @@ public final class Smartcar {
     return vehicleRequest;
   }
 
-  private Vehicle[] getVehicleArray(String token, String json){
-    String[] vehicleIds = gson.fromJson(json, Api.Vehicles.class).vehicles;
-    Vehicle[] vehicles = new Vehicle[vehicleIds.length];
-    for (int i=0; i<vehicleIds.length; i++){
-      vehicles[i] = getVehicle(token, vehicleIds[i]);
-    }
-    return vehicles;
-  }
-
   /**
    * Generate a OAuth authentication URL for the specified OEM
    *
@@ -87,10 +78,10 @@ public final class Smartcar {
    * @return The user's vehicles
    * @throws Exceptions.SmartcarException
    */
-  public Vehicle[] getVehicles(String token)
+  public Api.Vehicles getVehicles(String token)
   throws Exceptions.SmartcarException {
     String json = getVehicleRequest(token).vehicles();
-    return getVehicleArray(token, json);
+    return gson.fromJson(json, Api.Vehicles.class);
   }
 
   /**
@@ -100,11 +91,11 @@ public final class Smartcar {
    *                [default: 10, maximum: 50]
    * @param  offset Set the index to start the vehicle list at [default: 0]
    */
-  public Vehicle[] getVehicles(String token, int limit, int offset)
+  public Api.Vehicles getVehicles(String token, int limit, int offset)
   throws Exceptions.SmartcarException {
 
     String json = getVehicleRequest(token).vehicles(limit, offset);
-    return getVehicleArray(token, json);
+    return gson.fromJson(json, Api.Vehicles.class);
   }
 
   /**

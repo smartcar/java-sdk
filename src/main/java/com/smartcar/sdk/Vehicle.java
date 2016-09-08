@@ -285,10 +285,10 @@ public class Vehicle {
     String json = api.get("washer_fluid");
     return gson.fromJson(json, Api.WasherFluid.class);
   }
-  public Api.Wheel[] wheels()
+  public Api.Wheels wheels()
   throws Exceptions.SmartcarException {
     String json = api.get("wheels");
-    return gson.fromJson(json, Api.Wheels.class).wheels;
+    return gson.fromJson(json, Api.Wheels.class);
   }
   public Api.WheelSpeeds wheelSpeeds()
   throws Exceptions.SmartcarException {

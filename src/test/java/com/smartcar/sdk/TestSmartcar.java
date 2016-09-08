@@ -149,19 +149,19 @@ public class TestSmartcar {
       "\"3cd4ffb8-b0f6-45cf-9a4c-47d2102bb6b1\"]}"
     ), API_PATH);
 
-    Vehicle[] vehicles = client.getVehicles(ACCESS_TOKEN);
+    Api.Vehicles vehicles = client.getVehicles(ACCESS_TOKEN);
     verify(BEARER_AUTH);
 
     /* begin assertions */
     Assert.assertEquals(request.getPath(), API_PATH);
 
     Assert.assertEquals(
-      vehicles[0].getVid(),
+      vehicles.vehicles[0],
       "36ab27d0-fd9d-4455-823a-ce30af709ffc"
     );
 
     Assert.assertEquals(
-      vehicles[1].getVid(),
+      vehicles.vehicles[1],
       "3cd4ffb8-b0f6-45cf-9a4c-47d2102bb6b1"
     );
   }
@@ -176,7 +176,7 @@ public class TestSmartcar {
       "\"3cd4ffb8-b0f6-45cf-9a4c-47d2102bb6b1\"]}"
     ), API_PATH);
 
-    Vehicle[] vehicles = client.getVehicles(ACCESS_TOKEN, LIMIT, OFFSET);
+    Api.Vehicles vehicles = client.getVehicles(ACCESS_TOKEN, LIMIT, OFFSET);
     verify(BEARER_AUTH);
 
     /* begin assertions */
@@ -185,12 +185,12 @@ public class TestSmartcar {
       String.format(API_PATH + "?limit=%s&offset=%s", LIMIT, OFFSET)
     );
     Assert.assertEquals(
-      vehicles[0].getVid(),
+      vehicles.vehicles[0],
       "36ab27d0-fd9d-4455-823a-ce30af709ffc"
     );
 
     Assert.assertEquals(
-      vehicles[1].getVid(),
+      vehicles.vehicles[1],
       "3cd4ffb8-b0f6-45cf-9a4c-47d2102bb6b1"
     );
   }
