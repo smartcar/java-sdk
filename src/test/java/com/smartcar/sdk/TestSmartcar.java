@@ -67,10 +67,10 @@ public class TestSmartcar {
 
   @Test
   public void testGetAuthUrl() {
-    String base = "https://oem.smartcar.com/oauth/authorize?response_type=code"
+    String base = "https://ford.smartcar.com/oauth/authorize?response_type=code"
         + "&client_id=client-id&redirect_uri=https://redirect.uri" 
         + "&scope=read_vehicle_info%20open_sunroof";
-    AuthUrl auth = client.getAuthUrl("oem");
+    AuthUrl auth = client.getAuthUrl("ford");
     Assert.assertEquals(
       auth.toString(), 
       base + "&approval_prompt=auto"
@@ -80,11 +80,6 @@ public class TestSmartcar {
       auth.toString(), 
       base + "&approval_prompt=force&state=XYZ"
     );
-  }
-
-  @Test
-  public void testGetAuthUrlWithBadInput(){
-    Assert.assertNull(client.getAuthUrl("oem ").toString());
   }
 
   @Test
