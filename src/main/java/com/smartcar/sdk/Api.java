@@ -380,14 +380,13 @@ public final class Api {
     }
   }
   public static class Location {
-    public double latitude, longitude, accuracy;
+    public double latitude, longitude;
 
     @Override
     public String toString() {
       return "Location{" +
               "latitude=" + latitude +
               ", longitude=" + longitude +
-              ", accuracy=" + accuracy +
               '}';
     }
   }
@@ -404,7 +403,7 @@ public final class Api {
   public static class Mirror {
     public String location;
     public double xTilt, yTilt;
-    public Mirror(String location, double xTilt, double yTilt){
+    public Mirror(String location, double xTilt, double yTilt) {
       this.location = location;
       this.xTilt = xTilt;
       this.yTilt = yTilt;
@@ -697,7 +696,7 @@ public final class Api {
     public boolean isLocked;
     public double percentOpen;
 
-    public Window(String location, double percentOpen){
+    public Window(String location, double percentOpen) {
       this.location = location;
       this.percentOpen = percentOpen;
     }
@@ -728,14 +727,14 @@ public final class Api {
   }
   public static class GenericAction {
     String action;
-    public GenericAction(String action){
+    public GenericAction(String action) {
       this.action = action;
     }
   }
   public static class ChargeLimitAction {
     String action;
     double limit;
-    public ChargeLimitAction(String action, double limit){
+    public ChargeLimitAction(String action, double limit) {
       this.action = action;
       this.limit = limit;
     }
@@ -743,7 +742,7 @@ public final class Api {
   public static class ChargeScheduleAction {
     String action;
     String startTime;
-    public ChargeScheduleAction(String action, String startTime){
+    public ChargeScheduleAction(String action, String startTime) {
       this.action = action;
       this.startTime = startTime;
     }
@@ -751,7 +750,7 @@ public final class Api {
   public static class ClimateAction {
     String action;
     double temperature;
-    public ClimateAction(String action, double temperature){
+    public ClimateAction(String action, double temperature) {
       this.action = action;
       this.temperature = temperature;
     }
@@ -759,7 +758,7 @@ public final class Api {
   public static class MirrorAction {
     String action;
     Mirror[] mirrors;
-    public MirrorAction(String action, Mirror[] mirrors){
+    public MirrorAction(String action, Mirror[] mirrors) {
       this.action = action;
       this.mirrors = mirrors;
     }
@@ -767,7 +766,7 @@ public final class Api {
   public static class WindowAction {
     String action;
     Window[] windows;
-    public WindowAction(String action, Window[] windows){
+    public WindowAction(String action, Window[] windows) {
       this.action = action;
       this.windows = windows;
     }

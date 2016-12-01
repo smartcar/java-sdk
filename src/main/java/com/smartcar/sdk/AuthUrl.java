@@ -2,51 +2,55 @@ package com.smartcar.sdk;
 
 import okhttp3.HttpUrl;
 import java.util.HashMap;
+import java.util.Properties;
 
 public class AuthUrl {
 
-  private String oem, id, redirectUri, scope, state;
-  private boolean force;
-  private static HashMap<String, String> oems = new HashMap<String, String>();
+  private String oem, clientId, redirectUri, scope, state;
+  private boolean forceApproval;
 
-  public AuthUrl(String oem, String id, String redirectUri, String scope){
+  /**
+   * Default constructor.
+   *
+   * @param oem the OEM name
+   * @param clientId the application's client ID
+   * @param redirectUri the application's redirect URL
+   * @param scope a list of scopes
+   */
+  public AuthUrl(String oem, String clientId, String redirectUri, String scope) {
+
     this.oem = oem;
-    this.id = id;
+    this.clientId = clientId;
     this.redirectUri = redirectUri;
     this.scope = scope;
-    this.force = false;
-    this.oems.put("acura", "https://acura.smartcar.com");
-    this.oems.put("audi", "https://audi.smartcar.com");
-    this.oems.put("fiat", "https://fiat.smartcar.com");
-    this.oems.put("ford", "https://ford.smartcar.com");
-    this.oems.put("landrover", "https://landrover.smartcar.com");
-    this.oems.put("mercedes", "https://mercedes.smartcar.com");
-    this.oems.put("tesla", "https://tesla.smartcar.com");
-    this.oems.put("volkswagen", "https://volkswagen.smartcar.com");
-    this.oems.put("volvo", "https://volvo.smartcar.com");
-    this.oems.put("hyundai", "https://hyundai.smartcar.com");
+    this.forceApproval = false;
   }
 
-  public AuthUrl state(String state){
+  public AuthUrl state(String state) {
     this.state = state;
     return this;
   }
 
-  public AuthUrl forceApproval(boolean force){
-    this.force = force;
+  public AuthUrl forceApproval(boolean forceApproval) {
+    this.forceApproval = forceApproval;
     return this;
   }
 
-  public String toString(){
-    HttpUrl parsed = HttpUrl.parse(this.oems.get(this.oem));
-    if (parsed != null){
+  /**
+   * Build the authentication request and return it as a string.
+   *
+   * @return
+   */
+  public String toString() {
+    HttpUrl parsed = HttpUrl.parse(OEM.LIST.get(this.oem));
+    if (parsed != null) {
       HttpUrl.Builder partial = parsed.newBuilder()
         .addPathSegments("oauth/authorize")
         .addQueryParameter("response_type", "code")
-        .addQueryParameter("client_id", this.id)
+        .addQueryParameter("client_id", this.clientId)
         .addQueryParameter("redirect_uri", this.redirectUri)
         .addQueryParameter("scope", this.scope)
-        .addQueryParameter("approval_prompt", this.force ? "force" : "auto");
+        .addQueryParameter("approval_prompt", this.forceApproval ? "force" : "auto");
 
       if (this.state != null)
         partial.addQueryParameter("state", this.state);

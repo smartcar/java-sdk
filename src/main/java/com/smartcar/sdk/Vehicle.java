@@ -1,6 +1,5 @@
 package com.smartcar.sdk;
 
-import okhttp3.Request;
 import com.google.gson.Gson;
 
 public class Vehicle {
@@ -9,25 +8,31 @@ public class Vehicle {
   private VehicleRequest api;
   private final Gson gson = new Gson();
 
-  public Vehicle(String token, String vehicleId) {
+  /**
+   * Default constructor.
+   *
+   * @param vehicleId Smartcar vehicle ID
+   * @param token Smartcar API access token
+   */
+  public Vehicle(String vehicleId, String token) {
       this.token = token;
       this.vehicleId = vehicleId;
-      this.api = new VehicleRequest(token, vehicleId);
+      this.api = new VehicleRequest(vehicleId, token);
   }
 
-  public String getVid(){
+  public String getVid() {
     return this.vehicleId;
   }
 
-  public String getToken(){
+  public String getToken() {
     return this.token;
   }
 
-  private String makeAction(String action){
+  private String makeAction(String action) {
     return gson.toJson(new Api.GenericAction(action));
   }
 
-  void setBaseUrl(String url){
+  void setBaseUrl(String url) {
     this.api.setBaseUrl(url);
   }
 

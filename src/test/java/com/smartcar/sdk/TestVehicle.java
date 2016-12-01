@@ -25,13 +25,13 @@ public class TestVehicle {
   final String SUCCESS = "{\"status\":\"success\"}";
 
   private final Gson gson = new Gson();
-  Vehicle vehicle = new Vehicle(ACCESS_TOKEN, VEHICLE_ID);
+  Vehicle vehicle = new Vehicle(VEHICLE_ID, ACCESS_TOKEN);
   MockWebServer server;
   RecordedRequest request;
 
   /* create a new server before every test */
   @BeforeMethod
-  public void before(){
+  public void before() {
     server = new MockWebServer();
   }
 
@@ -55,16 +55,16 @@ public class TestVehicle {
   }
 
   /* set the global request object to the next request */
-  private void updateRequest(){
+  private void updateRequest() {
     try {
       request = server.takeRequest();
-    } catch (InterruptedException e){
+    } catch (InterruptedException e) {
       System.out.println(e);
     }
   }
 
   /* verify the auth header, HTTP method, and request path */
-  private void verify(String method, String path){
+  private void verify(String method, String path) {
     updateRequest();
     Assert.assertEquals(
       request.getHeader("Authorization"), 
@@ -78,7 +78,7 @@ public class TestVehicle {
   }
 
   /* verify(method, path) and action */
-  private void verify(String method, String path, String action){
+  private void verify(String method, String path, String action) {
     verify(method, path);
     Assert.assertEquals(
       gson.fromJson(
@@ -467,7 +467,6 @@ public class TestVehicle {
     verify("GET", "location");
     Assert.assertEquals(data.latitude, 40.5);
     Assert.assertEquals(data.longitude, 38.2);
-    Assert.assertEquals(data.accuracy, 102.2);
   }
 
   @Test public void testLocationNoAccuracy() 
@@ -480,7 +479,6 @@ public class TestVehicle {
     verify("GET", "location");
     Assert.assertEquals(data.latitude, 40.5);
     Assert.assertEquals(data.longitude, 38.2);
-    Assert.assertEquals(data.accuracy, 0.0);
   }
 
   @Test public void testMirrors() 
