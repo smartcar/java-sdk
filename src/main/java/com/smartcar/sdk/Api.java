@@ -228,23 +228,23 @@ public final class Api {
               '}';
     }
   }
-  public static class SafetyLocks {
-    public SafetyLock[] safetyLocks;
+  public static class ChildSafetyLocks {
+    public ChildSafetyLock[] childSafetyLocks;
 
     @Override
     public String toString() {
-      return "SafetyLocks{" +
-              "safetyLocks=" + Arrays.toString(safetyLocks) +
+      return "ChildSafetyLocks{" +
+              "childSafetyLocks=" + Arrays.toString(childSafetyLocks) +
               '}';
     }
   }
-  public static class SafetyLock {
+  public static class ChildSafetyLock {
     public String location;
     public boolean isLocked;
 
     @Override
     public String toString() {
-      return "SafetyLock{" +
+      return "ChildSafetyLock{" +
               "location='" + location + '\'' +
               ", isLocked=" + isLocked +
               '}';
@@ -324,6 +324,16 @@ public final class Api {
       return "Fuel{" +
               "range=" + range +
               ", percentRemaining=" + percentRemaining +
+              '}';
+    }
+  }
+  public static class Gyroscope {
+    public double yawRate;
+
+    @Override
+    public String toString() {
+      return "Gyroscope{" +
+              "yawRate=" + yawRate +
               '}';
     }
   }
@@ -516,7 +526,6 @@ public final class Api {
               '}';
     }
   }
-
   public static class Gauge {
     public double speed;
 
@@ -524,6 +533,16 @@ public final class Api {
     public String toString() {
       return "Gauge{" +
               "speed=" + speed +
+              '}';
+    }
+  }
+  public static class EngineSpeed {
+    public double engineSpeed;
+
+    @Override
+    public String toString() {
+      return "EngineSpeed{" +
+              "engineSpeed=" + engineSpeed +
               '}';
     }
   }
@@ -552,13 +571,12 @@ public final class Api {
     }
   }
   public static class Temperature {
-    public double inside, outside;
+    public double temperature;
 
     @Override
     public String toString() {
       return "Temperature{" +
-              "inside=" + inside +
-              ", outside=" + outside +
+              "temperature=" + temperature +
               '}';
     }
   }
@@ -715,16 +733,7 @@ public final class Api {
     
     }
   }
-  public static class Yaw {
-    public double rate;
 
-    @Override
-    public String toString() {
-      return "Yaw{" +
-              "rate=" + rate +
-              '}';
-    }
-  }
   public static class GenericAction {
     String action;
     public GenericAction(String action) {
