@@ -228,23 +228,23 @@ public final class Api {
               '}';
     }
   }
-  public static class SafetyLocks {
-    public SafetyLock[] safetyLocks;
+  public static class ChildSafetyLocks {
+    public ChildSafetyLock[] childSafetyLocks;
 
     @Override
     public String toString() {
-      return "SafetyLocks{" +
-              "safetyLocks=" + Arrays.toString(safetyLocks) +
+      return "ChildSafetyLocks{" +
+              "childSafetyLocks=" + Arrays.toString(childSafetyLocks) +
               '}';
     }
   }
-  public static class SafetyLock {
+  public static class ChildSafetyLock {
     public String location;
     public boolean isLocked;
 
     @Override
     public String toString() {
-      return "SafetyLock{" +
+      return "ChildSafetyLock{" +
               "location='" + location + '\'' +
               ", isLocked=" + isLocked +
               '}';
@@ -327,6 +327,16 @@ public final class Api {
               '}';
     }
   }
+  public static class Gyroscope {
+    public double yawRate;
+
+    @Override
+    public String toString() {
+      return "Gyroscope{" +
+              "yawRate=" + yawRate +
+              '}';
+    }
+  }
   public static class HazardLight {
     public boolean isOn;
 
@@ -380,14 +390,13 @@ public final class Api {
     }
   }
   public static class Location {
-    public double latitude, longitude, accuracy;
+    public double latitude, longitude;
 
     @Override
     public String toString() {
       return "Location{" +
               "latitude=" + latitude +
               ", longitude=" + longitude +
-              ", accuracy=" + accuracy +
               '}';
     }
   }
@@ -404,7 +413,7 @@ public final class Api {
   public static class Mirror {
     public String location;
     public double xTilt, yTilt;
-    public Mirror(String location, double xTilt, double yTilt){
+    public Mirror(String location, double xTilt, double yTilt) {
       this.location = location;
       this.xTilt = xTilt;
       this.yTilt = yTilt;
@@ -517,7 +526,6 @@ public final class Api {
               '}';
     }
   }
-
   public static class Gauge {
     public double speed;
 
@@ -525,6 +533,16 @@ public final class Api {
     public String toString() {
       return "Gauge{" +
               "speed=" + speed +
+              '}';
+    }
+  }
+  public static class EngineSpeed {
+    public double engineSpeed;
+
+    @Override
+    public String toString() {
+      return "EngineSpeed{" +
+              "engineSpeed=" + engineSpeed +
               '}';
     }
   }
@@ -553,13 +571,12 @@ public final class Api {
     }
   }
   public static class Temperature {
-    public double inside, outside;
+    public double temperature;
 
     @Override
     public String toString() {
       return "Temperature{" +
-              "inside=" + inside +
-              ", outside=" + outside +
+              "temperature=" + temperature +
               '}';
     }
   }
@@ -697,7 +714,7 @@ public final class Api {
     public boolean isLocked;
     public double percentOpen;
 
-    public Window(String location, double percentOpen){
+    public Window(String location, double percentOpen) {
       this.location = location;
       this.percentOpen = percentOpen;
     }
@@ -716,26 +733,17 @@ public final class Api {
     
     }
   }
-  public static class Yaw {
-    public double rate;
 
-    @Override
-    public String toString() {
-      return "Yaw{" +
-              "rate=" + rate +
-              '}';
-    }
-  }
   public static class GenericAction {
     String action;
-    public GenericAction(String action){
+    public GenericAction(String action) {
       this.action = action;
     }
   }
   public static class ChargeLimitAction {
     String action;
     double limit;
-    public ChargeLimitAction(String action, double limit){
+    public ChargeLimitAction(String action, double limit) {
       this.action = action;
       this.limit = limit;
     }
@@ -743,7 +751,7 @@ public final class Api {
   public static class ChargeScheduleAction {
     String action;
     String startTime;
-    public ChargeScheduleAction(String action, String startTime){
+    public ChargeScheduleAction(String action, String startTime) {
       this.action = action;
       this.startTime = startTime;
     }
@@ -751,7 +759,7 @@ public final class Api {
   public static class ClimateAction {
     String action;
     double temperature;
-    public ClimateAction(String action, double temperature){
+    public ClimateAction(String action, double temperature) {
       this.action = action;
       this.temperature = temperature;
     }
@@ -759,7 +767,7 @@ public final class Api {
   public static class MirrorAction {
     String action;
     Mirror[] mirrors;
-    public MirrorAction(String action, Mirror[] mirrors){
+    public MirrorAction(String action, Mirror[] mirrors) {
       this.action = action;
       this.mirrors = mirrors;
     }
@@ -767,7 +775,7 @@ public final class Api {
   public static class WindowAction {
     String action;
     Window[] windows;
-    public WindowAction(String action, Window[] windows){
+    public WindowAction(String action, Window[] windows) {
       this.action = action;
       this.windows = windows;
     }

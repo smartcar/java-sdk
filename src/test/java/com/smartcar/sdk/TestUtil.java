@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 public class TestUtil {
 
   @Test
-  public void testJoinWithMultiArray(){
+  public void testJoinWithMultiArray() {
 
     Assert.assertEquals(
       Util.join(new String[] {"one", "two", "three"}),
@@ -15,7 +15,7 @@ public class TestUtil {
   }
 
   @Test
-  public void testJoinWithSingularArray(){
+  public void testJoinWithSingularArray() {
     Assert.assertEquals(
       Util.join(new String[]{"one"}),
       "one"
@@ -23,7 +23,7 @@ public class TestUtil {
   }
 
   @Test
-  public void testJoinWithEmptyArray(){
+  public void testJoinWithEmptyArray() {
 
     Assert.assertEquals(
       Util.join(new String[]{}),

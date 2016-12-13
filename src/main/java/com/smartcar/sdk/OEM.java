@@ -1,0 +1,83 @@
+package com.smartcar.sdk;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
+public class OEM {
+    public static final Map<String, String> LIST = createList();
+
+    private static Map<String, String> createList() {
+        Map<String, String> list = new HashMap<String, String>();
+        list.put("abarth", "https://abarth.smartcar.com");
+        list.put("acura", "https://acura.smartcar.com");
+        list.put("alfa_romeo", "https://alfa_romeo.smartcar.com");
+        list.put("aston_martin", "https://aston_martin.smartcar.com");
+        list.put("audi", "https://audi.smartcar.com");
+        list.put("bajaj", "https://bajaj.smartcar.com");
+        list.put("bentley", "https://bentley.smartcar.com");
+        list.put("bmw", "https://bmw.smartcar.com");
+        list.put("bugatti", "https://bugatti.smartcar.com");
+        list.put("buick", "https://buick.smartcar.com"); 
+        list.put("cadillac", "https://cadillac.smartcar.com");
+        list.put("chevrolet", "https://chevrolet.smartcar.com");
+        list.put("chrysler", "https://chrysler.smartcar.com");
+        list.put("citroen", "https://citroen.smartcar.com");
+        list.put("dodge", "https://dodge.smartcar.com");
+        list.put("ducati", "https://ducati.smartcar.com");
+        list.put("ferrari", "https://ferrari.smartcar.com");
+        list.put("fiat", "https://fiat.smartcar.com");
+        list.put("fisker", "https://fisker.smartcar.com");
+        list.put("ford", "https://ford.smartcar.com");
+        list.put("geely", "https://geely.smartcar.com");
+        list.put("gmc", "https://gmc.smartcar.com");
+        list.put("hero", "https://hero.smartcar.com");
+        list.put("honda", "https://honda.smartcar.com");
+        list.put("hyundai", "https://hyundai.smartcar.com");
+        list.put("infiniti", "https://infiniti.smartcar.com");
+        list.put("isuzu", "https://isuzu.smartcar.com");
+        list.put("jaguar", "https://jaguar.smartcar.com");
+        list.put("jeep", "https://jeep.smartcar.com");
+        list.put("kawasaki", "https://kawasaki.smartcar.com");
+        list.put("kia", "https://kia.smartcar.com");
+        list.put("lamborghini", "https://lamborghini.smartcar.com");
+        list.put("lanchester", "https://lanchester.smartcar.com");
+        list.put("lancia", "https://lancia.smartcar.com");
+        list.put("land_rover", "https://landrover.smartcar.com");
+        list.put("lexus", "https://lexus.smartcar.com");
+        list.put("lincoln", "https://lincoln.smartcar.com");
+        list.put("lotus", "https://lotus.smartcar.com");
+        list.put("mahindra", "https://mahindra.smartcar.com");
+        list.put("maserati", "https://maserati.smartcar.com");
+        list.put("mazda", "https://mazda.smartcar.com");
+        list.put("mclaren", "https://mclaren.smartcar.com");
+        list.put("mercedes_benz", "https://mercedes.smartcar.com");
+        list.put("mini", "https://mini.smartcar.com");
+        list.put("mitsubishi", "https://mitsubishi.smartcar.com");
+        list.put("mock", "https://mock.smartcar.com");
+        list.put("nissan", "https://nissan.smartcar.com");
+        list.put("onstar", "https://onstar.smartcar.com");
+        list.put("opel", "https://opel.smartcar.com");
+        list.put("peugeot", "https://peugeot.smartcar.com");
+        list.put("porsche", "https://porsche.smartcar.com");
+        list.put("ram", "https://ram.smartcar.com");
+        list.put("renault", "https://renault.smartcar.com");
+        list.put("rolls_royce", "https://rolls_royce.smartcar.com");
+        list.put("saab", "https://saab.smartcar.com");
+        list.put("scion", "https://scion.smartcar.com");
+        list.put("smart", "https://smart.smartcar.com");
+        list.put("subaru", "https://subaru.smartcar.com");
+        list.put("suzuki", "https://suzuki.smartcar.com");
+        list.put("tata", "https://tata.smartcar.com");
+        list.put("tesla", "https://tesla.smartcar.com");
+        list.put("toyota", "https://toyota.smartcar.com");
+        list.put("tvs", "https://tvs.smartcar.com");
+        list.put("uconnect", "https://uconnect.smartcar.com");
+        list.put("vauxhall", "https://vauxhall.smartcar.com");
+        list.put("vespa", "https://vespa.smartcar.com");
+        list.put("volkswagen", "https://volkswagen.smartcar.com");
+        list.put("volvo", "https://volvo.smartcar.com");
+        list.put("yamaha", "https://yamaha.smartcar.com");
+        return Collections.unmodifiableMap(list);
+    }
+}

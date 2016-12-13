@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-fail(){
+fail() {
   echo "ERROR: NECESSARY ENV VARIABLE(S) MISSING"
   exit 1
 }

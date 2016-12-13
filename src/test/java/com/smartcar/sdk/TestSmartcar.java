@@ -39,22 +39,22 @@ public class TestSmartcar {
   MockWebServer server;
   RecordedRequest request;
 
-  private void setup(MockResponse response, String path){
+  private void setup(MockResponse response, String path) {
     server = new MockWebServer();
     server.enqueue(response);
     try {
       server.start();
-    } catch (IOException e){
+    } catch (IOException e) {
       System.out.println(e);
     }
     client.setBaseAccessUrl(server.url(path).toString());
     client.setBaseVehicleUrl(server.url(path).toString());
   }
 
-  private void verify(String authentication){
+  private void verify(String authentication) {
     try {
       request = server.takeRequest();
-    } catch (InterruptedException e){
+    } catch (InterruptedException e) {
       System.out.println(e);
     }
     Assert.assertEquals(request.getHeader("Authorization"), authentication);

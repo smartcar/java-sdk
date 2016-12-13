@@ -41,7 +41,7 @@ public final class Util {
    *         
    *         { "status": "success" }
    *                                
-   * @throws SmartcarException    
+   * @throws <Exceptions.SmartcarException>
    */
   static String call(Request request) 
     throws Exceptions.SmartcarException {
@@ -50,11 +50,11 @@ public final class Util {
     try {
       response = client.newCall(request).execute();
       body = response.body().string();
-    } catch (IOException e){
+    } catch (IOException e) {
       throw new Exceptions.SmartcarException(e.getMessage());
     }
 
-    if (!response.isSuccessful()){
+    if (!response.isSuccessful()) {
       response.close();
       switch(response.code()) {
         case 400: 
@@ -86,7 +86,8 @@ public final class Util {
   }
 
   /**
-   * Join an array of strings with spaces
+   * Join an array of strings with spaces.
+   *
    * @param  strings
    * @return Joined array
    */
@@ -97,7 +98,7 @@ public final class Util {
       return strings[0];
 
     String joinedString = "";
-    for (int i=0; i<strings.length - 1; i++){
+    for (int i=0; i<strings.length - 1; i++) {
       if (strings[i] != null)
         joinedString += strings[i] + " ";
     }

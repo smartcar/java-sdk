@@ -17,11 +17,11 @@ public class TestExceptions {
   final String ACCESS_TOKEN = "access-token";
   final String VEHICLE_ID = "vehicle-id";
 
-  Vehicle vehicle = new Vehicle(ACCESS_TOKEN, VEHICLE_ID);
+  Vehicle vehicle = new Vehicle(VEHICLE_ID, ACCESS_TOKEN);
   MockWebServer server;
 
   @BeforeMethod
-  public void before(){
+  public void before() {
     server = new MockWebServer();
   }
 
@@ -30,7 +30,7 @@ public class TestExceptions {
     server.shutdown();
   }
 
-  private void setup(int code){
+  private void setup(int code) {
     server.enqueue(
       new MockResponse().setResponseCode(code)
     );
@@ -42,7 +42,7 @@ public class TestExceptions {
     vehicle.setBaseUrl(server.url(API_PATH).toString());
   }
 
-  @Test public void testValidationException(){
+  @Test public void testValidationException() {
     setup(400);
     try {
       vehicle.info();
@@ -50,7 +50,7 @@ public class TestExceptions {
       Assert.assertTrue(e instanceof Exceptions.ValidationException);
     }
   }
-  @Test public void testAuthenticationException(){
+  @Test public void testAuthenticationException() {
     setup(401);
     try {
       vehicle.info();
@@ -58,23 +58,23 @@ public class TestExceptions {
       Assert.assertTrue(e instanceof Exceptions.AuthenticationException);
     }
   }
-  @Test public void testPermissionException(){
+  @Test public void testPermissionException() {
     setup(403);
     try {
       vehicle.info();
-    } catch (Exceptions.SmartcarException e){
+    } catch (Exceptions.SmartcarException e) {
       Assert.assertTrue(e instanceof Exceptions.PermissionException);
     }
   }
-  @Test public void testResourceNotFoundException(){
+  @Test public void testResourceNotFoundException() {
     setup(404);
     try {
       vehicle.info();
-    } catch (Exceptions.SmartcarException e){
+    } catch (Exceptions.SmartcarException e) {
       Assert.assertTrue(e instanceof Exceptions.ResourceNotFoundException);
     }
   }
-  @Test public void testStateException(){
+  @Test public void testStateException() {
     setup(409);
     try {
       vehicle.info();
@@ -82,7 +82,7 @@ public class TestExceptions {
       Assert.assertTrue(e instanceof Exceptions.StateException);
     }
   }
-  @Test public void testRateLimitingException(){
+  @Test public void testRateLimitingException() {
     setup(429);
     try {
       vehicle.info();
@@ -90,7 +90,7 @@ public class TestExceptions {
       Assert.assertTrue(e instanceof Exceptions.RateLimitingException);
     }
   }
-  @Test public void testMonthlyLimitExceededException(){
+  @Test public void testMonthlyLimitExceededException() {
     setup(430);
     try {
       vehicle.info();
@@ -98,7 +98,7 @@ public class TestExceptions {
       Assert.assertTrue(e instanceof Exceptions.MonthlyLimitExceeded);
     }
   }
-  @Test public void testServerException(){
+  @Test public void testServerException() {
     setup(500);
     try {
       vehicle.info();
@@ -106,7 +106,7 @@ public class TestExceptions {
       Assert.assertTrue(e instanceof Exceptions.ServerException);
     }
   }
-  @Test public void testNotCapableException(){
+  @Test public void testNotCapableException() {
     setup(501);
     try {
       vehicle.info();
@@ -114,7 +114,7 @@ public class TestExceptions {
       Assert.assertTrue(e instanceof Exceptions.NotCapableException);
     }
   }
-  @Test public void testGatewayTimeoutException(){
+  @Test public void testGatewayTimeoutException() {
     setup(504);
     try {
       vehicle.info();

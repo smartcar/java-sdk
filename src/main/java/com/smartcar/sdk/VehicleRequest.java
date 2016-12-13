@@ -1,6 +1,5 @@
 package com.smartcar.sdk;
 
-import okhttp3.HttpUrl;
 import okhttp3.Request;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -9,31 +8,31 @@ class VehicleRequest {
 
   private String token, url, vehicleId;
 
-  VehicleRequest(String token){
+  VehicleRequest(String token) {
     this.token = token;
     this.url = "https://api.smartcar.com/v1.0/vehicles";
   }
 
-  VehicleRequest(String token, String vehicleId){
+  VehicleRequest(String vehicleId, String token) {
     this(token);
     this.vehicleId = vehicleId;
   }
 
-  Request.Builder request(String url){
+  Request.Builder request(String url) {
     return new Request.Builder()
       .header("Authorization", "Bearer " + token)
       .url(url); 
   }
 
-  void setBaseUrl(String url){
+  void setBaseUrl(String url) {
     this.url = url;
   }
 
-  private String formatUrl(String endpoint){
+  private String formatUrl(String endpoint) {
     return this.url + '/' + this.vehicleId + '/' + endpoint;
   }
 
-  private String paging(int limit, int offset){
+  private String paging(int limit, int offset) {
     return "?limit=" + limit + "&offset=" + offset;
   }
 

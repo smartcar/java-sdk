@@ -25,13 +25,13 @@ public class TestVehicle {
   final String SUCCESS = "{\"status\":\"success\"}";
 
   private final Gson gson = new Gson();
-  Vehicle vehicle = new Vehicle(ACCESS_TOKEN, VEHICLE_ID);
+  Vehicle vehicle = new Vehicle(VEHICLE_ID, ACCESS_TOKEN);
   MockWebServer server;
   RecordedRequest request;
 
   /* create a new server before every test */
   @BeforeMethod
-  public void before(){
+  public void before() {
     server = new MockWebServer();
   }
 
@@ -55,16 +55,16 @@ public class TestVehicle {
   }
 
   /* set the global request object to the next request */
-  private void updateRequest(){
+  private void updateRequest() {
     try {
       request = server.takeRequest();
-    } catch (InterruptedException e){
+    } catch (InterruptedException e) {
       System.out.println(e);
     }
   }
 
   /* verify the auth header, HTTP method, and request path */
-  private void verify(String method, String path){
+  private void verify(String method, String path) {
     updateRequest();
     Assert.assertEquals(
       request.getHeader("Authorization"), 
@@ -78,7 +78,7 @@ public class TestVehicle {
   }
 
   /* verify(method, path) and action */
-  private void verify(String method, String path, String action){
+  private void verify(String method, String path, String action) {
     verify(method, path);
     Assert.assertEquals(
       gson.fromJson(
@@ -276,7 +276,7 @@ public class TestVehicle {
       .put("weight", 1234.5)
       .toString());
     Api.Dimensions data = vehicle.dimensions();
-    verify("GET", "dimension");
+    verify("GET", "dimensions");
     Assert.assertEquals(data.height, 11.1);
     Assert.assertEquals(data.width, 12.2);
     Assert.assertEquals(data.length, 13.3);
@@ -305,10 +305,10 @@ public class TestVehicle {
     Assert.assertEquals(data.doors[1].isOpen, true);
   }
 
-  @Test public void testSafetyLocks() 
+  @Test public void testChildSafetyLocks()
   throws Exceptions.SmartcarException {
     setup(new JSONObject()
-      .put("safetyLocks", new JSONArray()
+      .put("childSafetyLocks", new JSONArray()
         .put(new JSONObject()
           .put("location", "FRONT_LEFT")
           .put("isLocked", false)
@@ -319,8 +319,8 @@ public class TestVehicle {
         )
       )
       .toString());
-    Api.SafetyLock[] data = vehicle.safetyLocks().safetyLocks;
-    verify("GET", "doors/safety_locks");
+    Api.ChildSafetyLock[] data = vehicle.childSafetyLocks().childSafetyLocks;
+    verify("GET", "doors/child_safety_locks");
     Assert.assertEquals(data[0].location, "FRONT_LEFT");
     Assert.assertEquals(data[0].isLocked, false);
     Assert.assertEquals(data[1].location, "FRONT_RIGHT");
@@ -409,10 +409,20 @@ public class TestVehicle {
     Assert.assertEquals(data.percentRemaining, 0.7);
   }
 
-  @Test public void testHazardLight() 
+  @Test public void testGyroscope()
+          throws Exceptions.SmartcarException {
+    setup(new JSONObject()
+            .put("yawRate", 20.2)
+            .toString());
+    Api.Gyroscope data = vehicle.gyroscope();
+    verify("GET", "gyroscope");
+    Assert.assertEquals(data.yawRate, 20.2);
+  }
+
+  @Test public void testHazardLights()
   throws Exceptions.SmartcarException {
     setup(new JSONObject().put("isOn", false).toString());
-    Api.HazardLight data = vehicle.hazardLight();
+    Api.HazardLight data = vehicle.hazardLights();
     verify("GET", "lights/hazard");
     Assert.assertEquals(data.isOn, false);
   }
@@ -420,8 +430,8 @@ public class TestVehicle {
   @Test public void testHeadlights() 
   throws Exceptions.SmartcarException {
     setup(new JSONObject().put("state", "STATE").toString());
-    Api.Headlight data = vehicle.headlight();
-    verify("GET", "lights/headlight");
+    Api.Headlight data = vehicle.headlights();
+    verify("GET", "lights/headlights");
     Assert.assertEquals(data.state, "STATE");
   }
 
@@ -467,7 +477,6 @@ public class TestVehicle {
     verify("GET", "location");
     Assert.assertEquals(data.latitude, 40.5);
     Assert.assertEquals(data.longitude, 38.2);
-    Assert.assertEquals(data.accuracy, 102.2);
   }
 
   @Test public void testLocationNoAccuracy() 
@@ -480,10 +489,9 @@ public class TestVehicle {
     verify("GET", "location");
     Assert.assertEquals(data.latitude, 40.5);
     Assert.assertEquals(data.longitude, 38.2);
-    Assert.assertEquals(data.accuracy, 0.0);
   }
 
-  @Test public void testMirrors() 
+  @Test public void testSideviewMirrors()
   throws Exceptions.SmartcarException {
     setup(new JSONObject()
       .put("mirrors", new JSONArray()
@@ -499,8 +507,8 @@ public class TestVehicle {
         )
       )
       .toString());
-    Api.Mirror[] data = vehicle.mirrors().mirrors;
-    verify("GET", "mirrors");
+    Api.Mirror[] data = vehicle.sideviewMirrors().mirrors;
+    verify("GET", "mirrors/side_view");
     Assert.assertEquals(data[0].location, "LEFT");
     Assert.assertEquals(data[1].location, "RIGHT");
     Assert.assertEquals(data[0].xTilt, 0.1);
@@ -534,7 +542,7 @@ public class TestVehicle {
       )
       .toString());
     Api.TripOdometer[] data = vehicle.tripOdometers().trips;
-    verify("GET", "odometer/trip");
+    verify("GET", "odometer/trips");
     Assert.assertEquals(data[0].label, "a");
     Assert.assertEquals(data[0].distance, 101.12);
     Assert.assertEquals(data[1].label, "b");
@@ -657,23 +665,31 @@ public class TestVehicle {
   @Test public void testTachometer() 
   throws Exceptions.SmartcarException {
     setup(new JSONObject()
-      .put("speed", 1500.5)
+      .put("engineSpeed", 1500.5)
       .toString());
-    Api.Gauge data = vehicle.tachometer();
+    Api.EngineSpeed data = vehicle.tachometer();
     verify("GET", "tachometer");
-    Assert.assertEquals(data.speed, 1500.5);
+    Assert.assertEquals(data.engineSpeed, 1500.5);
   }
 
-  @Test public void testTemperature() 
+  @Test public void testInteriorThermistor()
   throws Exceptions.SmartcarException {
     setup(new JSONObject()
-      .put("inside", 86.2)
-      .put("outside", 90.2)
+      .put("temperature", 86.2)
       .toString());
-    Api.Temperature data = vehicle.temperature();
-    verify("GET", "temperature");
-    Assert.assertEquals(data.inside, 86.2);
-    Assert.assertEquals(data.outside, 90.2);
+    Api.Temperature data = vehicle.interiorThermistor();
+    verify("GET", "thermistors/interior");
+    Assert.assertEquals(data.temperature, 86.2);
+  }
+
+  @Test public void testExteriorThermistor()
+          throws Exceptions.SmartcarException {
+    setup(new JSONObject()
+            .put("temperature", 90.2)
+            .toString());
+    Api.Temperature data = vehicle.exteriorThermistor();
+    verify("GET", "thermistors/exterior");
+    Assert.assertEquals(data.temperature, 90.2);
   }
 
   @Test public void testTires() 
@@ -794,7 +810,7 @@ public class TestVehicle {
         )
       ).toString());
     Api.WheelSpeeds data = vehicle.wheelSpeeds();
-    verify("GET", "wheels/speed");
+    verify("GET", "wheels/speeds");
     Assert.assertEquals(data.wheelSpeed[0].location, "FRONT_RIGHT");
     Assert.assertEquals(data.wheelSpeed[1].location, "FRONT_LEFT");
     Assert.assertEquals(data.wheelSpeed[0].speed, data.wheelSpeed[1].speed); 
@@ -823,16 +839,6 @@ public class TestVehicle {
     Assert.assertEquals(data[1].location, "FRONT_LEFT");
     Assert.assertEquals(data[1].isLocked, false);
     Assert.assertEquals(data[1].percentOpen, 0.0);
-  }
-
-  @Test public void testYaw() 
-  throws Exceptions.SmartcarException {
-    setup(new JSONObject()
-      .put("rate", 20.2)
-      .toString());
-    Api.Yaw data = vehicle.yaw();
-    verify("GET", "yaw");
-    Assert.assertEquals(data.rate, 20.2);
   }
 
   /* Action Intent Tests */
@@ -978,17 +984,17 @@ public class TestVehicle {
     verify("POST", "engine", "ACCESSORY_2");
   }
 
-  @Test public void testOpenHood()
+  @Test public void testOpenEngineHood()
   throws Exceptions.SmartcarException {
     setup(SUCCESS);
-    vehicle.openHood();
+    vehicle.openEngineHood();
     verify("POST", "engine/hood", "OPEN");
   }
 
-  @Test public void testCloseHood()
+  @Test public void testCloseEngineHood()
   throws Exceptions.SmartcarException {
     setup(SUCCESS);
-    vehicle.closeHood();
+    vehicle.closeEngineHood();
     verify("POST", "engine/hood", "CLOSE");
   }
 
@@ -1003,18 +1009,18 @@ public class TestVehicle {
   throws Exceptions.SmartcarException {
     setup(SUCCESS);
     vehicle.flashHeadlight();
-    verify("POST", "lights/headlight", "FLASH");
+    verify("POST", "lights/headlights", "FLASH");
   }
 
-  @Test public void testAdjustMirrors()
+  @Test public void testTiltSideviewMirrors()
   throws Exceptions.SmartcarException {
     setup(SUCCESS);
     Api.Mirror[] mirrors = {
       new Api.Mirror("LEFT", 0.1, -0.07),
       new Api.Mirror("RIGHT", 0.2, 0.5)
     };
-    vehicle.adjustMirrors(mirrors);
-    verify("POST", "mirrors");
+    vehicle.tiltSideviewMirrors(mirrors);
+    verify("POST", "mirrors/side_view");
     Api.MirrorAction action = gson.fromJson(
       request.getBody().readUtf8(),
       Api.MirrorAction.class

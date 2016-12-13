@@ -1,6 +1,5 @@
 package com.smartcar.sdk;
 
-import okhttp3.Request;
 import com.google.gson.Gson;
 
 public class Vehicle {
@@ -9,25 +8,31 @@ public class Vehicle {
   private VehicleRequest api;
   private final Gson gson = new Gson();
 
-  public Vehicle(String token, String vehicleId) {
+  /**
+   * Default constructor.
+   *
+   * @param vehicleId Smartcar vehicle ID
+   * @param token Smartcar API access token
+   */
+  public Vehicle(String vehicleId, String token) {
       this.token = token;
       this.vehicleId = vehicleId;
-      this.api = new VehicleRequest(token, vehicleId);
+      this.api = new VehicleRequest(vehicleId, token);
   }
 
-  public String getVid(){
+  public String getVid() {
     return this.vehicleId;
   }
 
-  public String getToken(){
+  public String getToken() {
     return this.token;
   }
 
-  private String makeAction(String action){
+  private String makeAction(String action) {
     return gson.toJson(new Api.GenericAction(action));
   }
 
-  void setBaseUrl(String url){
+  void setBaseUrl(String url) {
     this.api.setBaseUrl(url);
   }
 
@@ -107,7 +112,7 @@ public class Vehicle {
   }
   public Api.Dimensions dimensions()
   throws Exceptions.SmartcarException {
-    String json = api.get("dimension");
+    String json = api.get("dimensions");
     return gson.fromJson(json, Api.Dimensions.class);
   }
   public Api.Doors doors()
@@ -115,10 +120,10 @@ public class Vehicle {
     String json = api.get("doors");
     return gson.fromJson(json, Api.Doors.class);
   }
-  public Api.SafetyLocks safetyLocks()
+  public Api.ChildSafetyLocks childSafetyLocks()
   throws Exceptions.SmartcarException {
-    String json = api.get("doors/safety_locks");
-    return gson.fromJson(json, Api.SafetyLocks.class);
+    String json = api.get("doors/child_safety_locks");
+    return gson.fromJson(json, Api.ChildSafetyLocks.class);
   }
   public Api.DriveMode driveMode()
   throws Exceptions.SmartcarException {
@@ -155,14 +160,19 @@ public class Vehicle {
     String json = api.get("fuel");
     return gson.fromJson(json, Api.Fuel.class);
   }
-  public Api.HazardLight hazardLight()
+  public Api.Gyroscope gyroscope()
+          throws Exceptions.SmartcarException {
+    String json = api.get("gyroscope");
+    return gson.fromJson(json, Api.Gyroscope.class);
+  }
+  public Api.HazardLight hazardLights()
   throws Exceptions.SmartcarException {
     String json = api.get("lights/hazard");
     return gson.fromJson(json, Api.HazardLight.class);
   }
-  public Api.Headlight headlight()
+  public Api.Headlight headlights()
   throws Exceptions.SmartcarException {
-    String json = api.get("lights/headlight");
+    String json = api.get("lights/headlights");
     return gson.fromJson(json, Api.Headlight.class);
   }
   public Api.InteriorLights interiorLights()
@@ -180,9 +190,9 @@ public class Vehicle {
     String json = api.get("location");
     return gson.fromJson(json, Api.Location.class);
   }
-  public Api.Mirrors mirrors()
+  public Api.Mirrors sideviewMirrors()
   throws Exceptions.SmartcarException {
-    String json = api.get("mirrors");
+    String json = api.get("mirrors/side_view");
     return gson.fromJson(json, Api.Mirrors.class);
   }
   public Api.Odometer odometer()
@@ -192,7 +202,7 @@ public class Vehicle {
   }
   public Api.TripOdometers tripOdometers()
   throws Exceptions.SmartcarException {
-    String json = api.get("odometer/trip");
+    String json = api.get("odometer/trips");
     return gson.fromJson(json, Api.TripOdometers.class);
   }
   public Api.Pedal acceleratorPedal()
@@ -240,14 +250,19 @@ public class Vehicle {
     String json = api.get("sunroof");
     return gson.fromJson(json, Api.Sunroof.class);
   }
-  public Api.Gauge tachometer()
+  public Api.EngineSpeed tachometer()
   throws Exceptions.SmartcarException {
     String json = api.get("tachometer");
-    return gson.fromJson(json, Api.Gauge.class);
+    return gson.fromJson(json, Api.EngineSpeed.class);
   }
-  public Api.Temperature temperature()
+  public Api.Temperature interiorThermistor()
   throws Exceptions.SmartcarException {
-    String json = api.get("temperature");
+    String json = api.get("thermistors/interior");
+    return gson.fromJson(json, Api.Temperature.class);
+  }
+  public Api.Temperature exteriorThermistor()
+          throws Exceptions.SmartcarException {
+    String json = api.get("thermistors/exterior");
     return gson.fromJson(json, Api.Temperature.class);
   }
   public Api.Tires tires()
@@ -292,18 +307,13 @@ public class Vehicle {
   }
   public Api.WheelSpeeds wheelSpeeds()
   throws Exceptions.SmartcarException {
-    String json = api.get("wheels/speed");
+    String json = api.get("wheels/speeds");
     return gson.fromJson(json, Api.WheelSpeeds.class);
   }
   public Api.Windows windows()
   throws Exceptions.SmartcarException {
     String json = api.get("windows");
     return gson.fromJson(json, Api.Windows.class);
-  }
-  public Api.Yaw yaw()
-  throws Exceptions.SmartcarException {
-    String json = api.get("yaw");
-    return gson.fromJson(json, Api.Yaw.class);
   }
 
   /*
@@ -405,12 +415,12 @@ public class Vehicle {
     String json = api.action("engine", makeAction("ACCESSORY_2"));
     return gson.fromJson(json, Api.Success.class);
   }
-  public Api.Success openHood()
+  public Api.Success openEngineHood()
   throws Exceptions.SmartcarException {
     String json = api.action("engine/hood", makeAction("OPEN"));
     return gson.fromJson(json, Api.Success.class);
   }
-  public Api.Success closeHood()
+  public Api.Success closeEngineHood()
   throws Exceptions.SmartcarException {
     String json = api.action("engine/hood", makeAction("CLOSE"));
     return gson.fromJson(json, Api.Success.class);
@@ -422,15 +432,15 @@ public class Vehicle {
   }
   public Api.Success flashHeadlight()
   throws Exceptions.SmartcarException {
-    String json = api.action("lights/headlight", makeAction("FLASH"));
+    String json = api.action("lights/headlights", makeAction("FLASH"));
     return gson.fromJson(json, Api.Success.class);
   }
-  public Api.Success adjustMirrors(Api.Mirror[] mirrors)
+  public Api.Success tiltSideviewMirrors(Api.Mirror[] mirrors)
   throws Exceptions.SmartcarException {
     String body = gson.toJson(
       new Api.MirrorAction("TILT", mirrors)
     );
-    String json = api.action("mirrors", body);
+    String json = api.action("mirrors/side_view", body);
     return gson.fromJson(json, Api.Success.class);
   }
   public Api.Success startPanic()

@@ -6,8 +6,16 @@ public final class Access {
   private final long createdAt;
   private final int expiresIn;
 
+  /**
+   * Default constructor.
+   *
+   * @param accessToken
+   * @param refreshToken
+   * @param tokenType
+   * @param expiresIn
+   */
   public Access(String accessToken, String refreshToken, 
-                String tokenType, int expiresIn){
+                String tokenType, int expiresIn) {
     this.accessToken = accessToken;
     this.refreshToken = refreshToken;
     this.tokenType = tokenType;
@@ -15,22 +23,23 @@ public final class Access {
     this.createdAt = this.now();
   }
 
-  private long now(){
+  private long now() {
     return System.currentTimeMillis();
   }
 
-  public boolean expired(){
+  public boolean expired() {
     return this.now() > this.createdAt + this.expiresIn * 1000;
   }
 
-  public String getAccessToken(){
+  public String getAccessToken() {
     return this.accessToken;
   }
 
-  public String getRefreshToken(){
+  public String getRefreshToken() {
     return this.refreshToken;
   }
-  public String getTokenType(){
+
+  public String getTokenType() {
     return this.tokenType;
   }
 }
