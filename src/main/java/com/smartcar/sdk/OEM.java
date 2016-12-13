@@ -11,12 +11,13 @@ public class OEM {
         Map<String, String> list = new HashMap<String, String>();
         list.put("abarth", "https://abarth.smartcar.com");
         list.put("acura", "https://acura.smartcar.com");
-        list.put("alfa_romeo", "https://alfa_romeo.smartcar.com");
-        list.put("aston_martin", "https://aston_martin.smartcar.com");
+        list.put("alfa-romeo", "https://alfa-romeo.smartcar.com");
+        list.put("aston-martin", "https://aston-martin.smartcar.com");
         list.put("audi", "https://audi.smartcar.com");
         list.put("bajaj", "https://bajaj.smartcar.com");
         list.put("bentley", "https://bentley.smartcar.com");
         list.put("bmw", "https://bmw.smartcar.com");
+        list.put("bmw-connected", "https://bmw-connected.smartcar.com");
         list.put("bugatti", "https://bugatti.smartcar.com");
         list.put("buick", "https://buick.smartcar.com"); 
         list.put("cadillac", "https://cadillac.smartcar.com");
@@ -43,7 +44,7 @@ public class OEM {
         list.put("lamborghini", "https://lamborghini.smartcar.com");
         list.put("lanchester", "https://lanchester.smartcar.com");
         list.put("lancia", "https://lancia.smartcar.com");
-        list.put("land_rover", "https://landrover.smartcar.com");
+        list.put("land-rover", "https://landrover.smartcar.com");
         list.put("lexus", "https://lexus.smartcar.com");
         list.put("lincoln", "https://lincoln.smartcar.com");
         list.put("lotus", "https://lotus.smartcar.com");
@@ -51,7 +52,7 @@ public class OEM {
         list.put("maserati", "https://maserati.smartcar.com");
         list.put("mazda", "https://mazda.smartcar.com");
         list.put("mclaren", "https://mclaren.smartcar.com");
-        list.put("mercedes_benz", "https://mercedes.smartcar.com");
+        list.put("mercedes-benz", "https://mercedes.smartcar.com");
         list.put("mini", "https://mini.smartcar.com");
         list.put("mitsubishi", "https://mitsubishi.smartcar.com");
         list.put("mock", "https://mock.smartcar.com");
@@ -62,7 +63,7 @@ public class OEM {
         list.put("porsche", "https://porsche.smartcar.com");
         list.put("ram", "https://ram.smartcar.com");
         list.put("renault", "https://renault.smartcar.com");
-        list.put("rolls_royce", "https://rolls_royce.smartcar.com");
+        list.put("rolls-royce", "https://rolls-royce.smartcar.com");
         list.put("saab", "https://saab.smartcar.com");
         list.put("scion", "https://scion.smartcar.com");
         list.put("smart", "https://smart.smartcar.com");
