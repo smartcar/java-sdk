@@ -176,7 +176,7 @@ public class Vehicle {
     return gson.fromJson(json, Api.Headlight.class);
   }
   public Api.Ignition ignition()
-    throws Exceptions.SmartcarException {
+  throws Exceptions.SmartcarException {
     String json = api.get("ignition");
     return gson.fromJson(json, Api.Ignition.class);
   }

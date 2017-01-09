@@ -436,7 +436,7 @@ public class TestVehicle {
   }
 
   @Test public void testIgnition()
-    throws Exceptions.SmartcarException {
+  throws Exceptions.SmartcarException {
     setup(new JSONObject().put("state", "STATE").toString());
     Api.Ignition data = vehicle.ignition();
     verify("GET", "ignition");
