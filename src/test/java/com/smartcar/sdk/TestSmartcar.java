@@ -1,5 +1,7 @@
 package com.smartcar.sdk;
 
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.GsonBuilder;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.annotations.AfterMethod;
@@ -30,7 +32,7 @@ public class TestSmartcar {
   int EXPIRES_IN = 7200;
   String CODE = "code";
 
-  final Gson gson = new Gson();
+  final Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
   MockResponse ACCESS_RESPONSE = new MockResponse().setBody(gson.toJson(
     new Access(ACCESS_TOKEN, REFRESH_TOKEN, TOKEN_TYPE, EXPIRES_IN)
   ));
