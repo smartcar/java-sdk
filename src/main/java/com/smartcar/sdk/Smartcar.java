@@ -67,9 +67,6 @@ public final class Smartcar {
   public Access exchangeCode(String code)
   throws Exceptions.SmartcarException {
     String json = this.access.code(code, this.redirectUri);
-    System.out.println(json);
-    Access accessObj = gson.fromJson(json, Access.class);
-    System.out.println(accessObj.getAccessToken());
     return gson.fromJson(json, Access.class);
   }
 
