@@ -1,12 +1,14 @@
 package com.smartcar.sdk;
 
+import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public final class Smartcar {
 
   private final String clientId, clientSecret, redirectUri;
   private final String[] scope;
-  private final Gson gson = new Gson();
+  private final Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
   private final AccessRequest access;
   private String vehicleUrl;
 
@@ -65,6 +67,9 @@ public final class Smartcar {
   public Access exchangeCode(String code)
   throws Exceptions.SmartcarException {
     String json = this.access.code(code, this.redirectUri);
+    System.out.println(json);
+    Access accessObj = gson.fromJson(json, Access.class);
+    System.out.println(accessObj.getAccessToken());
     return gson.fromJson(json, Access.class);
   }
 
