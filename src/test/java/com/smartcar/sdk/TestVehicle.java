@@ -340,11 +340,11 @@ public class TestVehicle {
   @Test public void testEngine() 
   throws Exceptions.SmartcarException {
     setup(new JSONObject()
-      .put("state", "STATE")
+      .put("isOn", "IS_ON")
       .toString());
     Api.Engine data = vehicle.engine();
     verify("GET", "engine");
-    Assert.assertEquals(data.state, "STATE");
+    Assert.assertEquals(data.isOn, "IS_ON");
   }
 
   @Test public void testEngineCoolant() 
@@ -432,6 +432,14 @@ public class TestVehicle {
     setup(new JSONObject().put("state", "STATE").toString());
     Api.Headlight data = vehicle.headlights();
     verify("GET", "lights/headlights");
+    Assert.assertEquals(data.state, "STATE");
+  }
+
+  @Test public void testIgnition()
+    throws Exceptions.SmartcarException {
+    setup(new JSONObject().put("state", "STATE").toString());
+    Api.Ignition data = vehicle.ignition();
+    verify("GET", "ignition");
     Assert.assertEquals(data.state, "STATE");
   }
 
@@ -949,39 +957,32 @@ public class TestVehicle {
     verify("POST", "climate", "STOP");
   }
 
-  @Test public void testStartEngine()
+  @Test public void testStartIgnition()
   throws Exceptions.SmartcarException {
     setup(SUCCESS);
-    vehicle.startEngine();
-    verify("POST", "engine", "START");
+    vehicle.startIgnition();
+    verify("POST", "ignition", "START");
   }
 
-  @Test public void testStopEngine()
+  @Test public void testSetIgnitionOff()
   throws Exceptions.SmartcarException {
     setup(SUCCESS);
-    vehicle.stopEngine();
-    verify("POST", "engine", "STOP");
+    vehicle.setIgnitionOff();
+    verify("POST", "ignition", "OFF");
   }
 
-  @Test public void testTurnEngineOn()
+  @Test public void testSetIgnitionOn()
   throws Exceptions.SmartcarException {
     setup(SUCCESS);
-    vehicle.turnEngineOn();
-    verify("POST", "engine", "ON");
+    vehicle.setIgnitionOn();
+    verify("POST", "ignition", "ON");
   }
 
-  @Test public void testTurnEngineAC1()
+  @Test public void testSetIgnitionAccessory()
   throws Exceptions.SmartcarException {
     setup(SUCCESS);
-    vehicle.turnEngineAC1();
-    verify("POST", "engine", "ACCESSORY_1");
-  }
-
-  @Test public void testTurnEngineAC2()
-  throws Exceptions.SmartcarException {
-    setup(SUCCESS);
-    vehicle.turnEngineAC2();
-    verify("POST", "engine", "ACCESSORY_2");
+    vehicle.setIgnitionAccessory();
+    verify("POST", "ignition", "ACCESSORY");
   }
 
   @Test public void testOpenEngineHood()

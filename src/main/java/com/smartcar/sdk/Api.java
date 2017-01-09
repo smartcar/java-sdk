@@ -261,12 +261,12 @@ public final class Api {
     }
   }
   public static class Engine {
-    public String state;
+    public String isOn;
 
     @Override
     public String toString() {
       return "Engine{" +
-              "state='" + state + '\'' +
+              "state='" + isOn + '\'' +
               '}';
     }
   }
@@ -354,6 +354,16 @@ public final class Api {
     public String toString() {
       return "Headlight{" +
               "state='" + state + '\'' +
+              '}';
+    }
+  }
+  public static class Ignition {
+    public String state;
+
+    @Override
+    public String toString() {
+      return "Ignition{" +
+              "state=" + state +
               '}';
     }
   }

@@ -175,6 +175,12 @@ public class Vehicle {
     String json = api.get("lights/headlights");
     return gson.fromJson(json, Api.Headlight.class);
   }
+  public Api.Ignition ignition()
+    throws Exceptions.SmartcarException {
+    String json = api.get("ignition");
+    return gson.fromJson(json, Api.Ignition.class);
+  }
+
   public Api.InteriorLights interiorLights()
   throws Exceptions.SmartcarException {
     String json = api.get("lights/interior");
@@ -390,31 +396,27 @@ public class Vehicle {
     String json = api.action("climate", makeAction("STOP"));
     return gson.fromJson(json, Api.Success.class);
   }
-  public Api.Success startEngine()
+  public Api.Success startIgnition()
   throws Exceptions.SmartcarException {
-    String json = api.action("engine", makeAction("START"));
+    String json = api.action("ignition", makeAction("START"));
     return gson.fromJson(json, Api.Success.class);
   }
-  public Api.Success stopEngine()
+  public Api.Success setIgnitionOn()
   throws Exceptions.SmartcarException {
-    String json = api.action("engine", makeAction("STOP"));
+    String json = api.action("ignition", makeAction("ON"));
     return gson.fromJson(json, Api.Success.class);
   }
-  public Api.Success turnEngineOn()
+  public Api.Success setIgnitionAccessory()
   throws Exceptions.SmartcarException {
-    String json = api.action("engine", makeAction("ON"));
+    String json = api.action("ignition", makeAction("ACCESSORY"));
     return gson.fromJson(json, Api.Success.class);
   }
-  public Api.Success turnEngineAC1()
+  public Api.Success setIgnitionOff()
   throws Exceptions.SmartcarException {
-    String json = api.action("engine", makeAction("ACCESSORY_1"));
+    String json = api.action("ignition", makeAction("OFF"));
     return gson.fromJson(json, Api.Success.class);
   }
-  public Api.Success turnEngineAC2()
-  throws Exceptions.SmartcarException {
-    String json = api.action("engine", makeAction("ACCESSORY_2"));
-    return gson.fromJson(json, Api.Success.class);
-  }
+
   public Api.Success openEngineHood()
   throws Exceptions.SmartcarException {
     String json = api.action("engine/hood", makeAction("OPEN"));
