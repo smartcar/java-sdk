@@ -20,6 +20,85 @@ Get started at https://developer.smartcar.com
 compile "com.smartcar:sdk:0.0.1"
 ```
 
+## Overall Flow
+
+* Create a new `Client` object with your `clientId`, `clientSecret`,
+`redirectUri`, and `scope`
+
+```java
+static String ID = "YOUR_CLIENT_ID";
+static String SECRET = "YOUR_CLIENT_SECRET";
+static String REDIRECT_URI = "http://localhost:5000/callback";
+static String[] scope = { "read_vehicle_info", "read_location", "read_engine"};
+
+static Smartcar client = new Smartcar(ID, SECRET, REDIRECT_URI, scope);
+```
+
+* Redirect the user to an OEM login page with `getAuthUrl`
+
+```java
+String url = client.getAuthUrl("bmw").toString();
+```
+
+* The user will login, and then accept or deny your `scope`'s permissions
+* Handle the get request to `redirectUri`
+  * If the user accepted your permissions, the request's query parameters will contain an
+    authentication code keyed by `code`
+    * Use `exchangeCode` with this code to obtain an access object
+    containing an access token (lasting 2 hours) and a refresh token
+    (lasting 60 days)
+      * save this access object
+    * If the user denied your permissions, the request's query parameters will contain an
+    error keyed by `error`
+    * If you passed a state parameter to `getAuthUrl`, the request's query parameters will contain an
+    the passed state keyed by `state`
+
+```java
+// following code uses SparkJava framework, syntax may differ
+get("/callback", (req, res) -> {
+    String code = req.queryMap().get("code").value();
+    Access access = client.exchangeCode(code);
+    // save access for use
+```
+
+* Redirect to your main app endpoint
+* Handle the get request to your main app endpoint
+* When necessary, use `exchangeToken` on your saved access object to automatically refresh an
+expired `access_token`
+
+```java
+if (oldAccess.expired()) {
+  Access newRefreshedAccess = client.exchangeToken(oldAccess.getRefreshToken());
+  // newRefreshedAccess.getAccessToken() now holds a new access token
+}
+```
+
+* Get the ids of the users vehicles with `getVehicles`
+
+```java
+Api.Vehicles vehicles = client.getVehicles(access.getAccessToken());
+String[] vehicleIds = vehicles.vehicles;
+```
+
+* Create a new `Vehicle` object using a vehicleId from the previous response, and
+the `access_token`
+
+```java
+String vehicleId = vehicleIds[0];
+Vehicle firstVehicle = new Vehicle(vehicleId, access.getAccessToken());
+```
+
+* Do stuff with the vehicle data!
+
+```java
+// latitude and longitude!
+Api.Location location = vehicle.location();
+```
+
+## Full Example
+
+See the full example here (no link yet, example is not in repo yet)
+
 ## Structure
 
 ### Access:
