@@ -7,7 +7,6 @@
  * @author Robin Jayaswal
  */
 
-import static spark.Spark.*;
 
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -17,10 +16,7 @@ import java.util.Map;
 import java.util.concurrent.Exchanger;
 import java.util.concurrent.atomic.AtomicReference;
 
-import com.smartcar.sdk.Access;
-import com.smartcar.sdk.Api;
-import com.smartcar.sdk.Smartcar;
-import com.smartcar.sdk.Vehicle;
+import com.smartcar.sdk.*;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
 
@@ -28,14 +24,20 @@ import org.apache.http.client.utils.URLEncodedUtils;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
+import static spark.Spark.port;
+import static spark.Spark.post;
+import static spark.Spark.staticFiles;
+import static spark.Spark.get;
+
+
 
 public class Main {
 
     /**
      * Variables we pass to Smartcar constructor to create a client to interact with the SDK
      */
-    static String ID = "ef534fb2-5933-4227-9d82-321efe56aa1b";
-    static String SECRET = "110e5fc8-441b-4fa3-926e-bf73f82a1504";
+    static String ID = "INSERT_YOUR_CLIENT_ID_HERE";
+    static String SECRET = "INSERT_YOUR_CLIENT_SECRET_HERE";
     static String REDIRECT_URI = "http://localhost:5000/callback";
     static String[] scope = { "read_vehicle_info", "read_location", "read_engine", "control_ignition"};
 
@@ -53,7 +55,7 @@ public class Main {
      * Arrays used to hold data just for this sample app
      */
     static String[] sampleEmployees = { "John Doe", "Jane Doe", "None"};
-    static List<VehicleData> vehicleDataList = new ArrayList<VehicleData>();
+    static Map<String, VehicleData> vehicleDataMap = new HashMap<>();
 
 
     /**
@@ -84,16 +86,14 @@ public class Main {
             oem.url = client.getAuthUrl(oem.name).toString();
         }
 
-        // map to pass to handlebars template engine for landing and login
-        Map map = new HashMap();
-
         // landing page
-        get("/", (req, res) -> new ModelAndView(map, "landing.hbs"), new HandlebarsTemplateEngine());
+        get("/", (req, res) -> new ModelAndView(null, "landing.hbs"), new HandlebarsTemplateEngine());
 
 
         // login render and handling
-        get("/login", (req, res) -> new ModelAndView(map, "login.hbs"), new HandlebarsTemplateEngine());
+        get("/login", (req, res) -> new ModelAndView(null, "login.hbs"), new HandlebarsTemplateEngine());
 
+        // handler when user presses login, in this example we do no authentication and redirect to dashboard
         post("/login", (req, res) -> {
             res.redirect("/dashboard");
             return null;
@@ -103,13 +103,16 @@ public class Main {
         // map to pass to handlebars template engine for dashboard
         Map<String, Object> dashboardMap = new HashMap<>();
         dashboardMap.put("availableMakes", availableMakes);
-        dashboardMap.put("vehicleDataList", vehicleDataList);
         dashboardMap.put("carsConnected", false);
+        dashboardMap.put("vehicleDataMap", vehicleDataMap);
 
+        // main dashboard where user can connect cars and see connected cars.
         get("/dashboard", (req, res) -> new ModelAndView(dashboardMap, "dashboard.hbs"),new HandlebarsTemplateEngine());
 
 
-        // our callback that we told smartcar to redirect to with REDIRECT_URI we passed
+        // our callback that we told smartcar to redirect to with REDIRECT_URI we passed. The user logs in (or rejects)
+        // and smartcar redirects here with an auth code. We exchange the auth code for an access object, and use this
+        // to get a list of the vehicles the user authorized.
         get("/callback", (req, res) -> {
             try {
                 // get the authentication code from query string
@@ -136,25 +139,26 @@ public class Main {
                     String currentUser = sampleEmployees[i % sampleEmployees.length];
 
                     VehicleData vd = new VehicleData(vehicle, info, location, engine, currentUser);
-                    vehicleDataList.add(vd);
+                    vehicleDataMap.put(vehicleId, vd);
                 }
 
                 // store access object
                 accessRef.set(access);
 
                 // flip boolean in handlebars template
-                if (vehicleDataList.size() > 0) {
+                if (vehicleDataMap.size() > 0) {
                     dashboardMap.put("carsConnected", true);
                 }
 
-            } catch (Exception e) {
-                System.out.println(e);
+            } catch (Exceptions.SmartcarException e) {
+                System.err.println(e);
             }
 
             res.redirect("/dashboard");
             return null;
         });
 
+        // endpoint that is hit when user presses 'Stop Engine' button next to a connected vehicle.
         post("/stop/:vid", (req, res) -> {
             // get the access object we saved in the callback
             Access access = accessRef.get();
@@ -169,18 +173,10 @@ public class Main {
             Vehicle vehicle = new Vehicle(req.params(":vid"), access.getAccessToken());
             Api.Success result = vehicle.setIgnitionOff();
 
-            // find the vehicle in the vehicleDataList, and display to the user that the request succeeded or failed
-            for (Integer i = 0; i < vehicleDataList.size(); i++) {
-                VehicleData currVehicle = vehicleDataList.get(i);
-                if (currVehicle.getVid().equals(req.params(":vid"))) {
-                    if (result.status.equals("success")) {
-                        currVehicle.changeButtonMessage("Engine Stopped");
-                    } else {
-                        System.out.println(result.status);
-                       currVehicle.changeButtonMessage("Error");
-                    }
-                }
-            }
+            // check the result of the setIgnitionOff call, and display success or error on button
+            VehicleData currVehicle = vehicleDataMap.get(req.params(":vid"));
+            String buttonMessage = result.status.equals("success") ? "Engine Stopped" : "Error";
+            currVehicle.changeButtonMessage(buttonMessage);
 
             res.redirect("/dashboard");
             return null;
@@ -246,7 +242,7 @@ class VehicleData {
         this.ignitionButtonText = "Stop Engine";
     }
     public Vehicle getVehicle() {
-       return this.vehicle;
+        return this.vehicle;
     }
     public String getVid() {
         return this.vehicle.getVid();
@@ -277,9 +273,9 @@ class VehicleData {
         return this.currentUser;
     }
     public void changeButtonMessage(String message) {
-       this.ignitionButtonText = message;
+        this.ignitionButtonText = message;
     }
     public String getIgnitionButtonText() {
-       return this.ignitionButtonText;
+        return this.ignitionButtonText;
     }
 }
