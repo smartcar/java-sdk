@@ -30,6 +30,23 @@ public final class Smartcar {
     this.access = new AccessRequest(clientId, clientSecret);
   }
 
+  /**
+   * Constructor with no scope (with no scope supplied, it will default to all
+   * permissions application is allowed to request).
+   *
+   * @param clientId Application's client ID, provided by Smartcar
+   * @param clientSecret Application's client secret, provided by Smartcar
+   * @param redirectUri Application's redirect URI
+   */
+  public Smartcar(String clientId, String clientSecret,
+                  String redirectUri) {
+    this.clientId = clientId;
+    this.clientSecret = clientSecret;
+    this.redirectUri = redirectUri;
+    this.scope = null;
+    this.access = new AccessRequest(clientId, clientSecret);
+  }
+
   void setBaseAccessUrl(String url) {
     this.access.setBaseUrl(url);
   }
@@ -56,7 +73,10 @@ public final class Smartcar {
    * @param  oem name of an OEM
    */
   public AuthUrl getAuthUrl(String oem) {
-    return new AuthUrl(oem, this.clientId, this.redirectUri, Util.join(this.scope));
+    if (this.scope != null) {
+      return new AuthUrl(oem, this.clientId, this.redirectUri, Util.join(this.scope));
+    }
+    return new AuthUrl(oem, this.clientId, this.redirectUri,null);
   }
 
   /**

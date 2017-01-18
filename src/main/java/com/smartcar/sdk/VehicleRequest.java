@@ -21,7 +21,8 @@ class VehicleRequest {
   Request.Builder request(String url) {
     return new Request.Builder()
       .header("Authorization", "Bearer " + token)
-      .url(url); 
+      .addHeader("User-Agent", "smartcar-java-sdk")
+      .url(url);
   }
 
   void setBaseUrl(String url) {

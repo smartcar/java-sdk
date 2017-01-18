@@ -22,6 +22,7 @@ public class TestVehicle {
   final String ACCESS_TOKEN = "access-token";
   final String VEHICLE_ID = "vehicle-id";
   final String AUTHORIZATION = "Bearer " + ACCESS_TOKEN;
+  final String USER_AGENT = "smartcar-java-sdk";
   final String SUCCESS = "{\"status\":\"success\"}";
 
   private final Gson gson = new Gson();
@@ -69,6 +70,10 @@ public class TestVehicle {
     Assert.assertEquals(
       request.getHeader("Authorization"), 
       AUTHORIZATION
+    );
+    Assert.assertEquals(
+      request.getHeader("User-Agent"),
+      USER_AGENT
     );
     Assert.assertEquals(request.getMethod(), method);
     Assert.assertEquals(

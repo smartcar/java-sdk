@@ -29,6 +29,7 @@ public class TestSmartcar {
   String REFRESH_TOKEN = "refresh-token";
   String TOKEN_TYPE = "Bearer";
   String BEARER_AUTH = TOKEN_TYPE + " " + ACCESS_TOKEN;
+  String USER_AGENT = "smartcar-java-sdk";
   int EXPIRES_IN = 7200;
   String CODE = "code";
 
@@ -60,6 +61,7 @@ public class TestSmartcar {
       System.out.println(e);
     }
     Assert.assertEquals(request.getHeader("Authorization"), authentication);
+    Assert.assertEquals(request.getHeader("User-Agent"), USER_AGENT);
   }
 
   @AfterMethod
@@ -81,6 +83,25 @@ public class TestSmartcar {
     Assert.assertEquals(
       auth.toString(), 
       base + "&approval_prompt=force&state=XYZ"
+    );
+  }
+
+  @Test
+  public void testGetAuthUrlNoScope() {
+    String base = "https://ford.smartcar.com/oauth/authorize?response_type=code"
+            + "&client_id=client-id&redirect_uri=https://redirect.uri";
+
+    Smartcar noScopeClient = new Smartcar(ID, SECRET, REDIRECT_URI);
+
+    AuthUrl auth = noScopeClient.getAuthUrl("ford");
+    Assert.assertEquals(
+            auth.toString(),
+            base + "&approval_prompt=auto"
+    );
+    auth.state("XYZ").forceApproval(true);
+    Assert.assertEquals(
+            auth.toString(),
+            base + "&approval_prompt=force&state=XYZ"
     );
   }
 
