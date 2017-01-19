@@ -1,3 +1,5 @@
+package com.smartcar.sdk.example;
+
 /**
  * The Main program is intended as a simple example of how to use the Smartcar Java SDK to
  * have users authenticate and give your app permission to interact with their vehicles in
@@ -16,7 +18,11 @@ import java.util.Map;
 import java.util.concurrent.Exchanger;
 import java.util.concurrent.atomic.AtomicReference;
 
-import com.smartcar.sdk.*;
+import com.smartcar.sdk.Access;
+import com.smartcar.sdk.Api;
+import com.smartcar.sdk.Exceptions;
+import com.smartcar.sdk.Smartcar;
+import com.smartcar.sdk.Vehicle;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
 
@@ -48,7 +54,7 @@ public class Main {
      * function. We pass this list to a handlebars template which renders a button redirecting the user to the
      * corresponding url for authorization.
      */
-    static Helpers.OEM[] availableMakes = { new Helpers.OEM("mock", "Mock", ""), new OEM("bmw", "BMW", "") };
+    static Helpers.OEM[] availableMakes = { new Helpers.OEM("mock", "Mock", ""), new Helpers.OEM("bmw", "BMW", "") };
 
 
     /**

@@ -1,3 +1,5 @@
+package com.smartcar.sdk.example;
+
 import com.smartcar.sdk.Api;
 import com.smartcar.sdk.Vehicle;
 
