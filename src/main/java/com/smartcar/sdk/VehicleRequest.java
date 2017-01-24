@@ -21,7 +21,8 @@ class VehicleRequest {
   Request.Builder request(String url) {
     return new Request.Builder()
       .header("Authorization", "Bearer " + token)
-      .url(url); 
+      .addHeader("User-Agent", "smartcar-java-sdk:0.0.1")
+      .url(url);
   }
 
   void setBaseUrl(String url) {
@@ -36,13 +37,13 @@ class VehicleRequest {
     return "?limit=" + limit + "&offset=" + offset;
   }
 
-  String get(String endpoint) 
+  String get(String endpoint)
   throws Exceptions.SmartcarException {
     String url = formatUrl(endpoint);
     return Util.call(request(url).build());
   }
 
-  String action(String endpoint, String body) 
+  String action(String endpoint, String body)
   throws Exceptions.SmartcarException {
     MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     RequestBody formBody = RequestBody.create(JSON, body);

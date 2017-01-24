@@ -48,12 +48,16 @@ public class AuthUrl {
         .addPathSegments("oauth/authorize")
         .addQueryParameter("response_type", "code")
         .addQueryParameter("client_id", this.clientId)
-        .addQueryParameter("redirect_uri", this.redirectUri)
-        .addQueryParameter("scope", this.scope)
-        .addQueryParameter("approval_prompt", this.forceApproval ? "force" : "auto");
+        .addQueryParameter("redirect_uri", this.redirectUri);
+
+      if (this.scope != null)
+        partial.addQueryParameter("scope", this.scope);
+
+      partial.addQueryParameter("approval_prompt", this.forceApproval ? "force" : "auto");
 
       if (this.state != null)
         partial.addQueryParameter("state", this.state);
+
 
       return partial.build().toString();
     }
