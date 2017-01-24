@@ -76,7 +76,7 @@ public final class Smartcar {
     if (this.scope != null) {
       return new AuthUrl(oem, this.clientId, this.redirectUri, Util.join(this.scope));
     }
-    return new AuthUrl(oem, this.clientId, this.redirectUri,null);
+    return new AuthUrl(oem, this.clientId, this.redirectUri, null);
   }
 
   /**
