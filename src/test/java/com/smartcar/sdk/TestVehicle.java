@@ -22,7 +22,7 @@ public class TestVehicle {
   final String ACCESS_TOKEN = "access-token";
   final String VEHICLE_ID = "vehicle-id";
   final String AUTHORIZATION = "Bearer " + ACCESS_TOKEN;
-  final String USER_AGENT = "smartcar-java-sdk";
+  final String USER_AGENT = "smartcar-java-sdk:0.0.1";
   final String SUCCESS = "{\"status\":\"success\"}";
 
   private final Gson gson = new Gson();
@@ -68,7 +68,7 @@ public class TestVehicle {
   private void verify(String method, String path) {
     updateRequest();
     Assert.assertEquals(
-      request.getHeader("Authorization"), 
+      request.getHeader("Authorization"),
       AUTHORIZATION
     );
     Assert.assertEquals(
@@ -77,7 +77,7 @@ public class TestVehicle {
     );
     Assert.assertEquals(request.getMethod(), method);
     Assert.assertEquals(
-      request.getPath(), 
+      request.getPath(),
       API_PATH + '/' + VEHICLE_ID + '/' + path
     );
   }
@@ -91,7 +91,7 @@ public class TestVehicle {
         Api.GenericAction.class
       ).action,
       action
-    );   
+    );
   }
 
   /* Get Intent Tests */
@@ -109,9 +109,9 @@ public class TestVehicle {
     String[] permissions = vehicle.permissions(10, 0).permissions;
     verify("GET", "permissions?limit=10&offset=0");
     Assert.assertEquals(
-      permissions[0], 
+      permissions[0],
       "read_vehicle_info"
-    );    
+    );
   }
 
   @Test public void testInfo()
@@ -190,7 +190,7 @@ public class TestVehicle {
     Assert.assertEquals(data.percentRemaining, 0.5);
   }
 
-  @Test public void testCharge() 
+  @Test public void testCharge()
   throws Exceptions.SmartcarException {
     setup(new JSONObject()
       .put("isPluggedIn", true)
@@ -226,7 +226,7 @@ public class TestVehicle {
     Assert.assertEquals(data.startTime, "12:30");
   }
 
-  @Test public void testClimate() 
+  @Test public void testClimate()
   throws Exceptions.SmartcarException {
     setup(new JSONObject()
       .put("temperature", 100.6)
@@ -238,7 +238,7 @@ public class TestVehicle {
     Assert.assertEquals(data.isOn, false);
   }
 
-  @Test public void testCollisionSensor() 
+  @Test public void testCollisionSensor()
   throws Exceptions.SmartcarException {
     setup(new JSONObject()
       .put("isTriggered", true)
@@ -248,7 +248,7 @@ public class TestVehicle {
     Assert.assertEquals(data.isTriggered, true);
   }
 
-  @Test public void testCompass() 
+  @Test public void testCompass()
   throws Exceptions.SmartcarException {
     setup(new JSONObject()
       .put("heading", 40.5)
@@ -258,7 +258,7 @@ public class TestVehicle {
     Assert.assertEquals(data.heading, 40.5);
   }
 
-  @Test public void testCruiseControl() 
+  @Test public void testCruiseControl()
   throws Exceptions.SmartcarException {
     setup(new JSONObject()
       .put("speed", 100.5)
@@ -272,7 +272,7 @@ public class TestVehicle {
     Assert.assertEquals(data.isOn, false);
   }
 
-  @Test public void testDimensions() 
+  @Test public void testDimensions()
   throws Exceptions.SmartcarException {
     setup(new JSONObject()
       .put("height", 11.1)
@@ -288,7 +288,7 @@ public class TestVehicle {
     Assert.assertEquals(data.weight, 1234.5);
   }
 
-  @Test public void testDoors() 
+  @Test public void testDoors()
   throws Exceptions.SmartcarException {
     setup(new JSONObject()
       .put("doors", new JSONArray()
@@ -332,7 +332,7 @@ public class TestVehicle {
     Assert.assertEquals(data[1].isLocked, true);
   }
 
-  @Test public void testDriveMode() 
+  @Test public void testDriveMode()
   throws Exceptions.SmartcarException {
     setup(new JSONObject()
       .put("mode", "MODE")
@@ -342,7 +342,7 @@ public class TestVehicle {
     Assert.assertEquals(data.mode, "MODE");
   }
 
-  @Test public void testEngine() 
+  @Test public void testEngine()
   throws Exceptions.SmartcarException {
     setup(new JSONObject()
       .put("isOn", "IS_ON")
@@ -352,7 +352,7 @@ public class TestVehicle {
     Assert.assertEquals(data.isOn, "IS_ON");
   }
 
-  @Test public void testEngineCoolant() 
+  @Test public void testEngineCoolant()
   throws Exceptions.SmartcarException {
     setup(new JSONObject()
       .put("level", 0.5)
@@ -364,7 +364,7 @@ public class TestVehicle {
     Assert.assertEquals(data.temperature, 100.5);
   }
 
-  @Test public void testEngineHood() 
+  @Test public void testEngineHood()
   throws Exceptions.SmartcarException {
     setup(new JSONObject()
       .put("isOpen", false)
@@ -374,7 +374,7 @@ public class TestVehicle {
     Assert.assertEquals(data.isOpen, false);
   }
 
-  @Test public void testEngineOil() 
+  @Test public void testEngineOil()
   throws Exceptions.SmartcarException {
     setup(new JSONObject()
       .put("changeIndicator", false)
@@ -392,7 +392,7 @@ public class TestVehicle {
     Assert.assertEquals(data.temperature, 200.5);
   }
 
-  @Test public void testEngineThrottle() 
+  @Test public void testEngineThrottle()
   throws Exceptions.SmartcarException {
     setup(new JSONObject()
       .put("percentOpen", 0.5)
@@ -402,7 +402,7 @@ public class TestVehicle {
     Assert.assertEquals(data.percentOpen, 0.5);
   }
 
-  @Test public void testFuel() 
+  @Test public void testFuel()
   throws Exceptions.SmartcarException {
     setup(new JSONObject()
       .put("range", 100.5)
@@ -432,7 +432,7 @@ public class TestVehicle {
     Assert.assertEquals(data.isOn, false);
   }
 
-  @Test public void testHeadlights() 
+  @Test public void testHeadlights()
   throws Exceptions.SmartcarException {
     setup(new JSONObject().put("state", "STATE").toString());
     Api.Headlight data = vehicle.headlights();
@@ -448,7 +448,7 @@ public class TestVehicle {
     Assert.assertEquals(data.state, "STATE");
   }
 
-  @Test public void testInteriorLights() 
+  @Test public void testInteriorLights()
   throws Exceptions.SmartcarException {
     setup(new JSONObject()
       .put("lights", new JSONArray()
@@ -469,7 +469,7 @@ public class TestVehicle {
     Assert.assertEquals(data[1].isOn, false);
   }
 
-  @Test public void testTurnIndicator() 
+  @Test public void testTurnIndicator()
   throws Exceptions.SmartcarException {
     setup(new JSONObject()
       .put("state", "LEFT")
@@ -479,7 +479,7 @@ public class TestVehicle {
     Assert.assertEquals(data.state, "LEFT");
   }
 
-  @Test public void testLocation() 
+  @Test public void testLocation()
   throws Exceptions.SmartcarException {
     setup(new JSONObject()
       .put("latitude", 40.5)
@@ -492,7 +492,7 @@ public class TestVehicle {
     Assert.assertEquals(data.longitude, 38.2);
   }
 
-  @Test public void testLocationNoAccuracy() 
+  @Test public void testLocationNoAccuracy()
   throws Exceptions.SmartcarException {
     setup(new JSONObject()
       .put("latitude", 40.5)
@@ -530,7 +530,7 @@ public class TestVehicle {
     Assert.assertEquals(data[1].yTilt, 0.3);
   }
 
-  @Test public void testOdometer() 
+  @Test public void testOdometer()
   throws Exceptions.SmartcarException {
     setup(new JSONObject()
       .put("distance", 104.32)
@@ -540,7 +540,7 @@ public class TestVehicle {
     Assert.assertEquals(data.distance, 104.32);
   }
 
-  @Test public void testTripOdometers() 
+  @Test public void testTripOdometers()
   throws Exceptions.SmartcarException {
     setup(new JSONObject()
       .put("trips", new JSONArray()
@@ -562,7 +562,7 @@ public class TestVehicle {
     Assert.assertEquals(data[1].distance, 23.11);
   }
 
-  @Test public void testAcceleratorPedal() 
+  @Test public void testAcceleratorPedal()
   throws Exceptions.SmartcarException {
     setup(new JSONObject()
       .put("percentDepressed", 0.3)
@@ -572,7 +572,7 @@ public class TestVehicle {
     Assert.assertEquals(data.percentDepressed, 0.3);
   }
 
-  @Test public void testBrakePedal() 
+  @Test public void testBrakePedal()
   throws Exceptions.SmartcarException {
     setup(new JSONObject()
       .put("percentDepressed", 0.3)
@@ -582,7 +582,7 @@ public class TestVehicle {
     Assert.assertEquals(data.percentDepressed, 0.3);
   }
 
-  @Test public void testRainSensor() 
+  @Test public void testRainSensor()
   throws Exceptions.SmartcarException {
     setup(new JSONObject()
       .put("isRaining", false)
@@ -592,7 +592,7 @@ public class TestVehicle {
     Assert.assertEquals(data.isRaining, false);
   }
 
-  @Test public void testSeats() 
+  @Test public void testSeats()
   throws Exceptions.SmartcarException {
     setup(new JSONObject()
       .put("seats", new JSONArray()
@@ -617,7 +617,7 @@ public class TestVehicle {
     Assert.assertEquals(data[1].isBuckled, true);
   }
 
-  @Test public void testSecurity() 
+  @Test public void testSecurity()
   throws Exceptions.SmartcarException {
     setup(new JSONObject()
       .put("isLocked", true)
@@ -627,7 +627,7 @@ public class TestVehicle {
     Assert.assertEquals(data.isLocked, true);
   }
 
-  @Test public void testSliBattery() 
+  @Test public void testSliBattery()
   throws Exceptions.SmartcarException {
     setup(new JSONObject()
       .put("current", 15.5)
@@ -641,7 +641,7 @@ public class TestVehicle {
     Assert.assertEquals(data.percentRemaining, 0.7);
   }
 
-  @Test public void testSpeedometer() 
+  @Test public void testSpeedometer()
   throws Exceptions.SmartcarException {
     setup(new JSONObject()
       .put("speed", 100.2)
@@ -651,7 +651,7 @@ public class TestVehicle {
     Assert.assertEquals(data.speed, 100.2);
   }
 
-  @Test public void testSteeringWheel() 
+  @Test public void testSteeringWheel()
   throws Exceptions.SmartcarException {
     setup(new JSONObject()
       .put("location", "LEFT")
@@ -663,7 +663,7 @@ public class TestVehicle {
     Assert.assertEquals(data.angle, 100.2);
   }
 
-  @Test public void testSunroof() 
+  @Test public void testSunroof()
   throws Exceptions.SmartcarException {
     setup(new JSONObject()
       .put("state", "OPEN")
@@ -675,7 +675,7 @@ public class TestVehicle {
     Assert.assertEquals(data.percentOpen, 0.5);
   }
 
-  @Test public void testTachometer() 
+  @Test public void testTachometer()
   throws Exceptions.SmartcarException {
     setup(new JSONObject()
       .put("engineSpeed", 1500.5)
@@ -705,7 +705,7 @@ public class TestVehicle {
     Assert.assertEquals(data.temperature, 90.2);
   }
 
-  @Test public void testTires() 
+  @Test public void testTires()
   throws Exceptions.SmartcarException {
     setup(new JSONObject()
       .put("tires", new JSONArray()
@@ -725,7 +725,7 @@ public class TestVehicle {
     Assert.assertEquals(data[0].pressure, data[1].pressure);
   }
 
-  @Test public void testTransmission() 
+  @Test public void testTransmission()
   throws Exceptions.SmartcarException {
     setup(new JSONObject()
       .put("type", "AUTOMATIC")
@@ -737,7 +737,7 @@ public class TestVehicle {
     Assert.assertEquals(data.state, "PARKED");
   }
 
-  @Test public void testTransmissionFluid() 
+  @Test public void testTransmissionFluid()
   throws Exceptions.SmartcarException {
     setup(new JSONObject()
       .put("temperature", 100.6)
@@ -749,7 +749,7 @@ public class TestVehicle {
     Assert.assertEquals(data.wear, 0.9);
   }
 
-  @Test public void testFrontTrunk() 
+  @Test public void testFrontTrunk()
   throws Exceptions.SmartcarException {
     setup(new JSONObject()
       .put("isOpen", false)
@@ -759,7 +759,7 @@ public class TestVehicle {
     Assert.assertEquals(data.isOpen, false);
   }
 
-  @Test public void testRearTrunk() 
+  @Test public void testRearTrunk()
   throws Exceptions.SmartcarException {
     setup(new JSONObject()
       .put("isOpen", true)
@@ -769,7 +769,7 @@ public class TestVehicle {
     Assert.assertEquals(data.isOpen, true);
   }
 
-  @Test public void testVin() 
+  @Test public void testVin()
   throws Exceptions.SmartcarException {
     setup(new JSONObject()
       .put("vin", "VIN")
@@ -779,7 +779,7 @@ public class TestVehicle {
     Assert.assertEquals(data.vin, "VIN");
   }
 
-  @Test public void testWasherFluid() 
+  @Test public void testWasherFluid()
   throws Exceptions.SmartcarException {
     setup(new JSONObject()
       .put("percentRemaining", 0.3)
@@ -789,7 +789,7 @@ public class TestVehicle {
     Assert.assertEquals(data.percentRemaining, 0.3);
   }
 
-  @Test public void testWheels() 
+  @Test public void testWheels()
   throws Exceptions.SmartcarException {
     setup(new JSONObject()
       .put("wheels", new JSONArray()
@@ -809,7 +809,7 @@ public class TestVehicle {
     Assert.assertEquals(data.wheels[0].diameter, data.wheels[1].diameter);
   }
 
-  @Test public void testWheelSpeeds() 
+  @Test public void testWheelSpeeds()
   throws Exceptions.SmartcarException {
     setup(new JSONObject()
       .put("wheelSpeed", new JSONArray()
@@ -826,10 +826,10 @@ public class TestVehicle {
     verify("GET", "wheels/speeds");
     Assert.assertEquals(data.wheelSpeed[0].location, "FRONT_RIGHT");
     Assert.assertEquals(data.wheelSpeed[1].location, "FRONT_LEFT");
-    Assert.assertEquals(data.wheelSpeed[0].speed, data.wheelSpeed[1].speed); 
+    Assert.assertEquals(data.wheelSpeed[0].speed, data.wheelSpeed[1].speed);
   }
 
-  @Test public void testWindows() 
+  @Test public void testWindows()
   throws Exceptions.SmartcarException {
     setup(new JSONObject()
       .put("windows", new JSONArray()
@@ -856,7 +856,7 @@ public class TestVehicle {
 
   /* Action Intent Tests */
 
-  @Test public void testDisconnect() 
+  @Test public void testDisconnect()
   throws Exceptions.SmartcarException {
     setup(SUCCESS);
     vehicle.disconnect();
@@ -864,21 +864,21 @@ public class TestVehicle {
     Assert.assertEquals(request.getBody().readUtf8(), "");
   }
 
-  @Test public void testStartCharging() 
+  @Test public void testStartCharging()
   throws Exceptions.SmartcarException {
     setup(SUCCESS);
     vehicle.startCharging();
     verify("POST", "charge", "START");
   }
 
-  @Test public void testStopCharging() 
+  @Test public void testStopCharging()
   throws Exceptions.SmartcarException {
     setup(SUCCESS);
     vehicle.stopCharging();
     verify("POST", "charge", "STOP");
   }
 
-  @Test public void testEnableChargeLimitNoParameter() 
+  @Test public void testEnableChargeLimitNoParameter()
   throws Exceptions.SmartcarException {
     setup(SUCCESS);
     vehicle.enableChargeLimit();
@@ -892,14 +892,14 @@ public class TestVehicle {
     vehicle.enableChargeLimit(LIMIT);
     verify("POST", "charge/limit");
     Api.ChargeLimitAction action = gson.fromJson(
-      request.getBody().readUtf8(), 
+      request.getBody().readUtf8(),
       Api.ChargeLimitAction.class
     );
     Assert.assertEquals(action.action, "ENABLE");
     Assert.assertEquals(action.limit, LIMIT);
   }
 
-  @Test public void testDisableChargeLimit() 
+  @Test public void testDisableChargeLimit()
   throws Exceptions.SmartcarException {
     setup(SUCCESS);
     vehicle.disableChargeLimit();

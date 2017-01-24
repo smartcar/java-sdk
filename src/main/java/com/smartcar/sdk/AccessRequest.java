@@ -36,7 +36,7 @@ class AccessRequest {
       return new Request.Builder()
         .url(this.url)
         .header("Authorization", this.auth)
-        .addHeader("User-Agent", "smartcar-java-sdk")
+        .addHeader("User-Agent", "smartcar-java-sdk:0.0.1")
         .post(this.body)
         .build();
   }

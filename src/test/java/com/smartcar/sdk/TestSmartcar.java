@@ -29,7 +29,7 @@ public class TestSmartcar {
   String REFRESH_TOKEN = "refresh-token";
   String TOKEN_TYPE = "Bearer";
   String BEARER_AUTH = TOKEN_TYPE + " " + ACCESS_TOKEN;
-  String USER_AGENT = "smartcar-java-sdk";
+  String USER_AGENT = "smartcar-java-sdk:0.0.1";
   int EXPIRES_IN = 7200;
   String CODE = "code";
 
@@ -37,7 +37,7 @@ public class TestSmartcar {
   MockResponse ACCESS_RESPONSE = new MockResponse().setBody(gson.toJson(
     new Access(ACCESS_TOKEN, REFRESH_TOKEN, TOKEN_TYPE, EXPIRES_IN)
   ));
-  
+
   Smartcar client = new Smartcar(ID, SECRET, REDIRECT_URI, scope);
   MockWebServer server;
   RecordedRequest request;
@@ -72,16 +72,16 @@ public class TestSmartcar {
   @Test
   public void testGetAuthUrl() {
     String base = "https://ford.smartcar.com/oauth/authorize?response_type=code"
-        + "&client_id=client-id&redirect_uri=https://redirect.uri" 
+        + "&client_id=client-id&redirect_uri=https://redirect.uri"
         + "&scope=read_vehicle_info%20open_sunroof";
     AuthUrl auth = client.getAuthUrl("ford");
     Assert.assertEquals(
-      auth.toString(), 
+      auth.toString(),
       base + "&approval_prompt=auto"
     );
     auth.state("XYZ").forceApproval(true);
     Assert.assertEquals(
-      auth.toString(), 
+      auth.toString(),
       base + "&approval_prompt=force&state=XYZ"
     );
   }
@@ -123,9 +123,9 @@ public class TestSmartcar {
     Assert.assertEquals(access.getTokenType(), TOKEN_TYPE);
     Assert.assertFalse(access.expired());
   }
-  
+
   @Test
-  public void testExchangeToken() 
+  public void testExchangeToken()
   throws Exceptions.SmartcarException {
 
     setup(ACCESS_RESPONSE, AUTH_PATH);
