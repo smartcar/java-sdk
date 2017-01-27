@@ -1,0 +1,38 @@
+<html>
+    <head>
+        <title>OnFleet</title>
+        <link rel="stylesheet" type="text/css" href="landing.css">
+    </head>
+    <body>
+        <div class="full-screen" style="background-image:url('splash.jpg')">
+            <div class="login">
+                <div class="left-bar">
+                    <div class="logo-container">
+                        <img src="car.png">
+                        <span>OnFleet</span>
+                    </div>
+                </div>
+                <div class="right-bar">
+                    <div class="options-container">
+                        <div class="learn-more">
+                            <span>Learn More</span>
+                            <div class="dot"></div>
+                        </div>
+                        <div class="login-button" onclick="window.location.href='/login'">
+                            <span>Log In</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="login-main">
+                <div class="form-container">
+                    <form action="/login" method="post">
+                        <input type="text" name="username" placeholder="username">
+                        <input type="text" placeholder="password">
+                        <button type="submit">Log In</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
