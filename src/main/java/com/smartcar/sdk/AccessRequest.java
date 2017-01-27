@@ -4,6 +4,8 @@ import okhttp3.Request;
 import okhttp3.FormBody;
 import okhttp3.Credentials;
 
+import java.io.IOException;
+
 class AccessRequest {
 
   private final String clientId, clientSecret, auth;
@@ -33,10 +35,16 @@ class AccessRequest {
    * @return The request object
    */
   private Request request() {
+      String version = "";
+      try {
+          version = ReadVersion.getVersionNumber();
+      } catch (IOException e) {
+          version = "0.0.0";
+      }
       return new Request.Builder()
         .url(this.url)
         .header("Authorization", this.auth)
-        .addHeader("User-Agent", "smartcar-java-sdk:0.0.1")
+        .addHeader("User-Agent", "smartcar-java-sdk:" + version)
         .post(this.body)
         .build();
   }

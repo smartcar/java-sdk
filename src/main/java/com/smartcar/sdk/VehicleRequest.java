@@ -4,6 +4,8 @@ import okhttp3.Request;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
+import java.io.IOException;
+
 class VehicleRequest {
 
   private String token, url, vehicleId;
@@ -19,9 +21,15 @@ class VehicleRequest {
   }
 
   Request.Builder request(String url) {
+    String version = "";
+    try {
+      version = ReadVersion.getVersionNumber();
+    } catch (IOException e) {
+      version = "0.0.0";
+    }
     return new Request.Builder()
       .header("Authorization", "Bearer " + token)
-      .addHeader("User-Agent", "smartcar-java-sdk:0.0.1")
+      .addHeader("User-Agent", "smartcar-java-sdk:" + version)
       .url(url);
   }
 

@@ -29,7 +29,7 @@ public class TestSmartcar {
   String REFRESH_TOKEN = "refresh-token";
   String TOKEN_TYPE = "Bearer";
   String BEARER_AUTH = TOKEN_TYPE + " " + ACCESS_TOKEN;
-  String USER_AGENT = "smartcar-java-sdk:0.0.1";
+  String USER_AGENT = "";
   int EXPIRES_IN = 7200;
   String CODE = "code";
 
@@ -37,6 +37,7 @@ public class TestSmartcar {
   MockResponse ACCESS_RESPONSE = new MockResponse().setBody(gson.toJson(
     new Access(ACCESS_TOKEN, REFRESH_TOKEN, TOKEN_TYPE, EXPIRES_IN)
   ));
+
 
   Smartcar client = new Smartcar(ID, SECRET, REDIRECT_URI, scope);
   MockWebServer server;
@@ -50,6 +51,13 @@ public class TestSmartcar {
     } catch (IOException e) {
       System.out.println(e);
     }
+    String version = "";
+    try {
+      version = ReadVersion.getVersionNumber();
+    } catch (IOException e) {
+      version = "0.0.0";
+    }
+    USER_AGENT = "smartcar-java-sdk:" + version;
     client.setBaseAccessUrl(server.url(path).toString());
     client.setBaseVehicleUrl(server.url(path).toString());
   }
