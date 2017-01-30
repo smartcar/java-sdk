@@ -51,12 +51,7 @@ public class TestSmartcar {
     } catch (IOException e) {
       System.out.println(e);
     }
-    String version = "";
-    try {
-      version = ReadVersion.getVersionNumber();
-    } catch (IOException e) {
-      version = "0.0.0";
-    }
+    String version = ReadVersion.getVersionNumber();
     USER_AGENT = "smartcar-java-sdk:" + version;
     client.setBaseAccessUrl(server.url(path).toString());
     client.setBaseVehicleUrl(server.url(path).toString());

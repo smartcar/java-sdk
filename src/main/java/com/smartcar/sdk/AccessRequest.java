@@ -35,12 +35,7 @@ class AccessRequest {
    * @return The request object
    */
   private Request request() {
-      String version = "";
-      try {
-          version = ReadVersion.getVersionNumber();
-      } catch (IOException e) {
-          version = "0.0.0";
-      }
+      String version = ReadVersion.getVersionNumber();
       return new Request.Builder()
         .url(this.url)
         .header("Authorization", this.auth)

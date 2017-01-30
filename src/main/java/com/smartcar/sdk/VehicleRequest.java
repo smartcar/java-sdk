@@ -21,12 +21,7 @@ class VehicleRequest {
   }
 
   Request.Builder request(String url) {
-    String version = "";
-    try {
-      version = ReadVersion.getVersionNumber();
-    } catch (IOException e) {
-      version = "0.0.0";
-    }
+    String version = ReadVersion.getVersionNumber();
     return new Request.Builder()
       .header("Authorization", "Bearer " + token)
       .addHeader("User-Agent", "smartcar-java-sdk:" + version)

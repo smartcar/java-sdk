@@ -52,12 +52,7 @@ public class TestVehicle {
     } catch (IOException e) {
       System.out.println(e);
     }
-    String version = "";
-    try {
-      version = ReadVersion.getVersionNumber();
-    } catch (IOException e) {
-      version = "0.0.0";
-    }
+    String version = ReadVersion.getVersionNumber();
     USER_AGENT = "smartcar-java-sdk:" + version;
     vehicle.setBaseUrl(server.url(API_PATH).toString());
   }

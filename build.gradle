@@ -67,7 +67,7 @@ jar {
   if (versionPropsFile.canRead()) {
     def Properties versionProps = new Properties()
     versionProps.load(new FileInputStream(versionPropsFile))
-    versionBuild = versionProps['VERSION_BUILD']
+    versionBuild = versionProps['VERSION']
   } else {
     throw new GradleException("Could not read version.properties!")
   }
