@@ -60,8 +60,20 @@ dependencies {
 }
 
 jar {
+  def versionPropsFile = file('src/main/resources/version.properties')
+  def parsedVersion
+
+  /*Setting default value for versionBuild which is the last incremented value stored in the file */
+  if (versionPropsFile.canRead()) {
+    def Properties versionProps = new Properties()
+    versionProps.load(new FileInputStream(versionPropsFile))
+    parsedVersion = versionProps['VERSION']
+  } else {
+    throw new GradleException("Could not read version.properties!")
+  }
+
   baseName = 'smartcar-sdk'
-  version = '0.0.1'
+  version = parsedVersion
 }
 
 test {

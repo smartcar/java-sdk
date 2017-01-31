@@ -22,7 +22,7 @@ public class TestVehicle {
   final String ACCESS_TOKEN = "access-token";
   final String VEHICLE_ID = "vehicle-id";
   final String AUTHORIZATION = "Bearer " + ACCESS_TOKEN;
-  final String USER_AGENT = "smartcar-java-sdk:0.0.1";
+  String USER_AGENT = "";
   final String SUCCESS = "{\"status\":\"success\"}";
 
   private final Gson gson = new Gson();
@@ -52,6 +52,8 @@ public class TestVehicle {
     } catch (IOException e) {
       System.out.println(e);
     }
+    String version = ReadVersion.getVersionNumber();
+    USER_AGENT = "smartcar-java-sdk:" + version;
     vehicle.setBaseUrl(server.url(API_PATH).toString());
   }
 
