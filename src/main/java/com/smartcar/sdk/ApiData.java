@@ -4,20 +4,27 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.Serializable;
+
 /**
  * The base object representing parsed API response data.
  */
-class ApiData {
+class ApiData<T> implements Serializable {
   private static Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
 
-  private String data;
+  private T data;
+
+  /**
+   * Default constructor.
+   */
+  public ApiData() {}
 
   /**
    * Initializes a new instance with the specified data.
    *
    * @param data the data to be included
    */
-  public ApiData(String data) {
+  public ApiData(T data) {
     this.data = data;
   }
 
@@ -27,6 +34,6 @@ class ApiData {
    * @return the stored data
    */
   public String toString() {
-    return this.data;
+    return String.valueOf(this.data);
   }
 }
