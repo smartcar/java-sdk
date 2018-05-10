@@ -5,19 +5,48 @@ apply plugin: 'java'
 apply plugin: 'jacoco'
 
 sourceCompatibility = 1.7
+targetCompatibility = 1.7
 
 repositories {
     jcenter()
 }
 
+configurations {
+    integrationCompile.extendsFrom testCompile
+    integrationRuntime.extendsFrom testRuntime
+}
+
 dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.10.0'
     compile 'com.google.code.gson:gson:2.7'
+    testCompile sourceSets.main.output
     testCompile 'com.squareup.okhttp3:mockwebserver:3.4.1'
     testCompile 'org.json:json:20160810'
     testCompile 'org.powermock:powermock-release-with-testng-mockito-dependencies:1.6.2'
     testCompile 'org.testng:testng:6.9.12'
+    integrationCompile sourceSets.test.output
 }
+
+sourceSets {
+    main {
+        java.srcDir 'src/main/java'
+        resources.srcDir 'src/main/resources'
+    }
+    test {
+        java.srcDir 'src/test/unit/java'
+        resources.srcDir 'src/test/unit/resources'
+    }
+    integration {
+        java.srcDir 'src/test/integration/java'
+        resources.srcDir 'src/test/integration/resources'
+    }
+}
+
+task integration(type: Test) {
+    testClassesDir = sourceSets.integration.output.classesDir
+    classpath = sourceSets.integration.runtimeClasspath
+}
+
 
 test {
     useTestNG()
