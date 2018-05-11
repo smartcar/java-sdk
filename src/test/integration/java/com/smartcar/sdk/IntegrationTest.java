@@ -71,17 +71,15 @@ public abstract class IntegrationTest {
 
   protected EnvProperties config = new EnvProperties();
 
-  /**srxzsxen
+  /**
    * Loads the configuration for the specified environment.
    *
    * @param env the desired environment
    */
   private void loadConfig(Environment env) throws IOException {
     ClassLoader loader = Thread.currentThread().getContextClassLoader();
-    InputStream stream = loader.getResourceAsStream("environment.qa.properties");
-
-//    InputStream in = this.getClass().getClassLoader().getResourceAsStream(
-//        "environment." + env.toString().toLowerCase() + ".properties");
+    InputStream stream = this.getClass().getClassLoader().getResourceAsStream(
+        "environment." + env.toString().toLowerCase() + ".properties");
     this.config.load(stream);
     stream.close();
   }
