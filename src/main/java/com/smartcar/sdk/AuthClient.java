@@ -1,11 +1,45 @@
 package com.smartcar.sdk;
 
+import com.google.gson.*;
+import com.smartcar.sdk.data.Auth;
 import okhttp3.*;
+
+import java.lang.reflect.Type;
+import java.util.Calendar;
 
 /**
  * Smartcar OAuth 2.0 Authentication Client
  */
 public class AuthClient extends ApiClient {
+  /**
+   * Custom deserializer for Auth data from the OAuth endpoint.
+   */
+  private class AuthDeserializer implements JsonDeserializer<Auth> {
+    /**
+     * Deserializes the OAuth auth endpoint JSON into a new Auth object.
+     *
+     * @param json the Json data being deserialized
+     * @param typeOfT the type of the Object to deserialize to
+     * @param context the deserialization context
+     *
+     * @return the newly created Auth object
+     */
+    public Auth deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
+      JsonObject jsonObject = json.getAsJsonObject();
+
+      // Get timestamp for expiration.
+      Calendar expiration = Calendar.getInstance();
+      expiration.add(Calendar.SECOND, jsonObject.get("expires_in").getAsInt());
+
+      return new Auth(
+          jsonObject.get("access_token").getAsString(),
+          jsonObject.get("refresh_token").getAsString(),
+          expiration.getTime(),
+          expiration.getTime()
+      );
+    }
+  }
+
   private static final String URL_AUTHORIZE = "https://connect.smartcar.com/oauth/authorize";
   private static final String URL_ACCESS_TOKEN = "https://auth.smartcar.com/oauth/token";
 
@@ -14,6 +48,8 @@ public class AuthClient extends ApiClient {
   private String redirectUri;
   private String[] scope;
   private boolean development;
+  public String urlAuthorize = AuthClient.URL_AUTHORIZE;
+  public String urlAccessToken = AuthClient.URL_ACCESS_TOKEN;
 
   /**
    * Initializes a new AuthClient.
@@ -30,27 +66,8 @@ public class AuthClient extends ApiClient {
     this.redirectUri = redirectUri;
     this.scope = scope;
     this.development = development;
-  }
 
-  /**
-   * Executes an Auth API request.
-   *
-   * @param requestBody the request body to be included
-   *
-   * @return the parsed response
-   *
-   * @throws SmartcarException if the API request fails
-   */
-  private Auth call(RequestBody requestBody) throws SmartcarException {
-    Request request = new Request.Builder()
-        .url(AuthClient.URL_ACCESS_TOKEN)
-        .header("Authorization", this.clientAuthorization)
-        .header("Content-Type", "application/json")
-        .addHeader("User-Agent", AuthClient.USER_AGENT)
-        .post(requestBody)
-        .build();
-
-    return AuthClient.execute(request, Auth.class);
+    AuthClient.gson.registerTypeAdapter(Auth.class, new AuthDeserializer());
   }
 
   /**
@@ -89,6 +106,27 @@ public class AuthClient extends ApiClient {
   }
 
   /**
+   * Executes an Auth API request.
+   *
+   * @param requestBody the request body to be included
+   *
+   * @return the parsed response
+   *
+   * @throws SmartcarException if the API request fails
+   */
+  private Auth call(RequestBody requestBody) throws SmartcarException {
+    Request request = new Request.Builder()
+        .url(this.urlAccessToken)
+        .header("Authorization", this.clientAuthorization)
+        .header("Content-Type", "application/json")
+        .addHeader("User-Agent", AuthClient.USER_AGENT)
+        .post(requestBody)
+        .build();
+
+    return AuthClient.execute(request, Auth.class);
+  }
+
+  /**
    * Returns the assembled authentication URL.
    *
    * @param state an arbitrary string to be returned to the redirect URI
@@ -97,7 +135,7 @@ public class AuthClient extends ApiClient {
    * @return the authentication URL
    */
   public String getAuthUrl(String state, boolean forcePrompt) {
-    HttpUrl.Builder urlBuilder = HttpUrl.parse(AuthClient.URL_AUTHORIZE).newBuilder()
+    HttpUrl.Builder urlBuilder = HttpUrl.parse(this.urlAuthorize).newBuilder()
         .addQueryParameter("response_type", "code")
         .addQueryParameter("client_id", this.clientId)
         .addQueryParameter("redirect_uri", this.redirectUri)
