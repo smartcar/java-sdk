@@ -1,5 +1,6 @@
 package com.smartcar.sdk;
 
+import com.smartcar.sdk.data.ApiData;
 import okhttp3.*;
 
 /**

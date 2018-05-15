@@ -1,8 +1,8 @@
 package com.smartcar.sdk;
 
 import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.smartcar.sdk.data.ApiData;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -17,7 +17,7 @@ abstract class ApiClient {
   protected static final String USER_AGENT = "smartcar-java-sdk: " + ApiClient.SDK_VERSION;
 
   private static OkHttpClient client = new OkHttpClient();
-  private static Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
+  static GsonBuilder gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
 
   /**
    * Sends the specified request, returning the raw response body.
@@ -58,6 +58,6 @@ abstract class ApiClient {
    */
   protected static <T extends ApiData> T execute(Request request, Class<T> type) throws SmartcarException {
     String body = ApiClient.execute(request);
-    return ApiClient.gson.fromJson(body, type);
+    return ApiClient.gson.create().fromJson(body, type);
   }
 }
