@@ -3,7 +3,7 @@ package com.smartcar.sdk.data;
 /**
  * POJO for Smartcar /location endpoint
  */
-public class VehicleLoation extends ApiData {
+public class VehicleLocation extends ApiData {
   private Int latitude;
   private Int longitude;
 
