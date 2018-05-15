@@ -1,5 +1,6 @@
 package com.smartcar.sdk;
 
+import com.smartcar.sdk.data.Auth;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.reflect.Whitebox;
 import org.testng.Assert;
@@ -18,27 +19,17 @@ public class AuthClientIT extends IntegrationTest {
    * Initializes the subject under test.
    */
   @BeforeMethod
-  public void beforeMethod() {
-    System.out.println("before method");
+  public void beforeMethod() throws Exception {
     this.subject = new AuthClient(
         this.config.getProperty("auth.client_id"),
         this.config.getProperty("auth.client_secret"),
-        this.config.getProperty("auth.redirect_uri")
+        this.config.getProperty("auth.redirect_uri"),
 //        this.config.getProperty("auth.scope"),
-//        this.config.getProperty("auth.development")
+        Boolean.parseBoolean(this.config.getProperty("auth.development"))
     );
 
-    Whitebox.setInternalState(
-        AuthClient.class,
-        "URL_AUTHORIZE",
-        this.config.getProperty("auth.url_authorize")
-    );
-
-    Whitebox.setInternalState(
-        AuthClient.class,
-        "URL_ACCESS_TOKEN",
-        this.config.getProperty("auth.url_access_token")
-    );
+    Whitebox.setInternalState(this.subject, "urlAuthorize", this.config.getProperty("auth.url_authorize"));
+    Whitebox.setInternalState(this.subject, "urlAccessToken", this.config.getProperty("auth.url_access_token"));
   }
 
 
