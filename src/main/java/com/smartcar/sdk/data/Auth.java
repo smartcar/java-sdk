@@ -1,4 +1,4 @@
-package com.smartcar.sdk;
+package com.smartcar.sdk.data;
 
 import java.util.Date;
 
@@ -6,7 +6,7 @@ import java.util.Date;
  * A container for the authentication tokens obtained from the Smartcar OAuth
  * 2.0 service.
  */
-class Auth extends ApiData {
+public class Auth extends ApiData {
   private String accessToken;
   private String refreshToken;
   private Date expiration;
