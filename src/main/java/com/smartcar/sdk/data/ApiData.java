@@ -1,4 +1,4 @@
-package com.smartcar.sdk;
+package com.smartcar.sdk.data;
 
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  * The base object representing parsed API response data.
  */
-class ApiData<T> implements Serializable {
+public class ApiData<T> implements Serializable {
   private static Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
 
   private T data;
