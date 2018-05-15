@@ -7,7 +7,7 @@ public class VehicleInfo extends ApiData {
   private String id;
   private String make;
   private String model;
-  private Int year;
+  private int year;
 
   /**
    * Initializes a new instance of VehicleInfo
@@ -17,7 +17,7 @@ public class VehicleInfo extends ApiData {
    * @param model model of the vehicle
    * @param year year of the vehicle
    */
-  public VehicleInfo(final String id, final String make, final String model, final Int year) {
+  public VehicleInfo(final String id, final String make, final String model, final int year) {
      this.id = id;
      this.make = make;
      this.model = model;
@@ -83,7 +83,7 @@ public class VehicleInfo extends ApiData {
    *
    * @return year of the vehicle
    */
-  public Int getYear() {
+  public int getYear() {
     return this.year;
   }
 
@@ -92,7 +92,7 @@ public class VehicleInfo extends ApiData {
    *
    * @param year year of the vehicle
    */
-  public void setYear(Int year) {
-    this.year = year
+  public void setYear(int year) {
+    this.year = year;
   }
 }
