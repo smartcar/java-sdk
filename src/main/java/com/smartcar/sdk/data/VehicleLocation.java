@@ -4,8 +4,8 @@ package com.smartcar.sdk.data;
  * POJO for Smartcar /location endpoint
  */
 public class VehicleLocation extends ApiData {
-  private Int latitude;
-  private Int longitude;
+  private int latitude;
+  private int longitude;
 
   /**
    * Initializes a new instance of VehicleLocation
@@ -13,7 +13,7 @@ public class VehicleLocation extends ApiData {
    * @param latitude latitude of the vehicle
    * @param longitude longitude of the vehicle
    */
-  public VehicleLocation(final Int latitude, final Int longitude) {
+  public VehicleLocation(final int latitude, final int longitude) {
     this.latitude = latitude;
     this.longitude = longitude;
   }
@@ -23,7 +23,7 @@ public class VehicleLocation extends ApiData {
    *
    * @return latitude of the vehicle
    */
-  public Int getLatitude() {
+  public int getLatitude() {
     return this.latitude;
   }
 
@@ -32,7 +32,7 @@ public class VehicleLocation extends ApiData {
    *
    * @param latitude latitude of the vehicle
    */
-  public void setLatitude(Int latitude) {
+  public void setLatitude(int latitude) {
     this.latitude = latitude;
   }
 
@@ -41,7 +41,7 @@ public class VehicleLocation extends ApiData {
    *
    * @return longitude of the vehicle
    */
-  public Int getLongitude() {
+  public int getLongitude() {
     return this.longitude;
   }
 
@@ -50,7 +50,7 @@ public class VehicleLocation extends ApiData {
    *
    * @param longitude longitude of the vehicle
    */
-  public void setLongitude(Int longitude) {
+  public void setLongitude(int longitude) {
     this.longitude = longitude;
   }
 }
