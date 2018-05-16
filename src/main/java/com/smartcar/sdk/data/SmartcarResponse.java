@@ -5,19 +5,19 @@ import java.util.Date;
 /**
  * POJO for Wrapping ApiData with meta data
  */
-public class MetaWrapper extends ApiData {
-  private ApiData data;
+public class SmartcarResponse<T extends ApiData> extends ApiData {
+  private T data;
   private String unitSystem;
   private Date age;
 
   /**
-   * Initializes an instance of MetaWrapper
+   * Initializes an instance of SmartcarResponse
    *
    * @param data ApiData object
    * @param unitSystem unitSystem of the response
    * @param age age of the response
    */
-  public MetaWrapper(final ApiData data, final String unitSystem, final Date age) {
+  public SmartcarResponse(final T data, final String unitSystem, final Date age) {
     this.data = data;
     this.unitSystem = unitSystem;
     this.age = age;
@@ -28,7 +28,7 @@ public class MetaWrapper extends ApiData {
    *
    * @return response data
    */
-  public ApiData getData() {
+  public T getData() {
     return this.data;
   }
 
@@ -37,7 +37,7 @@ public class MetaWrapper extends ApiData {
    *
    * @param data response data
    */
-  public void setData(ApiData data) {
+  public void setData(T data) {
     this.data = data;
   }
 
