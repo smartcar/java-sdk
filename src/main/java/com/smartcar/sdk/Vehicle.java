@@ -1,8 +1,13 @@
 package com.smartcar.sdk;
 
 import com.smartcar.sdk.data.ApiData;
+import com.smartcar.sdk.data.ApplicationPermissions;
+import com.smartcar.sdk.data.VehicleInfo;
+import com.smartcar.sdk.data.VehicleVin;
+import com.sun.istack.internal.Nullable;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 
 /**
  * Smartcar Vehicle API Object
@@ -80,7 +85,7 @@ public class Vehicle extends ApiClient {
    * @throws SmartcarException if the request is unsuccessful
    */
   private String call(String path, String method, @Nullable RequestBody body) throws SmartcarException {
-    return this.call(path, ApiData.class).toString();
+    return this.call(path, method, body, ApiData.class).toString();
   }
 
   /**
@@ -88,8 +93,8 @@ public class Vehicle extends ApiClient {
    *
    * @return VehicleInfo object
    */
-  public VehicleInfo info() {
-    return this.call("", "GET", null, VehicleInfo);
+  public VehicleInfo info() throws SmartcarException {
+    return this.call("", "GET", null, VehicleInfo.class);
   }
 
   /**
@@ -97,8 +102,8 @@ public class Vehicle extends ApiClient {
    *
    * @return the vin of the vehicle
    */
-  public String vin() {
-    VehicleVin vehicleVin = this.call("/vin", "GET", null, VehicleVin);
+  public String vin() throws SmartcarException {
+    VehicleVin vehicleVin = this.call("/vin", "GET", null, VehicleVin.class);
     return vehicleVin.getVin();
   }
 
@@ -107,15 +112,15 @@ public class Vehicle extends ApiClient {
    *
    * @return the permission of the application
    */
-  public String[] permission() {
-    ApplicationPermission appPermission = this.call("/permissions", "GET", null, ApplicationPermission);
-    return appPermission.getPermissions();
+  public String[] permissions() throws SmartcarException {
+    ApplicationPermissions appPermissions = this.call("/permissions", "GET", null, ApplicationPermissions.class);
+    return appPermissions.getPermissions();
   }
 
   /**
    * Send request to the /disconnect endpoint
    */
-  public void disconnect() {
+  public void disconnect() throws SmartcarException {
     this.call("/disconnect", "DELETE", null);
   }
 
