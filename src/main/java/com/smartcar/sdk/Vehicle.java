@@ -118,9 +118,33 @@ public class Vehicle extends ApiClient {
 
   /**
    * Send request to the /location endpoint
+   *
+   * @return the location of the vehicle
    */
   public SmartcarResponse location() {
     return this.call("/location", "GET", null, VehicleLocation.class);
+  }
+
+  /**
+   * Send request to the /security endpoint to unlock a vehicle
+   */
+  public void unlock() {
+    RequestBody body = new FormBody.Builder()
+      .add("action", "UNLOCK")
+      .build();
+
+    this.call("/security", "POST", body)
+  }
+
+  /**
+   * Send request to the /security endpoint to lock a vehicle
+   */
+  public void lock() {
+    RequestBody body = new FormBody.Builder()
+      .add("action", "LOCK")
+      .build();
+
+    this.call("/security", "POST", body)
   }
 
   /**
@@ -133,12 +157,30 @@ public class Vehicle extends ApiClient {
   }
 
   /**
+   * Stores the vehicleId
+   *
+   * @param vehicleId the vehicle ID
+   */
+  public void setVehicleId(String vehicleId) {
+    this.vehicleId = vehicleId;
+  }
+
+  /**
    * Returns the currently stored access token.
    *
    * @return the access token
    */
   public String getAccessToken() {
     return this.accessToken;
+  }
+
+  /**
+   * Stores the accessToken
+   *
+   * @param accessToken the accessToken
+   */
+  public void setAccessToken(String accessToken) {
+    this.accessToken = accessToken;
   }
 
   /**
