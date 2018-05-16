@@ -1,8 +1,15 @@
 package com.smartcar.sdk;
 
-import com.google.gson.*;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.smartcar.sdk.data.Auth;
-import okhttp3.*;
+import okhttp3.Credentials;
+import okhttp3.FormBody;
+import okhttp3.HttpUrl;
+import okhttp3.Request;
+import okhttp3.RequestBody;
 
 import java.lang.reflect.Type;
 import java.util.Calendar;
@@ -48,6 +55,8 @@ public class AuthClient extends ApiClient {
   private String redirectUri;
   private String[] scope;
   private boolean development;
+
+  // TODO: Make these private
   public String urlAuthorize = AuthClient.URL_AUTHORIZE;
   public String urlAccessToken = AuthClient.URL_ACCESS_TOKEN;
 

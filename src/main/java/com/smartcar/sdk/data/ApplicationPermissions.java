@@ -3,7 +3,7 @@ package com.smartcar.sdk.data;
 /**
  * POJO for Smartcar /permissions endpoint
  */
-public class ApplicationPermission extends ApiData {
+public class ApplicationPermissions extends ApiData {
   private ResponsePaging paging;
   private String[] permissions;
 
@@ -13,7 +13,7 @@ public class ApplicationPermission extends ApiData {
    * @param paging metadata about the list of elements
    * @param permissions an array of permissions
    */
-  public ApplicationPermission(final ResponsePaging paging, final String[] permissions) {
+  public ApplicationPermissions(final ResponsePaging paging, final String[] permissions) {
     this.paging = paging;
     this.permissions = permissions;
   }

@@ -1,7 +1,8 @@
 package com.smartcar.sdk;
 
 import com.smartcar.sdk.data.ApiData;
-import okhttp3.*;
+import okhttp3.HttpUrl;
+import okhttp3.Request;
 
 /**
  * Smartcar Vehicle API Object
