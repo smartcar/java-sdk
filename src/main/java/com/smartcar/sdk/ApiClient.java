@@ -3,11 +3,15 @@ package com.smartcar.sdk;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.GsonBuilder;
 import com.smartcar.sdk.data.ApiData;
+import com.smartcar.sdk.data.SmartcarResponse;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 /**
  * Provides the core functionality for API client objects.
@@ -28,7 +32,7 @@ abstract class ApiClient {
    *
    * @throws SmartcarException if the request is unsuccessful
    */
-  private static String execute(Request request) throws SmartcarException {
+  private static Response execute(Request request) throws SmartcarException {
     try {
       Response response = ApiClient.client.newCall(request).execute();
 
@@ -55,9 +59,16 @@ abstract class ApiClient {
    *
    * @throws SmartcarException if the request is unsuccessful
    */
-  protected static <T extends ApiData> MetaWrapper execute(Request request, Class<T> dataType) throws SmartcarException {
+  protected static <T extends ApiData> SmartcarResponse<T> execute(Request request, Class<T> dataType) throws SmartcarException {
     Response response = ApiClient.execute(request);
-    String body = response.body().string();
+    String body = null;
+
+    try {
+      body = response.body().string();
+    } catch (IOException e) {
+      throw new SmartcarException(e.getMessage());
+    }
+
     T data = ApiClient.gson.create().fromJson(body, dataType);
 
     String unitHeader = response.header("sc-unit-system");
@@ -65,7 +76,10 @@ abstract class ApiClient {
     String ageHeader = response.header("sc-data-age");
     DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 
-    return new MetaWrapper<T>(data, unitHeader, df.parse(ageHeader));
-
+    try {
+      return new SmartcarResponse<T>(data, unitHeader, df.parse(ageHeader));
+    } catch (ParseException e) {
+      throw new SmartcarException(e.getMessage());
+    }
   }
 }

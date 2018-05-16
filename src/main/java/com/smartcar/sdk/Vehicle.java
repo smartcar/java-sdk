@@ -1,7 +1,11 @@
 package com.smartcar.sdk;
 
-import com.smartcar.sdk.data.ApiData;
-import okhttp3.*;
+import com.smartcar.sdk.data.*;
+import com.sun.istack.internal.Nullable;
+import okhttp3.FormBody;
+import okhttp3.HttpUrl;
+import okhttp3.Request;
+import okhttp3.RequestBody;
 
 /**
  * Smartcar Vehicle API Object
@@ -57,7 +61,7 @@ public class Vehicle extends ApiClient {
    *
    * @throws SmartcarException if the request is unsuccessful
    */
-  private <T extends ApiData> ApiData call(String path, String method, @Nullable RequestBody body, Class<T> type) throws SmartcarException {
+  private <T extends ApiData> SmartcarResponse<T> call(String path, String method, @Nullable RequestBody body, Class<T> type) throws SmartcarException {
     HttpUrl url = HttpUrl.parse(Vehicle.URL_API + "/vehicles/" + this.vehicleId).newBuilder()
         .addPathSegments(path)
         .build();
@@ -76,7 +80,7 @@ public class Vehicle extends ApiClient {
    *
    * @return VehicleInfo object
    */
-  public VehicleInfo info() {
+  public VehicleInfo info() throws SmartcarException {
     return this.call("", "GET", null, VehicleInfo.class).getData();
   }
 
@@ -85,9 +89,8 @@ public class Vehicle extends ApiClient {
    *
    * @return the vin of the vehicle
    */
-  public String vin() {
-    VehicleVin vehicleVin = this.call("/vin", "GET", null, VehicleVin.class);
-    return vehicleVin.getData().getVin();
+  public String vin() throws SmartcarException {
+    return this.call("/vin", "GET", null, VehicleVin.class).getData().getVin();
   }
 
   /**
@@ -95,9 +98,8 @@ public class Vehicle extends ApiClient {
    *
    * @return the permission of the application
    */
-  public String[] permission() {
-    ApplicationPermission appPermission = this.call("/permissions", "GET", null, ApplicationPermission.class);
-    return appPermission.getData().getPermissions();
+  public String[] permission() throws SmartcarException {
+    return this.call("/permissions", "GET", null, ApplicationPermissions.class).getData().getPermissions();
   }
 
   /**
@@ -112,7 +114,7 @@ public class Vehicle extends ApiClient {
    *
    * @return the odometer of the vehicle
    */
-  public SmartcarResponse odometer() {
+  public SmartcarResponse odometer() throws SmartcarException {
     return this.call("/odometer", "GET", null, VehicleOdometer.class);
   }
 
@@ -121,7 +123,7 @@ public class Vehicle extends ApiClient {
    *
    * @return the location of the vehicle
    */
-  public SmartcarResponse location() {
+  public SmartcarResponse location() throws SmartcarException {
     return this.call("/location", "GET", null, VehicleLocation.class);
   }
 
