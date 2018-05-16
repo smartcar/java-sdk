@@ -10,7 +10,7 @@ public class Vehicle extends ApiClient {
   public enum UnitSystem {
     DEFAULT,
     IMPERIAL,
-    METRIC
+    METRIC,
   }
 
   private static final String URL_API = "https://api.smartcar.com/";
@@ -55,7 +55,7 @@ public class Vehicle extends ApiClient {
    *
    * @throws SmartcarException if the request is unsuccessful
    */
-  private <T extends ApiData> T call(String path, Class<T> type) throws SmartcarException {
+  private <T extends ApiData> T call(String path, String method, @Nullable RequestBody body, Class<T> type) throws SmartcarException {
     HttpUrl url = HttpUrl.parse(Vehicle.URL_API + "/vehicles/" + this.vehicleId).newBuilder()
         .addPathSegments(path)
         .build();
@@ -63,6 +63,7 @@ public class Vehicle extends ApiClient {
         .url(url)
         .header("Authorization", "Bearer " + this.accessToken)
         .addHeader("User-Agent", Vehicle.USER_AGENT)
+        .method(method, body)
         .build();
 
     return Vehicle.execute(request, type);
@@ -77,9 +78,46 @@ public class Vehicle extends ApiClient {
    *
    * @throws SmartcarException if the request is unsuccessful
    */
-  private String call(String path) throws SmartcarException {
+  private String call(String path, String method, @Nullable RequestBody body) throws SmartcarException {
     return this.call(path, ApiData.class).toString();
   }
+
+  /**
+   * Send request to the /info endpoint
+   *
+   * @return VehicleInfo object
+   */
+  public VehicleInfo info() {
+    return this.call("", "GET", null, VehicleInfo);
+  }
+
+  /**
+   * Send request to the /vin endpoint
+   *
+   * @return the vin of the vehicle
+   */
+  public String vin() {
+    VehicleVin vehicleVin = this.call("/vin", "GET", null, VehicleVin);
+    return vehicleVin.getVin();
+  }
+
+  /**
+   * Send request to the /permissions endpoint
+   *
+   * @return the permission of the application
+   */
+  public String[] permission() {
+    ApplicationPermission appPermission = this.call("/permissions", "GET", null, ApplicationPermission);
+    return appPermission.getPermissions();
+  }
+
+  /**
+   * Send request to the /disconnect endpoint
+   */
+  public void disconnect() {
+    this.call("/disconnect", "DELETE", null);
+  }
+
 
   /**
    * Returns the currently stored vehicle ID.
