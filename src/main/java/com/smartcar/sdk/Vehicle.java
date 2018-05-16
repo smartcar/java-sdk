@@ -76,6 +76,21 @@ public class Vehicle extends ApiClient {
   }
 
   /**
+   * Executes an API request under the Vehicles endpoint.
+   *
+   * @param path the path to the sub-endpoint
+   * @param method the method of the request
+   * @param body the body of the request
+   *
+   * @return the response value
+   *
+   * @throws SmartcarException if the request is unsuccessful
+   */
+  private String call(String path, String method, @Nullable RequestBody body) throws SmartcarException {
+    return this.call(path, method, body, ApiData.class).toString();
+  }
+
+  /**
    * Send request to the /info endpoint
    *
    * @return VehicleInfo object
@@ -105,7 +120,7 @@ public class Vehicle extends ApiClient {
   /**
    * Send request to the /disconnect endpoint
    */
-  public void disconnect() {
+  public void disconnect() throws SmartcarException {
     this.call("/disconnect", "DELETE", null);
   }
 
@@ -130,7 +145,7 @@ public class Vehicle extends ApiClient {
   /**
    * Send request to the /security endpoint to unlock a vehicle
    */
-  public void unlock() {
+  public void unlock() throws SmartcarException {
     RequestBody body = new FormBody.Builder()
       .add("action", "UNLOCK")
       .build();
@@ -141,7 +156,7 @@ public class Vehicle extends ApiClient {
   /**
    * Send request to the /security endpoint to lock a vehicle
    */
-  public void lock() {
+  public void lock() throws SmartcarException {
     RequestBody body = new FormBody.Builder()
       .add("action", "LOCK")
       .build();
