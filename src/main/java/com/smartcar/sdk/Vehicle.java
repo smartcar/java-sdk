@@ -1,13 +1,7 @@
 package com.smartcar.sdk;
 
 import com.smartcar.sdk.data.ApiData;
-import com.smartcar.sdk.data.ApplicationPermissions;
-import com.smartcar.sdk.data.VehicleInfo;
-import com.smartcar.sdk.data.VehicleVin;
-import com.sun.istack.internal.Nullable;
-import okhttp3.HttpUrl;
-import okhttp3.Request;
-import okhttp3.RequestBody;
+import okhttp3.*;
 
 /**
  * Smartcar Vehicle API Object
@@ -55,13 +49,15 @@ public class Vehicle extends ApiClient {
    * Executes an API request under the Vehicles endpoint.
    *
    * @param path the path to the sub-endpoint
+   * @param method the method of the request
+   * @param body the body of the request
    * @param type the type into which the response will be parsed
    *
    * @return the parsed response
    *
    * @throws SmartcarException if the request is unsuccessful
    */
-  private <T extends ApiData> T call(String path, String method, @Nullable RequestBody body, Class<T> type) throws SmartcarException {
+  private <T extends ApiData> ApiData call(String path, String method, @Nullable RequestBody body, Class<T> type) throws SmartcarException {
     HttpUrl url = HttpUrl.parse(Vehicle.URL_API + "/vehicles/" + this.vehicleId).newBuilder()
         .addPathSegments(path)
         .build();
@@ -76,25 +72,12 @@ public class Vehicle extends ApiClient {
   }
 
   /**
-   * Executes an API request under the Vehicles endpoint.
-   *
-   * @param path the path to the sub-endpoint
-   *
-   * @return the response value
-   *
-   * @throws SmartcarException if the request is unsuccessful
-   */
-  private String call(String path, String method, @Nullable RequestBody body) throws SmartcarException {
-    return this.call(path, method, body, ApiData.class).toString();
-  }
-
-  /**
    * Send request to the /info endpoint
    *
    * @return VehicleInfo object
    */
-  public VehicleInfo info() throws SmartcarException {
-    return this.call("", "GET", null, VehicleInfo.class);
+  public VehicleInfo info() {
+    return this.call("", "GET", null, VehicleInfo.class).getData();
   }
 
   /**
@@ -102,9 +85,9 @@ public class Vehicle extends ApiClient {
    *
    * @return the vin of the vehicle
    */
-  public String vin() throws SmartcarException {
+  public String vin() {
     VehicleVin vehicleVin = this.call("/vin", "GET", null, VehicleVin.class);
-    return vehicleVin.getVin();
+    return vehicleVin.getData().getVin();
   }
 
   /**
@@ -112,18 +95,33 @@ public class Vehicle extends ApiClient {
    *
    * @return the permission of the application
    */
-  public String[] permissions() throws SmartcarException {
-    ApplicationPermissions appPermissions = this.call("/permissions", "GET", null, ApplicationPermissions.class);
-    return appPermissions.getPermissions();
+  public String[] permission() {
+    ApplicationPermission appPermission = this.call("/permissions", "GET", null, ApplicationPermission.class);
+    return appPermission.getData().getPermissions();
   }
 
   /**
    * Send request to the /disconnect endpoint
    */
-  public void disconnect() throws SmartcarException {
+  public void disconnect() {
     this.call("/disconnect", "DELETE", null);
   }
 
+  /**
+   * Send request to the /odometer endpoint
+   *
+   * @return the odometer of the vehicle
+   */
+  public SmartcarResponse odometer() {
+    return this.call("/odometer", "GET", null, VehicleOdometer.class);
+  }
+
+  /**
+   * Send request to the /location endpoint
+   */
+  public SmartcarResponse location() {
+    return this.call("/location", "GET", null, VehicleLocation.class);
+  }
 
   /**
    * Returns the currently stored vehicle ID.
