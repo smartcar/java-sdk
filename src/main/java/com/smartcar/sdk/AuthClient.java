@@ -2,10 +2,9 @@ package com.smartcar.sdk;
 
 import com.google.gson.*;
 import com.smartcar.sdk.data.Auth;
-import okhttp3.*;
-
 import java.lang.reflect.Type;
 import java.util.Calendar;
+import okhttp3.*;
 
 /**
  * Smartcar OAuth 2.0 Authentication Client

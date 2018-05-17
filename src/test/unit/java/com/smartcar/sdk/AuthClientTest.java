@@ -1,6 +1,8 @@
 package com.smartcar.sdk;
 
 import com.smartcar.sdk.data.Auth;
+
+import java.util.Date;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -8,8 +10,6 @@ import org.powermock.modules.testng.PowerMockTestCase;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
-import java.util.Date;
 
 import static org.mockito.Matchers.any;
 

@@ -2,16 +2,16 @@ package com.smartcar.sdk;
 
 import com.smartcar.sdk.*;
 import com.smartcar.sdk.data.*;
+
+import java.util.Date;
+import java.util.UUID;
+import okhttp3.FormBody;
+import okhttp3.RequestBody;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import okhttp3.FormBody;
-import okhttp3.RequestBody;
-
-import java.util.Date;
-import java.util.UUID;
 
 import static org.mockito.Matchers.*;
 
