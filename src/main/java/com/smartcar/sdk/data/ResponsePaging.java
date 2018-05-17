@@ -4,8 +4,8 @@ package com.smartcar.sdk.data;
  * POJO for the paging object
  */
 public class ResponsePaging extends ApiData {
-  private Int count;
-  private Int offset;
+  private int count;
+  private int offset;
 
   /**
    * Initializes a new instance of ResponsePaging
@@ -13,7 +13,7 @@ public class ResponsePaging extends ApiData {
    * @param count the number of items in the response
    * @param offset the index to start the response list
    */
-  public ResponsePaging(final Int count, final Int offset) {
+  public ResponsePaging(final int count, final int offset) {
     this.count = count;
     this.offset = offset;
   }
@@ -23,7 +23,7 @@ public class ResponsePaging extends ApiData {
    *
    * @return response count
    */
-  public Int getCount() {
+  public int getCount() {
     return this.count;
   }
 
@@ -32,7 +32,7 @@ public class ResponsePaging extends ApiData {
    *
    * @param count response count
    */
-  public void setCount(Int count) {
+  public void setCount(int count) {
     this.count = count;
   }
 
@@ -41,7 +41,7 @@ public class ResponsePaging extends ApiData {
    *
    * @return response offset
    */
-  public Int getOffset() {
+  public int getOffset() {
     return this.offset;
   }
 
@@ -50,7 +50,7 @@ public class ResponsePaging extends ApiData {
    *
    * @param offset response offset
    */
-  public void setOffset(Int offset) {
+  public void setOffset(int offset) {
     this.offset = offset;
   }
 }

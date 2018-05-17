@@ -1,5 +1,6 @@
 package com.smartcar.sdk;
 
+import com.smartcar.sdk.data.Auth;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
