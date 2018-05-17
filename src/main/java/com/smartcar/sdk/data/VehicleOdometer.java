@@ -4,14 +4,14 @@ package com.smartcar.sdk.data;
  * POJO for Smartcar /odometer endpoint
  */
 public class VehicleOdometer extends ApiData {
-  private String distance;
+  private int distance;
 
   /**
    * Initializes a new instance of the VehicleOdometer
    *
    * @param distance odometer distance
    */
-  public VehicleOdometer(final String distance) {
+  public VehicleOdometer(final int distance) {
     this.distance = distance;
   }
 
@@ -20,7 +20,7 @@ public class VehicleOdometer extends ApiData {
    *
    * @return odometer distance
    */
-  public String getDistance() {
+  public int getDistance() {
     return this.distance;
   }
 
@@ -29,7 +29,7 @@ public class VehicleOdometer extends ApiData {
    *
    * @param distance stores the odometer distance
    */
-  public void setDistance(String distance) {
+  public void setDistance(int distance) {
     this.distance = distance;
   }
 }

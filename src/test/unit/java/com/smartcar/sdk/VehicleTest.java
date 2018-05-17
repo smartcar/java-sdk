@@ -1,38 +1,158 @@
 package com.smartcar.sdk;
 
-import com.smartcar.sdk.data.Auth;
+import com.smartcar.sdk.*;
+import com.smartcar.sdk.data.*;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import okhttp3.FormBody;
+import okhttp3.RequestBody;
+
+import java.util.Date;
+import java.util.UUID;
+
+import static org.mockito.Matchers.*;
 
 /**
  * Test Suite: Vehicle
  */
+//@RunWith(PowerMockRunner.class)
+@PrepareForTest(Vehicle.class)
 public class VehicleTest {
+
+  private final String vehicleId = UUID.randomUUID().toString();
+  private final String accessToken = UUID.randomUUID().toString();
+
+  private Vehicle subject;
+
+  @BeforeMethod
+  private void beforeMethod() {
+    this.subject = PowerMockito.spy(new Vehicle(
+      this.vehicleId,
+      this.accessToken
+    ));
+  }
+
   @Test
-  public void testGetAuthUrl() {
-    String clientId = "66f498e1-9447-4333-a0c2-1889909c1b44";
-    String clientSecret = "aef2d2c8-5674-44de-b852-5b4aee143cd5";
-    String redirectUri = "http://localhost:4000/auth";
-    String state = "foobar";
+  public void testInfo() throws Exception {
+    String id = UUID.randomUUID().toString();
+    String make = "MOCK";
+    String model = "model";
+    int year = 2018;
+    VehicleInfo expected = new VehicleInfo(id, make, model, year);
+    SmartcarResponse res = new SmartcarResponse<VehicleInfo>(expected);
 
-    AuthClient authClient = new AuthClient(clientId, clientSecret, redirectUri, true);
+    PowerMockito.doReturn(res)
+      .when(this.subject, "call", "", "GET", null, VehicleInfo.class);
 
-//    Assert.assertEquals(authClient.getAuthUrl(state), "");
+    VehicleInfo info = this.subject.info();
 
-    String code = "21b0f3c0-6f29-431f-ad99-6180d56e2c4f";
+    Assert.assertEquals(info, expected);
+  }
 
-    Auth auth = null;
-    try {
-      auth = authClient.exchangeCode(code);
-    } catch (SmartcarException ex) {
-      System.out.println("Code: " + ex.getStatus());
-      System.out.println("Message: " + ex.getMessage());
-      ex.printStackTrace();
-    }
+  @Test
+  public void testVin() throws Exception {
+    String expectedVin = "2HKRM4H35EH681798";
+    VehicleVin expected = new VehicleVin(expectedVin);
+    SmartcarResponse res = new SmartcarResponse<VehicleVin>(expected);
 
-//    Assert.assertEquals(auth.getAccessToken(), "");
+    PowerMockito.doReturn(res)
+      .when(this.subject, "call", "/vin", "GET", null, VehicleVin.class);
 
-//    String accessToken = auth.getAccessToken();
+    String vin = this.subject.vin();
 
+    Assert.assertEquals(vin, expectedVin);
+  }
 
+  @Test
+  public void testPermission() throws Exception {
+    String[] expectedPermissions = new String[] {"read_odometer"};
+    ResponsePaging paging = new ResponsePaging(10, 0);
+    ApplicationPermissions expected = new ApplicationPermissions(paging, expectedPermissions);
+    SmartcarResponse res = new SmartcarResponse<ApplicationPermissions>(expected);
+
+    PowerMockito.doReturn(res)
+      .when(this.subject, "call", "/permissions", "GET", null, ApplicationPermissions.class);
+
+    String[] permissions = this.subject.permissions();
+
+    Assert.assertEquals(permissions, expectedPermissions);
+  }
+
+  @Test
+  public void testDisconnect() throws Exception {
+
+    ApiData data = new ApiData();
+    SmartcarResponse res = new SmartcarResponse(data);
+
+    PowerMockito.doReturn(res.toString())
+      .when(this.subject, "call", "/disconnect", "DELETE", null);
+
+    this.subject.disconnect();
+  }
+
+  @Test
+  public void testOdometer() throws Exception {
+    int expectedDistance = 1234;
+    VehicleOdometer expected = new VehicleOdometer(expectedDistance);
+    String unitSystem = "metric";
+    Date age = new Date();
+    SmartcarResponse res = new SmartcarResponse<VehicleOdometer>(expected, unitSystem, age);
+
+    PowerMockito.doReturn(res)
+      .when(this.subject, "call", "/odometer", "GET", null, VehicleOdometer.class);
+
+    SmartcarResponse odometer = this.subject.odometer();
+
+    Assert.assertEquals(res, odometer);
+  }
+
+  @Test
+  public void testLocation() throws Exception {
+    double expectedLongitude = 124.3;
+    double expectedLatitude = 431.1;
+    VehicleLocation expected = new VehicleLocation(expectedLongitude, expectedLatitude);
+    String unitSystem = "metric";
+    Date age = new Date();
+    SmartcarResponse res = new SmartcarResponse<VehicleLocation>(expected, unitSystem, age);
+
+    PowerMockito.doReturn(res)
+      .when(this.subject, "call", "/location", "GET", null, VehicleLocation.class);
+
+    SmartcarResponse location = this.subject.location();
+
+    Assert.assertEquals(res, location);
+  }
+
+  @Test
+  public void testUnlock() throws Exception {
+
+    ApiData data = new ApiData();
+    SmartcarResponse res = new SmartcarResponse(data);
+    RequestBody body = new FormBody.Builder()
+      .add("action", "UNLOCK")
+      .build();
+
+    PowerMockito.doReturn(res.toString())
+      .when(this.subject, "call", eq("/security"), eq("POST"), refEq(body));
+
+    this.subject.unlock();
+  }
+
+  @Test
+  public void testLock() throws Exception {
+
+    ApiData data = new ApiData();
+    SmartcarResponse res = new SmartcarResponse(data);
+    RequestBody body = new FormBody.Builder()
+      .add("action", "LOCK")
+      .build();
+
+    PowerMockito.doReturn(res.toString())
+      .when(this.subject, "call", eq("/security"), eq("POST"), refEq(body));
+
+    this.subject.lock();
   }
 }
