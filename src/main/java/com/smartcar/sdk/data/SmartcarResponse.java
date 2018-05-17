@@ -13,7 +13,7 @@ public class SmartcarResponse<T extends ApiData> extends ApiData {
   /**
    * Initializes an instance of SmartcarResponse
    *
-   * @param data ApiData object
+   * @param data Object extending the ApiData
    * @param unitSystem unitSystem of the response
    * @param age age of the response
    */
@@ -21,6 +21,15 @@ public class SmartcarResponse<T extends ApiData> extends ApiData {
     this.data = data;
     this.unitSystem = unitSystem;
     this.age = age;
+  }
+
+  /**
+  * Initializes an instance of SmartcarResponse
+  *
+  * @param data  Object extending the ApiData
+  */
+  public SmartcarResponse(final T data) {
+    this(data, null, null);
   }
 
   /**

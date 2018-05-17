@@ -112,7 +112,7 @@ public class Vehicle extends ApiClient {
    *
    * @return the permission of the application
    */
-  public String[] permission() throws SmartcarException {
+  public String[] permissions() throws SmartcarException {
     return this.call("/permissions", "GET", null, ApplicationPermissions.class).getData().getPermissions();
   }
 
