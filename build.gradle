@@ -42,26 +42,6 @@ sourceSets {
     }
 }
 
-task integration(type: Test) {
-    description = 'Integration tests.'
-    testClassesDirs = sourceSets.integration.output.classesDirs
-    classpath = sourceSets.integration.runtimeClasspath
-
-    useTestNG()
-
-    // Log the results on every run.
-    testLogging {
-        outputs.upToDateWhen {false}
-        showExceptions = true
-        exceptionFormat = 'full'
-        showStackTraces = true
-    }
-
-    afterTest { desc, result ->
-        println "${result.resultType} ${desc.name}"
-    }
-}
-
 test {
     useTestNG()
 
