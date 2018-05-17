@@ -1,7 +1,6 @@
 package com.smartcar.sdk;
 
 import com.smartcar.sdk.data.*;
-import com.sun.istack.internal.Nullable;
 import okhttp3.FormBody;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
@@ -61,7 +60,7 @@ public class Vehicle extends ApiClient {
    *
    * @throws SmartcarException if the request is unsuccessful
    */
-  private <T extends ApiData> SmartcarResponse<T> call(String path, String method, @Nullable RequestBody body, Class<T> type) throws SmartcarException {
+  private <T extends ApiData> SmartcarResponse<T> call(String path, String method, RequestBody body, Class<T> type) throws SmartcarException {
     HttpUrl url = HttpUrl.parse(Vehicle.URL_API + "/vehicles/" + this.vehicleId).newBuilder()
         .addPathSegments(path)
         .build();
@@ -86,7 +85,7 @@ public class Vehicle extends ApiClient {
    *
    * @throws SmartcarException if the request is unsuccessful
    */
-  private String call(String path, String method, @Nullable RequestBody body) throws SmartcarException {
+  private String call(String path, String method, RequestBody body) throws SmartcarException {
     return this.call(path, method, body, ApiData.class).toString();
   }
 
@@ -150,7 +149,7 @@ public class Vehicle extends ApiClient {
       .add("action", "UNLOCK")
       .build();
 
-    this.call("/security", "POST", body)
+    this.call("/security", "POST", body);
   }
 
   /**
@@ -161,7 +160,7 @@ public class Vehicle extends ApiClient {
       .add("action", "LOCK")
       .build();
 
-    this.call("/security", "POST", body)
+    this.call("/security", "POST", body);
   }
 
   /**
