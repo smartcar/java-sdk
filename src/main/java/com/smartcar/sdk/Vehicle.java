@@ -17,8 +17,6 @@ public class Vehicle extends ApiClient {
     METRIC,
   }
 
-  private static final String URL_API = "https://api.smartcar.com/";
-
   private String vehicleId;
   private String accessToken;
   private Vehicle.UnitSystem unitSystem = UnitSystem.DEFAULT;
@@ -50,7 +48,7 @@ public class Vehicle extends ApiClient {
   }
 
   /**
-   * Executes an API request under the Vehicles endpoint.
+   * Executes an API request under the VehicleIds endpoint.
    *
    * @param path the path to the sub-endpoint
    * @param method the method of the request
@@ -76,7 +74,7 @@ public class Vehicle extends ApiClient {
   }
 
   /**
-   * Executes an API request under the Vehicles endpoint.
+   * Executes an API request under the VehicleIds endpoint.
    *
    * @param path the path to the sub-endpoint
    * @param method the method of the request

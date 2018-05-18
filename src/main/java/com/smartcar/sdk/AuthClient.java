@@ -1,10 +1,12 @@
 package com.smartcar.sdk;
 
 import com.google.gson.*;
-import com.smartcar.sdk.data.Auth;
+import com.smartcar.sdk.data.*;
+import okhttp3.*;
+
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Calendar;
-import okhttp3.*;
 
 /**
  * Smartcar OAuth 2.0 Authentication Client
@@ -49,6 +51,86 @@ public class AuthClient extends ApiClient {
   private boolean development;
   public String urlAuthorize = AuthClient.URL_AUTHORIZE;
   public String urlAccessToken = AuthClient.URL_ACCESS_TOKEN;
+
+  /**
+   * Retrieves the user ID of the user authenticated with the specified access
+   * token.
+   *
+   * @param accessToken a valid access token
+   *
+   * @return the corresponding user ID
+   *
+   * @throws SmartcarException if the request is unsuccessful
+   */
+  public static String getUserId(String accessToken) throws SmartcarException {
+    // Build Request
+    Request request = new Request.Builder()
+        .url(HttpUrl.parse(AuthClient.urlApi + "/user"))
+        .header("Authorization", "Bearer " + accessToken)
+        .addHeader("User-Agent", AuthClient.USER_AGENT)
+        .build();
+
+    // Execute Request
+    Response response = AuthClient.execute(request);
+
+    // Parse Response
+    JsonObject json = null;
+
+    try {
+      json = new Gson().fromJson(response.body().string(), JsonObject.class);
+    } catch (IOException ex) {
+      throw new SmartcarException(ex.getMessage());
+    }
+
+    return json.get("id").getAsString();
+  }
+
+  /**
+   * Retrieves all vehicle IDs associated with the authenticated user.
+   *
+   * @param accessToken a valid access token
+   * @param paging paging parameters
+   *
+   * @return the requested vehicle IDs
+   *
+   * @throws SmartcarException if the request is unsuccessful
+   */
+  public static SmartcarResponse getVehicleIds(String accessToken, RequestPaging paging) throws SmartcarException {
+    // Build Request
+    HttpUrl url = HttpUrl.parse(AuthClient.urlApi + "/vehicles").newBuilder()
+        .addQueryParameter("limit", String.valueOf(paging.getLimit()))
+        .addQueryParameter("offset", String.valueOf(paging.getOffset()))
+        .build();
+    Request request = new Request.Builder()
+        .url(url)
+        .header("Authorization", "Bearer " + accessToken)
+        .addHeader("User-Agent", AuthClient.USER_AGENT)
+        .build();
+
+    // Execute Request
+    Response response = AuthClient.execute(request);
+
+    // Parse Response
+    JsonObject json = null;
+
+    try {
+      json = new Gson().fromJson(response.body().string(), JsonObject.class);
+    } catch (IOException ex) {
+      throw new SmartcarException(ex.getMessage());
+    }
+
+    JsonObject jsonPaging = json.get("paging").getAsJsonObject();
+    ResponsePaging responsePaging = new ResponsePaging(jsonPaging.get("count").getAsInt(), jsonPaging.get("offset").getAsInt());
+    JsonArray vehicles = json.get("vehicles").getAsJsonArray();
+    int count = vehicles.size();
+    String[] data = new String[count];
+
+    for (int i = 0; i < count; i++) {
+      data[i] = vehicles.get(i).getAsString();
+    }
+
+    return new SmartcarResponse<VehicleIds>(new VehicleIds(data), responsePaging);
+  }
 
   /**
    * Initializes a new AuthClient.

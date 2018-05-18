@@ -9,6 +9,22 @@ public class SmartcarResponse<T extends ApiData> extends ApiData {
   private T data;
   private String unitSystem;
   private Date age;
+  private ResponsePaging paging;
+
+  /**
+   * Initializes an instance of SmartcarResponse
+   *
+   * @param data Object extending the ApiData
+   * @param unitSystem unitSystem of the response
+   * @param age age of the response
+   * @param paging the paging information included with the response
+   */
+  public SmartcarResponse(final T data, final String unitSystem, final Date age, final ResponsePaging paging) {
+    this.data = data;
+    this.unitSystem = unitSystem;
+    this.age = age;
+    this.paging = paging;
+  }
 
   /**
    * Initializes an instance of SmartcarResponse
@@ -18,9 +34,17 @@ public class SmartcarResponse<T extends ApiData> extends ApiData {
    * @param age age of the response
    */
   public SmartcarResponse(final T data, final String unitSystem, final Date age) {
-    this.data = data;
-    this.unitSystem = unitSystem;
-    this.age = age;
+    this(data, unitSystem, age, null);
+  }
+
+  /**
+   * Initializes an instance of SmartcarResponse
+   *
+   * @param data Object extending the ApiData
+   * @param paging the paging information included with the response
+   */
+  public SmartcarResponse(final T data, final ResponsePaging paging) {
+    this(data, null, null, paging);
   }
 
   /**
