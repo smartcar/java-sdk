@@ -69,4 +69,50 @@ public class SmartcarExceptionTest {
       Assert.assertEquals(ex.getStatus(), testStatus);
     }
   }
+
+  /**
+   * Test that the Status enum returns the expected status code.
+   */
+  @Test
+  public void testGettingStatusCode() {
+    SmartcarException.Status testStatus = SmartcarException.Status.PERMISSION;
+
+    try {
+      throw new SmartcarException(testStatus);
+    }
+    catch (SmartcarException ex) {
+      Assert.assertEquals(ex.getStatus().getCode(), 403);
+    }
+  }
+
+  /**
+   * Test that the Status enum returns the expected status text.
+   */
+  @Test
+  public void testGettingStatusText() {
+    SmartcarException.Status testStatus = SmartcarException.Status.RESOURCE_NOT_FOUND;
+
+    try {
+      throw new SmartcarException(testStatus);
+    }
+    catch (SmartcarException ex) {
+      Assert.assertEquals(ex.getStatus().getText(), "Resource Not Found");
+    }
+  }
+
+  /**
+   * Test that the correct Status is found given an integer code.
+   */
+  @Test
+  public void testGettingKnownStatusForCode() {
+    Assert.assertEquals(SmartcarException.Status.forCode(409), SmartcarException.Status.VEHICLE_STATE);
+  }
+
+  /**
+   * Test that the UNKNOWN Status is found given a smarmy integer code.
+   */
+  @Test
+  public void testGettingUnknownStatusForCode() {
+    Assert.assertEquals(SmartcarException.Status.forCode(1337), SmartcarException.Status.UNKNOWN);
+  }
 }
