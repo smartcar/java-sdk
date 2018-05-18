@@ -1,8 +1,7 @@
 package com.smartcar.sdk;
 
 import com.smartcar.sdk.data.Auth;
-
-import java.util.Date;
+import com.smartcar.sdk.data.SmartcarResponse;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -10,6 +9,8 @@ import org.powermock.modules.testng.PowerMockTestCase;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import java.util.Date;
 
 import static org.mockito.Matchers.any;
 
@@ -250,7 +251,9 @@ public class AuthClientTest extends PowerMockTestCase {
 
     // Mocks
     PowerMockito.spy(ApiClient.class);
-    PowerMockito.doReturn(expected)
+    PowerMockito.doReturn(
+          PowerMockito.spy(new SmartcarResponse<Auth>(expected))
+        )
         .when(ApiClient.class, "execute", any(), any());
 
     // Execute
@@ -285,7 +288,10 @@ public class AuthClientTest extends PowerMockTestCase {
 
     // Mocks
     PowerMockito.spy(ApiClient.class);
-    PowerMockito.doReturn(expected)
+    PowerMockito.spy(SmartcarResponse.class);
+    PowerMockito.doReturn(
+          PowerMockito.spy(new SmartcarResponse<Auth>(expected))
+        )
         .when(ApiClient.class, "execute", any(), any());
 
     // Execute
