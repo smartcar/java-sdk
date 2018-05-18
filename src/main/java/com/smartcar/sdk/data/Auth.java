@@ -28,6 +28,15 @@ public class Auth extends ApiData {
   }
 
   /**
+   * Determines whether or not the current auth token has expired.
+   *
+   * @return whether or not the token has expired
+   */
+  public boolean isExpired() {
+    return !this.expiration.after(new Date());
+  }
+
+  /**
    * Returns the currently stored access token.
    *
    * @return the access token
