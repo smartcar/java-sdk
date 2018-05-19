@@ -107,4 +107,22 @@ public class SmartcarResponse<T extends ApiData> extends ApiData {
   public void setAge(Date age) {
     this.age = age;
   }
+
+  /**
+   * Return paging information
+   *
+   * @return the paging information
+   */
+  public ResponsePaging getPaging() {
+    return this.paging;
+  }
+
+  /**
+   * Stores the paging information
+   *
+   * @param paging the paging information
+   */
+  public void setPaging(ResponsePaging paging) {
+    this.paging = paging;
+  }
 }

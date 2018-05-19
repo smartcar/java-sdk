@@ -1,8 +1,22 @@
 package com.smartcar.sdk;
 
-import com.google.gson.*;
-import com.smartcar.sdk.data.*;
-import okhttp3.*;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.smartcar.sdk.data.Auth;
+import com.smartcar.sdk.data.RequestPaging;
+import com.smartcar.sdk.data.ResponsePaging;
+import com.smartcar.sdk.data.SmartcarResponse;
+import com.smartcar.sdk.data.VehicleIds;
+import okhttp3.Credentials;
+import okhttp3.FormBody;
+import okhttp3.HttpUrl;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -74,12 +88,14 @@ public class AuthClient extends ApiClient {
     Response response = AuthClient.execute(request);
 
     // Parse Response
-    JsonObject json = null;
+    JsonObject json;
 
     try {
       json = new Gson().fromJson(response.body().string(), JsonObject.class);
     } catch (IOException ex) {
       throw new SmartcarException(ex.getMessage());
+    } catch (NullPointerException ex) {
+      throw new SmartcarException("Received an empty response body.");
     }
 
     return json.get("id").getAsString();
@@ -95,7 +111,7 @@ public class AuthClient extends ApiClient {
    *
    * @throws SmartcarException if the request is unsuccessful
    */
-  public static SmartcarResponse getVehicleIds(String accessToken, RequestPaging paging) throws SmartcarException {
+  public static SmartcarResponse<VehicleIds> getVehicleIds(String accessToken, RequestPaging paging) throws SmartcarException {
     // Build Request
     HttpUrl url = HttpUrl.parse(AuthClient.urlApi + "/vehicles").newBuilder()
         .addQueryParameter("limit", String.valueOf(paging.getLimit()))
