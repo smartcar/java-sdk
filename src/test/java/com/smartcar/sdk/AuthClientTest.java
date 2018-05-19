@@ -1,23 +1,57 @@
 package com.smartcar.sdk;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.smartcar.sdk.data.Auth;
+import com.smartcar.sdk.data.RequestPaging;
 import com.smartcar.sdk.data.SmartcarResponse;
+import com.smartcar.sdk.data.VehicleIds;
+import okhttp3.HttpUrl;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.testng.PowerMockTestCase;
-import org.testng.Assert;
+import org.powermock.reflect.Whitebox;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Type;
+import java.util.Calendar;
 import java.util.Date;
 
 import static org.mockito.Matchers.any;
+import static org.powermock.api.mockito.PowerMockito.doReturn;
+import static org.powermock.api.mockito.PowerMockito.mock;
+import static org.powermock.api.mockito.PowerMockito.mockStatic;
+import static org.powermock.api.mockito.PowerMockito.spy;
+import static org.powermock.api.mockito.PowerMockito.when;
+import static org.powermock.api.mockito.PowerMockito.whenNew;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNull;
 
 /**
  * Test Suite: AuthClient
  */
-@PrepareForTest(AuthClient.class)
+@PrepareForTest({
+    AuthClient.class,
+    Gson.class,
+    HttpUrl.class,
+    JsonArray.class,
+    JsonObject.class,
+    Request.class,
+    Response.class,
+    ResponseBody.class
+})
 @PowerMockIgnore("javax.net.ssl.*")
 public class AuthClientTest extends PowerMockTestCase {
   // Sample Constructor Args
@@ -62,6 +96,307 @@ public class AuthClientTest extends PowerMockTestCase {
   }
 
   /**
+   * Tests that a valid user ID is returned.
+   *
+   * @throws Exception when an error occurs
+   */
+  @Test
+  public void testGetUserId() throws Exception {
+    // Setup
+    String expectedUserId = "9c58a58f-579e-4fce-b2fc-53a518271b8c";
+
+    // Mock: okhttp
+    mockStatic(HttpUrl.class);
+    Request.Builder mockBuilder = mock(Request.Builder.class);
+    Request mockRequest = mock(Request.class);
+
+    whenNew(Request.Builder.class).withNoArguments().thenReturn(mockBuilder);
+    when(mockBuilder.url(any(HttpUrl.class))).thenReturn(mockBuilder);
+    when(mockBuilder.header(any(String.class), any(String.class))).thenReturn(mockBuilder);
+    when(mockBuilder.addHeader(any(String.class), any(String.class))).thenReturn(mockBuilder);
+    when(mockBuilder.build()).thenReturn(mockRequest);
+
+    Response mockResponse = mock(Response.class);
+    ResponseBody mockResponseBody = mock(ResponseBody.class);
+
+    when(mockResponse.body()).thenReturn(mockResponseBody);
+    when(mockResponseBody.string()).thenReturn("");
+
+    // Mock: ApiClient.execute()
+    spy(ApiClient.class);
+    doReturn(mockResponse).when(ApiClient.class, "execute", mockRequest);
+
+    // Mock: gson
+    JsonObject mockJson = mock(JsonObject.class);
+    JsonObject mockJsonId = mock(JsonObject.class);
+    Gson mockGson = mock(Gson.class);
+
+    whenNew(Gson.class).withNoArguments().thenReturn(mockGson);
+    when(mockGson.fromJson(any(String.class), any(Class.class))).thenReturn(mockJson);
+    when(mockJson.get("id")).thenReturn(mockJsonId);
+    when(mockJsonId.getAsString()).thenReturn(expectedUserId);
+
+    // Execute
+    String actualUserId = AuthClient.getUserId(this.fakeAccessToken);
+
+    // Assertions
+    assertEquals(actualUserId, expectedUserId);
+  }
+
+  /**
+   * Tests that a SmartcarException is thrown when JSON parsing fails.
+   *
+   * @throws Exception when an error occurs
+   */
+  @Test(expectedExceptions = SmartcarException.class)
+  public void testGetUserIdThrowsSmartcarExceptionWhenParsingFails() throws Exception {
+    // Mock: okhttp
+    mockStatic(HttpUrl.class);
+    Request.Builder mockBuilder = mock(Request.Builder.class);
+    Request mockRequest = mock(Request.class);
+
+    whenNew(Request.Builder.class).withNoArguments().thenReturn(mockBuilder);
+    when(mockBuilder.url(any(HttpUrl.class))).thenReturn(mockBuilder);
+    when(mockBuilder.header(any(String.class), any(String.class))).thenReturn(mockBuilder);
+    when(mockBuilder.addHeader(any(String.class), any(String.class))).thenReturn(mockBuilder);
+    when(mockBuilder.build()).thenReturn(mockRequest);
+
+    Response mockResponse = mock(Response.class);
+    ResponseBody mockResponseBody = mock(ResponseBody.class);
+
+    when(mockResponse.body()).thenReturn(mockResponseBody);
+    when(mockResponseBody.string()).thenThrow(IOException.class);
+
+    // Mock: ApiClient.execute()
+    spy(ApiClient.class);
+    doReturn(mockResponse).when(ApiClient.class, "execute", mockRequest);
+
+    // Execute
+    AuthClient.getUserId(this.fakeAccessToken);
+  }
+
+  /**
+   * Tests that a SmartcarException is thrown when the API response body is
+   * null.
+   *
+   * @throws SmartcarException when an error occurs
+   */
+  @Test(expectedExceptions = SmartcarException.class)
+  public void testGetUserIdThrowsSmartcarExceptionWhenResponseBodyIsEmpty() throws Exception {
+    // Mock: okhttp
+    mockStatic(HttpUrl.class);
+    Request.Builder mockBuilder = mock(Request.Builder.class);
+    Request mockRequest = mock(Request.class);
+
+    whenNew(Request.Builder.class).withNoArguments().thenReturn(mockBuilder);
+    when(mockBuilder.url(any(HttpUrl.class))).thenReturn(mockBuilder);
+    when(mockBuilder.header(any(String.class), any(String.class))).thenReturn(mockBuilder);
+    when(mockBuilder.addHeader(any(String.class), any(String.class))).thenReturn(mockBuilder);
+    when(mockBuilder.build()).thenReturn(mockRequest);
+
+    Response mockResponse = mock(Response.class);
+
+    when(mockResponse.body()).thenThrow(NullPointerException.class);
+
+    // Mock: ApiClient.execute()
+    spy(ApiClient.class);
+    doReturn(mockResponse).when(ApiClient.class, "execute", mockRequest);
+
+    // Execute
+    AuthClient.getUserId(this.fakeAccessToken);
+  }
+
+  /**
+   * Tests the expected vehicle IDs are returned.
+   *
+   * @throws Exception when an error occurs
+   */
+  @Test
+  public void testGetVehicleIds() throws Exception {
+    // Setup
+    String[] expectedVehicleIds = new String[]{
+        "9f3a9f2b-1ee2-41ea-a1ae-a06a527282ad",
+        "219fac76-40c7-401d-92b5-d3a1f85bb89e",
+        "c66f9e9d-08f1-4050-bec5-06e4ed677305",
+        "33e10fcb-71f7-4661-94ad-6c87e1f5a2fe"
+    };
+    int expectedCount = expectedVehicleIds.length;
+    int expectedOffset = 0;
+
+    // Mock
+    RequestPaging mockRequestPaging = mock(RequestPaging.class);
+
+    // Mock: okhttp
+    mockStatic(HttpUrl.class);
+    HttpUrl.Builder mockUrlBuilder = mock(HttpUrl.Builder.class);
+    HttpUrl mockUrl = mock(HttpUrl.class);
+
+    when(HttpUrl.parse(any(String.class))).thenReturn(mockUrl);
+    when(mockUrl.newBuilder()).thenReturn(mockUrlBuilder);
+    when(mockUrlBuilder.addQueryParameter(any(String.class), any(String.class))).thenReturn(mockUrlBuilder);
+    when(mockUrlBuilder.build()).thenReturn(mockUrl);
+
+    Request.Builder mockRequestBuilder = mock(Request.Builder.class);
+    Request mockRequest = mock(Request.class);
+
+    whenNew(Request.Builder.class).withNoArguments().thenReturn(mockRequestBuilder);
+    when(mockRequestBuilder.url(any(HttpUrl.class))).thenReturn(mockRequestBuilder);
+    when(mockRequestBuilder.header(any(String.class), any(String.class))).thenReturn(mockRequestBuilder);
+    when(mockRequestBuilder.addHeader(any(String.class), any(String.class))).thenReturn(mockRequestBuilder);
+    when(mockRequestBuilder.build()).thenReturn(mockRequest);
+
+    Response mockResponse = mock(Response.class);
+    ResponseBody mockResponseBody = mock(ResponseBody.class);
+
+    when(mockResponse.body()).thenReturn(mockResponseBody);
+    when(mockResponseBody.string()).thenReturn("");
+
+    // Mock: ApiClient.execute()
+    spy(ApiClient.class);
+    doReturn(mockResponse).when(ApiClient.class, "execute", mockRequest);
+
+    // Mock: gson
+    Gson mockGson = mock(Gson.class);
+    JsonObject mockJsonBody = mock(JsonObject.class);
+    JsonElement mockJsonElementPaging = mock(JsonElement.class);
+    JsonObject mockJsonPaging = mock(JsonObject.class);
+    JsonElement mockJsonElementCount = mock(JsonElement.class);
+    JsonElement mockJsonElementOffset = mock(JsonElement.class);
+    JsonElement mockJsonElementVehicles = mock(JsonElement.class);
+    JsonArray mockJsonArrayVehicles = mock(JsonArray.class);
+
+    whenNew(Gson.class).withNoArguments().thenReturn(mockGson);
+    when(mockGson.fromJson(any(String.class), any(Class.class))).thenReturn(mockJsonBody);
+
+    when(mockJsonBody.get("paging")).thenReturn(mockJsonElementPaging);
+    when(mockJsonElementPaging.getAsJsonObject()).thenReturn(mockJsonPaging);
+
+    when(mockJsonPaging.get("count")).thenReturn(mockJsonElementCount);
+    when(mockJsonElementCount.getAsInt()).thenReturn(expectedCount);
+
+    when(mockJsonPaging.get("offset")).thenReturn(mockJsonElementOffset);
+    when(mockJsonElementOffset.getAsInt()).thenReturn(expectedOffset);
+
+    when(mockJsonBody.get("vehicles")).thenReturn(mockJsonElementVehicles);
+    when(mockJsonElementVehicles.getAsJsonArray()).thenReturn(mockJsonArrayVehicles);
+    when(mockJsonArrayVehicles.size()).thenReturn(expectedCount);
+
+    JsonElement[] mockJsonElements = new JsonElement[expectedCount];
+
+    for(int i = 0; i < expectedCount; i++) {
+      mockJsonElements[i] = mock(JsonElement.class);
+
+      when(mockJsonElements[i].getAsString()).thenReturn(expectedVehicleIds[i]);
+      when(mockJsonArrayVehicles.get(i)).thenReturn(mockJsonElements[i]);
+    }
+
+    // Execute
+    SmartcarResponse<VehicleIds> actual = AuthClient.getVehicleIds(this.fakeAccessToken, mockRequestPaging);
+
+    // Assert
+    assertEquals(actual.getData().getVehicleIds(), expectedVehicleIds);
+    assertEquals(actual.getPaging().getCount(), expectedCount);
+    assertEquals(actual.getPaging().getOffset(), expectedOffset);
+    assertNull(actual.getAge());
+    assertNull(actual.getUnitSystem());
+  }
+
+  /**
+   * Tests that a SmartcarException is thrown when JSON parsing fails.
+   *
+   * @throws Exception when an error occurs
+   */
+  @Test(expectedExceptions = SmartcarException.class)
+  public void testGetVehicleIdsThrowsSmartcarExceptionWhenParsingFails() throws Exception {
+    // Mock
+    RequestPaging mockRequestPaging = mock(RequestPaging.class);
+
+    // Mock: okhttp
+    mockStatic(HttpUrl.class);
+    HttpUrl.Builder mockUrlBuilder = mock(HttpUrl.Builder.class);
+    HttpUrl mockUrl = mock(HttpUrl.class);
+
+    when(HttpUrl.parse(any(String.class))).thenReturn(mockUrl);
+    when(mockUrl.newBuilder()).thenReturn(mockUrlBuilder);
+    when(mockUrlBuilder.addQueryParameter(any(String.class), any(String.class))).thenReturn(mockUrlBuilder);
+    when(mockUrlBuilder.build()).thenReturn(mockUrl);
+
+    Request.Builder mockRequestBuilder = mock(Request.Builder.class);
+    Request mockRequest = mock(Request.class);
+
+    whenNew(Request.Builder.class).withNoArguments().thenReturn(mockRequestBuilder);
+    when(mockRequestBuilder.url(any(HttpUrl.class))).thenReturn(mockRequestBuilder);
+    when(mockRequestBuilder.header(any(String.class), any(String.class))).thenReturn(mockRequestBuilder);
+    when(mockRequestBuilder.addHeader(any(String.class), any(String.class))).thenReturn(mockRequestBuilder);
+    when(mockRequestBuilder.build()).thenReturn(mockRequest);
+
+    Response mockResponse = mock(Response.class);
+    ResponseBody mockResponseBody = mock(ResponseBody.class);
+
+    when(mockResponse.body()).thenReturn(mockResponseBody);
+    when(mockResponseBody.string()).thenThrow(IOException.class);
+
+    // Mock: ApiClient.execute()
+    spy(ApiClient.class);
+    doReturn(mockResponse).when(ApiClient.class, "execute", mockRequest);
+
+    // Execute
+    AuthClient.getVehicleIds(this.fakeAccessToken, mockRequestPaging);
+  }
+
+  /**
+   * Tests that the custom Auth deserializer used by gson produces the expected
+   * Auth instance with the correct values.
+   *
+   * @throws IllegalAccessException if there is a problem accessing the custom deserializer from this scope
+   * @throws InvocationTargetException when an error occurs inside the custom deserializer
+   * @throws InstantiationException if the custom deserializer cannot be instantiated
+   * @throws ClassNotFoundException if the custom deserializer cannot be found
+   */
+  @Test
+  public void testAuthCustomDeserializer() throws IllegalAccessException, InvocationTargetException, InstantiationException, ClassNotFoundException {
+    // Setup
+    Class clazz = Whitebox.getInnerClassType(AuthClient.class, "AuthDeserializer");
+    Constructor constructor = Whitebox.getConstructor(clazz, AuthClient.class);
+    JsonDeserializer<Auth> authDeserializer = (JsonDeserializer<Auth>) constructor.newInstance(this.subject);
+
+    // Mock: JsonElement
+    JsonElement mockJson = mock(JsonElement.class);
+    JsonObject mockJsonObject = mock(JsonObject.class);
+    JsonObject mockJsonExpiresIn = mock(JsonObject.class);
+    JsonObject mockJsonAccessToken = mock(JsonObject.class);
+    JsonObject mockJsonRefreshToken = mock(JsonObject.class);
+
+    when(mockJson.getAsJsonObject()).thenReturn(mockJsonObject);
+    when(mockJsonObject.get("expires_in")).thenReturn(mockJsonExpiresIn);
+    when(mockJsonExpiresIn.getAsInt()).thenReturn(10);
+    when(mockJsonObject.get("access_token")).thenReturn(mockJsonAccessToken);
+    when(mockJsonAccessToken.getAsString()).thenReturn(this.fakeAccessToken);
+    when(mockJsonObject.get("refresh_token")).thenReturn(mockJsonRefreshToken);
+    when(mockJsonRefreshToken.getAsString()).thenReturn(this.fakeRefreshToken);
+
+    // Mock: Calendar
+    mockStatic(Calendar.class);
+    Calendar mockExpiration = mock(Calendar.class);
+
+    when(Calendar.getInstance()).thenReturn(mockExpiration);
+    when(mockExpiration.getTime()).thenReturn(this.fakeExpiration);
+
+    // Mock: Unused Parameters
+    Type mockTypeOfT = mock(Type.class);
+    JsonDeserializationContext mockContext = mock(JsonDeserializationContext.class);
+
+    // Execute Test
+    Auth actualAuth = authDeserializer.deserialize(mockJson, mockTypeOfT, mockContext);
+
+    // Assertions
+    assertEquals(actualAuth.getAccessToken(), this.fakeAccessToken);
+    assertEquals(actualAuth.getRefreshToken(), this.fakeRefreshToken);
+    assertEquals(actualAuth.getExpiration(), this.fakeExpiration);
+    assertEquals(actualAuth.getRefreshExpiration(), this.fakeExpiration);
+  }
+
+  /**
    * Tests the constructor providing all required and optional arguments.
    */
   @Test
@@ -81,7 +416,7 @@ public class AuthClientTest extends PowerMockTestCase {
         "&scope=read_vehicle_info%20read_location%20read_odometer" +
         "&mock=true";
 
-    Assert.assertEquals(testSubject.getAuthUrl(), expectedAuthUrl);
+    assertEquals(testSubject.getAuthUrl(), expectedAuthUrl);
   }
 
   /**
@@ -103,7 +438,7 @@ public class AuthClientTest extends PowerMockTestCase {
         "&approval_prompt=auto" +
         "&mock=true";
 
-    Assert.assertEquals(testSubject.getAuthUrl(), expectedAuthUrl);
+    assertEquals(testSubject.getAuthUrl(), expectedAuthUrl);
   }
 
   /**
@@ -125,7 +460,7 @@ public class AuthClientTest extends PowerMockTestCase {
         "&approval_prompt=auto" +
         "&scope=read_vehicle_info%20read_location%20read_odometer";
 
-    Assert.assertEquals(testSubject.getAuthUrl(), expectedAuthUrl);
+    assertEquals(testSubject.getAuthUrl(), expectedAuthUrl);
   }
 
   /**
@@ -145,7 +480,7 @@ public class AuthClientTest extends PowerMockTestCase {
         "&redirect_uri=" + this.sampleRedirectUriEncoded +
         "&approval_prompt=auto";
 
-    Assert.assertEquals(testSubject.getAuthUrl(), expectedAuthUrl);
+    assertEquals(testSubject.getAuthUrl(), expectedAuthUrl);
   }
 
   /**
@@ -167,7 +502,7 @@ public class AuthClientTest extends PowerMockTestCase {
         "&scope=read_vehicle_info%20read_location%20read_odometer" +
         "&mock=true";
 
-    Assert.assertEquals(actualAuthUrl, expectedAuthUrl);
+    assertEquals(actualAuthUrl, expectedAuthUrl);
   }
 
   /**
@@ -186,7 +521,7 @@ public class AuthClientTest extends PowerMockTestCase {
         "&scope=read_vehicle_info%20read_location%20read_odometer" +
         "&mock=true";
 
-    Assert.assertEquals(actualAuthUrl, expectedAuthUrl);
+    assertEquals(actualAuthUrl, expectedAuthUrl);
   }
 
   /**
@@ -204,7 +539,7 @@ public class AuthClientTest extends PowerMockTestCase {
         "&scope=read_vehicle_info%20read_location%20read_odometer" +
         "&mock=true";
 
-    Assert.assertEquals(actualAuthUrl, expectedAuthUrl);
+    assertEquals(actualAuthUrl, expectedAuthUrl);
   }
 
   /**
@@ -222,7 +557,7 @@ public class AuthClientTest extends PowerMockTestCase {
         "&scope=read_vehicle_info%20read_location%20read_odometer" +
         "&mock=true";
 
-    Assert.assertEquals(actualAuthUrl, expectedAuthUrl);
+    assertEquals(actualAuthUrl, expectedAuthUrl);
   }
 
   /**
@@ -234,7 +569,7 @@ public class AuthClientTest extends PowerMockTestCase {
   @Test
   public void testExchangeCode() throws Exception {
     // Setup
-    AuthClient testSubject = PowerMockito.spy(new AuthClient(
+    AuthClient testSubject = spy(new AuthClient(
         this.sampleClientId,
         this.sampleClientSecret,
         this.sampleRedirectUri,
@@ -250,9 +585,9 @@ public class AuthClientTest extends PowerMockTestCase {
     );
 
     // Mocks
-    PowerMockito.spy(ApiClient.class);
+    spy(ApiClient.class);
     PowerMockito.doReturn(
-          PowerMockito.spy(new SmartcarResponse<Auth>(expected))
+          spy(new SmartcarResponse<Auth>(expected))
         )
         .when(ApiClient.class, "execute", any(), any());
 
@@ -260,7 +595,7 @@ public class AuthClientTest extends PowerMockTestCase {
     Auth actual = testSubject.exchangeCode(this.sampleCode);
 
     // Assertions
-    Assert.assertEquals(actual, expected);
+    assertEquals(actual, expected);
   }
 
   /**
@@ -272,7 +607,7 @@ public class AuthClientTest extends PowerMockTestCase {
   @Test
   public void testExchangeRefreshToken() throws Exception {
     // Setup
-    AuthClient testSubject = PowerMockito.spy(new AuthClient(
+    AuthClient testSubject = spy(new AuthClient(
         this.sampleClientId,
         this.sampleClientSecret,
         this.sampleRedirectUri,
@@ -287,10 +622,10 @@ public class AuthClientTest extends PowerMockTestCase {
         this.fakeRefreshExpiration);
 
     // Mocks
-    PowerMockito.spy(ApiClient.class);
-    PowerMockito.spy(SmartcarResponse.class);
+    spy(ApiClient.class);
+    spy(SmartcarResponse.class);
     PowerMockito.doReturn(
-          PowerMockito.spy(new SmartcarResponse<Auth>(expected))
+          spy(new SmartcarResponse<Auth>(expected))
         )
         .when(ApiClient.class, "execute", any(), any());
 
@@ -298,6 +633,6 @@ public class AuthClientTest extends PowerMockTestCase {
     Auth actual = testSubject.exchangeRefreshToken(this.sampleRefreshToken);
 
     // Assertions
-    Assert.assertEquals(actual, expected);
+    assertEquals(actual, expected);
   }
 }
