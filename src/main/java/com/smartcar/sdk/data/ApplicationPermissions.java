@@ -48,7 +48,7 @@ public class ApplicationPermissions extends ApiData {
   /**
    * Stores the application permissions
    *
-   * @param application permissions
+   * @param permissions application permissions
    */
   public void setPermissions(String[] permissions) {
     this.permissions = permissions;
