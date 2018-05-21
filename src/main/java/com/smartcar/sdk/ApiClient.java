@@ -57,6 +57,7 @@ abstract class ApiClient {
    * Sends the specified request, parsing the response into the specified type.
    * Wraps the request with the unitSystem and age meta data.
    *
+   * @param <T> the data container for the parsed response JSON
    * @param request the desired request to transmit
    * @param dataType the type into which the response will be parsed
    *

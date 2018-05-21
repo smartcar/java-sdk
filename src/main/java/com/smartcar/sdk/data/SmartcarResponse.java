@@ -103,6 +103,8 @@ public class SmartcarResponse<T extends ApiData> extends ApiData {
 
   /**
    * Stores the age of the response
+   *
+   * @param age the age of the response
    */
   public void setAge(Date age) {
     this.age = age;

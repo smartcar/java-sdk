@@ -92,6 +92,8 @@ public class Vehicle extends ApiClient {
    * Send request to the /info endpoint
    *
    * @return VehicleInfo object
+   *
+   * @throws SmartcarException if the request is unsuccessful
    */
   public VehicleInfo info() throws SmartcarException {
     return this.call("", "GET", null, VehicleInfo.class).getData();
@@ -101,6 +103,8 @@ public class Vehicle extends ApiClient {
    * Send request to the /vin endpoint
    *
    * @return the vin of the vehicle
+   *
+   * @throws SmartcarException if the request is unsuccessful
    */
   public String vin() throws SmartcarException {
     return this.call("/vin", "GET", null, VehicleVin.class).getData().getVin();
@@ -110,6 +114,8 @@ public class Vehicle extends ApiClient {
    * Send request to the /permissions endpoint
    *
    * @return the permission of the application
+   *
+   * @throws SmartcarException if the request is unsuccessful
    */
   public String[] permissions() throws SmartcarException {
     return this.call("/permissions", "GET", null, ApplicationPermissions.class).getData().getPermissions();
@@ -117,6 +123,8 @@ public class Vehicle extends ApiClient {
 
   /**
    * Send request to the /disconnect endpoint
+   *
+   * @throws SmartcarException if the request is unsuccessful
    */
   public void disconnect() throws SmartcarException {
     this.call("/disconnect", "DELETE", null);
@@ -126,6 +134,8 @@ public class Vehicle extends ApiClient {
    * Send request to the /odometer endpoint
    *
    * @return the odometer of the vehicle
+   *
+   * @throws SmartcarException if the request is unsuccessful
    */
   public SmartcarResponse odometer() throws SmartcarException {
     return this.call("/odometer", "GET", null, VehicleOdometer.class);
@@ -135,6 +145,8 @@ public class Vehicle extends ApiClient {
    * Send request to the /location endpoint
    *
    * @return the location of the vehicle
+   *
+   * @throws SmartcarException if the request is unsuccessful
    */
   public SmartcarResponse location() throws SmartcarException {
     return this.call("/location", "GET", null, VehicleLocation.class);
@@ -142,6 +154,8 @@ public class Vehicle extends ApiClient {
 
   /**
    * Send request to the /security endpoint to unlock a vehicle
+   *
+   * @throws SmartcarException if the request is unsuccessful
    */
   public void unlock() throws SmartcarException {
     RequestBody body = new FormBody.Builder()
@@ -153,6 +167,8 @@ public class Vehicle extends ApiClient {
 
   /**
    * Send request to the /security endpoint to lock a vehicle
+   *
+   * @throws SmartcarException if the request is unsuccessful
    */
   public void lock() throws SmartcarException {
     RequestBody body = new FormBody.Builder()

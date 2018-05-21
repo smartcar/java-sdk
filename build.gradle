@@ -1,5 +1,5 @@
 group 'com.smartcar'
-version '0.0.0'
+version '1.0.0'
 
 apply plugin: 'java'
 apply plugin: 'jacoco'
@@ -19,6 +19,11 @@ dependencies {
     testCompile 'org.json:json:20160810'
     testCompile 'org.powermock:powermock-release-with-testng-mockito-dependencies:1.6.2'
     testCompile 'org.testng:testng:6.9.12'
+}
+
+javadoc {
+    source = sourceSets.main.allJava
+    classpath = configurations.compile
 }
 
 test {
