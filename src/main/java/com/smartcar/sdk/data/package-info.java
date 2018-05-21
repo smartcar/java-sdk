@@ -1,4 +1,4 @@
 /**
- * Each POJO represents the parsed response for a specific sub-endpoint.
+ * Data POJOs representing parsed responses from Smartcar endpoints.
  */
 package com.smartcar.sdk.data;
