@@ -93,10 +93,13 @@ bintray {
         userOrg = bintrayOrg
         desc = description
         websiteUrl = developerWebsite
+        issueTrackerUrl = developerIssues
         vcsUrl = vcsUrl
         licenses = [licenseId]
         publish = true
         publicDownloadNumbers = true
+        githubRepo = vcsGithubRepo
+        githubReleaseNotesFile = vcsGithubReadme
         version {
             name = version
             released = new Date()
