@@ -1,8 +1,11 @@
-group 'com.smartcar'
-version '1.0.0'
+plugins {
+    id "com.jfrog.bintray" version "1.7.3"
+}
 
 apply plugin: 'java'
+apply plugin: 'java-library'
 apply plugin: 'jacoco'
+apply plugin: 'maven-publish'
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
@@ -24,6 +27,31 @@ dependencies {
 javadoc {
     source = sourceSets.main.allJava
     classpath = configurations.compile
+
+    options.header = project.name
+    options.windowTitle = "${project.name} - ${project.version}"
+}
+
+jar {
+    manifest {
+        attributes('Implementation-Title': project.name,
+                   'Implementation-Version': project.version)
+    }
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'docs'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
 }
 
 test {
@@ -50,5 +78,36 @@ jacocoTestReport {
     reports {
         html.enabled = true
         xml.enabled = true
+    }
+}
+
+bintray {
+    user = bintrayUser
+    key = bintrayKey
+
+    configurations = ['archives']
+
+    pkg {
+        repo = bintrayRepo
+        name = name
+        userOrg = bintrayOrg
+        desc = description
+        websiteUrl = developerWebsite
+        vcsUrl = vcsUrl
+        licenses = [licenseId]
+        publish = true
+        publicDownloadNumbers = true
+        version {
+            name = version
+            released = new Date()
+        }
+    }
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+        }
     }
 }
