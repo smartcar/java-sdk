@@ -81,6 +81,12 @@ jacocoTestReport {
     }
 }
 
+task setVersion {
+    dolast {
+
+    }
+}
+
 bintray {
     user = bintrayUser
     key = bintrayKey
@@ -94,9 +100,9 @@ bintray {
         desc = libDescription
         websiteUrl = developerWebsite
         issueTrackerUrl = developerIssues
-        vcsUrl = vcsUrl
+        vcsUrl = vcsRepoUrl
         publicDownloadNumbers = true
-        githubRepo = vcsGithubRepo
+//        githubRepo = vcsGithubRepo
         version {
             name = libVersion
             released = new Date()
@@ -130,7 +136,7 @@ publishing {
                         appendNode('name', developerName).parent().
                         appendNode('email', developerEmail)
                 root.appendNode('scm').
-                    appendNode('url', vcsUrl).parent()
+                    appendNode('url', vcsRepoUrl).parent()
             }
         }
     }
