@@ -1,5 +1,5 @@
 plugins {
-    id "com.jfrog.bintray" version "1.7.3"
+    id "com.jfrog.bintray" version "1.8.0"
 }
 
 apply plugin: 'java'
@@ -84,24 +84,21 @@ jacocoTestReport {
 bintray {
     user = bintrayUser
     key = bintrayKey
-
-    configurations = ['archives']
-
+    publish = true
+    publications = ['SmartcarPublication']
     pkg {
         repo = bintrayRepo
-        name = name
+        name = libName
         userOrg = bintrayOrg
-        desc = description
+        licenses = [licenseId]
+        desc = libDescription
         websiteUrl = developerWebsite
         issueTrackerUrl = developerIssues
         vcsUrl = vcsUrl
-        licenses = [licenseId]
-        publish = true
         publicDownloadNumbers = true
         githubRepo = vcsGithubRepo
-        githubReleaseNotesFile = vcsGithubReadme
         version {
-            name = version
+            name = libVersion
             released = new Date()
         }
     }
@@ -109,8 +106,32 @@ bintray {
 
 publishing {
     publications {
-        maven(MavenPublication) {
+        SmartcarPublication(MavenPublication) {
             from components.java
+            artifact sourcesJar
+            artifact javadocJar
+            groupId libGroup
+            artifactId libName
+            version libVersion
+            pom.withXml {
+                def root = asNode()
+
+                root.appendNode('name', libName)
+                root.appendNode('description', libDescription)
+                root.appendNode('url', libUrl)
+                root.appendNode('licenses').
+                    appendNode('license').
+                        appendNode('name', licenseName).parent().
+                        appendNode('url', licenseUrl).parent().
+                        appendNode('distribution', 'repo')
+                root.appendNode('developers').
+                    appendNode('developer').
+                        appendNode('id', developerId).parent().
+                        appendNode('name', developerName).parent().
+                        appendNode('email', developerEmail)
+                root.appendNode('scm').
+                    appendNode('url', vcsUrl).parent()
+            }
         }
     }
 }
