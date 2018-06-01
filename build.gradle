@@ -81,10 +81,14 @@ jacocoTestReport {
     }
 }
 
-task setVersion {
-    dolast {
+task markdown(type: Copy) {
+    from './'
+    into './'
+    include '*.tpl'
+    rename '^(.*)\\.tpl$', '$1.md'
+    expand(libGroup: libGroup, libName: libName, libVersion: libVersion)
 
-    }
+    filteringCharset = 'UTF-8'
 }
 
 bintray {
