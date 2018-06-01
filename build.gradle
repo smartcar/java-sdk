@@ -87,7 +87,6 @@ task markdown(type: Copy) {
     include '*.tpl'
     rename '^(.*)\\.tpl$', '$1.md'
     expand(libGroup: libGroup, libName: libName, libVersion: libVersion)
-
     filteringCharset = 'UTF-8'
 }
 
