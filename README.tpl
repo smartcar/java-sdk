@@ -11,22 +11,22 @@ download links are also provided below.
 
 ### Gradle
 ```groovy
-compile "com.smartcar.sdk:java-sdk:1.0.0"
+compile "${libGroup}:${libName}:${libVersion}"
 ```
 
 ### Maven
 ```xml
 <dependency>
-  <groupId>com.smartcar.sdk</groupId>
-  <artifactId>java-sdk</artifactId>
-  <version>1.0.0</version>
+  <groupId>${libGroup}</groupId>
+  <artifactId>${libName}</artifactId>
+  <version>${libVersion}</version>
 </dependency>
 ```
 
 ### Jar Direct Download
-* [java-sdk-1.0.0.jar](https://bintray.com/smartcar/library/download_file?file_path=com%2Fsmartcar%2Fsdk%2Fjava-sdk%2F1.0.0%2Fjava-sdk-1.0.0.jar)
-* [java-sdk-1.0.0-sources.jar](https://bintray.com/smartcar/library/download_file?file_path=com%2Fsmartcar%2Fsdk%2Fjava-sdk%2F1.0.0%2Fjava-sdk-1.0.0-sources.jar)
-* [java-sdk-1.0.0-docs.jar](https://bintray.com/smartcar/library/download_file?file_path=com%2Fsmartcar%2Fsdk%2Fjava-sdk%2F1.0.0%2Fjava-sdk-1.0.0-docs.jar)
+* [${libName}-${libVersion}.jar](https://bintray.com/smartcar/library/download_file?file_path=com%2Fsmartcar%2Fsdk%2Fjava-sdk%2F1.0.0%2Fjava-sdk-${libVersion}.jar)
+* [${libName}-${libVersion}-sources.jar](https://bintray.com/smartcar/library/download_file?file_path=com%2Fsmartcar%2Fsdk%2Fjava-sdk%2F1.0.0%2Fjava-sdk-${libVersion}-sources.jar)
+* [${libName}-${libVersion}-docs.jar](https://bintray.com/smartcar/library/download_file?file_path=com%2Fsmartcar%2Fsdk%2Fjava-sdk%2F1.0.0%2Fjava-sdk-${libVersion}-docs.jar)
 
 
 ## Usage
