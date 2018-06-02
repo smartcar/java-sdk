@@ -118,9 +118,9 @@ start making requests to vehicles.
 [1]: https://tools.ietf.org/html/rfc6749#section-1.3.1
 [2]: https://tools.ietf.org/html/rfc6749
 
-[smartcar-developer]: https://developer.smartcar.com/
+[smartcar-developer]: https://developer.smartcar.com
 [smartcar-docs-api]: https://smartcar.com/docs
-[smartcar-sdk-javadoc]: https://developer.smartcar.com/sdk/java/javadoc
+[smartcar-sdk-javadoc]: https://smartcar.github.io/java-sdk
 
 [ci-image]: https://travis-ci.com/smartcar/java-sdk.svg?token=jMbuVtXPGeJMPdsn7RQ5&branch=master
 [ci-url]: https://travis-ci.com/smartcar/java-sdk
