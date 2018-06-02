@@ -84,8 +84,8 @@ jacocoTestReport {
 task markdown(type: Copy) {
     from './'
     into './'
-    include '*.tpl'
-    rename '^(.*)\\.tpl$', '$1.md'
+    include '*.mdt'
+    rename '^(.*)\\.mdt$', '$1.md'
     expand(libGroup: libGroup, libName: libName, libVersion: libVersion)
     filteringCharset = 'UTF-8'
 }
