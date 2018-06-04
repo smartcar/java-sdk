@@ -52,7 +52,7 @@ public class VehicleInfo extends ApiData {
   }
 
   /**
-   * Stores the vehicle getMake
+   * Stores the vehicle make
    *
    * @param make make of the vehicle
    */

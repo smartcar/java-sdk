@@ -46,11 +46,14 @@ public class AuthClient extends ApiClient {
       Calendar expiration = Calendar.getInstance();
       expiration.add(Calendar.SECOND, jsonObject.get("expires_in").getAsInt());
 
+      Calendar refreshExpiration = Calendar.getInstance();
+      refreshExpiration.add(Calendar.DAY, 60);
+
       return new Auth(
           jsonObject.get("access_token").getAsString(),
           jsonObject.get("refresh_token").getAsString(),
           expiration.getTime(),
-          expiration.getTime()
+          refreshExpiration.getTime()
       );
     }
   }
