@@ -19,6 +19,7 @@ public class SmartcarException extends java.lang.Exception {
 
     private final int code;
     private final String text;
+    private Status status;
 
     /**
      * Initializes a new Status enum.
@@ -68,8 +69,6 @@ public class SmartcarException extends java.lang.Exception {
       return Status.UNKNOWN;
     }
   }
-
-  private Status status;
 
   /**
    * Initializes a new Smartcar API exception with default values.
