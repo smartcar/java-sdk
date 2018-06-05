@@ -88,7 +88,7 @@ start making requests to vehicles.
     String[] vehicleIds = vehicleIdsResponse.getData().getVehicleIds();
     ```
 
-2.  The `/vehicles/:id` endpoint is accessed using an instance of `Vehicle`:
+2.  Create an instance of `Vehicle`:
 
     ```java
     Vehicle vehicle = new Vehicle(vehicleIds[0], auth.getAccessToken());
