@@ -21,6 +21,7 @@ import okhttp3.Response;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Smartcar OAuth 2.0 Authentication Client
@@ -166,6 +167,17 @@ public class AuthClient extends ApiClient {
    */
   public static SmartcarResponse<VehicleIds> getVehicleIds(String accessToken) throws SmartcarException {
     return AuthClient.getVehicleIds(accessToken, null);
+  }
+
+  /**
+   * Convenience method for determining if an auth token expiration has passed.
+   *
+   * @param expiration the expiration date of the token
+   *
+   * @return whether or not the token has expired
+   */
+  public static boolean isExpired(Date expiration) {
+    return !expiration.after(new Date());
   }
 
   /**
