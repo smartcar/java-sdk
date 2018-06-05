@@ -27,6 +27,7 @@ dependencies {
 javadoc {
     source = sourceSets.main.allJava
     classpath = configurations.compile
+    destinationDir = file('docs')
 
     options.header = project.name
     options.windowTitle = "${project.name} - ${project.version}"
