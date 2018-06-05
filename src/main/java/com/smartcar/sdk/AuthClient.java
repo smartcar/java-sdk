@@ -62,7 +62,7 @@ public class AuthClient extends ApiClient {
   private static final String URL_ACCESS_TOKEN = "https://auth.smartcar.com/oauth/token";
 
   private String clientId;
-  private String clientAuthorization;
+  private String basicAuthorization;
   private String redirectUri;
   private String[] scope;
   private boolean development;
@@ -179,7 +179,7 @@ public class AuthClient extends ApiClient {
    */
   public AuthClient(String clientId, String clientSecret, String redirectUri, String[] scope, boolean development) {
     this.clientId = clientId;
-    this.clientAuthorization = Credentials.basic(clientId, clientSecret);
+    this.basicAuthorization = Credentials.basic(clientId, clientSecret);
     this.redirectUri = redirectUri;
     this.scope = scope;
     this.development = development;
@@ -234,7 +234,7 @@ public class AuthClient extends ApiClient {
   private Auth call(RequestBody requestBody) throws SmartcarException {
     Request request = new Request.Builder()
         .url(this.urlAccessToken)
-        .header("Authorization", this.clientAuthorization)
+        .header("Authorization", this.basicAuthorization)
         .header("Content-Type", "application/json")
         .addHeader("User-Agent", AuthClient.USER_AGENT)
         .post(requestBody)
