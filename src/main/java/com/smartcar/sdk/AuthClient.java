@@ -116,10 +116,14 @@ public class AuthClient extends ApiClient {
    */
   public static SmartcarResponse<VehicleIds> getVehicleIds(String accessToken, RequestPaging paging) throws SmartcarException {
     // Build Request
-    HttpUrl url = HttpUrl.parse(AuthClient.urlApi + "/vehicles").newBuilder()
-        .addQueryParameter("limit", String.valueOf(paging.getLimit()))
-        .addQueryParameter("offset", String.valueOf(paging.getOffset()))
-        .build();
+    HttpUrl.Builder urlBuilder = HttpUrl.parse(AuthClient.urlApi + "/vehicles").newBuilder();
+
+    if(paging != null) {
+      urlBuilder.addQueryParameter("limit", String.valueOf(paging.getLimit()))
+          .addQueryParameter("offset", String.valueOf(paging.getOffset()));
+    }
+
+    HttpUrl url = urlBuilder.build();
     Request request = new Request.Builder()
         .url(url)
         .header("Authorization", "Bearer " + accessToken)
@@ -149,6 +153,19 @@ public class AuthClient extends ApiClient {
     }
 
     return new SmartcarResponse<VehicleIds>(new VehicleIds(data), responsePaging);
+  }
+
+  /**
+   * Retrieves all vehicle IDs associated with the authenticated user.
+   *
+   * @param accessToken a valid access token
+   *
+   * @return the requested vehicle IDs
+   *
+   * @throws SmartcarException if the request is unsuccessful
+   */
+  public static SmartcarResponse<VehicleIds> getVehicleIds(String accessToken) throws SmartcarException {
+    return AuthClient.getVehicleIds(accessToken, null);
   }
 
   /**
