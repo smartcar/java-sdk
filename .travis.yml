@@ -14,3 +14,23 @@ cache:
   directories:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
+
+script:
+  # Create Tag from Version
+  - git config --global user.email "ci@smartcar.com"
+  - git config --global user.name "Travis CI User"
+  - export SDK_VERSION=$(cat gradle.properties | grep -E '^libVersion=.*$' | sed 's/^libVersion=//')
+  - if [ "${TRAVIS_BRANCH}" = "master" ]; then git tag -a "v${SDK_VERSION}" -m "Travis Generated Tag"; fi
+
+deploy:
+  - provider: script
+    skip_cleanup: true
+    script: echo -e "machine github.com\n  login $CI_USER_TOKEN" >> ~/.netrc && git push origin "v${SDK_VERSION}"
+    on:
+      branch: master
+
+  - provider: script
+    skip_cleanup: true
+    script: gradle publish
+    on:
+      branch: master
