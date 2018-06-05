@@ -47,7 +47,7 @@ public class AuthClient extends ApiClient {
       expiration.add(Calendar.SECOND, jsonObject.get("expires_in").getAsInt());
 
       Calendar refreshExpiration = Calendar.getInstance();
-      refreshExpiration.add(Calendar.DAY, 60);
+      refreshExpiration.add(Calendar.DAY_OF_YEAR, 60);
 
       return new Auth(
           jsonObject.get("access_token").getAsString(),
