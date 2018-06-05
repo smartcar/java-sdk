@@ -82,11 +82,14 @@ jacocoTestReport {
 }
 
 task markdown(type: Copy) {
+    def date = new Date()
+    def licenseYear = date.format('yyyy')
+
     from './'
     into './'
     include '*.mdt'
     rename '^(.*)\\.mdt$', '$1.md'
-    expand(libGroup: libGroup, libName: libName, libVersion: libVersion)
+    expand(libGroup: libGroup, libName: libName, libVersion: libVersion, year: licenseYear)
     filteringCharset = 'UTF-8'
 }
 
