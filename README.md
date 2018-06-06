@@ -1,4 +1,4 @@
-# Smartcar Java SDK [![Build Status][ci-image]][ci-url] [![Code Coverage][coverage-image]][coverage-url]
+# Smartcar Java SDK [![Build Status][ci-image]][ci-url] [![Code Coverage][coverage-image]][coverage-url] [![JavaDoc][javadoc-image]][javadoc-url]
 
 ## Resources
  * [Smartcar Developer Dashboard][smartcar-developer]
@@ -126,3 +126,5 @@ start making requests to vehicles.
 [ci-url]: https://travis-ci.com/smartcar/java-sdk
 [coverage-image]: https://codecov.io/gh/smartcar/java-sdk/branch/master/graph/badge.svg?token=nZAITx7w3X
 [coverage-url]: https://codecov.io/gh/smartcar/java-sdk
+[javadoc-image]: https://img.shields.io/badge/javadoc-1.0.0-brightgreen.svg
+[javadoc-url]: https://smartcar.github.io/java-sdk
