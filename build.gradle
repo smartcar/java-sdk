@@ -109,7 +109,7 @@ bintray {
         issueTrackerUrl = developerIssues
         vcsUrl = vcsRepoUrl
         publicDownloadNumbers = true
-//        githubRepo = vcsGithubRepo
+        githubRepo = vcsGithubRepo
         version {
             name = libVersion
             released = new Date()
