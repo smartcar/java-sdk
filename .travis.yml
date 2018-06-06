@@ -17,6 +17,7 @@ cache:
 
 script:
   - gradle check
+  - gradle jacocoTestReport
   - bash <(curl -s https://codecov.io/bash)
 
 jobs:
