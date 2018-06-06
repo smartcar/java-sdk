@@ -33,8 +33,7 @@ jobs:
             branch: master
     - stage: publish
       language: java
-      jdk:
-        - openjdk8
+      jdk: openjdk8
       script: true
       deploy:
         - provider: script
