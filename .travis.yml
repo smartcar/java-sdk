@@ -28,6 +28,7 @@ deploy:
     script: echo -e "machine github.com\n  login $CI_USER_TOKEN" >> ~/.netrc && git push origin "v${SDK_VERSION}"
     on:
       branch: master
+      jdk: openjdk8
 
   - provider: script
     skip_cleanup: true
