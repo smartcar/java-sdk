@@ -34,3 +34,4 @@ deploy:
     script: gradle bintrayUpload
     on:
       branch: master
+      jdk: openjdk8
