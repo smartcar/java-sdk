@@ -60,9 +60,13 @@ public class Vehicle extends ApiClient {
    * @throws SmartcarException if the request is unsuccessful
    */
   private <T extends ApiData> SmartcarResponse<T> call(String path, String method, RequestBody body, Class<T> type) throws SmartcarException {
-    HttpUrl url = HttpUrl.parse(Vehicle.URL_API + "/vehicles/" + this.vehicleId).newBuilder()
+    HttpUrl url = HttpUrl.parse(Vehicle.URL_API).newBuilder()
+        // addPathSegments will take care of adding leading `/`
+        .addPathSegments("vehicles")
+        .addPathSegments(this.vehicleId)
         .addPathSegments(path)
         .build();
+
     Request request = new Request.Builder()
         .url(url)
         .header("Authorization", "Bearer " + this.accessToken)
@@ -107,7 +111,7 @@ public class Vehicle extends ApiClient {
    * @throws SmartcarException if the request is unsuccessful
    */
   public String vin() throws SmartcarException {
-    return this.call("/vin", "GET", null, VehicleVin.class).getData().getVin();
+    return this.call("vin", "GET", null, VehicleVin.class).getData().getVin();
   }
 
   /**
@@ -118,7 +122,7 @@ public class Vehicle extends ApiClient {
    * @throws SmartcarException if the request is unsuccessful
    */
   public String[] permissions() throws SmartcarException {
-    return this.call("/permissions", "GET", null, ApplicationPermissions.class).getData().getPermissions();
+    return this.call("permissions", "GET", null, ApplicationPermissions.class).getData().getPermissions();
   }
 
   /**
@@ -127,7 +131,7 @@ public class Vehicle extends ApiClient {
    * @throws SmartcarException if the request is unsuccessful
    */
   public void disconnect() throws SmartcarException {
-    this.call("/disconnect", "DELETE", null);
+    this.call("disconnect", "DELETE", null);
   }
 
   /**
@@ -138,7 +142,7 @@ public class Vehicle extends ApiClient {
    * @throws SmartcarException if the request is unsuccessful
    */
   public SmartcarResponse odometer() throws SmartcarException {
-    return this.call("/odometer", "GET", null, VehicleOdometer.class);
+    return this.call("odometer", "GET", null, VehicleOdometer.class);
   }
 
   /**
@@ -149,7 +153,7 @@ public class Vehicle extends ApiClient {
    * @throws SmartcarException if the request is unsuccessful
    */
   public SmartcarResponse location() throws SmartcarException {
-    return this.call("/location", "GET", null, VehicleLocation.class);
+    return this.call("location", "GET", null, VehicleLocation.class);
   }
 
   /**
@@ -162,7 +166,7 @@ public class Vehicle extends ApiClient {
       .add("action", "UNLOCK")
       .build();
 
-    this.call("/security", "POST", body);
+    this.call("security", "POST", body);
   }
 
   /**
@@ -175,7 +179,7 @@ public class Vehicle extends ApiClient {
       .add("action", "LOCK")
       .build();
 
-    this.call("/security", "POST", body);
+    this.call("security", "POST", body);
   }
 
   /**
