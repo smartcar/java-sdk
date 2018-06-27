@@ -6,6 +6,11 @@ jdk:
 
 sudo: false
 
+branches:
+  except:
+    # Don't run on tag pushes
+    - /^v\d+\.\d+\.\d+$/
+
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
@@ -43,8 +48,6 @@ jobs:
       deploy:
         - provider: script
           skip_cleanup: true
-          script:
-            - gradle
-            - gradle bintrayUpload
+          script: gradle bintrayUpload
           on:
             branch: master
