@@ -59,7 +59,7 @@ public class VehicleTest {
     SmartcarResponse res = new SmartcarResponse<VehicleVin>(expected);
 
     PowerMockito.doReturn(res)
-      .when(this.subject, "call", "/vin", "GET", null, VehicleVin.class);
+      .when(this.subject, "call", "vin", "GET", null, VehicleVin.class);
 
     String vin = this.subject.vin();
 
@@ -74,7 +74,7 @@ public class VehicleTest {
     SmartcarResponse res = new SmartcarResponse<ApplicationPermissions>(expected);
 
     PowerMockito.doReturn(res)
-      .when(this.subject, "call", "/permissions", "GET", null, ApplicationPermissions.class);
+      .when(this.subject, "call", "permissions", "GET", null, ApplicationPermissions.class);
 
     String[] permissions = this.subject.permissions();
 
@@ -88,7 +88,7 @@ public class VehicleTest {
     SmartcarResponse res = new SmartcarResponse(data);
 
     PowerMockito.doReturn(res.toString())
-      .when(this.subject, "call", "/disconnect", "DELETE", null);
+      .when(this.subject, "call", "disconnect", "DELETE", null);
 
     this.subject.disconnect();
   }
@@ -102,7 +102,7 @@ public class VehicleTest {
     SmartcarResponse res = new SmartcarResponse<VehicleOdometer>(expected, unitSystem, age);
 
     PowerMockito.doReturn(res)
-      .when(this.subject, "call", "/odometer", "GET", null, VehicleOdometer.class);
+      .when(this.subject, "call", "odometer", "GET", null, VehicleOdometer.class);
 
     SmartcarResponse odometer = this.subject.odometer();
 
@@ -119,7 +119,7 @@ public class VehicleTest {
     SmartcarResponse res = new SmartcarResponse<VehicleLocation>(expected, unitSystem, age);
 
     PowerMockito.doReturn(res)
-      .when(this.subject, "call", "/location", "GET", null, VehicleLocation.class);
+      .when(this.subject, "call", "location", "GET", null, VehicleLocation.class);
 
     SmartcarResponse location = this.subject.location();
 
@@ -136,7 +136,7 @@ public class VehicleTest {
       .build();
 
     PowerMockito.doReturn(res.toString())
-      .when(this.subject, "call", eq("/security"), eq("POST"), refEq(body));
+      .when(this.subject, "call", eq("security"), eq("POST"), refEq(body));
 
     this.subject.unlock();
   }
@@ -151,7 +151,7 @@ public class VehicleTest {
       .build();
 
     PowerMockito.doReturn(res.toString())
-      .when(this.subject, "call", eq("/security"), eq("POST"), refEq(body));
+      .when(this.subject, "call", eq("security"), eq("POST"), refEq(body));
 
     this.subject.lock();
   }
