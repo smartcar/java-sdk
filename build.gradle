@@ -64,6 +64,7 @@ test {
         showExceptions = true
         exceptionFormat = 'full'
         showStackTraces = true
+        showStandardStreams = true
     }
 
     afterTest { desc, result ->
