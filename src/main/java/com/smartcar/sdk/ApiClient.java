@@ -14,6 +14,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.joda.time.DateTime;
+
 /**
  * Provides the core functionality for API client objects.
  */
@@ -80,16 +82,13 @@ abstract class ApiClient {
     String unitHeader = response.header("sc-unit-system");
 
     String ageHeader = response.header("sc-data-age");
-    DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
-    try {
-      if(ageHeader != null) {
-        return new SmartcarResponse<T>(data, unitHeader, df.parse(ageHeader));
-      } else {
-        return new SmartcarResponse<T>(data, unitHeader, new Date());
-      }
-    } catch (ParseException ex) {
-      throw new SmartcarException(ex.getMessage());
+    if(ageHeader != null) {
+      DateTime date = DateTime.parse(ageHeader);
+
+      return new SmartcarResponse<T>(data, unitHeader, date.toDate());
+    } else {
+      return new SmartcarResponse<T>(data, unitHeader, null);
     }
   }
 }
