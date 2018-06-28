@@ -80,7 +80,7 @@ abstract class ApiClient {
     String unitHeader = response.header("sc-unit-system");
 
     String ageHeader = response.header("sc-data-age");
-    DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+    DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
     try {
       if(ageHeader != null) {
