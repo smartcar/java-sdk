@@ -6,11 +6,14 @@ import okhttp3.FormBody;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
 import okhttp3.RequestBody;
+import okhttp3.MediaType;
 
 /**
  * Smartcar Vehicle API Object
  */
 public class Vehicle extends ApiClient {
+  public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+
   public enum UnitSystem {
     DEFAULT,
     IMPERIAL,
@@ -162,9 +165,8 @@ public class Vehicle extends ApiClient {
    * @throws SmartcarException if the request is unsuccessful
    */
   public void unlock() throws SmartcarException {
-    RequestBody body = new FormBody.Builder()
-      .add("action", "UNLOCK")
-      .build();
+    String json = "{\"action\": \"UNLOCK\"}";
+    RequestBody body = RequestBody.create(JSON, json);
 
     this.call("security", "POST", body);
   }
@@ -175,9 +177,8 @@ public class Vehicle extends ApiClient {
    * @throws SmartcarException if the request is unsuccessful
    */
   public void lock() throws SmartcarException {
-    RequestBody body = new FormBody.Builder()
-      .add("action", "LOCK")
-      .build();
+    String json = "{\"action\": \"LOCK\"}";
+    RequestBody body = RequestBody.create(JSON, json);
 
     this.call("security", "POST", body);
   }
