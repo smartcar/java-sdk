@@ -22,8 +22,15 @@ import org.joda.time.DateTime;
 abstract class ApiClient {
   private static final String SDK_VERSION = ApiClient.class.getPackage().getImplementationVersion();
   private static final String API_VERSION = "v1.0";
-  protected static final String USER_AGENT = "smartcar-java-sdk: " + ApiClient.SDK_VERSION;
   protected static final String URL_API = "https://api.smartcar.com/" + ApiClient.API_VERSION;
+  protected static final String USER_AGENT = String.format(
+      "Smartcar/%s (%s; %s) Java v%s %s",
+      ApiClient.SDK_VERSION,
+      System.getProperty("os.name"),
+      System.getProperty("os.arch"),
+      System.getProperty("java.version"),
+      System.getProperty("java.vm.name")
+  );
 
   private static OkHttpClient client = new OkHttpClient();
   static GsonBuilder gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
