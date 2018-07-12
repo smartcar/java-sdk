@@ -134,7 +134,7 @@ public class VehicleTest {
     ApiData data = new ApiData();
     SmartcarResponse res = new SmartcarResponse(data);
     JsonObject json = Json.createObjectBuilder()
-      .add("action", "LOCK")
+      .add("action", "UNLOCK")
       .build();
     RequestBody body = RequestBody.create(Vehicle.JSON, json.toString());
 
@@ -150,7 +150,7 @@ public class VehicleTest {
     ApiData data = new ApiData();
     SmartcarResponse res = new SmartcarResponse(data);
     JsonObject json = Json.createObjectBuilder()
-      .add("action", "UNLOCK")
+      .add("action", "LOCK")
       .build();
     RequestBody body = RequestBody.create(Vehicle.JSON, json.toString());
 
