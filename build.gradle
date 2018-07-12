@@ -71,12 +71,6 @@ artifacts {
     archives javadocJar
 }
 
-compileTestJava {
-    doLast {
-        systemProperties = System.properties
-    }
-}
-
 tasks.withType(Test) {
     useTestNG {
         preserveOrder = true
