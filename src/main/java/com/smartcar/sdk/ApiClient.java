@@ -4,6 +4,7 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.GsonBuilder;
 import com.smartcar.sdk.data.ApiData;
 import com.smartcar.sdk.data.SmartcarResponse;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -14,12 +15,15 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.json.Json;
+
 import org.joda.time.DateTime;
 
 /**
  * Provides the core functionality for API client objects.
  */
 abstract class ApiClient {
+  public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
   private static final String SDK_VERSION = ApiClient.class.getPackage().getImplementationVersion();
   private static final String API_VERSION = "v1.0";
   protected static final String URL_API = "https://api.smartcar.com/" + ApiClient.API_VERSION;

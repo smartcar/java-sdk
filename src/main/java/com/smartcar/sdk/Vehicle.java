@@ -2,6 +2,9 @@ package com.smartcar.sdk;
 
 import com.smartcar.sdk.data.*;
 
+import javax.json.Json;
+import javax.json.JsonObject;
+
 import okhttp3.FormBody;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
@@ -162,9 +165,11 @@ public class Vehicle extends ApiClient {
    * @throws SmartcarException if the request is unsuccessful
    */
   public void unlock() throws SmartcarException {
-    RequestBody body = new FormBody.Builder()
+    JsonObject json = Json.createObjectBuilder()
       .add("action", "UNLOCK")
       .build();
+
+    RequestBody body = RequestBody.create(JSON, json.toString());
 
     this.call("security", "POST", body);
   }
@@ -175,9 +180,11 @@ public class Vehicle extends ApiClient {
    * @throws SmartcarException if the request is unsuccessful
    */
   public void lock() throws SmartcarException {
-    RequestBody body = new FormBody.Builder()
+    JsonObject json = Json.createObjectBuilder()
       .add("action", "LOCK")
       .build();
+
+    RequestBody body = RequestBody.create(JSON, json.toString());
 
     this.call("security", "POST", body);
   }

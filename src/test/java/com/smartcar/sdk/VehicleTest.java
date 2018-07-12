@@ -3,6 +3,9 @@ package com.smartcar.sdk;
 import com.smartcar.sdk.*;
 import com.smartcar.sdk.data.*;
 
+import javax.json.Json;
+import javax.json.JsonObject;
+
 import java.util.Date;
 import java.util.UUID;
 import okhttp3.FormBody;
@@ -14,7 +17,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import static org.mockito.Matchers.*;
-
 /**
  * Test Suite: Vehicle
  */
@@ -131,9 +133,10 @@ public class VehicleTest {
 
     ApiData data = new ApiData();
     SmartcarResponse res = new SmartcarResponse(data);
-    RequestBody body = new FormBody.Builder()
+    JsonObject json = Json.createObjectBuilder()
       .add("action", "UNLOCK")
       .build();
+    RequestBody body = RequestBody.create(Vehicle.JSON, json.toString());
 
     PowerMockito.doReturn(res.toString())
       .when(this.subject, "call", eq("security"), eq("POST"), refEq(body));
@@ -146,9 +149,11 @@ public class VehicleTest {
 
     ApiData data = new ApiData();
     SmartcarResponse res = new SmartcarResponse(data);
-    RequestBody body = new FormBody.Builder()
+    JsonObject json = Json.createObjectBuilder()
       .add("action", "LOCK")
       .build();
+    RequestBody body = RequestBody.create(Vehicle.JSON, json.toString());
+
 
     PowerMockito.doReturn(res.toString())
       .when(this.subject, "call", eq("security"), eq("POST"), refEq(body));
