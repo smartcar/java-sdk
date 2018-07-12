@@ -4,7 +4,7 @@ jdk:
   - oraclejdk8
   - openjdk8
 
-sudo: false
+sudo: required
 
 branches:
   except:
@@ -24,6 +24,9 @@ script:
   - gradle check
   - gradle jacocoTestReport
   - bash <(curl -s https://codecov.io/bash)
+
+services:
+  - docker
 
 jobs:
   include:
