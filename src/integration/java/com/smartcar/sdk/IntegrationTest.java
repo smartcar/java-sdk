@@ -27,8 +27,15 @@ abstract class IntegrationTest {
     final String authClientId = System.getenv("INTEGRATION_CLIENT_ID");
     final String authClientSecret = System.getenv("INTEGRATION_CLIENT_SECRET");
     final String authRedirectUri = "https://example.com/auth";
-    final String[] authScope = {"read_vehicle_info", "read_location", "read_odometer"};
     final boolean authDevelopment = true;
+    final String[] authScope = {
+            "control_security:lock",
+            "control_security:unlock",
+            "read_vehicle_info",
+            "read_vin",
+            "read_location",
+            "read_odometer"
+    };
 
     WebDriver driver;
     WebDriverWait wait;
