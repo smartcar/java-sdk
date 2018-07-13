@@ -5,6 +5,8 @@ import com.smartcar.sdk.data.VehicleInfo;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
+import java.io.IOException;
+
 /**
  * Integration Test Suite: /vehicles/:id
  */
