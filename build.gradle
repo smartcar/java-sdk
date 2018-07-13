@@ -1,3 +1,5 @@
+import com.sun.org.apache.xalan.internal.xsltc.compiler.Copy
+
 plugins {
     id 'com.adarshr.test-logger' version '1.3.1'
     id 'com.avast.gradle.docker-compose' version '0.8.0'
@@ -76,7 +78,10 @@ tasks.withType(Test) {
         preserveOrder = true
     }
 
-    testlogger.theme 'mocha'
+    testlogger {
+        showStandardStreams true
+        theme 'mocha'
+    }
 }
 
 integration {
