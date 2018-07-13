@@ -1,28 +1,129 @@
 package com.smartcar.sdk;
 
+import com.smartcar.sdk.data.Auth;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 
 /**
  * Provides all shared functionality among integration tests.
  */
 abstract class IntegrationTest {
     private static final int WEBDRIVER_DEFAULT_TIMEOUT_SECONDS = 10;
+    private static Auth auth;
 
-    final String clientId = System.getenv("INTEGRATION_CLIENT_ID");
-    final String clientSecret = System.getenv("INTEGRATION_CLIENT_SECRET");
-    final String redirectUri = "https://example.com/auth";
-    final String[] scope = {"read_vehicle_info", "read_location", "read_odometer"};
-    final boolean development = true;
+    final String authOemUsername = IntegrationUtils.nonce(16) + "@example.com";
+    final String authOemPassword = IntegrationUtils.nonce(16);
+
+    final String authClientId = System.getenv("INTEGRATION_CLIENT_ID");
+    final String authClientSecret = System.getenv("INTEGRATION_CLIENT_SECRET");
+    final String authRedirectUri = "https://example.com/auth";
+    final String[] authScope = {"read_vehicle_info", "read_location", "read_odometer"};
+    final boolean authDevelopment = true;
 
     WebDriver driver;
     WebDriverWait wait;
+
+    /**
+     * Maintains the auth singleton that provides auth credentials for integration tests.
+     *
+     * @return the current auth credentials
+     */
+    Auth getAuth() throws Exception {
+        if(IntegrationTest.auth == null) {
+            AuthClient authClient = new AuthClient(
+                    this.authClientId,
+                    this.authClientSecret,
+                    this.authRedirectUri,
+                    this.authScope,
+                    this.authDevelopment
+            );
+
+            String authCode = this.getAuthCode(authClient.getAuthUrl(), this.authOemUsername, this.authOemPassword);
+
+            IntegrationTest.auth = authClient.exchangeCode(authCode);
+        }
+
+        return IntegrationTest.auth;
+    }
+
+    /**
+     * Retrieves an auth code that can be exchanged for an auth token.
+     *
+     * @param connectAuthUrl the Smartcar auth URL
+     * @param oemUsername the OEM username
+     * @param oemPassword the OEM password
+     *
+     * @return the resulting auth code
+     * @throws Exception if the auth code could not be obtained
+     */
+    private String getAuthCode(String connectAuthUrl, String oemUsername, String oemPassword) throws Exception {
+        String oemAuthUrl = null;
+
+        this.startDriver();
+
+        // 1 -- Initiate the OAuth 2.0 flow at https://connect.smartcar.com
+        this.driver.get(connectAuthUrl);
+
+        List<WebElement> webOemButtons = this.driver.findElements(By.cssSelector("body > div > a.button"));
+
+        for (WebElement webButton : webOemButtons) {
+            if(webButton.getAttribute("href").startsWith("https://mock.smartcar.com")) {
+                oemAuthUrl = webButton.getAttribute("href");
+                break;
+            }
+        }
+
+        if(oemAuthUrl == null) {
+            throw new Exception("Expected OEM auth button was not found.");
+        }
+
+        // 2 -- Find the Mock OEM button, and navigate to the Mock OEM login page.
+        this.driver.get(oemAuthUrl);
+
+        this.wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input#username")));
+
+        // 3 -- Enter OEM user credentials and submit the form.
+        this.driver.findElement(By.cssSelector("input#username")).sendKeys(oemUsername);
+        this.driver.findElement(By.cssSelector("input#password")).sendKeys(oemPassword);
+        this.driver.findElement(By.cssSelector("#approval-button")).submit();
+
+        // 4 -- Approve/grant access to the checked vehicles bu submitting the next form.
+        this.wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".review-permissions")));
+
+        this.driver.findElement(By.cssSelector("#approval-button")).click();
+
+        // 5 -- After the triggered redirect, parse the redirect URL's query string for the auth code.
+        URL redirectUrl = new URL(this.driver.getCurrentUrl());
+        String[] params = redirectUrl.getQuery().split("&");
+        String code = null;
+
+        for(String param : params) {
+            String[] currentParam = param.split("=");
+
+            if(currentParam[0].equals("code")) {
+                code = currentParam[1];
+                break;
+            }
+        }
+
+        this.stopDriver();
+
+        if(code == null) {
+            throw new Exception("Failed obtaining auth code.");
+        }
+
+        return code;
+    }
 
     /**
      * Starts the Selenium WebDriver.
