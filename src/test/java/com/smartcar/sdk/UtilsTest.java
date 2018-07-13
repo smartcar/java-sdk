@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
  */
 public class UtilsTest {
   /**
-   * Verifies that join combines all array elements, delimited by the specifed
+   * Verifies that join combines all array elements, delimited by the specified
    * separator.
    */
   @Test
