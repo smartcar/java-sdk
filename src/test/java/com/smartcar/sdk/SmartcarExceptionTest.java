@@ -16,7 +16,7 @@ public class SmartcarExceptionTest {
       throw new SmartcarException();
     }
     catch (SmartcarException ex) {
-      Assert.assertNull(ex.getMessage());
+      Assert.assertEquals(ex.getMessage(), SmartcarException.Status.UNKNOWN.toString());
       Assert.assertEquals(ex.getStatus(), SmartcarException.Status.UNKNOWN);
     }
   }
@@ -48,7 +48,7 @@ public class SmartcarExceptionTest {
       throw new SmartcarException(testStatus);
     }
     catch (SmartcarException ex) {
-      Assert.assertNull(ex.getMessage());
+      Assert.assertEquals(ex.getMessage(), testStatus.toString());
       Assert.assertEquals(ex.getStatus(), testStatus);
     }
   }
