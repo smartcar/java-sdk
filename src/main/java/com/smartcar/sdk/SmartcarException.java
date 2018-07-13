@@ -1,5 +1,8 @@
 package com.smartcar.sdk;
 
+import okhttp3.Request;
+import okhttp3.Response;
+
 /**
  * Thrown when the Smartcar API library encounters a problem.
  */
@@ -67,9 +70,20 @@ public class SmartcarException extends java.lang.Exception {
 
       return Status.UNKNOWN;
     }
+
+    /**
+     * Returns a string representation of the status.
+     *
+     * @return the string representation
+     */
+    public String toString() {
+      return this.code + ": " + this.text;
+    }
   }
 
   private Status status;
+  private Request request;
+  private Response response;
 
   /**
    * Initializes a new Smartcar API exception with default values.
@@ -104,7 +118,43 @@ public class SmartcarException extends java.lang.Exception {
    * @param status a status associated with the exception
    */
   public SmartcarException(final String message, final Status status) {
-    super(message);
+    this(message, status, null, null);
+  }
+
+  /**
+   * Initializes a new Smartcar API exception with the specified message and
+   * status.
+   *
+   * @param request the associated HTTP request
+   * @param response the associated HTTP response
+   */
+  public SmartcarException(final Request request, final Response response) {
+    this(null, Status.forCode(response.code()), request, response);
+  }
+
+  /**
+   * Initializes a new Smartcar API exception with the specified status,
+   * request, and response.
+   *
+   * @param status a status associated with the exception
+   * @param request the associated HTTP request
+   * @param response the associated HTTP response
+   */
+  public SmartcarException(final Status status, final Request request, final Response response) {
+    this(null, status, request, response);
+  }
+
+  /**
+   * Initializes a new Smartcar API exception with the specified message,
+   * status, request, and response.
+   *
+   * @param message a message associated with the exception
+   * @param status a status associated with the exception
+   * @param request the associated HTTP request
+   * @param response the associated HTTP response
+   */
+  public SmartcarException(final String message, final Status status, final Request request, final Response response) {
+    super(SmartcarException.generateMessage(message, status));
 
     if(status != null) {
       this.status = status;
@@ -112,6 +162,29 @@ public class SmartcarException extends java.lang.Exception {
     else {
       this.status = Status.UNKNOWN;
     }
+
+    this.request = request;
+    this.response = response;
+  }
+
+  /**
+   * Generates a message for the exception, handling cases where no message is provided.
+   *
+   * @param message the message specified when the exception was thrown
+   * @param status the status specified when the exception was thrown
+   *
+   * @return the generated message
+   */
+  private static String generateMessage(final String message, final Status status) {
+    if(message != null) {
+      return message;
+    }
+
+    if(status != null) {
+      return status.toString();
+    }
+
+    return Status.UNKNOWN.toString();
   }
 
   /**
@@ -121,5 +194,23 @@ public class SmartcarException extends java.lang.Exception {
    */
   public Status getStatus() {
     return this.status;
+  }
+
+  /**
+   * Returns the HTTP request associated with the exception.
+   *
+   * @return the request object
+   */
+  public Request getRequest() {
+    return this.request;
+  }
+
+  /**
+   * Returns the HTTP response associated with the exception.
+   *
+   * @return the response object
+   */
+  public Response getResponse() {
+    return this.response;
   }
 }

@@ -8,16 +8,9 @@ import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import org.joda.time.DateTime;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import javax.json.Json;
-
-import org.joda.time.DateTime;
 
 /**
  * Provides the core functionality for API client objects.
@@ -55,8 +48,7 @@ abstract class ApiClient {
       Response response = ApiClient.client.newCall(request).execute();
 
       if(!response.isSuccessful()) {
-        response.close();
-        throw new SmartcarException(SmartcarException.Status.forCode(response.code()));
+        throw new SmartcarException(request, response);
       }
       else {
         return response;
