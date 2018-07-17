@@ -1,14 +1,12 @@
 package com.smartcar.sdk;
 
 import com.smartcar.sdk.data.*;
-
-import javax.json.Json;
-import javax.json.JsonObject;
-
-import okhttp3.FormBody;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
 import okhttp3.RequestBody;
+
+import javax.json.Json;
+import javax.json.JsonObject;
 
 /**
  * Smartcar Vehicle API Object
@@ -134,7 +132,7 @@ public class Vehicle extends ApiClient {
    * @throws SmartcarException if the request is unsuccessful
    */
   public void disconnect() throws SmartcarException {
-    this.call("disconnect", "DELETE", null);
+    this.call("application", "DELETE", null);
   }
 
   /**
