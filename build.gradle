@@ -73,7 +73,6 @@ artifacts {
 
 tasks.withType(Test) {
     useTestNG {
-        groupByInstances true
         preserveOrder true
     }
 
