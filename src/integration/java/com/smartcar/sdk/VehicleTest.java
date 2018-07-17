@@ -20,7 +20,7 @@ public class VehicleTest extends IntegrationTest {
     public void beforeSuite() throws Exception {
         Auth auth = this.getAuth();
         String accessToken = auth.getAccessToken();
-        
+
         SmartcarResponse vehicleIdResponse = AuthClient.getVehicleIds(accessToken);
         VehicleIds vehicleIdData = (VehicleIds) vehicleIdResponse.getData();
         String[] vehicleIds = vehicleIdData.getVehicleIds();
