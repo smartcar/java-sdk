@@ -11,6 +11,12 @@ import org.testng.annotations.Test;
 public class VehicleTest extends IntegrationTest {
     private Vehicle vehicle;
 
+    /**
+     * Authenticates with the Smartcar platform and initializes
+     * a vehicle.
+     *
+     * @throws Exception
+     */
     @BeforeSuite
     public void beforeSuite() throws Exception {
         String[] vehicleIds = AuthClient.getVehicleIds(this.getAuth().getAccessToken()).getData().getVehicleIds();
@@ -76,7 +82,7 @@ public class VehicleTest extends IntegrationTest {
     /**
      * Tests that access for the current application can be revoked.
      */
-//    @Test
+    @Test
     public void testDisconnect() throws SmartcarException {
         this.vehicle.disconnect();
     }
