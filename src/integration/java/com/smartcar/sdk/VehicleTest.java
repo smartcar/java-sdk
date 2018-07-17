@@ -1,7 +1,6 @@
 package com.smartcar.sdk;
 
-import com.smartcar.sdk.data.SmartcarResponse;
-import com.smartcar.sdk.data.VehicleInfo;
+import com.smartcar.sdk.data.*;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
@@ -19,7 +18,13 @@ public class VehicleTest extends IntegrationTest {
      */
     @BeforeSuite
     public void beforeSuite() throws Exception {
-        String[] vehicleIds = AuthClient.getVehicleIds(this.getAuth().getAccessToken()).getData().getVehicleIds();
+        Auth auth = this.getAuth();
+        String accessToken = auth.getAccessToken();
+        
+        SmartcarResponse vehicleIdResponse = AuthClient.getVehicleIds(accessToken);
+        VehicleIds vehicleIdData = (VehicleIds) vehicleIdResponse.getData();
+        String[] vehicleIds = vehicleIdData.getVehicleIds();
+
         this.vehicle = new Vehicle(vehicleIds[0], this.getAuth().getAccessToken());
     }
 
