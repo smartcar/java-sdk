@@ -31,7 +31,7 @@ public class VehicleTest extends IntegrationTest {
     /**
      * Tests that vehicle info can be obtained.
      */
-    @Test
+    @Test(groups = "vehicle")
     public void testInfo() throws SmartcarException {
         VehicleInfo info = this.vehicle.info();
     }
@@ -39,7 +39,7 @@ public class VehicleTest extends IntegrationTest {
     /**
      * Tests that the vehicle VIN can be obtained.
      */
-    @Test
+    @Test(groups = "vehicle")
     public void testVin() throws SmartcarException {
         String vin = this.vehicle.vin();
     }
@@ -47,7 +47,7 @@ public class VehicleTest extends IntegrationTest {
     /**
      * Tests that the application permissions can be obtained.
      */
-    @Test
+    @Test(groups = "vehicle")
     public void testPermissions() throws SmartcarException {
         String[] permissions = this.vehicle.permissions();
     }
@@ -55,7 +55,7 @@ public class VehicleTest extends IntegrationTest {
     /**
      * Tests that the odometer value can be obtained.
      */
-    @Test
+    @Test(groups = "vehicle")
     public void testOdometer() throws SmartcarException {
         SmartcarResponse response = this.vehicle.odometer();
     }
@@ -63,7 +63,7 @@ public class VehicleTest extends IntegrationTest {
     /**
      * Tests that the vehicle's location can be obtained.
      */
-    @Test
+    @Test(groups = "vehicle")
     public void testLocation() throws SmartcarException {
         SmartcarResponse response = this.vehicle.location();
     }
@@ -71,7 +71,7 @@ public class VehicleTest extends IntegrationTest {
     /**
      * Tests that the vehicle lock action works.
      */
-    @Test
+    @Test(groups = "vehicle")
     public void testActionLock() throws SmartcarException {
         this.vehicle.lock();
     }
@@ -79,7 +79,7 @@ public class VehicleTest extends IntegrationTest {
     /**
      * Tests that the vehicle unlock action works.
      */
-    @Test
+    @Test(groups = "vehicle")
     public void testActionUnlock() throws SmartcarException {
         this.vehicle.unlock();
     }
@@ -87,7 +87,7 @@ public class VehicleTest extends IntegrationTest {
     /**
      * Tests that access for the current application can be revoked.
      */
-    @Test
+    @Test(dependsOnGroups = "vehicle")
     public void testDisconnect() throws SmartcarException {
         this.vehicle.disconnect();
     }
