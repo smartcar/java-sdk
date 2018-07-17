@@ -1,14 +1,6 @@
 package com.smartcar.sdk;
 
-import com.smartcar.sdk.*;
 import com.smartcar.sdk.data.*;
-
-import javax.json.Json;
-import javax.json.JsonObject;
-
-import java.util.Date;
-import java.util.UUID;
-import okhttp3.FormBody;
 import okhttp3.RequestBody;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -16,7 +8,13 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import static org.mockito.Matchers.*;
+import javax.json.Json;
+import javax.json.JsonObject;
+import java.util.Date;
+import java.util.UUID;
+
+import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.refEq;
 /**
  * Test Suite: Vehicle
  */
@@ -90,7 +88,7 @@ public class VehicleTest {
     SmartcarResponse res = new SmartcarResponse(data);
 
     PowerMockito.doReturn(res.toString())
-      .when(this.subject, "call", "disconnect", "DELETE", null);
+      .when(this.subject, "call", "application", "DELETE", null);
 
     this.subject.disconnect();
   }
