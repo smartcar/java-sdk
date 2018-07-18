@@ -1,3 +1,5 @@
+import com.sun.org.apache.xalan.internal.xsltc.compiler.Copy
+
 plugins {
     id 'com.adarshr.test-logger' version '1.3.1'
     id 'com.avast.gradle.docker-compose' version '0.8.0'
@@ -17,6 +19,11 @@ repositories {
     jcenter()
 }
 
+/**
+ * Defines testing sets:
+ *  - Unit Tests (test)  <-- existing default
+ *  - Integration (integration)
+ */
 testSets {
     integration
 }
@@ -36,6 +43,9 @@ dependencies {
     integrationCompile 'org.seleniumhq.selenium:selenium-java:3.13.0'
 }
 
+/**
+ * Generates Javadoc for the SDK.
+ */
 javadoc {
     source = sourceSets.main.allJava
     classpath = configurations.compile
@@ -45,6 +55,9 @@ javadoc {
     options.windowTitle = "${project.name} - ${project.version}"
 }
 
+/**
+ * Customizes the jar MANIFEST.MF for generated jars.
+ */
 jar {
     manifest {
         attributes('Implementation-Title': project.name,
@@ -52,25 +65,41 @@ jar {
     }
 }
 
+/**
+ * If the selenium.debug system property is set, selenium will use  a local
+ * ChromeDriver instance instead of Docker.
+ */
 if(!System.properties.containsKey('selenium.debug')) {
     dockerCompose.isRequiredBy integration
 }
 
+/**
+ * Generates a jar with sources.
+ */
 task sourcesJar(type: Jar, dependsOn: classes) {
     classifier = 'sources'
     from sourceSets.main.allSource
 }
 
+/**
+ * Generates a jar with generated Javadoc.
+ */
 task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'docs'
     from javadoc.destinationDir
 }
 
+/**
+ * Defines additional artifacts to be generated.
+ */
 artifacts {
     archives sourcesJar
     archives javadocJar
 }
 
+/**
+ * Configures all test tasks.
+ */
 tasks.withType(Test) {
     useTestNG {
         preserveOrder true
@@ -82,6 +111,9 @@ tasks.withType(Test) {
     }
 }
 
+/**
+ * Executes all integration tests.
+ */
 integration {
     if(!System.properties.containsKey('selenium.debug')) {
         doFirst {
@@ -98,6 +130,9 @@ integration {
 
 check.dependsOn integration
 
+/**
+ * Configures coverage reporting.
+ */
 jacoco {
     reportsDir = file("$buildDir/coverage")
 }
@@ -110,6 +145,9 @@ jacocoTestReport {
     }
 }
 
+/**
+ * Generates updated markdown documentation using the markdown template files.
+ */
 task markdown(type: Copy) {
     def date = new Date()
     def licenseYear = date.format('yyyy')
@@ -122,6 +160,9 @@ task markdown(type: Copy) {
     filteringCharset = 'UTF-8'
 }
 
+/**
+ * Configures Bintray publishing.
+ */
 bintray {
     user = bintrayUser
     key = bintrayKey
@@ -146,6 +187,9 @@ bintray {
     }
 }
 
+/**
+ * Configures packaging of modules/artifacts to publish.
+ */
 publishing {
     publications {
         SmartcarPublication(MavenPublication) {
