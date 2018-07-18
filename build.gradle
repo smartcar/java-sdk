@@ -22,12 +22,17 @@ repositories {
  *  - Unit Tests (test)  <-- existing default
  *  - Integration (integration)
  *
- *  Via plugin: org.unbroken-dome.test-sets
+ * @plugin org.unbroken-dome.test-sets
  */
 testSets {
     integration
 }
 
+/**
+ * Defines all dependencies.
+ *
+ * @plugin org.unbroken-dome.test-sets
+ */
 dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.10.0'
     compile 'com.google.code.gson:gson:2.7'
@@ -45,6 +50,8 @@ dependencies {
 
 /**
  * Generates Javadoc for the SDK.
+ *
+ * @plugin java
  */
 javadoc {
     source = sourceSets.main.allJava
@@ -57,6 +64,8 @@ javadoc {
 
 /**
  * Customizes the jar MANIFEST.MF for generated jars.
+ *
+ * @plugin java
  */
 jar {
     manifest {
@@ -68,6 +77,8 @@ jar {
 /**
  * If the selenium.debug system property is set, selenium will use  a local
  * ChromeDriver instance instead of Docker.
+ *
+ * @plugin com.avast.gradle.docker-compose
  */
 if(!System.properties.containsKey('selenium.debug')) {
     dockerCompose.isRequiredBy integration
@@ -75,6 +86,8 @@ if(!System.properties.containsKey('selenium.debug')) {
 
 /**
  * Generates a jar with sources.
+ *
+ * @plugin java
  */
 task sourcesJar(type: Jar, dependsOn: classes) {
     classifier = 'sources'
@@ -83,6 +96,8 @@ task sourcesJar(type: Jar, dependsOn: classes) {
 
 /**
  * Generates a jar with generated Javadoc.
+ *
+ * @plugin java
  */
 task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'docs'
@@ -99,6 +114,9 @@ artifacts {
 
 /**
  * Configures all test tasks.
+ *
+ * @plugin com.adarshr.test-logger
+ * @plugin java
  */
 tasks.withType(Test) {
     useTestNG {
@@ -113,6 +131,10 @@ tasks.withType(Test) {
 
 /**
  * Executes all integration tests.
+ *
+ * @plugin com.avast.gradle.docker-compose
+ * @plugin org.unbroken-dome.test-sets
+ * @plugin java
  */
 integration {
     if(!System.properties.containsKey('selenium.debug')) {
@@ -132,6 +154,8 @@ check.dependsOn integration
 
 /**
  * Configures coverage reporting.
+ *
+ * @plugin jacoco
  */
 jacoco {
     reportsDir = file("$buildDir/coverage")
@@ -162,6 +186,8 @@ task markdown(type: Copy) {
 
 /**
  * Configures Bintray publishing.
+ *
+ * @plugin com.jfrog.bintray
  */
 bintray {
     user = bintrayUser
@@ -189,6 +215,8 @@ bintray {
 
 /**
  * Configures packaging of modules/artifacts to publish.
+ *
+ * @plugin maven-publish
  */
 publishing {
     publications {
