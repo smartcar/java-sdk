@@ -34,10 +34,11 @@ testSets {
  * @plugin org.unbroken-dome.test-sets
  */
 dependencies {
-    compile 'com.squareup.okhttp3:okhttp:3.10.0'
+    compile 'com.github.mrmike:ok2curl:0.4.5'
     compile 'com.google.code.gson:gson:2.7'
-    compile 'joda-time:joda-time:2.10'
+    compile 'com.squareup.okhttp3:okhttp:3.10.0'
     compile 'javax.json:javax.json-api:1.0'
+    compile 'joda-time:joda-time:2.10'
     compile 'org.glassfish:javax.json:1.1'
 
     testCompile sourceSets.main.output
@@ -45,6 +46,7 @@ dependencies {
     testCompile 'org.json:json:20160810'
     testCompile 'org.powermock:powermock-release-with-testng-mockito-dependencies:1.6.2'
     testCompile 'org.testng:testng:6.9.12'
+
     integrationCompile 'org.seleniumhq.selenium:selenium-java:3.13.0'
 }
 

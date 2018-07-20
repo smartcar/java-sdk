@@ -17,7 +17,7 @@ import java.io.IOException;
  */
 abstract class ApiClient {
   public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-  private static final String SDK_VERSION = ApiClient.class.getPackage().getImplementationVersion();
+  private static final String SDK_VERSION = ApiClient.getSdkVersion();
   private static final String API_VERSION = "v1.0";
   protected static final String URL_API = "https://api.smartcar.com/" + ApiClient.API_VERSION;
   protected static final String USER_AGENT = String.format(
@@ -33,6 +33,22 @@ abstract class ApiClient {
   static GsonBuilder gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
 
   public static String urlApi = ApiClient.URL_API;
+
+  /**
+   * Retrieves the SDK version, falling back to DEVELOPMENT if we're not running
+   * from a jar.
+   *
+   * @return the SDK version
+   */
+  private static String getSdkVersion() {
+    String version = ApiClient.class.getPackage().getImplementationVersion();
+
+    if(version == null) {
+      version = "DEVELOPMENT";
+    }
+
+    return version;
+  }
 
   /**
    * Sends the specified request, returning the raw response body.
