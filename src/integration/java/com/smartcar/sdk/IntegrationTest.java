@@ -24,6 +24,7 @@ abstract class IntegrationTest {
     final String authOemUsername = IntegrationUtils.nonce(16) + "@example.com";
     final String authOemPassword = IntegrationUtils.nonce(16);
 
+    AuthClient authClient;
     final String authClientId = System.getenv("INTEGRATION_CLIENT_ID");
     final String authClientSecret = System.getenv("INTEGRATION_CLIENT_SECRET");
     final String authRedirectUri = "https://example.com/auth";
@@ -47,7 +48,7 @@ abstract class IntegrationTest {
      */
     Auth getAuth() throws Exception {
         if(IntegrationTest.auth == null) {
-            AuthClient authClient = new AuthClient(
+            this.authClient = new AuthClient(
                     this.authClientId,
                     this.authClientSecret,
                     this.authRedirectUri,

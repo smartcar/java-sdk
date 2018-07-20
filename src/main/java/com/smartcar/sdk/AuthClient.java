@@ -247,7 +247,7 @@ public class AuthClient extends ApiClient {
     Request request = new Request.Builder()
         .url(this.urlAccessToken)
         .header("Authorization", this.basicAuthorization)
-        .header("Content-Type", "application/json")
+        .header("Content-Type", "application/x-www-form-urlencoded")
         .addHeader("User-Agent", AuthClient.USER_AGENT)
         .post(requestBody)
         .build();
@@ -346,7 +346,7 @@ public class AuthClient extends ApiClient {
    */
   public Auth exchangeRefreshToken(String refreshToken) throws SmartcarException {
     RequestBody requestBody = new FormBody.Builder()
-        .add("grant_type", "authorization_code")
+        .add("grant_type", "refresh_token")
         .add("refresh_token", refreshToken)
         .build();
 
