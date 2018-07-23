@@ -133,18 +133,6 @@ public class SmartcarException extends java.lang.Exception {
   }
 
   /**
-   * Initializes a new Smartcar API exception with the specified status,
-   * request, and response.
-   *
-   * @param status a status associated with the exception
-   * @param request the associated HTTP request
-   * @param response the associated HTTP response
-   */
-  public SmartcarException(final Status status, final Request request, final Response response) {
-    this(null, status, request, response);
-  }
-
-  /**
    * Initializes a new Smartcar API exception with the specified message,
    * status, request, and response.
    *
