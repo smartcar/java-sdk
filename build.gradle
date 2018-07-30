@@ -160,15 +160,53 @@ check.dependsOn integration
  * @plugin jacoco
  */
 jacoco {
-    reportsDir = file("$buildDir/coverage")
+    reportsDir = file("${buildDir}/reports/coverage")
 }
 
+/**
+ * Generates coverage reports for the unit tests.
+ *
+ * @plugin jacoco
+ */
 jacocoTestReport {
     reports {
         html.enabled = true
+        html.destination = "${buildDir}/reports/coverage/test/html"
+
         xml.enabled = true
-        xml.destination "${buildDir}/reports/jacoco/report.xml"
+        xml.destination = "${buildDir}/reports/coverage/test/report.xml"
     }
+}
+
+/**
+ * Generates coverage reports for the integration tests.
+ *
+ * @plugin jacoco
+ */
+task jacocoIntegrationReport(type: JacocoReport) {
+    dependsOn integration
+
+    sourceSets sourceSets.main
+    executionData integration
+
+    reports {
+        html.enabled = true
+        html.destination = "${buildDir}/reports/coverage/integration/html"
+
+        xml.enabled = true
+        xml.destination = "${buildDir}/reports/coverage/integration/report.xml"
+    }
+}
+
+/**
+ * Generates all coverage reports after running tests.
+ *
+ * @plugin jacoco
+ */
+task coverage {
+    dependsOn check
+    dependsOn jacocoTestReport
+    dependsOn jacocoIntegrationReport
 }
 
 /**

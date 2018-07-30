@@ -23,7 +23,9 @@ cache:
 script:
   - gradle check
   - gradle jacocoTestReport
-  - bash <(curl -s https://codecov.io/bash)
+  - bash <(curl -s https://codecov.io/bash) -cF test
+  - gradle jacocoIntegrationReport
+  - bash <(curl -s https://codecov.io/bash) -cF integration
 
 services:
   - docker
