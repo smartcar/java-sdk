@@ -1,0 +1,10 @@
+coverage:
+  status:
+    project:
+      default: off
+      test:
+        target: 0%
+        flags: test
+      integration:
+        target: 0%
+        flags: integration
