@@ -60,7 +60,7 @@ public class AuthClientTest extends PowerMockTestCase {
   private final String sampleRedirectUri = "https://example.com/";
   private final String sampleRedirectUriEncoded = "https%3A%2F%2Fexample.com%2F";
   private final String[] sampleScope = {"read_vehicle_info", "read_location", "read_odometer"};
-  private final boolean sampleDevelopment = true;
+  private final boolean sampleTestMode = true;
 
   // Sample AuthClient.getAuthUrl Args
   private final String sampleState = "s4mpl3st4t3";
@@ -91,7 +91,7 @@ public class AuthClientTest extends PowerMockTestCase {
         this.sampleClientSecret,
         this.sampleRedirectUri,
         this.sampleScope,
-        this.sampleDevelopment
+        this.sampleTestMode
     );
   }
 
@@ -400,13 +400,13 @@ public class AuthClientTest extends PowerMockTestCase {
    * Tests the constructor providing all required and optional arguments.
    */
   @Test
-  public void testAuthClientConstructorWithAllValidArgsProducesExpectedAuthUrl() {
+  public void testAuthClientConstructorTestModeWithAllValidArgsProducesExpectedAuthUrl() {
     AuthClient testSubject = new AuthClient(
         this.sampleClientId,
         this.sampleClientSecret,
         this.sampleRedirectUri,
         this.sampleScope,
-        this.sampleDevelopment
+        this.sampleTestMode
     );
     String expectedAuthUrl = "https://connect.smartcar.com/oauth/authorize" +
         "?response_type=code" +
@@ -414,7 +414,27 @@ public class AuthClientTest extends PowerMockTestCase {
         "&redirect_uri=" + this.sampleRedirectUriEncoded +
         "&approval_prompt=auto" +
         "&scope=read_vehicle_info%20read_location%20read_odometer" +
-        "&mock=true";
+        "&mode=test";
+
+    assertEquals(testSubject.getAuthUrl(), expectedAuthUrl);
+  }
+
+  @Test
+  public void testAuthClientConstructorLiveModeWithAllValidArgsProducesExpectedAuthUrl() {
+    AuthClient testSubject = new AuthClient(
+        this.sampleClientId,
+        this.sampleClientSecret,
+        this.sampleRedirectUri,
+        this.sampleScope,
+        false
+    );
+    String expectedAuthUrl = "https://connect.smartcar.com/oauth/authorize" +
+        "?response_type=code" +
+        "&client_id=" + this.sampleClientId +
+        "&redirect_uri=" + this.sampleRedirectUriEncoded +
+        "&approval_prompt=auto" +
+        "&scope=read_vehicle_info%20read_location%20read_odometer" +
+        "&mode=live";
 
     assertEquals(testSubject.getAuthUrl(), expectedAuthUrl);
   }
@@ -429,14 +449,14 @@ public class AuthClientTest extends PowerMockTestCase {
         this.sampleClientId,
         this.sampleClientSecret,
         this.sampleRedirectUri,
-        this.sampleDevelopment
+        this.sampleTestMode
     );
     String expectedAuthUrl = "https://connect.smartcar.com/oauth/authorize" +
         "?response_type=code" +
         "&client_id=" + this.sampleClientId +
         "&redirect_uri=" + this.sampleRedirectUriEncoded +
         "&approval_prompt=auto" +
-        "&mock=true";
+        "&mode=test";
 
     assertEquals(testSubject.getAuthUrl(), expectedAuthUrl);
   }
@@ -458,7 +478,8 @@ public class AuthClientTest extends PowerMockTestCase {
         "&client_id=" + this.sampleClientId +
         "&redirect_uri=" + this.sampleRedirectUriEncoded +
         "&approval_prompt=auto" +
-        "&scope=read_vehicle_info%20read_location%20read_odometer";
+        "&scope=read_vehicle_info%20read_location%20read_odometer" +
+        "&mode=live";
 
     assertEquals(testSubject.getAuthUrl(), expectedAuthUrl);
   }
@@ -478,7 +499,8 @@ public class AuthClientTest extends PowerMockTestCase {
         "?response_type=code" +
         "&client_id=" + this.sampleClientId +
         "&redirect_uri=" + this.sampleRedirectUriEncoded +
-        "&approval_prompt=auto";
+        "&approval_prompt=auto" +
+        "&mode=live";
 
     assertEquals(testSubject.getAuthUrl(), expectedAuthUrl);
   }
@@ -500,7 +522,7 @@ public class AuthClientTest extends PowerMockTestCase {
         "&approval_prompt=force" +
         "&state=" + this.sampleState +
         "&scope=read_vehicle_info%20read_location%20read_odometer" +
-        "&mock=true";
+        "&mode=test";
 
     assertEquals(actualAuthUrl, expectedAuthUrl);
   }
@@ -519,7 +541,7 @@ public class AuthClientTest extends PowerMockTestCase {
         "&approval_prompt=auto" +
         "&state=" + this.sampleState +
         "&scope=read_vehicle_info%20read_location%20read_odometer" +
-        "&mock=true";
+        "&mode=test";
 
     assertEquals(actualAuthUrl, expectedAuthUrl);
   }
@@ -537,7 +559,7 @@ public class AuthClientTest extends PowerMockTestCase {
         "&redirect_uri=" + this.sampleRedirectUriEncoded +
         "&approval_prompt=force" +
         "&scope=read_vehicle_info%20read_location%20read_odometer" +
-        "&mock=true";
+        "&mode=test";
 
     assertEquals(actualAuthUrl, expectedAuthUrl);
   }
@@ -555,7 +577,7 @@ public class AuthClientTest extends PowerMockTestCase {
         "&redirect_uri=" + this.sampleRedirectUriEncoded +
         "&approval_prompt=auto" +
         "&scope=read_vehicle_info%20read_location%20read_odometer" +
-        "&mock=true";
+        "&mode=test";
 
     assertEquals(actualAuthUrl, expectedAuthUrl);
   }
@@ -574,7 +596,7 @@ public class AuthClientTest extends PowerMockTestCase {
         this.sampleClientSecret,
         this.sampleRedirectUri,
         this.sampleScope,
-        this.sampleDevelopment
+        this.sampleTestMode
     ));
 
     Auth expected = new Auth(
@@ -612,7 +634,7 @@ public class AuthClientTest extends PowerMockTestCase {
         this.sampleClientSecret,
         this.sampleRedirectUri,
         this.sampleScope,
-        this.sampleDevelopment
+        this.sampleTestMode
     ));
 
     Auth expected = new Auth(

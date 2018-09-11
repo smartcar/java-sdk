@@ -66,7 +66,7 @@ public class AuthClient extends ApiClient {
   private String basicAuthorization;
   private String redirectUri;
   private String[] scope;
-  private boolean development;
+  private boolean testMode;
   public String urlAuthorize = AuthClient.URL_AUTHORIZE;
   public String urlAccessToken = AuthClient.URL_ACCESS_TOKEN;
 
@@ -187,14 +187,14 @@ public class AuthClient extends ApiClient {
    * @param clientSecret the application client secret
    * @param redirectUri the registered redirect URI for the application
    * @param scope the permission scope requested
-   * @param development whether or not to operate in development mode
+   * @param testMode whether or not mode should be set to 'test'
    */
-  public AuthClient(String clientId, String clientSecret, String redirectUri, String[] scope, boolean development) {
+  public AuthClient(String clientId, String clientSecret, String redirectUri, String[] scope, boolean testMode) {
     this.clientId = clientId;
     this.basicAuthorization = Credentials.basic(clientId, clientSecret);
     this.redirectUri = redirectUri;
     this.scope = scope;
-    this.development = development;
+    this.testMode = testMode;
 
     AuthClient.gson.registerTypeAdapter(Auth.class, new AuthDeserializer());
   }
@@ -205,10 +205,10 @@ public class AuthClient extends ApiClient {
    * @param clientId the application client ID
    * @param clientSecret the application client secret
    * @param redirectUri the registered redirect URI for the application
-   * @param development whether or not to operate in development mode
+   * @param testMode whether or not mode should be set to 'test'
    */
-  public AuthClient(String clientId, String clientSecret, String redirectUri, boolean development) {
-    this(clientId, clientSecret, redirectUri, null, development);
+  public AuthClient(String clientId, String clientSecret, String redirectUri, boolean testMode) {
+    this(clientId, clientSecret, redirectUri, null, testMode);
   }
 
   /**
@@ -278,8 +278,10 @@ public class AuthClient extends ApiClient {
       urlBuilder.addQueryParameter("scope", Utils.join(this.scope, " "));
     }
 
-    if(this.development) {
-      urlBuilder.addQueryParameter("mock", "true");
+    if(this.testMode) {
+      urlBuilder.addQueryParameter("mode", "test");
+    } else {
+      urlBuilder.addQueryParameter("mode", "live");
     }
 
     return urlBuilder.build().toString();
