@@ -187,7 +187,7 @@ public class AuthClient extends ApiClient {
    * @param clientSecret the application client secret
    * @param redirectUri the registered redirect URI for the application
    * @param scope the permission scope requested
-   * @param testMode whether or not mode should be set to 'test'
+   * @param testMode launch the Smartcar auth flow in test mode
    */
   public AuthClient(String clientId, String clientSecret, String redirectUri, String[] scope, boolean testMode) {
     this.clientId = clientId;
@@ -205,7 +205,7 @@ public class AuthClient extends ApiClient {
    * @param clientId the application client ID
    * @param clientSecret the application client secret
    * @param redirectUri the registered redirect URI for the application
-   * @param testMode whether or not mode should be set to 'test'
+   * @param testMode launch the Smartcar auth flow in test mode
    */
   public AuthClient(String clientId, String clientSecret, String redirectUri, boolean testMode) {
     this(clientId, clientSecret, redirectUri, null, testMode);
