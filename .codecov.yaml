@@ -4,7 +4,9 @@ coverage:
       default: off
       test:
         target: 0%
+        threshold: 1%
         flags: test
       integration:
         target: 0%
+        threshold: 1%
         flags: integration
