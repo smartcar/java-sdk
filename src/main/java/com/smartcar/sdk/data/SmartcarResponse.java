@@ -127,4 +127,17 @@ public class SmartcarResponse<T extends ApiData> extends ApiData {
   public void setPaging(ResponsePaging paging) {
     this.paging = paging;
   }
+
+  /**
+   * @return a stringified representation of SmartcarResponse
+   */
+  @Override
+  public String toString() {
+    return this.getClass().getName() + "{" +
+            "data=" + data +
+            ", unitSystem='" + unitSystem + '\'' +
+            ", age=" + age +
+            ", paging=" + paging +
+            '}';
+  }
 }

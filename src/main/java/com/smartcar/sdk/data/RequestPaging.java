@@ -53,4 +53,15 @@ public class RequestPaging extends ApiData {
   public void setOffset(int offset) {
     this.offset = offset;
   }
+
+  /**
+   * @return a stringified representation of RequestPaging
+   */
+  @Override
+  public String toString() {
+    return this.getClass().getName() + "{" +
+            "limit=" + limit +
+            ", offset=" + offset +
+            '}';
+  }
 }

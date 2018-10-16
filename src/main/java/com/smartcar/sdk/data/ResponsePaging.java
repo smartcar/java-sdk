@@ -53,4 +53,15 @@ public class ResponsePaging extends ApiData {
   public void setOffset(int offset) {
     this.offset = offset;
   }
+
+  /**
+   * @return a stringified representation of ResponsePaging
+   */
+  @Override
+  public String toString() {
+    return this.getClass().getName() + "{" +
+            "count=" + count +
+            ", offset=" + offset +
+            '}';
+  }
 }

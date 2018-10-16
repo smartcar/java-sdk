@@ -32,4 +32,14 @@ public class VehicleOdometer extends ApiData {
   public void setDistance(double distance) {
     this.distance = distance;
   }
+
+  /**
+   * @return a stringified representation of VehicleOdometer
+   */
+  @Override
+  public String toString() {
+    return this.getClass().getName() + "{" +
+            "distance=" + distance +
+            '}';
+  }
 }

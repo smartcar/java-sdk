@@ -32,4 +32,14 @@ public class VehicleVin extends ApiData {
   public void setVin(String vin) {
     this.vin = vin;
   }
+
+  /**
+   * @return a stringified representation of VehicleVin
+   */
+  @Override
+  public String toString() {
+    return this.getClass().getName() + "{" +
+            "vin='" + vin + '\'' +
+            '}';
+  }
 }
