@@ -95,4 +95,17 @@ public class VehicleInfo extends ApiData {
   public void setYear(int year) {
     this.year = year;
   }
+
+  /**
+   * @return a stringified representation of VehicleInfo
+   */
+  @Override
+  public String toString() {
+    return this.getClass().getName() + "{" +
+            "id='" + id + '\'' +
+            ", make='" + make + '\'' +
+            ", model='" + model + '\'' +
+            ", year=" + year +
+            '}';
+  }
 }

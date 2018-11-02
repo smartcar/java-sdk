@@ -107,4 +107,17 @@ public class Auth extends ApiData {
   public void setRefreshExpiration(final Date refreshExpiration) {
     this.refreshExpiration = refreshExpiration;
   }
+
+  /**
+   * @return a stringified representation of Auth
+   */
+  @Override
+  public String toString() {
+    return this.getClass().getName() + "{" +
+            "accessToken='" + accessToken + '\'' +
+            ", refreshToken='" + refreshToken + '\'' +
+            ", expiration=" + expiration +
+            ", refreshExpiration=" + refreshExpiration +
+            '}';
+  }
 }

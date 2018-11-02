@@ -53,4 +53,15 @@ public class VehicleLocation extends ApiData {
   public void setLongitude(double longitude) {
     this.longitude = longitude;
   }
+
+  /**
+   * @return a stringified representation of VehicleLocation
+   */
+  @Override
+  public String toString() {
+    return this.getClass().getName() + "{" +
+            "latitude=" + latitude +
+            ", longitude=" + longitude +
+            '}';
+  }
 }
