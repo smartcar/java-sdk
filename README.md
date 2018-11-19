@@ -24,9 +24,9 @@ compile "com.smartcar.sdk:java-sdk:1.0.9"
 ```
 
 ### Jar Direct Download
-* [java-sdk-1.0.9.jar](https://bintray.com/smartcar/library/download_file?file_path=com%2Fsmartcar%2Fsdk%2Fjava-sdk%2F1.0.0%2Fjava-sdk-1.0.9.jar)
-* [java-sdk-1.0.9-sources.jar](https://bintray.com/smartcar/library/download_file?file_path=com%2Fsmartcar%2Fsdk%2Fjava-sdk%2F1.0.0%2Fjava-sdk-1.0.9-sources.jar)
-* [java-sdk-1.0.9-docs.jar](https://bintray.com/smartcar/library/download_file?file_path=com%2Fsmartcar%2Fsdk%2Fjava-sdk%2F1.0.0%2Fjava-sdk-1.0.9-docs.jar)
+* [java-sdk-1.0.9.jar](https://bintray.com/smartcar/library/download_file?file_path=com%2Fsmartcar%2Fsdk%2Fjava-sdk%2F1.0.9%2Fjava-sdk-1.0.9.jar)
+* [java-sdk-1.0.9-sources.jar](https://bintray.com/smartcar/library/download_file?file_path=com%2Fsmartcar%2Fsdk%2Fjava-sdk%2F1.0.9%2Fjava-sdk-1.0.9-sources.jar)
+* [java-sdk-1.0.9-docs.jar](https://bintray.com/smartcar/library/download_file?file_path=com%2Fsmartcar%2Fsdk%2Fjava-sdk%2F1.0.9%2Fjava-sdk-1.0.9-docs.jar)
 
 
 ## Usage

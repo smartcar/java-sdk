@@ -24,9 +24,9 @@ compile "${libGroup}:${libName}:${libVersion}"
 ```
 
 ### Jar Direct Download
-* [${libName}-${libVersion}.jar](https://bintray.com/smartcar/library/download_file?file_path=com%2Fsmartcar%2Fsdk%2Fjava-sdk%2F1.0.0%2Fjava-sdk-${libVersion}.jar)
-* [${libName}-${libVersion}-sources.jar](https://bintray.com/smartcar/library/download_file?file_path=com%2Fsmartcar%2Fsdk%2Fjava-sdk%2F1.0.0%2Fjava-sdk-${libVersion}-sources.jar)
-* [${libName}-${libVersion}-docs.jar](https://bintray.com/smartcar/library/download_file?file_path=com%2Fsmartcar%2Fsdk%2Fjava-sdk%2F1.0.0%2Fjava-sdk-${libVersion}-docs.jar)
+* [${libName}-${libVersion}.jar](https://bintray.com/smartcar/library/download_file?file_path=com%2Fsmartcar%2Fsdk%2Fjava-sdk%2F${libVersion}%2Fjava-sdk-${libVersion}.jar)
+* [${libName}-${libVersion}-sources.jar](https://bintray.com/smartcar/library/download_file?file_path=com%2Fsmartcar%2Fsdk%2Fjava-sdk%2F${libVersion}%2Fjava-sdk-${libVersion}-sources.jar)
+* [${libName}-${libVersion}-docs.jar](https://bintray.com/smartcar/library/download_file?file_path=com%2Fsmartcar%2Fsdk%2Fjava-sdk%2F${libVersion}%2Fjava-sdk-${libVersion}-docs.jar)
 
 
 ## Usage
