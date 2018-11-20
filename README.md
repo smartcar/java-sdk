@@ -11,7 +11,7 @@ download links are also provided below.
 
 ### Gradle
 ```groovy
-compile "com.smartcar.sdk:java-sdk:1.0.9"
+compile "com.smartcar.sdk:java-sdk:1.0.11"
 ```
 
 ### Maven
@@ -19,14 +19,14 @@ compile "com.smartcar.sdk:java-sdk:1.0.9"
 <dependency>
   <groupId>com.smartcar.sdk</groupId>
   <artifactId>java-sdk</artifactId>
-  <version>1.0.9</version>
+  <version>1.0.11</version>
 </dependency>
 ```
 
 ### Jar Direct Download
-* [java-sdk-1.0.9.jar](https://bintray.com/smartcar/library/download_file?file_path=com%2Fsmartcar%2Fsdk%2Fjava-sdk%2F1.0.9%2Fjava-sdk-1.0.9.jar)
-* [java-sdk-1.0.9-sources.jar](https://bintray.com/smartcar/library/download_file?file_path=com%2Fsmartcar%2Fsdk%2Fjava-sdk%2F1.0.9%2Fjava-sdk-1.0.9-sources.jar)
-* [java-sdk-1.0.9-docs.jar](https://bintray.com/smartcar/library/download_file?file_path=com%2Fsmartcar%2Fsdk%2Fjava-sdk%2F1.0.9%2Fjava-sdk-1.0.9-docs.jar)
+* [java-sdk-1.0.11.jar](https://bintray.com/smartcar/library/download_file?file_path=com%2Fsmartcar%2Fsdk%2Fjava-sdk%2F1.0.11%2Fjava-sdk-1.0.11.jar)
+* [java-sdk-1.0.11-sources.jar](https://bintray.com/smartcar/library/download_file?file_path=com%2Fsmartcar%2Fsdk%2Fjava-sdk%2F1.0.11%2Fjava-sdk-1.0.11-sources.jar)
+* [java-sdk-1.0.11-docs.jar](https://bintray.com/smartcar/library/download_file?file_path=com%2Fsmartcar%2Fsdk%2Fjava-sdk%2F1.0.11%2Fjava-sdk-1.0.11-docs.jar)
 
 
 ## Usage
@@ -84,7 +84,7 @@ start making requests to vehicles.
 1.  Obtain a list of authorized vehicles:
 
     ```java
-    SmartcarResponse vehicleIdsResponse = AuthClient.getVehicleIds(auth.getAccessToken());
+    SmartcarResponse<VehicleIds> vehicleIdsResponse = AuthClient.getVehicleIds(auth.getAccessToken());
     String[] vehicleIds = vehicleIdsResponse.getData().getVehicleIds();
     ```
 
@@ -101,12 +101,12 @@ start making requests to vehicles.
     String vin = vehicle.vin();
 
     // Read the vehicle's odometer
-    SmartcarResponse odometerResponse = vehicle.odometer();
+    SmartcarResponse<VehicleOdometer> odometerResponse = vehicle.odometer();
     VehicleOdometer odometerData = odometerResponse.getData();
     String odometer = odometerData.getDistance();
 
     // Retrieve the vehicle's location
-    SmartcarResponse locationResponse = vehicle.location();
+    SmartcarResponse<VehicleLocation> locationResponse = vehicle.location();
     VehicleLocation locationData = locationResponse.getData();
     String latLong = locationData.getLatitude() + ", " + locationData.getLongitude();
 
@@ -126,5 +126,5 @@ start making requests to vehicles.
 [ci-url]: https://travis-ci.com/smartcar/java-sdk
 [coverage-image]: https://codecov.io/gh/smartcar/java-sdk/branch/master/graph/badge.svg?token=nZAITx7w3X
 [coverage-url]: https://codecov.io/gh/smartcar/java-sdk
-[javadoc-image]: https://img.shields.io/badge/javadoc-1.0.9-brightgreen.svg
+[javadoc-image]: https://img.shields.io/badge/javadoc-1.0.11-brightgreen.svg
 [javadoc-url]: https://smartcar.github.io/java-sdk
