@@ -62,6 +62,7 @@ javadoc {
 
     options.header = project.name
     options.windowTitle = "${project.name} - ${project.version}"
+    options.addBooleanOption('notimestamp', true)
 }
 
 /**
