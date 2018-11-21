@@ -142,7 +142,7 @@ public class Vehicle extends ApiClient {
    *
    * @throws SmartcarException if the request is unsuccessful
    */
-  public SmartcarResponse odometer() throws SmartcarException {
+  public SmartcarResponse<VehicleOdometer> odometer() throws SmartcarException {
     return this.call("odometer", "GET", null, VehicleOdometer.class);
   }
 
@@ -153,7 +153,7 @@ public class Vehicle extends ApiClient {
    *
    * @throws SmartcarException if the request is unsuccessful
    */
-  public SmartcarResponse location() throws SmartcarException {
+  public SmartcarResponse<VehicleLocation> location() throws SmartcarException {
     return this.call("location", "GET", null, VehicleLocation.class);
   }
 

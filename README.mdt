@@ -84,7 +84,7 @@ start making requests to vehicles.
 1.  Obtain a list of authorized vehicles:
 
     ```java
-    SmartcarResponse vehicleIdsResponse = AuthClient.getVehicleIds(auth.getAccessToken());
+    SmartcarResponse<VehicleIds> vehicleIdsResponse = AuthClient.getVehicleIds(auth.getAccessToken());
     String[] vehicleIds = vehicleIdsResponse.getData().getVehicleIds();
     ```
 
@@ -101,12 +101,12 @@ start making requests to vehicles.
     String vin = vehicle.vin();
 
     // Read the vehicle's odometer
-    SmartcarResponse odometerResponse = vehicle.odometer();
+    SmartcarResponse<VehicleOdometer> odometerResponse = vehicle.odometer();
     VehicleOdometer odometerData = odometerResponse.getData();
     String odometer = odometerData.getDistance();
 
     // Retrieve the vehicle's location
-    SmartcarResponse locationResponse = vehicle.location();
+    SmartcarResponse<VehicleLocation> locationResponse = vehicle.location();
     VehicleLocation locationData = locationResponse.getData();
     String latLong = locationData.getLatitude() + ", " + locationData.getLongitude();
 
