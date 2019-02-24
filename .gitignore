@@ -4,3 +4,4 @@ out
 *.log
 .idea
 *.iml
+/bin/
