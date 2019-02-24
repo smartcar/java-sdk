@@ -359,7 +359,7 @@ public class AuthClient extends ApiClient {
   /**
    * Determine if a vehicle is compatible with Smartcar.
    * 
-   * @param compatibility
+   * @param compatibility whether the vehicle is compatible with Smartcar
    * 
    * @return true if the vehicle is compatible
    * 
