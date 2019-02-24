@@ -10,6 +10,10 @@ apply plugin: 'java-library'
 apply plugin: 'jacoco'
 apply plugin: 'maven-publish'
 
+jacoco {
+  toolVersion = "0.8.2"
+}
+
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
 

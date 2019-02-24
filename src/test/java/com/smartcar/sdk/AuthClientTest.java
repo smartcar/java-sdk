@@ -675,7 +675,7 @@ public class AuthClientTest extends PowerMockTestCase {
         this.sampleTestMode
     ));
 
-    boolean expected = true;
+    Compatibility expected = new Compatibility(true);
 
     // Mocks
     spy(ApiClient.class);
@@ -686,9 +686,9 @@ public class AuthClientTest extends PowerMockTestCase {
         .when(ApiClient.class, "execute", any(), any());
 
     // Execute
-    Compatibility actual = testSubject.compatibility("vin");
+    boolean actual = testSubject.compatibility("vin");
 
     // Assertions
-    assertEquals(actual, expected);
+    assertEquals(actual, expected.getCompatibility());
   }
 }
