@@ -21,7 +21,7 @@ abstract class IntegrationTest {
     private static final int WEBDRIVER_DEFAULT_TIMEOUT_SECONDS = 10;
     private static Auth auth;
 
-    final String authOemUsername = IntegrationUtils.nonce(16) + "@example.com";
+    final String authOemUsername = IntegrationUtils.nonce(16) + "@smartcar.com";
     final String authOemPassword = IntegrationUtils.nonce(16);
 
     AuthClient authClient;
