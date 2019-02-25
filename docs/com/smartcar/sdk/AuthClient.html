@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":9,"i3":9,"i4":10,"i5":10,"i6":10,"i7":10,"i8":9,"i9":9,"i10":9,"i11":9};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":9,"i4":9,"i5":10,"i6":10,"i7":10,"i8":10,"i9":9,"i10":9,"i11":9,"i12":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -252,27 +252,34 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/AuthClient.html#compatibility-java.lang.String-">compatibility</a></span>&#8203;(java.lang.String&nbsp;vin)</code></th>
+<td class="colLast">
+<div class="block">Determine if a vehicle is compatible with Smartcar.</div>
+</td>
+</tr>
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/smartcar/sdk/data/Auth.html" title="class in com.smartcar.sdk.data">Auth</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/AuthClient.html#exchangeCode-java.lang.String-">exchangeCode</a></span>&#8203;(java.lang.String&nbsp;code)</code></th>
 <td class="colLast">
 <div class="block">Exchanges an authorization code for an access token.</div>
 </td>
 </tr>
-<tr id="i1" class="rowColor">
+<tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="../../../com/smartcar/sdk/data/Auth.html" title="class in com.smartcar.sdk.data">Auth</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/AuthClient.html#exchangeRefreshToken-java.lang.String-">exchangeRefreshToken</a></span>&#8203;(java.lang.String&nbsp;refreshToken)</code></th>
 <td class="colLast">
 <div class="block">Exchanges a refresh token for a new access token.</div>
 </td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>protected static okhttp3.Response</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/AuthClient.html#execute-okhttp3.Request-">execute</a></span>&#8203;(okhttp3.Request&nbsp;request)</code></th>
 <td class="colLast">
 <div class="block">Sends the specified request, returning the raw response body.</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>protected static &lt;T extends <a href="../../../com/smartcar/sdk/data/ApiData.html" title="class in com.smartcar.sdk.data">ApiData</a>&gt;<br><a href="../../../com/smartcar/sdk/data/SmartcarResponse.html" title="class in com.smartcar.sdk.data">SmartcarResponse</a>&lt;T&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/AuthClient.html#execute-okhttp3.Request-java.lang.Class-">execute</a></span>&#8203;(okhttp3.Request&nbsp;request,
        java.lang.Class&lt;T&gt;&nbsp;dataType)</code></th>
@@ -280,28 +287,28 @@ extends java.lang.Object</pre>
 <div class="block">Sends the specified request, parsing the response into the specified type.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/AuthClient.html#getAuthUrl--">getAuthUrl</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns the assembled authentication URL.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/AuthClient.html#getAuthUrl-boolean-">getAuthUrl</a></span>&#8203;(boolean&nbsp;forcePrompt)</code></th>
 <td class="colLast">
 <div class="block">Returns the assembled authentication URL.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/AuthClient.html#getAuthUrl-java.lang.String-">getAuthUrl</a></span>&#8203;(java.lang.String&nbsp;state)</code></th>
 <td class="colLast">
 <div class="block">Returns the assembled authentication URL.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/AuthClient.html#getAuthUrl-java.lang.String-boolean-">getAuthUrl</a></span>&#8203;(java.lang.String&nbsp;state,
           boolean&nbsp;forcePrompt)</code></th>
@@ -309,7 +316,7 @@ extends java.lang.Object</pre>
 <div class="block">Returns the assembled authentication URL.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/AuthClient.html#getUserId-java.lang.String-">getUserId</a></span>&#8203;(java.lang.String&nbsp;accessToken)</code></th>
 <td class="colLast">
@@ -317,14 +324,14 @@ extends java.lang.Object</pre>
  token.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>static <a href="../../../com/smartcar/sdk/data/SmartcarResponse.html" title="class in com.smartcar.sdk.data">SmartcarResponse</a>&lt;<a href="../../../com/smartcar/sdk/data/VehicleIds.html" title="class in com.smartcar.sdk.data">VehicleIds</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/AuthClient.html#getVehicleIds-java.lang.String-">getVehicleIds</a></span>&#8203;(java.lang.String&nbsp;accessToken)</code></th>
 <td class="colLast">
 <div class="block">Retrieves all vehicle IDs associated with the authenticated user.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>static <a href="../../../com/smartcar/sdk/data/SmartcarResponse.html" title="class in com.smartcar.sdk.data">SmartcarResponse</a>&lt;<a href="../../../com/smartcar/sdk/data/VehicleIds.html" title="class in com.smartcar.sdk.data">VehicleIds</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/AuthClient.html#getVehicleIds-java.lang.String-com.smartcar.sdk.data.RequestPaging-">getVehicleIds</a></span>&#8203;(java.lang.String&nbsp;accessToken,
              <a href="../../../com/smartcar/sdk/data/RequestPaging.html" title="class in com.smartcar.sdk.data">RequestPaging</a>&nbsp;paging)</code></th>
@@ -332,7 +339,7 @@ extends java.lang.Object</pre>
 <div class="block">Retrieves all vehicle IDs associated with the authenticated user.</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>static boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/AuthClient.html#isExpired-java.util.Date-">isExpired</a></span>&#8203;(java.util.Date&nbsp;expiration)</code></th>
 <td class="colLast">
@@ -688,6 +695,25 @@ extends java.lang.Object</pre>
 <dd><code>refreshToken</code> - the refresh token</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the requested access token</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - when the request is unsuccessful</dd>
+</dl>
+</li>
+</ul>
+<a name="compatibility-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>compatibility</h4>
+<pre>public&nbsp;boolean&nbsp;compatibility&#8203;(java.lang.String&nbsp;vin)
+                      throws <a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
+<div class="block">Determine if a vehicle is compatible with Smartcar.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>vin</code> - the vin of the vehicle</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>true if the vehicle is compatible</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - when the request is unsuccessful</dd>
 </dl>

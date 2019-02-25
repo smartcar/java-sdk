@@ -7,6 +7,7 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.smartcar.sdk.data.Auth;
+import com.smartcar.sdk.data.Compatibility;
 import com.smartcar.sdk.data.RequestPaging;
 import com.smartcar.sdk.data.SmartcarResponse;
 import com.smartcar.sdk.data.VehicleIds;
@@ -656,5 +657,38 @@ public class AuthClientTest extends PowerMockTestCase {
 
     // Assertions
     assertEquals(actual, expected);
+  }
+
+  /**
+   * Verifies the compatibility method
+   *
+   * @throws Exception on failure
+   */
+  @Test
+  public void testCompatibility() throws Exception {
+    // Setup
+    AuthClient testSubject = spy(new AuthClient(
+        this.sampleClientId,
+        this.sampleClientSecret,
+        this.sampleRedirectUri,
+        this.sampleScope,
+        this.sampleTestMode
+    ));
+
+    Compatibility expected = new Compatibility(true);
+
+    // Mocks
+    spy(ApiClient.class);
+    spy(SmartcarResponse.class);
+    PowerMockito.doReturn(
+          spy(new SmartcarResponse<Compatibility>(expected))
+        )
+        .when(ApiClient.class, "execute", any(), any());
+
+    // Execute
+    boolean actual = testSubject.compatibility("vin");
+
+    // Assertions
+    assertEquals(actual, expected.getCompatibility());
   }
 }
