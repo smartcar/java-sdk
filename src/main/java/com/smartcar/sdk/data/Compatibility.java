@@ -21,7 +21,7 @@ public class Compatibility extends ApiData {
 	 * @return compatible
 	 */
 	public boolean getCompatible() {
-		return compatible;
+		return this.compatible;
 	}
 
 	/**
