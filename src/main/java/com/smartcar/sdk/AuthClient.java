@@ -367,9 +367,9 @@ public class AuthClient extends ApiClient {
    */
   public boolean isCompatible(String vin) throws SmartcarException {
     HttpUrl url = HttpUrl.parse(this.urlApi).newBuilder()
-      .addPathSegment("compatibility")
-      .addQueryParameter("vin", vin)
-      .build();
+        .addPathSegment("compatibility")
+        .addQueryParameter("vin", vin)
+        .build();
 
     Request request = new Request.Builder()
         .url(url)
@@ -379,6 +379,6 @@ public class AuthClient extends ApiClient {
         .build();
 
     return AuthClient.execute(request, Compatibility.class)
-    	.getData().getCompatible();
+    	  .getData().getCompatible();
   }
 }
