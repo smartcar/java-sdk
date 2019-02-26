@@ -7,6 +7,7 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.smartcar.sdk.data.Auth;
+import com.smartcar.sdk.data.Compatibility;
 import com.smartcar.sdk.data.RequestPaging;
 import com.smartcar.sdk.data.ResponsePaging;
 import com.smartcar.sdk.data.SmartcarResponse;
@@ -353,5 +354,31 @@ public class AuthClient extends ApiClient {
         .build();
 
     return this.call(requestBody);
+  }
+
+  /**
+   * Determine if a vehicle is compatible with Smartcar.
+   *
+   * @param vin the vin of the vehicle
+   *
+   * @return true if the vehicle is compatible
+   *
+   * @throws SmartcarException when the request is unsuccessful
+   */
+  public boolean isCompatible(String vin) throws SmartcarException {
+    HttpUrl url = HttpUrl.parse(this.urlApi).newBuilder()
+        .addPathSegment("compatibility")
+        .addQueryParameter("vin", vin)
+        .build();
+
+    Request request = new Request.Builder()
+        .url(url)
+        .header("Authorization", this.basicAuthorization)
+        .addHeader("User-Agent", AuthClient.USER_AGENT)
+        .get()
+        .build();
+
+    return AuthClient.execute(request, Compatibility.class)
+    	  .getData().getCompatible();
   }
 }

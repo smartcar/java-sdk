@@ -11,6 +11,7 @@ import java.net.MalformedURLException;
 import static org.testng.Assert.assertNotEquals;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.assertFalse;
 
 /**
  * Integration Test Suite: Authentication
@@ -53,7 +54,7 @@ public class AuthTest extends IntegrationTest {
      * @throws Exception if new credentials cannot be obtained
      */
     @Test
-    public void testRefrehToken() throws Exception {
+    public void testRefreshToken() throws Exception {
         Auth oldAuth = this.getAuth();
         Auth newAuth = this.authClient.exchangeRefreshToken(oldAuth.getRefreshToken());
 
@@ -61,6 +62,24 @@ public class AuthTest extends IntegrationTest {
         assertNotNull(newAuth.getRefreshToken());
         assertNotNull(newAuth.getExpiration());
         assertNotNull(newAuth.getRefreshExpiration());
+    }
+
+    /**
+     * Test that the compatibility is returned.
+     *
+     * @throws Exception if compatibility cannot be obtained
+     */
+    @Test
+    public void testIsCompatible() throws Exception {
+
+      String teslaVin = "5YJXCDE22HF068739";
+      String royceVin = "SCA665C59HUX86700";
+
+      boolean teslaComp = this.authClient.isCompatible(teslaVin);
+      boolean royceComp = this.authClient.isCompatible(royceVin);
+
+      assertTrue(teslaComp);
+      assertFalse(royceComp);
     }
 
     /**
