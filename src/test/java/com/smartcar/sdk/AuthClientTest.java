@@ -660,12 +660,12 @@ public class AuthClientTest extends PowerMockTestCase {
   }
 
   /**
-   * Verifies the compatibility method
+   * Verifies the isCompatible method
    *
    * @throws Exception on failure
    */
   @Test
-  public void testCompatibility() throws Exception {
+  public void testIsCompatible() throws Exception {
     // Setup
     AuthClient testSubject = spy(new AuthClient(
         this.sampleClientId,
@@ -686,9 +686,9 @@ public class AuthClientTest extends PowerMockTestCase {
         .when(ApiClient.class, "execute", any(), any());
 
     // Execute
-    boolean actual = testSubject.compatibility("vin");
+    boolean actual = testSubject.isCompatible("vin");
 
     // Assertions
-    assertEquals(actual, expected.getCompatibility());
+    assertEquals(actual, expected.getCompatible());
   }
 }

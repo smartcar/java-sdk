@@ -70,13 +70,13 @@ public class AuthTest extends IntegrationTest {
      * @throws Exception if compatibility cannot be obtained
      */
     @Test
-    public void testCompatibility() throws Exception {
+    public void testIsCompatible() throws Exception {
 
       String teslaVin = "5YJXCDE22HF068739";
       String royceVin = "SCA665C59HUX86700";
 
-      boolean teslaComp = this.authClient.compatibility(teslaVin);
-      boolean royceComp = this.authClient.compatibility(royceVin);
+      boolean teslaComp = this.authClient.isCompatible(teslaVin);
+      boolean royceComp = this.authClient.isCompatible(royceVin);
 
       assertTrue(teslaComp);
       assertFalse(royceComp);
