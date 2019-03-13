@@ -484,10 +484,11 @@ public class AuthClient extends ApiClient {
    *
    * @throws SmartcarException when the request is unsuccessful
    */
-  public boolean isCompatible(String vin) throws SmartcarException {
+  public boolean isCompatible(String vin, String scopes) throws SmartcarException {
     HttpUrl url = HttpUrl.parse(this.urlApi).newBuilder()
         .addPathSegment("compatibility")
         .addQueryParameter("vin", vin)
+        .addQueryParameter("scopes", scopes)
         .build();
 
     Request request = new Request.Builder()
