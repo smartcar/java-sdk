@@ -74,10 +74,28 @@ public class AuthTest extends IntegrationTest {
 
       String teslaVin = "5YJXCDE22HF068739";
       String royceVin = "SCA665C59HUX86700";
-      String scopes = "read_location read_odometer"; 
 
-      boolean teslaComp = this.authClient.isCompatible(teslaVin, scopes);
-      boolean royceComp = this.authClient.isCompatible(royceVin, scopes);
+      boolean teslaComp = this.authClient.isCompatible(teslaVin);
+      boolean royceComp = this.authClient.isCompatible(royceVin);
+
+      assertTrue(teslaComp);
+      assertFalse(royceComp);
+    }
+
+    /**
+     * Test that the compatibility is returned given scopes
+     *
+     * @throws Exception if compatibility cannot be obtained
+     */
+    @Test
+    public void testIsCompatible() throws Exception {
+
+      String teslaVin = "5YJXCDE22HF068739";
+      String royceVin = "SCA665C59HUX86700";
+      String scope = "read_location read_odometer"; 
+
+      boolean teslaComp = this.authClient.isCompatible(teslaVin, scope);
+      boolean royceComp = this.authClient.isCompatible(royceVin, scope);
 
       assertTrue(teslaComp);
       assertFalse(royceComp);

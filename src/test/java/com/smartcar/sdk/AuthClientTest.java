@@ -778,10 +778,14 @@ public class AuthClientTest extends PowerMockTestCase {
         )
         .when(ApiClient.class, "execute", any(), any());
 
-    // Execute
-    boolean actual = testSubject.isCompatible("vin", "scopes");
+    // Execute without scope
+    boolean compatibility = testSubject.isCompatible("vin");
+    // Execute with scope
+    boolean compatibilityWScopes = testSubject.isCompatible("vin", "scope");
+
 
     // Assertions
-    assertEquals(actual, expected.getCompatible());
+    assertEquals(compatibility, expected.getCompatible());
+    assertEquals(compatibilityWScopes, expected.getCompatible());
   }
 }
