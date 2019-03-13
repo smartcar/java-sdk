@@ -781,7 +781,9 @@ public class AuthClientTest extends PowerMockTestCase {
     // Execute without scope
     boolean compatibility = testSubject.isCompatible("vin");
     // Execute with scope
-    boolean compatibilityWScopes = testSubject.isCompatible("vin", "scope");
+    
+    String[] scope = new String[]{"read_location", "read_odometer"}; 
+    boolean compatibilityWScopes = testSubject.isCompatible("vin", scope);
 
 
     // Assertions
