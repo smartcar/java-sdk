@@ -256,15 +256,43 @@ public class AuthClient extends ApiClient {
     return AuthClient.execute(request, Auth.class).getData();
   }
 
+  public static class AuthVehicleInfo {
+    private String make;
+
+    private AuthVehicleInfo (Builder builder) {
+      this.make = builder.make;
+    }
+
+    public String getMake() {
+      return this.make;
+    }
+
+    public static class Builder {
+      private String make;
+
+      public Builder setMake(String make) {
+        this.make = make;
+        return this;
+      }
+
+      public AuthVehicleInfo build() {
+        return new AuthVehicleInfo(this);
+      }
+    }
+  }
+
   /**
    * Returns the assembled authentication URL.
    *
    * @param state an arbitrary string to be returned to the redirect URI
    * @param forcePrompt whether to force the approval prompt to show every auth
+   * @param authVehicleInfo an object that has an optional make property. Including
+   * the make property causes the OEM selector screen to be bypassed, allowing
+   * the user to go directly to the vehicle login screen.
    *
    * @return the authentication URL
    */
-  public String getAuthUrl(String state, boolean forcePrompt) {
+  public String getAuthUrl(String state, boolean forcePrompt, AuthVehicleInfo authVehicleInfo) {
     HttpUrl.Builder urlBuilder = HttpUrl.parse(this.urlAuthorize).newBuilder()
         .addQueryParameter("response_type", "code")
         .addQueryParameter("client_id", this.clientId)
@@ -285,6 +313,12 @@ public class AuthClient extends ApiClient {
       urlBuilder.addQueryParameter("mode", "live");
     }
 
+    if(authVehicleInfo != null) {
+      if(authVehicleInfo.getMake() != null) {
+        urlBuilder.addQueryParameter("make", authVehicleInfo.getMake());
+      }
+    }
+
     return urlBuilder.build().toString();
   }
 
@@ -296,7 +330,7 @@ public class AuthClient extends ApiClient {
    * @return the authentication URL
    */
   public String getAuthUrl(String state) {
-    return this.getAuthUrl(state, false);
+    return this.getAuthUrl(state, false, null);
   }
 
   /**
@@ -307,7 +341,60 @@ public class AuthClient extends ApiClient {
    * @return the authentication URL
    */
   public String getAuthUrl(boolean forcePrompt) {
-    return this.getAuthUrl(null, forcePrompt);
+    return this.getAuthUrl(null, forcePrompt, null);
+  }
+
+  /**
+   * Returns the assembled authentication URL.
+   *
+   * @param authVehicleInfo an object that has an optional make property. Including
+   * the make property causes the OEM selector screen to be bypassed, allowing
+   * the user to go directly to the vehicle login screen.
+   *
+   * @return the authentication URL
+   */
+  public String getAuthUrl(AuthVehicleInfo authVehicleInfo) {
+    return this.getAuthUrl(null, false, authVehicleInfo);
+  }
+
+  /**
+   * Returns the assembled authentication URL.
+   *
+   * @param state an arbitrary string to be returned to the redirect URI
+   * @param authVehicleInfo an object that has an optional make property. Including
+   * the make property causes the OEM selector screen to be bypassed, allowing
+   * the user to go directly to the vehicle login screen.
+   *
+   * @return the authentication URL
+   */
+  public String getAuthUrl(String state, AuthVehicleInfo authVehicleInfo) {
+    return this.getAuthUrl(state, false, authVehicleInfo);
+  }
+
+  /**
+   * Returns the assembled authentication URL.
+   *
+   * @param forcePrompt whether to force the approval prompt to show every auth
+   * @param authVehicleInfo an object that has an optional make property. Including
+   * the make property causes the OEM selector screen to be bypassed, allowing
+   * the user to go directly to the vehicle login screen.
+   *
+   * @return the authentication URL
+   */
+  public String getAuthUrl(boolean forcePrompt, AuthVehicleInfo authVehicleInfo) {
+    return this.getAuthUrl(null, forcePrompt, authVehicleInfo);
+  }
+
+  /**
+   * Returns the assembled authentication URL.
+   *
+   * @param state an arbitrary string to be returned to the redirect URI
+   * @param forcePrompt whether to force the approval prompt to show every auth
+   *
+   * @return the authentication URL
+   */
+  public String getAuthUrl(String state, boolean forcePrompt) {
+    return this.getAuthUrl(state, forcePrompt, null);
   }
 
   /**
@@ -316,7 +403,7 @@ public class AuthClient extends ApiClient {
    * @return the authentication URL
    */
   public String getAuthUrl() {
-    return this.getAuthUrl(null);
+    return this.getAuthUrl(null, false, null);
   }
 
   /**
