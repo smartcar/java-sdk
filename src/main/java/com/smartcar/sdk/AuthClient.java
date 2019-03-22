@@ -256,25 +256,58 @@ public class AuthClient extends ApiClient {
     return AuthClient.execute(request, Auth.class).getData();
   }
 
+  /**
+   * A class that creates a custom AuthVehicleInfo object, which can be used
+   * when generating an authentication URL.
+   */
   public static class AuthVehicleInfo {
     private String make;
 
+    /**
+     * Assigns optional and required properties on the AuthVehicleInfo object.
+     * 
+     * @param builder the builder to obtain the properties from
+     */
     private AuthVehicleInfo (Builder builder) {
       this.make = builder.make;
     }
 
+    /**
+    * Returns the make assigned to AuthVehicleInfo
+    * 
+    * @return the make of the vehicle
+    */
     public String getMake() {
       return this.make;
     }
 
+    /**
+     * Builder class that allows for optional properties on AuthVehicleInfo 
+     */
     public static class Builder {
       private String make;
 
+      /**
+       * Sets the make on the Builder. Make is an optional property for the Builder and 
+       * AuthVehicleInfo class. Including a make allows the user to bypass the OEM selection 
+       * screen and go directly to the vehicle login screen.
+       * 
+       * @param make name of the make of a vehicle. For a list of supported makes, please see 
+       * <a href="https://smartcar.com/docs/api#request-authorization">our API Reference</a>
+       *
+       * @return the builder with a make property added
+       */
       public Builder setMake(String make) {
         this.make = make;
         return this;
       }
 
+      /**
+       * Instantiates a new AuthVehicleInfo object, which will also have any optional properties
+       * that are already set on the Builder object that is calling this method. 
+       *
+       * @return a new instantiation of the AuthVehicleInfo class
+       */
       public AuthVehicleInfo build() {
         return new AuthVehicleInfo(this);
       }
@@ -286,9 +319,9 @@ public class AuthClient extends ApiClient {
    *
    * @param state an arbitrary string to be returned to the redirect URI
    * @param forcePrompt whether to force the approval prompt to show every auth
-   * @param authVehicleInfo an object that has an optional make property. Including
-   * the make property causes the OEM selector screen to be bypassed, allowing
-   * the user to go directly to the vehicle login screen.
+   * @param authVehicleInfo an optional AuthVehicleInfo object. Including the
+   * make property causes the OEM selector screen to be bypassed, allowing the
+   * user to go directly to the vehicle login screen.
    *
    * @return the authentication URL
    */
@@ -347,9 +380,9 @@ public class AuthClient extends ApiClient {
   /**
    * Returns the assembled authentication URL.
    *
-   * @param authVehicleInfo an object that has an optional make property. Including
-   * the make property causes the OEM selector screen to be bypassed, allowing
-   * the user to go directly to the vehicle login screen.
+   * @param authVehicleInfo an optional AuthVehicleInfo object. Including the
+   * make property causes the OEM selector screen to be bypassed, allowing the
+   * user to go directly to the vehicle login screen.
    *
    * @return the authentication URL
    */
@@ -361,9 +394,9 @@ public class AuthClient extends ApiClient {
    * Returns the assembled authentication URL.
    *
    * @param state an arbitrary string to be returned to the redirect URI
-   * @param authVehicleInfo an object that has an optional make property. Including
-   * the make property causes the OEM selector screen to be bypassed, allowing
-   * the user to go directly to the vehicle login screen.
+   * @param authVehicleInfo an optional AuthVehicleInfo object. Including the
+   * make property causes the OEM selector screen to be bypassed, allowing the
+   * user to go directly to the vehicle login screen.
    *
    * @return the authentication URL
    */
@@ -375,9 +408,9 @@ public class AuthClient extends ApiClient {
    * Returns the assembled authentication URL.
    *
    * @param forcePrompt whether to force the approval prompt to show every auth
-   * @param authVehicleInfo an object that has an optional make property. Including
-   * the make property causes the OEM selector screen to be bypassed, allowing
-   * the user to go directly to the vehicle login screen.
+   * @param authVehicleInfo an optional AuthVehicleInfo object. Including the
+   * make property causes the OEM selector screen to be bypassed, allowing the
+   * user to go directly to the vehicle login screen.
    *
    * @return the authentication URL
    */

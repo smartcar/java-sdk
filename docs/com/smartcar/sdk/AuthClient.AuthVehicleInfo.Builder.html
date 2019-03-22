@@ -114,6 +114,7 @@ var activeTableTab = "activeTableTab";
 <br>
 <pre>public static class <span class="typeNameLabel">AuthClient.AuthVehicleInfo.Builder</span>
 extends java.lang.Object</pre>
+<div class="block">Builder class that allows for optional properties on AuthVehicleInfo</div>
 </li>
 </ul>
 </div>
@@ -151,11 +152,16 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code><a href="../../../com/smartcar/sdk/AuthClient.AuthVehicleInfo.html" title="class in com.smartcar.sdk">AuthClient.AuthVehicleInfo</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/AuthClient.AuthVehicleInfo.Builder.html#build--">build</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/AuthClient.AuthVehicleInfo.Builder.html#build--">build</a></span>()</code>
+<div class="block">Instantiates a new AuthVehicleInfo object, which will also have any optional properties
+ that are already set on the Builder object that is calling this method.</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/smartcar/sdk/AuthClient.AuthVehicleInfo.Builder.html" title="class in com.smartcar.sdk">AuthClient.AuthVehicleInfo.Builder</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/AuthClient.AuthVehicleInfo.Builder.html#setMake-java.lang.String-">setMake</a></span>(java.lang.String&nbsp;make)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/AuthClient.AuthVehicleInfo.Builder.html#setMake-java.lang.String-">setMake</a></span>(java.lang.String&nbsp;make)</code>
+<div class="block">Sets the make on the Builder.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -203,6 +209,16 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>setMake</h4>
 <pre>public&nbsp;<a href="../../../com/smartcar/sdk/AuthClient.AuthVehicleInfo.Builder.html" title="class in com.smartcar.sdk">AuthClient.AuthVehicleInfo.Builder</a>&nbsp;setMake(java.lang.String&nbsp;make)</pre>
+<div class="block">Sets the make on the Builder. Make is an optional property for the Builder and 
+ AuthVehicleInfo class. Including a make allows the user to bypass the OEM selection 
+ screen and go directly to the vehicle login screen.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>make</code> - name of the make of a vehicle. For a list of supported makes, please see 
+ <a href="https://smartcar.com/docs/api#request-authorization">our API Reference</a></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the builder with a make property added</dd>
+</dl>
 </li>
 </ul>
 <a name="build--">
@@ -212,6 +228,12 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>build</h4>
 <pre>public&nbsp;<a href="../../../com/smartcar/sdk/AuthClient.AuthVehicleInfo.html" title="class in com.smartcar.sdk">AuthClient.AuthVehicleInfo</a>&nbsp;build()</pre>
+<div class="block">Instantiates a new AuthVehicleInfo object, which will also have any optional properties
+ that are already set on the Builder object that is calling this method.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a new instantiation of the AuthVehicleInfo class</dd>
+</dl>
 </li>
 </ul>
 </li>

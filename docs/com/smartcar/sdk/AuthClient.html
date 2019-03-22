@@ -131,7 +131,10 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/AuthClient.AuthVehicleInfo.html" title="class in com.smartcar.sdk">AuthClient.AuthVehicleInfo</a></span></code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/AuthClient.AuthVehicleInfo.html" title="class in com.smartcar.sdk">AuthClient.AuthVehicleInfo</a></span></code>
+<div class="block">A class that creates a custom AuthVehicleInfo object, which can be used
+ when generating an authentication URL.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -609,9 +612,9 @@ extends java.lang.Object</pre>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>state</code> - an arbitrary string to be returned to the redirect URI</dd>
 <dd><code>forcePrompt</code> - whether to force the approval prompt to show every auth</dd>
-<dd><code>authVehicleInfo</code> - an object that has an optional make property. Including
- the make property causes the OEM selector screen to be bypassed, allowing
- the user to go directly to the vehicle login screen.</dd>
+<dd><code>authVehicleInfo</code> - an optional AuthVehicleInfo object. Including the
+ make property causes the OEM selector screen to be bypassed, allowing the
+ user to go directly to the vehicle login screen.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the authentication URL</dd>
 </dl>
@@ -659,9 +662,9 @@ extends java.lang.Object</pre>
 <div class="block">Returns the assembled authentication URL.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>authVehicleInfo</code> - an object that has an optional make property. Including
- the make property causes the OEM selector screen to be bypassed, allowing
- the user to go directly to the vehicle login screen.</dd>
+<dd><code>authVehicleInfo</code> - an optional AuthVehicleInfo object. Including the
+ make property causes the OEM selector screen to be bypassed, allowing the
+ user to go directly to the vehicle login screen.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the authentication URL</dd>
 </dl>
@@ -679,9 +682,9 @@ extends java.lang.Object</pre>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>state</code> - an arbitrary string to be returned to the redirect URI</dd>
-<dd><code>authVehicleInfo</code> - an object that has an optional make property. Including
- the make property causes the OEM selector screen to be bypassed, allowing
- the user to go directly to the vehicle login screen.</dd>
+<dd><code>authVehicleInfo</code> - an optional AuthVehicleInfo object. Including the
+ make property causes the OEM selector screen to be bypassed, allowing the
+ user to go directly to the vehicle login screen.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the authentication URL</dd>
 </dl>
@@ -699,9 +702,9 @@ extends java.lang.Object</pre>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>forcePrompt</code> - whether to force the approval prompt to show every auth</dd>
-<dd><code>authVehicleInfo</code> - an object that has an optional make property. Including
- the make property causes the OEM selector screen to be bypassed, allowing
- the user to go directly to the vehicle login screen.</dd>
+<dd><code>authVehicleInfo</code> - an optional AuthVehicleInfo object. Including the
+ make property causes the OEM selector screen to be bypassed, allowing the
+ user to go directly to the vehicle login screen.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the authentication URL</dd>
 </dl>
