@@ -288,9 +288,8 @@ public class AuthClient extends ApiClient {
       private String make;
 
       /**
-       * Sets the make on the Builder. Make is an optional property for the Builder and 
-       * AuthVehicleInfo class. Including a make allows the user to bypass the OEM selection 
-       * screen and go directly to the vehicle login screen.
+       * Sets the make on the Builder. Including a make allows the user to bypass the OEM
+       * selection screen and go directly to the vehicle login screen.
        * 
        * @param make name of the make of a vehicle. For a list of supported makes, please see 
        * <a href="https://smartcar.com/docs/api#request-authorization">our API Reference</a>
