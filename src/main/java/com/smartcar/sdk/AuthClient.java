@@ -476,32 +476,6 @@ public class AuthClient extends ApiClient {
   }
 
   /**
-   * Determine if a vehicle is compatible with Smartcar.
-   *
-   * @param vin the vin of the vehicle
-   *
-   * @return true if the vehicle is compatible
-   *
-   * @throws SmartcarException when the request is unsuccessful
-   */
-  public boolean isCompatible(String vin) throws SmartcarException {
-    HttpUrl url = HttpUrl.parse(this.urlApi).newBuilder()
-        .addPathSegment("compatibility")
-        .addQueryParameter("vin", vin)
-        .build();
-
-    Request request = new Request.Builder()
-        .url(url)
-        .header("Authorization", this.basicAuthorization)
-        .addHeader("User-Agent", AuthClient.USER_AGENT)
-        .get()
-        .build();
-
-    return AuthClient.execute(request, Compatibility.class)
-    	  .getData().getCompatible();
-  }
-
-    /**
    * Determine if a vehicle is compatible with Smartcar given scopes.
    * Overloads isCompatible function to make scope optional
    *
@@ -517,7 +491,7 @@ public class AuthClient extends ApiClient {
         .addPathSegment("compatibility")
         .addQueryParameter("vin", vin)
         .addQueryParameter("scope", String.join(" ", scope))
-        .build();
+        .build(); 
 
     Request request = new Request.Builder()
         .url(url)
@@ -530,3 +504,4 @@ public class AuthClient extends ApiClient {
     	  .getData().getCompatible();
   }
 }
+

@@ -6,6 +6,7 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.smartcar.sdk.CompatibilityRequest;
 import com.smartcar.sdk.data.Auth;
 import com.smartcar.sdk.data.Compatibility;
 import com.smartcar.sdk.data.RequestPaging;
@@ -31,6 +32,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.argThat;
 import static org.powermock.api.mockito.PowerMockito.doReturn;
 import static org.powermock.api.mockito.PowerMockito.mock;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
@@ -111,7 +113,7 @@ public class AuthClientTest extends PowerMockTestCase {
     // Setup
     String expectedUserId = "9c58a58f-579e-4fce-b2fc-53a518271b8c";
 
-    // Mock: okhttp
+    // Mock: okhttp 
     mockStatic(HttpUrl.class);
     Request.Builder mockBuilder = mock(Request.Builder.class);
     Request mockRequest = mock(Request.class);
@@ -769,25 +771,20 @@ public class AuthClientTest extends PowerMockTestCase {
     ));
 
     Compatibility expected = new Compatibility(true);
-
+    
+    // Execute with scope
+    String[] scope = new String[]{"read_location", "read_odometer"}; 
+    
     // Mocks
     spy(ApiClient.class);
     spy(SmartcarResponse.class);
     PowerMockito.doReturn(
           spy(new SmartcarResponse<Compatibility>(expected))
         )
-        .when(ApiClient.class, "execute", any(), any());
+        .when(ApiClient.class, "execute", argThat(new CompatibilityRequest()), any());
 
-    // Execute without scope
-    boolean compatibility = testSubject.isCompatible("vin");
-    // Execute with scope
-    
-    String[] scope = new String[]{"read_location", "read_odometer"}; 
     boolean compatibilityWScopes = testSubject.isCompatible("vin", scope);
 
-
-    // Assertions
-    assertEquals(compatibility, expected.getCompatible());
     assertEquals(compatibilityWScopes, expected.getCompatible());
   }
 }
