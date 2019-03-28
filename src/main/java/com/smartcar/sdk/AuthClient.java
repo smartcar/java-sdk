@@ -477,7 +477,7 @@ public class AuthClient extends ApiClient {
 
   /**
    * Determine if a vehicle is compatible with Smartcar given scopes.
-   * Overloads isCompatible function to make scope optional
+   * Vin and Scopes are required parameters
    *
    * @param vin the vin of the vehicle
    * @param scope the space seperated string of scopes

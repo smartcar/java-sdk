@@ -73,14 +73,14 @@ public class AuthTest extends IntegrationTest {
     public void testIsCompatibleScopes() throws Exception {
 
       String teslaVin = "5YJXCDE22HF068739";
-      String royceVin = "SCA665C59HUX86700";
+      String audiVin = "WAUANAF40HN017169";
       String[] scope = new String[]{"read_location", "read_odometer"}; 
 
       boolean teslaComp = this.authClient.isCompatible(teslaVin, scope);
-      boolean royceComp = this.authClient.isCompatible(royceVin, scope);
+      boolean audiComp = this.authClient.isCompatible(audiVin, scope);
 
-    //   assertTrue(teslaComp);
-    //   assertFalse(royceComp);
+      assertTrue(teslaComp);
+      assertFalse(audiComp);
     }
 
     /**
