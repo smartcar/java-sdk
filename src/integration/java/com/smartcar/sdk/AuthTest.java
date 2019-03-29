@@ -70,7 +70,7 @@ public class AuthTest extends IntegrationTest {
      * @throws Exception if compatibility cannot be obtained
      */
     @Test
-    public void testIsCompatibleScopes() throws Exception {
+    public void testIsCompatible() throws Exception {
 
       String teslaVin = "5YJXCDE22HF068739";
       String audiVin = "WAUANAF40HN017169";

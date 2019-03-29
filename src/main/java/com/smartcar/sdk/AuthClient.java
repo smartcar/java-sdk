@@ -480,7 +480,7 @@ public class AuthClient extends ApiClient {
    * Vin and Scopes are required parameters
    *
    * @param vin the vin of the vehicle
-   * @param scope the space seperated string of scopes
+   * @param scope array of scopes
    *
    * @return true if the vehicle is compatible
    *

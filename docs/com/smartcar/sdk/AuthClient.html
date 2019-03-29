@@ -337,7 +337,7 @@ extends java.lang.Object</pre>
 <tr id="i15" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/AuthClient.html#isCompatible-java.lang.String-">isCompatible</a></span>&#8203;(java.lang.String&nbsp;vin&nbsp;String[]&nbsp;scope)</code>
-<div class="block">Determine if a vehicle is compatible with Smartcar and the provided scope.</div>
+<div class="block">Determine if a vehicle is compatible with the Smartcar API and the provided permissions.</div>
 </td>
 </tr>
 <tr id="i16" class="altColor">
@@ -786,23 +786,20 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>isCompatible</h4>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<pre>public&nbsp;boolean&nbsp;isCompatible(java.lang.String&nbsp;vin)
-=======
 <pre>public&nbsp;boolean&nbsp;isCompatible&#8203;(java.lang.String&nbsp;vin&nbsp;String&nbsp;scope)
->>>>>>> PR changes
-=======
-<pre>public&nbsp;boolean&nbsp;isCompatible&#8203;(java.lang.String&nbsp;vin&nbsp;String[]&nbsp;scope)
->>>>>>> fix test and change scope to array of strings
                      throws <a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
-<div class="block">Determine if a vehicle is compatible with Smartcar.</div>
+<div class="block">Smartcar offers a compatibility endpoint to determine vehicle compatibility with the API. 
+    A compatible vehicle is a vehicle that:
+    1. has the hardware required for internet connectivity,
+    2. belongs to the makes and models Smartcar supports, and.
+    supports the permissions.
+</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>vin</code> - the vin of the vehicle</dd>
-<dd><code>scope</code> - array of permission strings</dd>
+<dd><code>vin</code> - The <a href="https://www.autocheck.com/vehiclehistory/autocheck/en/vinbasics">VIN (Vehicle Identification Number)</a> of the vehicle.</dd>
+<dd><code>scope</code> - A space separated list of permissions. The valid permissions are found in the <a href="https://smartcar.com/docs/api#get-all-vehicles">API Reference</a></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>true if the vehicle is compatible with Smartcar and the provided scope</dd>
+<dd>false if the vehicle is not compatible. true if the vehicle is likely compatible.*</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - when the request is unsuccessful</dd>
 </dl>
