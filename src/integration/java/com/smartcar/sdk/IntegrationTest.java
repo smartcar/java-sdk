@@ -55,7 +55,7 @@ abstract class IntegrationTest {
                     this.authScope,
                     this.authDevelopment
             );
-
+            
             String authCode = this.getAuthCode(authClient.getAuthUrl(), this.authOemUsername, this.authOemPassword);
 
             IntegrationTest.auth = authClient.exchangeCode(authCode);
@@ -85,7 +85,7 @@ abstract class IntegrationTest {
         List<WebElement> webOemButtons = this.driver.findElements(By.cssSelector("body > div > a.button"));
 
         for (WebElement webButton : webOemButtons) {
-            if(webButton.getAttribute("href").startsWith("https://tesla.smartcar.com")) {
+            if(webButton.getAttribute("href").endsWith("&make=TESLA")) {
                 oemAuthUrl = webButton.getAttribute("href");
                 break;
             }
