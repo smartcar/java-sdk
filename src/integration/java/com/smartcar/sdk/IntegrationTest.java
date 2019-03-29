@@ -55,7 +55,7 @@ abstract class IntegrationTest {
                     this.authScope,
                     this.authDevelopment
             );
-
+            
             String authCode = this.getAuthCode(authClient.getAuthUrl(), this.authOemUsername, this.authOemPassword);
 
             IntegrationTest.auth = authClient.exchangeCode(authCode);

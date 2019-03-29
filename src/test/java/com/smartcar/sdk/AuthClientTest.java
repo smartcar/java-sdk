@@ -66,6 +66,11 @@ public class AuthClientTest extends PowerMockTestCase {
   // Sample AuthClient.getAuthUrl Args
   private final String sampleState = "s4mpl3st4t3";
   private final boolean sampleForcePrompt = true;
+  private final AuthClient.AuthVehicleInfo sampleAuthVehicleInfo = new AuthClient.AuthVehicleInfo.Builder()
+    .setMake("TESLA")
+    .build();
+
+
 
   // Sample AuthClient.exchangeCode Arg
   private final String sampleCode = "";
@@ -507,6 +512,30 @@ public class AuthClientTest extends PowerMockTestCase {
   }
 
   /**
+   * Tests that Auth URL generation produces the expected URL string when
+   * state, forcePrompt, and authVehicleInfo arguments are all specified.
+   */
+  @Test
+  public void testGetAuthUrlWithStateAndForcePromptAndAuthVehicleInfoProducesExpectedAuthUrl() {
+    String actualAuthUrl = this.subject.getAuthUrl(
+        this.sampleState,
+        this.sampleForcePrompt,
+        this.sampleAuthVehicleInfo
+    );
+    String expectedAuthUrl = "https://connect.smartcar.com/oauth/authorize" +
+        "?response_type=code" +
+        "&client_id=" + this.sampleClientId +
+        "&redirect_uri=" + this.sampleRedirectUriEncoded +
+        "&approval_prompt=force" +
+        "&state=" + this.sampleState +
+        "&scope=read_vehicle_info%20read_location%20read_odometer" +
+        "&mode=test" +
+        "&make=" + this.sampleAuthVehicleInfo.getMake();
+
+    assertEquals(actualAuthUrl, expectedAuthUrl);
+  }
+
+  /**
    * Tests that Auth URL generation produces the expected URL string when both
    * state and forcePrompt arguments are specified.
    */
@@ -524,6 +553,51 @@ public class AuthClientTest extends PowerMockTestCase {
         "&state=" + this.sampleState +
         "&scope=read_vehicle_info%20read_location%20read_odometer" +
         "&mode=test";
+
+    assertEquals(actualAuthUrl, expectedAuthUrl);
+  }
+
+  /**
+   * Tests that Auth URL generation produces the expected URL string when both
+   * state and authVehicleInfo arguments are specified.
+   */
+  @Test
+  public void testGetAuthUrlWithStateAndAndAuthVehicleInfoProducesExpectedAuthUrl() {
+    String actualAuthUrl = this.subject.getAuthUrl(
+        this.sampleState,
+        this.sampleAuthVehicleInfo
+    );
+    String expectedAuthUrl = "https://connect.smartcar.com/oauth/authorize" +
+        "?response_type=code" +
+        "&client_id=" + this.sampleClientId +
+        "&redirect_uri=" + this.sampleRedirectUriEncoded +
+        "&approval_prompt=auto" +
+        "&state=" + this.sampleState +
+        "&scope=read_vehicle_info%20read_location%20read_odometer" +
+        "&mode=test" +
+        "&make=" + this.sampleAuthVehicleInfo.getMake();
+
+    assertEquals(actualAuthUrl, expectedAuthUrl);
+  }
+
+  /**
+   * Tests that Auth URL generation produces the expected URL string when both
+   * state and authVehicleInfo arguments are specified.
+   */
+  @Test
+  public void testGetAuthUrlWithForcePromptAndAuthVehicleInfoProducesExpectedAuthUrl() {
+    String actualAuthUrl = this.subject.getAuthUrl(
+        this.sampleForcePrompt,
+        this.sampleAuthVehicleInfo
+    );
+    String expectedAuthUrl = "https://connect.smartcar.com/oauth/authorize" +
+        "?response_type=code" +
+        "&client_id=" + this.sampleClientId +
+        "&redirect_uri=" + this.sampleRedirectUriEncoded +
+        "&approval_prompt=force" +
+        "&scope=read_vehicle_info%20read_location%20read_odometer" +
+        "&mode=test" +
+        "&make=" + this.sampleAuthVehicleInfo.getMake();
 
     assertEquals(actualAuthUrl, expectedAuthUrl);
   }
@@ -562,6 +636,25 @@ public class AuthClientTest extends PowerMockTestCase {
         "&scope=read_vehicle_info%20read_location%20read_odometer" +
         "&mode=test";
 
+    assertEquals(actualAuthUrl, expectedAuthUrl);
+  }
+
+  /**
+   * Tests that Auth URL generation produces the expected URL string when the
+   * optional authVehicleInfo argument is specified.
+   */
+  @Test
+  public void testGetAuthUrlWithAuthVehicleInfo() {
+    String actualAuthUrl = this.subject.getAuthUrl(this.sampleAuthVehicleInfo);
+    String expectedAuthUrl = "https://connect.smartcar.com/oauth/authorize" +
+        "?response_type=code" +
+        "&client_id=" + this.sampleClientId +
+        "&redirect_uri=" + this.sampleRedirectUriEncoded +
+        "&approval_prompt=auto" +
+        "&scope=read_vehicle_info%20read_location%20read_odometer" +
+        "&mode=test" +
+        "&make=" + this.sampleAuthVehicleInfo.getMake();
+        
     assertEquals(actualAuthUrl, expectedAuthUrl);
   }
 
