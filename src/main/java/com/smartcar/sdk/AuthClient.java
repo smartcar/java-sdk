@@ -288,8 +288,8 @@ public class AuthClient extends ApiClient {
       private String make;
 
       /**
-       * Sets the make on the Builder. Including a make allows the user to bypass the OEM
-       * selection screen and go directly to the vehicle login screen.
+       * Sets the make on the Builder. Including a make allows the user to bypass the car brand
+       * selection screen.
        * 
        * @param make name of the make of a vehicle. For a list of supported makes, please see 
        * <a href="https://smartcar.com/docs/api#request-authorization">our API Reference</a>
@@ -319,8 +319,7 @@ public class AuthClient extends ApiClient {
    * @param state an arbitrary string to be returned to the redirect URI
    * @param forcePrompt whether to force the approval prompt to show every auth
    * @param authVehicleInfo an optional AuthVehicleInfo object. Including the
-   * make property causes the OEM selector screen to be bypassed, allowing the
-   * user to go directly to the vehicle login screen.
+   * make property causes the car brand selection screen to be bypassed.
    *
    * @return the authentication URL
    */
@@ -380,8 +379,7 @@ public class AuthClient extends ApiClient {
    * Returns the assembled authentication URL.
    *
    * @param authVehicleInfo an optional AuthVehicleInfo object. Including the
-   * make property causes the OEM selector screen to be bypassed, allowing the
-   * user to go directly to the vehicle login screen.
+   * make property causes the car brand selection screen to be bypassed.
    *
    * @return the authentication URL
    */
@@ -394,8 +392,7 @@ public class AuthClient extends ApiClient {
    *
    * @param state an arbitrary string to be returned to the redirect URI
    * @param authVehicleInfo an optional AuthVehicleInfo object. Including the
-   * make property causes the OEM selector screen to be bypassed, allowing the
-   * user to go directly to the vehicle login screen.
+   * make property causes the car brand selection screen to be bypassed.
    *
    * @return the authentication URL
    */
@@ -408,8 +405,7 @@ public class AuthClient extends ApiClient {
    *
    * @param forcePrompt whether to force the approval prompt to show every auth
    * @param authVehicleInfo an optional AuthVehicleInfo object. Including the
-   * make property causes the OEM selector screen to be bypassed, allowing the
-   * user to go directly to the vehicle login screen.
+   * make property causes the car brand selection screen to be bypassed.
    *
    * @return the authentication URL
    */
