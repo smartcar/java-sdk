@@ -73,7 +73,7 @@ public class AuthTest extends IntegrationTest {
     public void testIsCompatible() throws Exception {
 
       String teslaVin = "5YJXCDE22HF068739";
-      String audiVin = "WAUANAF40HN017169";
+      String audiVin = "WAUAFAFL1GN014882";
       String[] scope = new String[]{"read_location", "read_odometer"}; 
 
       boolean teslaComp = this.authClient.isCompatible(teslaVin, scope);
