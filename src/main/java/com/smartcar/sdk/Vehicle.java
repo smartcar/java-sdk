@@ -160,31 +160,35 @@ public class Vehicle extends ApiClient {
   /**
    * Send request to the /security endpoint to unlock a vehicle
    *
+   * @return VehicleSecurity object
+   *
    * @throws SmartcarException if the request is unsuccessful
    */
-  public void unlock() throws SmartcarException {
+  public VehicleSecurity unlock() throws SmartcarException {
     JsonObject json = Json.createObjectBuilder()
       .add("action", "UNLOCK")
       .build();
 
     RequestBody body = RequestBody.create(JSON, json.toString());
 
-    this.call("security", "POST", body);
+    return this.call("security", "POST", body, VehicleSecurity.class).getData();
   }
 
   /**
    * Send request to the /security endpoint to lock a vehicle
    *
+   * @return VehicleSecurity object
+   *
    * @throws SmartcarException if the request is unsuccessful
    */
-  public void lock() throws SmartcarException {
+  public VehicleSecurity lock() throws SmartcarException {
     JsonObject json = Json.createObjectBuilder()
       .add("action", "LOCK")
       .build();
 
     RequestBody body = RequestBody.create(JSON, json.toString());
 
-    this.call("security", "POST", body);
+    return this.call("security", "POST", body, VehicleSecurity.class).getData();
   }
 
   /**

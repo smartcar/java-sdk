@@ -13,6 +13,7 @@ import javax.json.JsonObject;
 import java.util.Date;
 import java.util.UUID;
 
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.refEq;
 /**
@@ -128,34 +129,37 @@ public class VehicleTest {
 
   @Test
   public void testUnlock() throws Exception {
+    VehicleSecurity expected = new VehicleSecurity("success");
+    SmartcarResponse res = new SmartcarResponse<VehicleSecurity>(expected);
 
-    ApiData data = new ApiData();
-    SmartcarResponse res = new SmartcarResponse(data);
     JsonObject json = Json.createObjectBuilder()
       .add("action", "UNLOCK")
       .build();
     RequestBody body = RequestBody.create(Vehicle.JSON, json.toString());
 
-    PowerMockito.doReturn(res.toString())
-      .when(this.subject, "call", eq("security"), eq("POST"), refEq(body));
+    PowerMockito.doReturn(res)
+      .when(this.subject, "call", eq("security"), eq("POST"), refEq(body), any(VehicleSecurity.class));
 
-    this.subject.unlock();
+    VehicleSecurity security = this.subject.unlock();
+
+    Assert.assertEquals(security, expected);
   }
 
   @Test
   public void testLock() throws Exception {
+    VehicleSecurity expected = new VehicleSecurity("success");
+    SmartcarResponse res = new SmartcarResponse<VehicleSecurity>(expected);
 
-    ApiData data = new ApiData();
-    SmartcarResponse res = new SmartcarResponse(data);
     JsonObject json = Json.createObjectBuilder()
       .add("action", "LOCK")
       .build();
     RequestBody body = RequestBody.create(Vehicle.JSON, json.toString());
 
+    PowerMockito.doReturn(res)
+      .when(this.subject, "call", eq("security"), eq("POST"), refEq(body), any(VehicleSecurity.class));
 
-    PowerMockito.doReturn(res.toString())
-      .when(this.subject, "call", eq("security"), eq("POST"), refEq(body));
+    VehicleSecurity security = this.subject.lock();
 
-    this.subject.lock();
+    Assert.assertEquals(security, expected);
   }
 }

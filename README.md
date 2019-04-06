@@ -111,8 +111,8 @@ start making requests to vehicles.
     String latLong = locationData.getLatitude() + ", " + locationData.getLongitude();
 
     // Lock and unlock the vehicle
-    vehicle.lock();
-    vehicle.unlock();
+    VehicleSecurity lockRequest = vehicle.lock();
+    VehicleSecurity unlockRequest = vehicle.unlock();
     ```
 
 [1]: https://tools.ietf.org/html/rfc6749#section-1.3.1
