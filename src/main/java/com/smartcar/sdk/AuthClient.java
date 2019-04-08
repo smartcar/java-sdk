@@ -472,13 +472,20 @@ public class AuthClient extends ApiClient {
   }
 
   /**
-   * Determine if a vehicle is compatible with Smartcar given scopes.
-   * Vin and Scopes are required parameters
+   * Determine if a vehicle is compatible with the Smartcar API and the provided permissions.
+   * A compatible vehicle is a vehicle that: <br>
+   * 1. has the hardware required for internet connectivity, <br>
+   * 2. belongs to the makes and models Smartcar supports, and <br> 
+   * 3. supports the permissions. <br>
    *
-   * @param vin the vin of the vehicle
-   * @param scope array of scopes
+   * @param vin the 
+   * {@link <a href="https://www.autocheck.com/vehiclehistory/autocheck/en/vinbasics">VIN (Vehicle Identification Number)</a>} 
+   * of the vehicle.
+
+   * @param scope An array of permissions. The valid permissions are found in the 
+   * {@link <a href="https://smartcar.com/docs/api#get-all-vehicles">API Reference</a>}.
    *
-   * @return true if the vehicle is compatible
+   * @return false if the vehicle is not compatible. true if the vehicle is likely compatible.
    *
    * @throws SmartcarException when the request is unsuccessful
    */

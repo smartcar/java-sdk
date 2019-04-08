@@ -755,7 +755,7 @@ public class AuthClientTest extends PowerMockTestCase {
   }
 
   /**
-   * Verifies the isCompatible method
+   * Verifies that compatibility to returned. 
    *
    * @throws Exception on failure
    */
