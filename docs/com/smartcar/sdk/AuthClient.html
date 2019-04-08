@@ -336,7 +336,8 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i15" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/AuthClient.html#isCompatible-java.lang.String-">isCompatible</a></span>&#8203;(java.lang.String&nbsp;vin,&nbsp;java.lang.String[]&nbsp;scope)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/AuthClient.html#isCompatible-java.lang.String-java.lang.String:A-">isCompatible</a></span>(java.lang.String&nbsp;vin,
+            java.lang.String[]&nbsp;scope)</code>
 <div class="block">Determine if a vehicle is compatible with the Smartcar API and the provided permissions.</div>
 </td>
 </tr>
@@ -776,30 +777,32 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a name="isCompatible-java.lang.String-">
+<a name="isCompatible-java.lang.String-java.lang.String:A-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>isCompatible</h4>
-<pre>public&nbsp;boolean&nbsp;isCompatible&#8203;(java.lang.String&nbsp;vin,&nbsp;java.land.String[]&nbsp;scope)
+<pre>public&nbsp;boolean&nbsp;isCompatible(java.lang.String&nbsp;vin,
+                            java.lang.String[]&nbsp;scope)
                      throws <a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
-<div class="block">Smartcar offers a compatibility endpoint to determine vehicle compatibility with the API.
-  <br>
-  <br>
-  <div>A compatible vehicle is a vehicle that:</div>
-    <ol>
-      <li>has the hardware required for internet connectivity,</li>
-      <li>belongs to the makes and models Smartcar supports, and</li>
-      <li>supports the permissions.
-    </ol>
-    <br>
-    <div><i>To use this endpoint, please contact us!</i></div>
-</div>
+<div class="block">Determine if a vehicle is compatible with the Smartcar API and the provided permissions.
+ A compatible vehicle is a vehicle that: 
+ <ol>
+ <li> 
+ has the hardware required for internet connectivity, 
+ </li>
+ <li> 
+ belongs to the makes and models Smartcar supports, and  
+ </li>
+ <li>
+ supports the permissions. 
+ </li> 
+ </ol></div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>vin</code> - The <a href="https://www.autocheck.com/vehiclehistory/autocheck/en/vinbasics">VIN (Vehicle Identification Number)</a> of the vehicle.</dd>
-<dd><code>scope</code> - A space separated list of permissions. The valid permissions are found in the <a href="https://smartcar.com/docs/api#get-all-vehicles">API Reference</a></dd>
+<dd><code>vin</code> - the VIN (Vehicle Identification Number) of the vehicle.</dd>
+<dd><code>scope</code> - An array of permissions. The valid permissions are found in the API Reference.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>false if the vehicle is not compatible. true if the vehicle is likely compatible.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>

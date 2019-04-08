@@ -65,7 +65,7 @@ public class AuthTest extends IntegrationTest {
     }
 
     /**
-     * Test that the compatibility is returned given scope
+     * Test that compatibility is returned given scope
      *
      * @throws Exception if compatibility cannot be obtained
      */
