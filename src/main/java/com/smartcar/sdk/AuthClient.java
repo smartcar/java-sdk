@@ -478,12 +478,9 @@ public class AuthClient extends ApiClient {
    * 2. belongs to the makes and models Smartcar supports, and <br> 
    * 3. supports the permissions. <br>
    *
-   * @param vin the 
-   * {@link <a href="https://www.autocheck.com/vehiclehistory/autocheck/en/vinbasics">VIN (Vehicle Identification Number)</a>} 
-   * of the vehicle.
+   * @param vin the VIN (Vehicle Identification Number) of the vehicle.
 
-   * @param scope An array of permissions. The valid permissions are found in the 
-   * {@link <a href="https://smartcar.com/docs/api#get-all-vehicles">API Reference</a>}.
+   * @param scope An array of permissions. The valid permissions are found in the API Reference.
    *
    * @return false if the vehicle is not compatible. true if the vehicle is likely compatible.
    *
