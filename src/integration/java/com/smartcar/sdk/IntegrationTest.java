@@ -103,7 +103,7 @@ abstract class IntegrationTest {
         // 3 -- Enter OEM user credentials and submit the form.
         this.driver.findElement(By.cssSelector("input#username")).sendKeys(oemUsername);
         this.driver.findElement(By.cssSelector("input#password")).sendKeys(oemPassword);
-        this.driver.findElement(By.cssSelector("#approval-button")).submit();
+        this.driver.findElement(By.cssSelector("#sign-in-button")).submit();
 
         // 4 -- Approve/grant access to the checked vehicles bu submitting the next form.
         this.wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".review-permissions")));
