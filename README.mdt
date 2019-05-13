@@ -103,7 +103,7 @@ start making requests to vehicles.
     // Read the vehicle's odometer
     SmartcarResponse<VehicleOdometer> odometerResponse = vehicle.odometer();
     VehicleOdometer odometerData = odometerResponse.getData();
-    String odometer = odometerData.getDistance();
+    double odometer = odometerData.getDistance();
 
     // Retrieve the vehicle's location
     SmartcarResponse<VehicleLocation> locationResponse = vehicle.location();
