@@ -2,22 +2,44 @@ package com.smartcar.sdk;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
+
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.testng.PowerMockTestCase;
+import static org.powermock.api.mockito.PowerMockito.mock;
+import static org.powermock.api.mockito.PowerMockito.when;
+
+import javax.json.Json;
 /**
  * Test Suite: SmartcarException
  */
-public class SmartcarExceptionTest {
+@PrepareForTest({
+    SmartcarException.class,
+    Gson.class,
+    JsonObject.class,
+    Response.class,
+    ResponseBody.class,
+})
+@PowerMockIgnore("javax.net.ssl.*")
+
+public class SmartcarExceptionTest extends PowerMockTestCase {
   /**
-   * Test throwing an SmartcarException with no parameters.
+   * Test throwing an SmartcarException with a message.
    */
   @Test
-  public void testNewExceptionWithNoParams() {
+  public void testNewExceptionWithMessage() throws Exception {
+    String testMessage = "test message";
+
     try {
-      throw new SmartcarException();
+      throw new SmartcarException(testMessage);
     }
     catch (SmartcarException ex) {
-      Assert.assertEquals(ex.getMessage(), SmartcarException.Status.UNKNOWN.toString());
-      Assert.assertEquals(ex.getStatus(), SmartcarException.Status.UNKNOWN);
+      Assert.assertEquals(ex.getMessage(), testMessage);
     }
   }
 
@@ -25,94 +47,31 @@ public class SmartcarExceptionTest {
    * Test throwing an SmartcarException with a message.
    */
   @Test
-  public void testNewExceptionWithMessage() {
-    String testMessage = "Trysail Sail ho Corsair red ensign hulk smartly boom jib rum gangway.";
+  public void testNewExceptionWithRequestAndResponse() throws Exception {
+    String expectedError = "expected_error";
+    String expectedMessage = "expected message";
+    String expectedCode = "VS_000";
+    Integer expectedStatusCode = 200;
 
-    try {
-      throw new SmartcarException(testMessage);
-    }
-    catch (SmartcarException ex) {
-      Assert.assertEquals(ex.getMessage(), testMessage);
-      Assert.assertEquals(ex.getStatus(), SmartcarException.Status.UNKNOWN);
-    }
-  }
+    String response = Json.createObjectBuilder()
+            .add("error", expectedError)
+            .add("message", expectedMessage)
+            .add("code", expectedCode)
+            .build()
+            .toString();
 
-  /**
-   * Test throwing an SmartcarException with a status.
-   */
-  @Test
-  public void testNewExceptionWithStatus() {
-    SmartcarException.Status testStatus = SmartcarException.Status.VALIDATION;
+    Response mockResponse = mock(Response.class);
+    ResponseBody mockResponseBody = mock(ResponseBody.class);
 
-    try {
-      throw new SmartcarException(testStatus);
-    }
-    catch (SmartcarException ex) {
-      Assert.assertEquals(ex.getMessage(), testStatus.toString());
-      Assert.assertEquals(ex.getStatus(), testStatus);
-    }
-  }
+    when(mockResponse.body()).thenReturn(mockResponseBody);
+    when(mockResponseBody.string()).thenReturn(response);
+    when(mockResponse.code()).thenReturn(expectedStatusCode);
 
-  /**
-   * Test throwing an SmartcarException with both a message and a status.
-   */
-  @Test
-  public void testNewExceptionWithMessageAndStatus() {
-    String testMessage = "Case shot Shiver me timbers gangplank crack Jennys tea cup ballast.";
-    SmartcarException.Status testStatus = SmartcarException.Status.AUTHENTICATION;
+    SmartcarException ex = SmartcarException.Factory(mockResponse);
 
-    try {
-      throw new SmartcarException(testMessage, testStatus);
-    }
-    catch (SmartcarException ex) {
-      Assert.assertEquals(ex.getMessage(), testMessage);
-      Assert.assertEquals(ex.getStatus(), testStatus);
-    }
-  }
-
-  /**
-   * Test that the Status enum returns the expected status code.
-   */
-  @Test
-  public void testGettingStatusCode() {
-    SmartcarException.Status testStatus = SmartcarException.Status.PERMISSION;
-
-    try {
-      throw new SmartcarException(testStatus);
-    }
-    catch (SmartcarException ex) {
-      Assert.assertEquals(ex.getStatus().getCode(), 403);
-    }
-  }
-
-  /**
-   * Test that the Status enum returns the expected status text.
-   */
-  @Test
-  public void testGettingStatusText() {
-    SmartcarException.Status testStatus = SmartcarException.Status.RESOURCE_NOT_FOUND;
-
-    try {
-      throw new SmartcarException(testStatus);
-    }
-    catch (SmartcarException ex) {
-      Assert.assertEquals(ex.getStatus().getText(), "Resource Not Found");
-    }
-  }
-
-  /**
-   * Test that the correct Status is found given an integer code.
-   */
-  @Test
-  public void testGettingKnownStatusForCode() {
-    Assert.assertEquals(SmartcarException.Status.forCode(409), SmartcarException.Status.VEHICLE_STATE);
-  }
-
-  /**
-   * Test that the UNKNOWN Status is found given a smarmy integer code.
-   */
-  @Test
-  public void testGettingUnknownStatusForCode() {
-    Assert.assertEquals(SmartcarException.Status.forCode(1337), SmartcarException.Status.UNKNOWN);
+    Assert.assertEquals(ex.getCode(), expectedCode);
+    Assert.assertEquals(ex.getMessage(), expectedMessage);
+    Assert.assertEquals(ex.getError(), expectedError);
+    Assert.assertEquals(ex.getStatusCode(), expectedStatusCode);
   }
 }
