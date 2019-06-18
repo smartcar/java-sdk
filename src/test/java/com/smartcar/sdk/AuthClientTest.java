@@ -6,7 +6,6 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.smartcar.sdk.CompatibilityRequest;
 import com.smartcar.sdk.data.Auth;
 import com.smartcar.sdk.data.Compatibility;
 import com.smartcar.sdk.data.RequestPaging;
@@ -23,6 +22,7 @@ import org.powermock.modules.testng.PowerMockTestCase;
 import org.powermock.reflect.Whitebox;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import javax.json.Json;
 
 import java.io.IOException;
 import java.lang.reflect.Constructor;
@@ -39,8 +39,7 @@ import static org.powermock.api.mockito.PowerMockito.mockStatic;
 import static org.powermock.api.mockito.PowerMockito.spy;
 import static org.powermock.api.mockito.PowerMockito.when;
 import static org.powermock.api.mockito.PowerMockito.whenNew;
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNull;
+import static org.testng.Assert.*;
 
 /**
  * Test Suite: AuthClient
@@ -127,22 +126,17 @@ public class AuthClientTest extends PowerMockTestCase {
     Response mockResponse = mock(Response.class);
     ResponseBody mockResponseBody = mock(ResponseBody.class);
 
+    String response = Json.createObjectBuilder()
+            .add("id", expectedUserId)
+            .build()
+            .toString();
+
     when(mockResponse.body()).thenReturn(mockResponseBody);
-    when(mockResponseBody.string()).thenReturn("");
+    when(mockResponseBody.string()).thenReturn(response);
 
     // Mock: ApiClient.execute()
     spy(ApiClient.class);
     doReturn(mockResponse).when(ApiClient.class, "execute", mockRequest);
-
-    // Mock: gson
-    JsonObject mockJson = mock(JsonObject.class);
-    JsonObject mockJsonId = mock(JsonObject.class);
-    Gson mockGson = mock(Gson.class);
-
-    whenNew(Gson.class).withNoArguments().thenReturn(mockGson);
-    when(mockGson.fromJson(any(String.class), any(Class.class))).thenReturn(mockJson);
-    when(mockJson.get("id")).thenReturn(mockJsonId);
-    when(mockJsonId.getAsString()).thenReturn(expectedUserId);
 
     // Execute
     String actualUserId = AuthClient.getUserId(this.fakeAccessToken);
@@ -156,7 +150,7 @@ public class AuthClientTest extends PowerMockTestCase {
    *
    * @throws Exception when an error occurs
    */
-  @Test(expectedExceptions = SmartcarException.class)
+  @Test
   public void testGetUserIdThrowsSmartcarExceptionWhenParsingFails() throws Exception {
     // Mock: okhttp
     mockStatic(HttpUrl.class);
@@ -172,15 +166,19 @@ public class AuthClientTest extends PowerMockTestCase {
     Response mockResponse = mock(Response.class);
     ResponseBody mockResponseBody = mock(ResponseBody.class);
 
+    // Mock: ApiClient.execute()
+     spy(ApiClient.class);
+     doReturn(mockResponse).when(ApiClient.class, "execute", mockRequest);
+
     when(mockResponse.body()).thenReturn(mockResponseBody);
     when(mockResponseBody.string()).thenThrow(IOException.class);
 
-    // Mock: ApiClient.execute()
-    spy(ApiClient.class);
-    doReturn(mockResponse).when(ApiClient.class, "execute", mockRequest);
-
     // Execute
-    AuthClient.getUserId(this.fakeAccessToken);
+    try {
+      AuthClient.getUserId(this.fakeAccessToken);
+    } catch(Exception e) {
+      assertEquals(e.getClass(), SmartcarException.class);
+    }
   }
 
   /**
@@ -189,7 +187,7 @@ public class AuthClientTest extends PowerMockTestCase {
    *
    * @throws SmartcarException when an error occurs
    */
-  @Test(expectedExceptions = SmartcarException.class)
+  @Test
   public void testGetUserIdThrowsSmartcarExceptionWhenResponseBodyIsEmpty() throws Exception {
     // Mock: okhttp
     mockStatic(HttpUrl.class);
@@ -211,7 +209,11 @@ public class AuthClientTest extends PowerMockTestCase {
     doReturn(mockResponse).when(ApiClient.class, "execute", mockRequest);
 
     // Execute
-    AuthClient.getUserId(this.fakeAccessToken);
+    try {
+      AuthClient.getUserId(this.fakeAccessToken);
+    } catch(Exception e) {
+      assertEquals(e.getClass(), SmartcarException.class);
+    }
   }
 
   /**
@@ -314,7 +316,7 @@ public class AuthClientTest extends PowerMockTestCase {
    *
    * @throws Exception when an error occurs
    */
-  @Test(expectedExceptions = SmartcarException.class)
+  @Test
   public void testGetVehicleIdsThrowsSmartcarExceptionWhenParsingFails() throws Exception {
     // Mock
     RequestPaging mockRequestPaging = mock(RequestPaging.class);
@@ -349,7 +351,11 @@ public class AuthClientTest extends PowerMockTestCase {
     doReturn(mockResponse).when(ApiClient.class, "execute", mockRequest);
 
     // Execute
-    AuthClient.getVehicleIds(this.fakeAccessToken, mockRequestPaging);
+    try {
+      AuthClient.getVehicleIds(this.fakeAccessToken, mockRequestPaging);
+    } catch(Exception e) {
+      assertEquals(e.getClass(), SmartcarException.class);
+    }
   }
 
   /**

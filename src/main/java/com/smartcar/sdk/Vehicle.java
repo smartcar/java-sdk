@@ -60,7 +60,7 @@ public class Vehicle extends ApiClient {
    *
    * @throws SmartcarException if the request is unsuccessful
    */
-  private <T extends ApiData> SmartcarResponse<T> call(String path, String method, RequestBody body, Class<T> type) throws SmartcarException {
+  protected <T extends ApiData> SmartcarResponse<T> call(String path, String method, RequestBody body, Class<T> type) throws SmartcarException {
     HttpUrl url = HttpUrl.parse(Vehicle.URL_API).newBuilder()
         // addPathSegments will take care of adding leading `/`
         .addPathSegments("vehicles")
@@ -89,7 +89,7 @@ public class Vehicle extends ApiClient {
    *
    * @throws SmartcarException if the request is unsuccessful
    */
-  private String call(String path, String method, RequestBody body) throws SmartcarException {
+  protected String call(String path, String method, RequestBody body) throws SmartcarException {
     return this.call(path, method, body, ApiData.class).toString();
   }
 

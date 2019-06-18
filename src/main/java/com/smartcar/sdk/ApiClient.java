@@ -64,7 +64,7 @@ abstract class ApiClient {
       Response response = ApiClient.client.newCall(request).execute();
 
       if(!response.isSuccessful()) {
-        throw new SmartcarException(request, response);
+        throw SmartcarException.Factory(response);
       }
       else {
         return response;

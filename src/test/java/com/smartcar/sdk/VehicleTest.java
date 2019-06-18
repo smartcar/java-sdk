@@ -42,10 +42,9 @@ public class VehicleTest {
     String model = "model";
     int year = 2018;
     VehicleInfo expected = new VehicleInfo(id, make, model, year);
-    SmartcarResponse res = new SmartcarResponse<VehicleInfo>(expected);
+    SmartcarResponse res = new SmartcarResponse<>(expected);
 
-    PowerMockito.doReturn(res)
-      .when(this.subject, "call", "", "GET", null, VehicleInfo.class);
+    PowerMockito.doReturn(res).when(this.subject).call("", "GET", null, VehicleInfo.class);
 
     VehicleInfo info = this.subject.info();
 
@@ -56,11 +55,9 @@ public class VehicleTest {
   public void testVin() throws Exception {
     String expectedVin = "2HKRM4H35EH681798";
     VehicleVin expected = new VehicleVin(expectedVin);
-    SmartcarResponse res = new SmartcarResponse<VehicleVin>(expected);
+    SmartcarResponse res = new SmartcarResponse<>(expected);
 
-    PowerMockito.doReturn(res)
-      .when(this.subject, "call", "vin", "GET", null, VehicleVin.class);
-
+    PowerMockito.doReturn(res).when(this.subject).call("vin", "GET", null, VehicleVin.class);
     String vin = this.subject.vin();
 
     Assert.assertEquals(vin, expectedVin);
@@ -71,10 +68,9 @@ public class VehicleTest {
     String[] expectedPermissions = new String[] {"read_odometer"};
     ResponsePaging paging = new ResponsePaging(10, 0);
     ApplicationPermissions expected = new ApplicationPermissions(paging, expectedPermissions);
-    SmartcarResponse res = new SmartcarResponse<ApplicationPermissions>(expected);
+    SmartcarResponse res = new SmartcarResponse<>(expected);
 
-    PowerMockito.doReturn(res)
-      .when(this.subject, "call", "permissions", "GET", null, ApplicationPermissions.class);
+    PowerMockito.doReturn(res).when(this.subject).call("permissions", "GET", null, ApplicationPermissions.class);
 
     String[] permissions = this.subject.permissions();
 
@@ -87,8 +83,7 @@ public class VehicleTest {
     ApiData data = new ApiData();
     SmartcarResponse res = new SmartcarResponse(data);
 
-    PowerMockito.doReturn(res.toString())
-      .when(this.subject, "call", "application", "DELETE", null);
+    PowerMockito.doReturn(res.toString()).when(this.subject).call("application", "DELETE", null);
 
     this.subject.disconnect();
   }
@@ -99,10 +94,9 @@ public class VehicleTest {
     VehicleOdometer expected = new VehicleOdometer(expectedDistance);
     String unitSystem = "metric";
     Date age = new Date();
-    SmartcarResponse res = new SmartcarResponse<VehicleOdometer>(expected, unitSystem, age);
+    SmartcarResponse res = new SmartcarResponse<>(expected, unitSystem, age);
 
-    PowerMockito.doReturn(res)
-      .when(this.subject, "call", "odometer", "GET", null, VehicleOdometer.class);
+    PowerMockito.doReturn(res).when(this.subject).call("odometer", "GET", null, VehicleOdometer.class);
 
     SmartcarResponse odometer = this.subject.odometer();
 
@@ -116,10 +110,9 @@ public class VehicleTest {
     VehicleLocation expected = new VehicleLocation(expectedLongitude, expectedLatitude);
     String unitSystem = "metric";
     Date age = new Date();
-    SmartcarResponse res = new SmartcarResponse<VehicleLocation>(expected, unitSystem, age);
+    SmartcarResponse res = new SmartcarResponse<>(expected, unitSystem, age);
 
-    PowerMockito.doReturn(res)
-      .when(this.subject, "call", "location", "GET", null, VehicleLocation.class);
+    PowerMockito.doReturn(res).when(this.subject).call("location", "GET", null, VehicleLocation.class);
 
     SmartcarResponse location = this.subject.location();
 
