@@ -51,7 +51,7 @@ public class SmartcarExceptionTest extends PowerMockTestCase {
     String expectedError = "expected_error";
     String expectedMessage = "expected message";
     String expectedCode = "VS_000";
-    Integer expectedStatusCode = 200;
+    int expectedStatusCode = 200;
 
     String response = Json.createObjectBuilder()
             .add("error", expectedError)

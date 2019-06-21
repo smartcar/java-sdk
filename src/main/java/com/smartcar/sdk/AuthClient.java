@@ -100,8 +100,6 @@ public class AuthClient extends ApiClient {
       return json.get("id").getAsString();
     } catch (IOException ex) {
       throw new SmartcarException(ex.getMessage());
-    } catch (NullPointerException ex)  {
-      throw new SmartcarException(ex.getMessage());
     }
   }
 

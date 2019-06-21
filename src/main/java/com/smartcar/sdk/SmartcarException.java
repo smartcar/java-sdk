@@ -14,12 +14,12 @@ public class SmartcarException extends java.lang.Exception {
 
   static Gson gson = new Gson();
 
-  private Integer statusCode;
+  private int statusCode;
   private String error;
   private String message;
   private String code;
 
-  public SmartcarException(Integer statusCode, String error, String message, String code) {
+  public SmartcarException(int statusCode, String error, String message, String code) {
     super(message);
     this.message = message;
     this.code = code;
@@ -69,21 +69,21 @@ public class SmartcarException extends java.lang.Exception {
    *
    * @return the response status code
    */
-  public Integer getStatusCode() {
+  public int getStatusCode() {
     return this.statusCode;
   }
 
   public static SmartcarException Factory(final Response response) throws IOException {
     JsonObject body = gson.fromJson(response.body().string(), JsonObject.class);
 
-    String code = "";
+    String code = null;
     JsonElement codeElement = body.get("code");
     if (codeElement != null) {
       code = codeElement.getAsString();
     }
     String message = body.get("message").getAsString();
     String error = body.get("error").getAsString();
-    Integer statusCode = response.code();
+    int statusCode = response.code();
     return new SmartcarException(statusCode, error, message, code);
   }
 }

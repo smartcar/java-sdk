@@ -185,7 +185,7 @@ public class AuthClientTest extends PowerMockTestCase {
    * Tests that a SmartcarException is thrown when the API response body is
    * null.
    *
-   * @throws SmartcarException when an error occurs
+   * @throws NullPointerException when an error occurs
    */
   @Test
   public void testGetUserIdThrowsSmartcarExceptionWhenResponseBodyIsEmpty() throws Exception {
@@ -212,7 +212,7 @@ public class AuthClientTest extends PowerMockTestCase {
     try {
       AuthClient.getUserId(this.fakeAccessToken);
     } catch(Exception e) {
-      assertEquals(e.getClass(), SmartcarException.class);
+      assertEquals(e.getClass(), NullPointerException.class);
     }
   }
 
