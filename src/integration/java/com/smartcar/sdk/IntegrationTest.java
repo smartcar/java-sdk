@@ -95,7 +95,7 @@ abstract class IntegrationTest {
         this.driver.findElement(By.cssSelector("#sign-in-button")).submit();
 
         // 4 -- Approve/grant access to the checked vehicles bu submitting the next form.
-        this.wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".review-permissions")));
+        this.wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".wrapper-page")));
 
         this.driver.findElement(By.cssSelector("#approval-button")).click();
 
