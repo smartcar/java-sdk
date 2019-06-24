@@ -97,13 +97,10 @@ public class AuthClient extends ApiClient {
 
     try {
       json = new Gson().fromJson(response.body().string(), JsonObject.class);
+      return json.get("id").getAsString();
     } catch (IOException ex) {
       throw new SmartcarException(ex.getMessage());
-    } catch (NullPointerException ex) {
-      throw new SmartcarException("Received an empty response body.");
     }
-
-    return json.get("id").getAsString();
   }
 
   /**

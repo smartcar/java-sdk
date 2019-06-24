@@ -82,21 +82,10 @@ abstract class IntegrationTest {
         // 1 -- Initiate the OAuth 2.0 flow at https://connect.smartcar.com
         this.driver.get(connectAuthUrl);
 
-        List<WebElement> webOemButtons = this.driver.findElements(By.cssSelector("body > div > a.button"));
-
-        for (WebElement webButton : webOemButtons) {
-            if (webButton.getAttribute("href").contains("smartcar.com/oauth/flow")) {
-                oemAuthUrl = webButton.getAttribute("href");
-                break;
-            }
-        }
-
-        if (oemAuthUrl == null) {
-            throw new Exception("Expected OEM auth button was not found.");
-        }
+        WebElement teslaButton = this.driver.findElement(By.cssSelector("button[data-make='TESLA']"));
 
         // 2 -- Find the Mock OEM button, and navigate to the Mock OEM login page.
-        this.driver.get(oemAuthUrl);
+        teslaButton.click();
 
         this.wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input#username")));
 
@@ -106,7 +95,7 @@ abstract class IntegrationTest {
         this.driver.findElement(By.cssSelector("#sign-in-button")).submit();
 
         // 4 -- Approve/grant access to the checked vehicles bu submitting the next form.
-        this.wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".review-permissions")));
+        this.wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".wrapper-page")));
 
         this.driver.findElement(By.cssSelector("#approval-button")).click();
 
