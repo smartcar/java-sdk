@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"com.smartcar.sdk"},{"l":"com.smartcar.sdk.data"}]

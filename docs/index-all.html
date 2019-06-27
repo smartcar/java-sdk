@@ -150,6 +150,14 @@
 </a>
 <h2 class="title">C</h2>
 <dl>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/Vehicle.html#call-java.lang.String-java.lang.String-okhttp3.RequestBody-java.lang.Class-">call(String, String, RequestBody, Class&lt;T&gt;)</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/Vehicle.html" title="class in com.smartcar.sdk">Vehicle</a></dt>
+<dd>
+<div class="block">Executes an API request under the VehicleIds endpoint.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/Vehicle.html#call-java.lang.String-java.lang.String-okhttp3.RequestBody-">call(String, String, RequestBody)</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/Vehicle.html" title="class in com.smartcar.sdk">Vehicle</a></dt>
+<dd>
+<div class="block">Executes an API request under the VehicleIds endpoint.</div>
+</dd>
 <dt><a href="com/smartcar/sdk/package-summary.html">com.smartcar.sdk</a> - package com.smartcar.sdk</dt>
 <dd>
 <div class="block">Smartcar Java SDK</div>
@@ -196,10 +204,8 @@
 </a>
 <h2 class="title">F</h2>
 <dl>
-<dt><span class="memberNameLink"><a href="com/smartcar/sdk/SmartcarException.Status.html#forCode-int-">forCode(int)</a></span> - Static method in enum com.smartcar.sdk.<a href="com/smartcar/sdk/SmartcarException.Status.html" title="enum in com.smartcar.sdk">SmartcarException.Status</a></dt>
-<dd>
-<div class="block">Returns the corresponding Status enum for the specified code.</div>
-</dd>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/SmartcarException.html#Factory-okhttp3.Response-">Factory(Response)</a></span> - Static method in exception com.smartcar.sdk.<a href="com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></dt>
+<dd>&nbsp;</dd>
 </dl>
 <a name="I:G">
 <!--   -->
@@ -250,9 +256,9 @@
 <dd>
 <div class="block">Returns the assembled authentication URL.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/smartcar/sdk/SmartcarException.Status.html#getCode--">getCode()</a></span> - Method in enum com.smartcar.sdk.<a href="com/smartcar/sdk/SmartcarException.Status.html" title="enum in com.smartcar.sdk">SmartcarException.Status</a></dt>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/SmartcarException.html#getCode--">getCode()</a></span> - Method in exception com.smartcar.sdk.<a href="com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></dt>
 <dd>
-<div class="block">Returns the code representation.</div>
+<div class="block">Returns the vehicle state error code associated with the SmartcarException.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/Compatibility.html#getCompatible--">getCompatible()</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/Compatibility.html" title="class in com.smartcar.sdk.data">Compatibility</a></dt>
 <dd>
@@ -269,6 +275,10 @@
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/VehicleOdometer.html#getDistance--">getDistance()</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/VehicleOdometer.html" title="class in com.smartcar.sdk.data">VehicleOdometer</a></dt>
 <dd>
 <div class="block">Returns the odometer distance</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/SmartcarException.html#getError--">getError()</a></span> - Method in exception com.smartcar.sdk.<a href="com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></dt>
+<dd>
+<div class="block">Returns the error code associated with the exception.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/Auth.html#getExpiration--">getExpiration()</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/Auth.html" title="class in com.smartcar.sdk.data">Auth</a></dt>
 <dd>
@@ -297,6 +307,10 @@
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/VehicleInfo.html#getMake--">getMake()</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/VehicleInfo.html" title="class in com.smartcar.sdk.data">VehicleInfo</a></dt>
 <dd>
 <div class="block">Returns the vehicle make</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/SmartcarException.html#getMessage--">getMessage()</a></span> - Method in exception com.smartcar.sdk.<a href="com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></dt>
+<dd>
+<div class="block">Returns the message associated with the exception.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/VehicleInfo.html#getModel--">getModel()</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/VehicleInfo.html" title="class in com.smartcar.sdk.data">VehicleInfo</a></dt>
 <dd>
@@ -330,21 +344,9 @@
 <dd>
 <div class="block">Returns the currently stored refresh token.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/smartcar/sdk/SmartcarException.html#getRequest--">getRequest()</a></span> - Method in exception com.smartcar.sdk.<a href="com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></dt>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/SmartcarException.html#getStatusCode--">getStatusCode()</a></span> - Method in exception com.smartcar.sdk.<a href="com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></dt>
 <dd>
-<div class="block">Returns the HTTP request associated with the exception.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="com/smartcar/sdk/SmartcarException.html#getResponse--">getResponse()</a></span> - Method in exception com.smartcar.sdk.<a href="com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></dt>
-<dd>
-<div class="block">Returns the HTTP response associated with the exception.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="com/smartcar/sdk/SmartcarException.html#getStatus--">getStatus()</a></span> - Method in exception com.smartcar.sdk.<a href="com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></dt>
-<dd>
-<div class="block">Returns the status associated with the SmartcarException.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="com/smartcar/sdk/SmartcarException.Status.html#getText--">getText()</a></span> - Method in enum com.smartcar.sdk.<a href="com/smartcar/sdk/SmartcarException.Status.html" title="enum in com.smartcar.sdk">SmartcarException.Status</a></dt>
-<dd>
-<div class="block">Returns the text representation.</div>
+<div class="block">Returns the HTTP status code.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/SmartcarResponse.html#getUnitSystem--">getUnitSystem()</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/SmartcarResponse.html" title="class in com.smartcar.sdk.data">SmartcarResponse</a></dt>
 <dd>
@@ -583,35 +585,12 @@
 <dd>
 <div class="block">Thrown when the Smartcar API library encounters a problem.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/smartcar/sdk/SmartcarException.html#SmartcarException--">SmartcarException()</a></span> - Constructor for exception com.smartcar.sdk.<a href="com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></dt>
-<dd>
-<div class="block">Initializes a new Smartcar API exception with default values.</div>
-</dd>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/SmartcarException.html#SmartcarException-int-java.lang.String-java.lang.String-java.lang.String-">SmartcarException(int, String, String, String)</a></span> - Constructor for exception com.smartcar.sdk.<a href="com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/SmartcarException.html#SmartcarException-java.lang.String-">SmartcarException(String)</a></span> - Constructor for exception com.smartcar.sdk.<a href="com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></dt>
 <dd>
 <div class="block">Initializes a new Smartcar API exception with the specified message.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/smartcar/sdk/SmartcarException.html#SmartcarException-com.smartcar.sdk.SmartcarException.Status-">SmartcarException(SmartcarException.Status)</a></span> - Constructor for exception com.smartcar.sdk.<a href="com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></dt>
-<dd>
-<div class="block">Initializes a new Smartcar API exception with the specified status.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="com/smartcar/sdk/SmartcarException.html#SmartcarException-java.lang.String-com.smartcar.sdk.SmartcarException.Status-">SmartcarException(String, SmartcarException.Status)</a></span> - Constructor for exception com.smartcar.sdk.<a href="com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></dt>
-<dd>
-<div class="block">Initializes a new Smartcar API exception with the specified message and
- status.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="com/smartcar/sdk/SmartcarException.html#SmartcarException-okhttp3.Request-okhttp3.Response-">SmartcarException(Request, Response)</a></span> - Constructor for exception com.smartcar.sdk.<a href="com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></dt>
-<dd>
-<div class="block">Initializes a new Smartcar API exception with the specified message and
- status.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="com/smartcar/sdk/SmartcarException.html#SmartcarException-java.lang.String-com.smartcar.sdk.SmartcarException.Status-okhttp3.Request-okhttp3.Response-">SmartcarException(String, SmartcarException.Status, Request, Response)</a></span> - Constructor for exception com.smartcar.sdk.<a href="com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></dt>
-<dd>
-<div class="block">Initializes a new Smartcar API exception with the specified message,
- status, request, and response.</div>
-</dd>
-<dt><a href="com/smartcar/sdk/SmartcarException.Status.html" title="enum in com.smartcar.sdk"><span class="typeNameLink">SmartcarException.Status</span></a> - Enum in <a href="com/smartcar/sdk/package-summary.html">com.smartcar.sdk</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="com/smartcar/sdk/data/SmartcarResponse.html" title="class in com.smartcar.sdk.data"><span class="typeNameLink">SmartcarResponse</span></a>&lt;<a href="com/smartcar/sdk/data/SmartcarResponse.html" title="type parameter in SmartcarResponse">T</a> extends <a href="com/smartcar/sdk/data/ApiData.html" title="class in com.smartcar.sdk.data">ApiData</a>&gt; - Class in <a href="com/smartcar/sdk/data/package-summary.html">com.smartcar.sdk.data</a></dt>
 <dd>
 <div class="block">POJO for Wrapping ApiData with meta data</div>
@@ -666,10 +645,6 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/VehicleVin.html#toString--">toString()</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/VehicleVin.html" title="class in com.smartcar.sdk.data">VehicleVin</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/smartcar/sdk/SmartcarException.Status.html#toString--">toString()</a></span> - Method in enum com.smartcar.sdk.<a href="com/smartcar/sdk/SmartcarException.Status.html" title="enum in com.smartcar.sdk">SmartcarException.Status</a></dt>
-<dd>
-<div class="block">Returns a string representation of the status.</div>
-</dd>
 </dl>
 <a name="I:U">
 <!--   -->
@@ -690,18 +665,9 @@
 </a>
 <h2 class="title">V</h2>
 <dl>
-<dt><span class="memberNameLink"><a href="com/smartcar/sdk/SmartcarException.Status.html#valueOf-java.lang.String-">valueOf(String)</a></span> - Static method in enum com.smartcar.sdk.<a href="com/smartcar/sdk/SmartcarException.Status.html" title="enum in com.smartcar.sdk">SmartcarException.Status</a></dt>
-<dd>
-<div class="block">Returns the enum constant of this type with the specified name.</div>
-</dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/Vehicle.UnitSystem.html#valueOf-java.lang.String-">valueOf(String)</a></span> - Static method in enum com.smartcar.sdk.<a href="com/smartcar/sdk/Vehicle.UnitSystem.html" title="enum in com.smartcar.sdk">Vehicle.UnitSystem</a></dt>
 <dd>
 <div class="block">Returns the enum constant of this type with the specified name.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="com/smartcar/sdk/SmartcarException.Status.html#values--">values()</a></span> - Static method in enum com.smartcar.sdk.<a href="com/smartcar/sdk/SmartcarException.Status.html" title="enum in com.smartcar.sdk">SmartcarException.Status</a></dt>
-<dd>
-<div class="block">Returns an array containing the constants of this enum type, in
-the order they are declared.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/Vehicle.UnitSystem.html#values--">values()</a></span> - Static method in enum com.smartcar.sdk.<a href="com/smartcar/sdk/Vehicle.UnitSystem.html" title="enum in com.smartcar.sdk">Vehicle.UnitSystem</a></dt>
 <dd>
