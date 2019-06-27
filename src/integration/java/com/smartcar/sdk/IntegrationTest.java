@@ -13,6 +13,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Provides all shared functionality among integration tests.
@@ -95,7 +96,8 @@ abstract class IntegrationTest {
         this.driver.findElement(By.cssSelector("#sign-in-button")).submit();
 
         // 4 -- Approve/grant access to the checked vehicles bu submitting the next form.
-        this.wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".wrapper-page")));
+        this.driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        this.wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".page-content")));
 
         this.driver.findElement(By.cssSelector("#approval-button")).click();
 
