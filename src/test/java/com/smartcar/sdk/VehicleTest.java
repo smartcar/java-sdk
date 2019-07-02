@@ -163,4 +163,16 @@ public class VehicleTest {
 
     Assert.assertTrue(this.subject.hasPermission("read_odometer"));
   }
+
+  @Test
+  public void testDoesNotHavePermission() throws Exception {
+    String[] expectedPermissions = new String[] {"read_odometer"};
+    ResponsePaging paging = new ResponsePaging(10, 0);
+    ApplicationPermissions expected = new ApplicationPermissions(paging, expectedPermissions);
+    SmartcarResponse res = new SmartcarResponse<>(expected);
+
+    PowerMockito.doReturn(res).when(this.subject).call("permissions", "GET", null, ApplicationPermissions.class);
+
+    Assert.assertFalse(this.subject.hasPermission("read_vehicle_info"));
+  }
 }
