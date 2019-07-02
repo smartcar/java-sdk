@@ -7,6 +7,7 @@ import okhttp3.RequestBody;
 
 import javax.json.Json;
 import javax.json.JsonObject;
+import java.util.Arrays;
 
 /**
  * Smartcar Vehicle API Object
@@ -185,6 +186,19 @@ public class Vehicle extends ApiClient {
     RequestBody body = RequestBody.create(JSON, json.toString());
 
     this.call("security", "POST", body);
+  }
+
+  public boolean hasPermission(String permission) throws SmartcarException {
+    try {
+      for(String vehiclePermission: this.permissions()){
+        if(vehiclePermission.equals(permission))
+          return true;
+      }
+
+      return false;
+    } catch (SmartcarException exception) {
+      throw exception;
+    }
   }
 
   /**
