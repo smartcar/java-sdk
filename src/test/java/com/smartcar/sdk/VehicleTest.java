@@ -80,14 +80,15 @@ public class VehicleTest {
 
   @Test
   public void testHasPermission() throws Exception {
-    String[] expectedPermissions = new String[] {"read_odometer"};
+    String[] expectedPermissions = new String[] {"read_odometer", "read_vehicle_info", "read_location"};
     ResponsePaging paging = new ResponsePaging(10, 0);
     ApplicationPermissions expected = new ApplicationPermissions(paging, expectedPermissions);
     SmartcarResponse res = new SmartcarResponse<>(expected);
 
     PowerMockito.doReturn(res).when(this.subject).call("permissions", "GET", null, ApplicationPermissions.class);
 
-    Assert.assertTrue(this.subject.hasPermission("read_odometer"));
+    Assert.assertTrue(this.subject.hasPermissions("read_odometer"));
+    Assert.assertTrue(this.subject.hasPermissions(new String[] {"read_odometer", "read_vehicle_info"}));
   }
 
   @Test
@@ -99,9 +100,10 @@ public class VehicleTest {
 
     PowerMockito.doReturn(res).when(this.subject).call("permissions", "GET", null, ApplicationPermissions.class);
 
-    Assert.assertFalse(this.subject.hasPermission("read_vehicle_info"));
+    Assert.assertFalse(this.subject.hasPermissions("read_vehicle_info"));
+    Assert.assertFalse(this.subject.hasPermissions(new String[] {"read_odometer", "read_vehicle_info"}));
   }
-  
+
   @Test
   public void testDisconnect() throws Exception {
 

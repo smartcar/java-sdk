@@ -135,7 +135,7 @@ public class Vehicle extends ApiClient {
    * @return if vehicle has specified permission
    * @throws SmartcarException if the request is unsuccessful
    */
-  public boolean hasPermission(String permission) throws SmartcarException {
+  public boolean hasPermissions(String permission) throws SmartcarException {
     try {
       for(String vehiclePermission: this.permissions()){
         if(vehiclePermission.equals(permission))
@@ -143,6 +143,33 @@ public class Vehicle extends ApiClient {
       }
 
       return false;
+    } catch (SmartcarException exception) {
+      throw exception;
+    }
+  }
+
+  /**
+   * Send request to the /permissions endpoint
+   *
+   * @param permissions the permissions to check on the vehicle
+   *
+   * @return if vehicle has specified permissions
+   * @throws SmartcarException if the request is unsuccessful
+   */
+  public boolean hasPermissions(String[] permissions) throws SmartcarException {
+    try {
+      int count = 0;
+
+      for(String permission: permissions){
+        for(String vehiclePermission: this.permissions()) {
+          if (permission.equals(vehiclePermission)) {
+            count++;
+          }
+        }
+      }
+
+      return(count == permissions.length) ? true : false;
+
     } catch (SmartcarException exception) {
       throw exception;
     }
