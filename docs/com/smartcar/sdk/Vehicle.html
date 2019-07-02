@@ -262,7 +262,9 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Vehicle.html#hasPermission-java.lang.String-">hasPermission</a></span>(java.lang.String&nbsp;permission)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Vehicle.html#hasPermission-java.lang.String-">hasPermission</a></span>(java.lang.String&nbsp;permission)</code>
+<div class="block">Send request to the /security endpoint to lock a vehicle</div>
+</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/smartcar/sdk/data/VehicleInfo.html" title="class in com.smartcar.sdk.data">VehicleInfo</a></code></td>
@@ -622,9 +624,14 @@ extends java.lang.Object</pre>
 <h4>hasPermission</h4>
 <pre>public&nbsp;boolean&nbsp;hasPermission(java.lang.String&nbsp;permission)
                       throws <a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
+<div class="block">Send request to the /security endpoint to lock a vehicle</div>
 <dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>permission</code> - the permission to check on the vehicle</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>if vehicle has specified permission</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code></dd>
+<dd><code><a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - if the request is unsuccessful</dd>
 </dl>
 </li>
 </ul>

@@ -187,6 +187,14 @@ public class Vehicle extends ApiClient {
     this.call("security", "POST", body);
   }
 
+  /**
+   * Send request to the /security endpoint to lock a vehicle
+   *
+   * @param permission the permission to check on the vehicle
+   *
+   * @return if vehicle has specified permission
+   * @throws SmartcarException if the request is unsuccessful
+   */
   public boolean hasPermission(String permission) throws SmartcarException {
     try {
       for(String vehiclePermission: this.permissions()){
