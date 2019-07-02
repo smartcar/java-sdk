@@ -126,6 +126,28 @@ public class Vehicle extends ApiClient {
     return this.call("permissions", "GET", null, ApplicationPermissions.class).getData().getPermissions();
   }
 
+
+  /**
+   * Send request to the /permissions endpoint
+   *
+   * @param permission the permission to check on the vehicle
+   *
+   * @return if vehicle has specified permission
+   * @throws SmartcarException if the request is unsuccessful
+   */
+  public boolean hasPermission(String permission) throws SmartcarException {
+    try {
+      for(String vehiclePermission: this.permissions()){
+        if(vehiclePermission.equals(permission))
+          return true;
+      }
+
+      return false;
+    } catch (SmartcarException exception) {
+      throw exception;
+    }
+  }
+
   /**
    * Send request to the /disconnect endpoint
    *
@@ -185,27 +207,6 @@ public class Vehicle extends ApiClient {
     RequestBody body = RequestBody.create(JSON, json.toString());
 
     this.call("security", "POST", body);
-  }
-
-  /**
-   * Send request to the /security endpoint to lock a vehicle
-   *
-   * @param permission the permission to check on the vehicle
-   *
-   * @return if vehicle has specified permission
-   * @throws SmartcarException if the request is unsuccessful
-   */
-  public boolean hasPermission(String permission) throws SmartcarException {
-    try {
-      for(String vehiclePermission: this.permissions()){
-        if(vehiclePermission.equals(permission))
-          return true;
-      }
-
-      return false;
-    } catch (SmartcarException exception) {
-      throw exception;
-    }
   }
 
   /**
