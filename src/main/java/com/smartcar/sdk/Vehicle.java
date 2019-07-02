@@ -158,17 +158,17 @@ public class Vehicle extends ApiClient {
    */
   public boolean hasPermissions(String[] permissions) throws SmartcarException {
     try {
-      int count = 0;
+      int commonPermissions = 0;
 
       for(String permission: permissions){
         for(String vehiclePermission: this.permissions()) {
           if (permission.equals(vehiclePermission)) {
-            count++;
+            commonPermissions++;
           }
         }
       }
 
-      return(count == permissions.length) ? true : false;
+      return(commonPermissions == permissions.length) ? true : false;
 
     } catch (SmartcarException exception) {
       throw exception;
