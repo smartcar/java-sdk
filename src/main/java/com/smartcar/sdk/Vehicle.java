@@ -7,7 +7,6 @@ import okhttp3.RequestBody;
 
 import javax.json.Json;
 import javax.json.JsonObject;
-import java.util.Arrays;
 
 /**
  * Smartcar Vehicle API Object
