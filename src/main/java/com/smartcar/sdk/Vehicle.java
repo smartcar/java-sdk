@@ -169,7 +169,6 @@ public class Vehicle extends ApiClient {
       }
 
       return(commonPermissions == permissions.length) ? true : false;
-
     } catch (SmartcarException exception) {
       throw exception;
     }

@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":9,"i4":9,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":9,"i4":9,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -262,65 +262,71 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Vehicle.html#hasPermission-java.lang.String-">hasPermission</a></span>(java.lang.String&nbsp;permission)</code>
-<div class="block">Send request to the /security endpoint to lock a vehicle</div>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Vehicle.html#hasPermissions-java.lang.String-">hasPermissions</a></span>(java.lang.String&nbsp;permission)</code>
+<div class="block">Send request to the /permissions endpoint</div>
 </td>
 </tr>
 <tr id="i9" class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Vehicle.html#hasPermissions-java.lang.String:A-">hasPermissions</a></span>(java.lang.String[]&nbsp;permissions)</code>
+<div class="block">Send request to the /permissions endpoint</div>
+</td>
+</tr>
+<tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="../../../com/smartcar/sdk/data/VehicleInfo.html" title="class in com.smartcar.sdk.data">VehicleInfo</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Vehicle.html#info--">info</a></span>()</code>
 <div class="block">Send request to the /info endpoint</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/smartcar/sdk/data/SmartcarResponse.html" title="class in com.smartcar.sdk.data">SmartcarResponse</a>&lt;<a href="../../../com/smartcar/sdk/data/VehicleLocation.html" title="class in com.smartcar.sdk.data">VehicleLocation</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Vehicle.html#location--">location</a></span>()</code>
 <div class="block">Send request to the /location endpoint</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Vehicle.html#lock--">lock</a></span>()</code>
 <div class="block">Send request to the /security endpoint to lock a vehicle</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/smartcar/sdk/data/SmartcarResponse.html" title="class in com.smartcar.sdk.data">SmartcarResponse</a>&lt;<a href="../../../com/smartcar/sdk/data/VehicleOdometer.html" title="class in com.smartcar.sdk.data">VehicleOdometer</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Vehicle.html#odometer--">odometer</a></span>()</code>
 <div class="block">Send request to the /odometer endpoint</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>java.lang.String[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Vehicle.html#permissions--">permissions</a></span>()</code>
 <div class="block">Send request to the /permissions endpoint</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Vehicle.html#setAccessToken-java.lang.String-">setAccessToken</a></span>(java.lang.String&nbsp;accessToken)</code>
 <div class="block">Stores the accessToken</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Vehicle.html#setUnitSystem-com.smartcar.sdk.Vehicle.UnitSystem-">setUnitSystem</a></span>(<a href="../../../com/smartcar/sdk/Vehicle.UnitSystem.html" title="enum in com.smartcar.sdk">Vehicle.UnitSystem</a>&nbsp;unitSystem)</code>
 <div class="block">Sets the preferred unit system for subsequent API requests.</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Vehicle.html#setVehicleId-java.lang.String-">setVehicleId</a></span>(java.lang.String&nbsp;vehicleId)</code>
 <div class="block">Stores the vehicleId</div>
 </td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Vehicle.html#unlock--">unlock</a></span>()</code>
 <div class="block">Send request to the /security endpoint to unlock a vehicle</div>
 </td>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Vehicle.html#vin--">vin</a></span>()</code>
 <div class="block">Send request to the /vin endpoint</div>
@@ -537,6 +543,44 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
+<a name="hasPermissions-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>hasPermissions</h4>
+<pre>public&nbsp;boolean&nbsp;hasPermissions(java.lang.String&nbsp;permission)
+                       throws <a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
+<div class="block">Send request to the /permissions endpoint</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>permission</code> - the permission to check on the vehicle</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>if vehicle has specified permission</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - if the request is unsuccessful</dd>
+</dl>
+</li>
+</ul>
+<a name="hasPermissions-java.lang.String:A-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>hasPermissions</h4>
+<pre>public&nbsp;boolean&nbsp;hasPermissions(java.lang.String[]&nbsp;permissions)
+                       throws <a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
+<div class="block">Send request to the /permissions endpoint</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>permissions</code> - the permissions to check on the vehicle</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>if vehicle has specified permissions</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - if the request is unsuccessful</dd>
+</dl>
+</li>
+</ul>
 <a name="disconnect--">
 <!--   -->
 </a>
@@ -611,25 +655,6 @@ extends java.lang.Object</pre>
           throws <a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
 <div class="block">Send request to the /security endpoint to lock a vehicle</div>
 <dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - if the request is unsuccessful</dd>
-</dl>
-</li>
-</ul>
-<a name="hasPermission-java.lang.String-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>hasPermission</h4>
-<pre>public&nbsp;boolean&nbsp;hasPermission(java.lang.String&nbsp;permission)
-                      throws <a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
-<div class="block">Send request to the /security endpoint to lock a vehicle</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>permission</code> - the permission to check on the vehicle</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>if vehicle has specified permission</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - if the request is unsuccessful</dd>
 </dl>

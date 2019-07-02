@@ -178,5 +178,4 @@ public class VehicleTest {
 
     this.subject.lock();
   }
-
 }
