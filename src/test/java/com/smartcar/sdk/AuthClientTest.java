@@ -70,7 +70,7 @@ public class AuthClientTest extends PowerMockTestCase {
   private final AuthClient.AuthVehicleInfo sampleAuthVehicleInfo = new AuthClient.AuthVehicleInfo.Builder()
     .setMake("TESLA")
     .build();
-
+  
 
 
   // Sample AuthClient.exchangeCode Arg
@@ -680,6 +680,76 @@ public class AuthClientTest extends PowerMockTestCase {
         "&approval_prompt=auto" +
         "&scope=read_vehicle_info%20read_location%20read_odometer" +
         "&mode=test";
+
+    assertEquals(actualAuthUrl, expectedAuthUrl);
+  }
+
+  /**
+   * Tests that Auth URL generation produces the expected URL string when
+   * AuthUrlConfig is used with no parameters.
+   */
+  @Test
+  public void testGetAuthUrlWithEmptyAuthUrlConfig() {
+    AuthClient.AuthUrlConfig authUrlConfig = new AuthClient.AuthUrlConfig();
+    String actualAuthUrl = this.subject.getAuthUrl(authUrlConfig);
+    String expectedAuthUrl = "https://connect.smartcar.com/oauth/authorize" +
+        "?response_type=code" +
+        "&client_id=" + this.sampleClientId +
+        "&redirect_uri=" + this.sampleRedirectUriEncoded +
+        "&scope=read_vehicle_info%20read_location%20read_odometer" +
+        "&mode=test" +
+        "&approval_prompt=auto" +
+        "&single_select=false";
+
+    assertEquals(actualAuthUrl, expectedAuthUrl);
+  }
+
+  /**
+   * Tests that Auth URL generation produces the expected URL string when
+   * AuthUrlConfig is used setting all params.
+   */
+  @Test
+  public void testGetAuthUrlWithAuthUrlConfig() {
+    AuthClient.AuthUrlConfig authUrlConfig = new AuthClient.AuthUrlConfig();
+    authUrlConfig.setForcePrompt(true);
+    authUrlConfig.setMake("TESLA");
+    authUrlConfig.setState("state");
+    authUrlConfig.setSingleSelect(true);
+
+    String actualAuthUrl = this.subject.getAuthUrl(authUrlConfig);
+    String expectedAuthUrl = "https://connect.smartcar.com/oauth/authorize" +
+            "?response_type=code" +
+            "&client_id=" + this.sampleClientId +
+            "&redirect_uri=" + this.sampleRedirectUriEncoded +
+            "&scope=read_vehicle_info%20read_location%20read_odometer" +
+            "&mode=test" +
+            "&approval_prompt=force" +
+            "&state=state" +
+            "&single_select=true" +
+            "&make=TESLA";
+
+    assertEquals(actualAuthUrl, expectedAuthUrl);
+  }
+
+  /**
+   * Tests that Auth URL generation produces the expected URL string when
+   * AuthUrlConfig is constructed with all params.
+   */
+  @Test
+  public void testGetAuthUrlWithAuthUrlConfigConstructor() {
+    AuthClient.AuthUrlConfig authUrlConfig = new AuthClient.AuthUrlConfig(true, "AUDI", true, "some_state");
+
+    String actualAuthUrl = this.subject.getAuthUrl(authUrlConfig);
+    String expectedAuthUrl = "https://connect.smartcar.com/oauth/authorize" +
+            "?response_type=code" +
+            "&client_id=" + this.sampleClientId +
+            "&redirect_uri=" + this.sampleRedirectUriEncoded +
+            "&scope=read_vehicle_info%20read_location%20read_odometer" +
+            "&mode=test" +
+            "&approval_prompt=force" +
+            "&state=some_state" +
+            "&single_select=true" +
+            "&make=AUDI";
 
     assertEquals(actualAuthUrl, expectedAuthUrl);
   }

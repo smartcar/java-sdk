@@ -23,6 +23,8 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map.Entry;
 
 /**
  * Smartcar OAuth 2.0 Authentication Client
@@ -308,6 +310,101 @@ public class AuthClient extends ApiClient {
         return new AuthVehicleInfo(this);
       }
     }
+  }
+
+  /**
+   * A class that creates a custom AuthUrlConfig object, which is used
+   * when generating an authentication URL.
+   */
+  public static class AuthUrlConfig {
+    private boolean forcePrompt;
+    private String make;
+    private boolean singleSelect;
+    private String state;
+    
+    /** 
+     * A function that creates a map with query params and their values.
+     */
+    public HashMap getParams() {
+      HashMap<String, String> list = new HashMap<>();
+
+      list.put("single_select", this.singleSelect ? "true" : "false");
+      list.put("approval_prompt", this.forcePrompt ? "force" : "auto");
+
+      if(this.state != null) {
+          list.put("state", this.state);
+      }
+      if(this.make != null){
+        list.put("make", this.make);
+      }
+
+      return list;
+    }
+
+    public void setMake(String make) {
+      this.make = make;
+    }
+
+    public void setForcePrompt(boolean forcePrompt) {
+      this.forcePrompt = forcePrompt;
+    }
+
+    public void setSingleSelect(boolean singleSelect) {
+      this.singleSelect = singleSelect;
+    }
+
+    public void setState(String state) {
+      this.state = state;
+    }
+
+    /**
+    * Initializes a new AuthUrlconfig.
+    *
+    * @param forcePropmt whether to force the approval prompt to tsho every auth.
+    * @param make a vehicle make.
+    * @param singleSelect boolean which limits the number of vehicles a user can select to 1.
+    * @param state arbitrary string to be returned to the redirect URI.
+    */
+    public AuthUrlConfig(boolean forcePrompt, String make, boolean singleSelect, String state){
+      this.state = state;
+      this.forcePrompt = forcePrompt;
+      this.make = make;
+      this.singleSelect = singleSelect;
+    }
+
+    /**
+    * Initializes a new AuthUrlconfig.
+    */
+    public AuthUrlConfig() {
+        this(false, null, false, null);
+    }
+  }
+
+  /**
+   * Returns the assembled authentication URL.
+   *
+   * @param options an object containing query params to generate auth URL.
+   *
+   * @return the authentication URL
+   */
+  public String getAuthUrl(AuthUrlConfig options) {
+    HttpUrl.Builder urlBuilder = HttpUrl.parse(this.urlAuthorize).newBuilder()
+        .addQueryParameter("response_type", "code")
+        .addQueryParameter("client_id", this.clientId)
+        .addQueryParameter("redirect_uri", this.redirectUri);
+
+    if(this.scope != null) {
+      urlBuilder.addQueryParameter("scope", Utils.join(this.scope, " "));
+    }
+    urlBuilder.addQueryParameter("mode", this.testMode ? "test" : "live");
+
+    HashMap<String, String> map = options.getParams();
+
+    for (Entry<String, String> entry: map.entrySet()){
+      urlBuilder.addQueryParameter(entry.getKey(), entry.getValue());
+    }
+
+    return urlBuilder.build().toString();
   }
 
   /**
