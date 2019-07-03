@@ -1,7 +1,7 @@
 package com.smartcar.sdk;
 
 import com.smartcar.sdk.data.*;
-import org.junit.Assert;
+import org.testng.Assert;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
@@ -60,6 +60,9 @@ public class VehicleTest extends IntegrationTest {
     public void testHasPermissions() throws SmartcarException {
         Assert.assertTrue(this.vehicle.hasPermissions("read_odometer"));
         Assert.assertTrue(this.vehicle.hasPermissions(new String[] {"read_odometer", "read_location"}));
+
+        Assert.assertFalse(this.vehicle.hasPermissions("read_ignition"));
+        Assert.assertFalse(this.vehicle.hasPermissions(new String[] {"read_odometer", "read_ignition"}));
     }
 
     /**
