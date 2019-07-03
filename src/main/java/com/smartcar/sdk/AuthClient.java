@@ -360,7 +360,7 @@ public class AuthClient extends ApiClient {
     /**
     * Initializes a new AuthUrlconfig.
     *
-    * @param forcePropmt whether to force the approval prompt to tsho every auth.
+    * @param forcePrompt whether to force the approval prompt to show every auth.
     * @param make a vehicle make.
     * @param singleSelect boolean which limits the number of vehicles a user can select to 1.
     * @param state arbitrary string to be returned to the redirect URI.
