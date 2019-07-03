@@ -140,7 +140,7 @@ public class Vehicle extends ApiClient {
   public boolean hasPermissions(String permission) throws SmartcarException {
     try {
       List<String> vehiclePermissions = Arrays.asList(this.permissions());
-      
+
       return vehiclePermissions.contains(permission);
     } catch (SmartcarException exception) {
       throw exception;
