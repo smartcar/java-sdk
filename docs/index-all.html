@@ -122,6 +122,11 @@
 <dd>
 <div class="block">Initializes a new AuthClient.</div>
 </dd>
+<dt><a href="com/smartcar/sdk/AuthClient.AuthUrlConfig.html" title="class in com.smartcar.sdk"><span class="typeNameLink">AuthClient.AuthUrlConfig</span></a> - Class in <a href="com/smartcar/sdk/package-summary.html">com.smartcar.sdk</a></dt>
+<dd>
+<div class="block">A class that creates a custom AuthUrlConfig object, which is used
+ when generating an authentication URL.</div>
+</dd>
 <dt><a href="com/smartcar/sdk/AuthClient.AuthVehicleInfo.html" title="class in com.smartcar.sdk"><span class="typeNameLink">AuthClient.AuthVehicleInfo</span></a> - Class in <a href="com/smartcar/sdk/package-summary.html">com.smartcar.sdk</a></dt>
 <dd>
 <div class="block">A class that creates a custom AuthVehicleInfo object, which can be used
@@ -130,6 +135,14 @@
 <dt><a href="com/smartcar/sdk/AuthClient.AuthVehicleInfo.Builder.html" title="class in com.smartcar.sdk"><span class="typeNameLink">AuthClient.AuthVehicleInfo.Builder</span></a> - Class in <a href="com/smartcar/sdk/package-summary.html">com.smartcar.sdk</a></dt>
 <dd>
 <div class="block">Builder class that allows for optional properties on AuthVehicleInfo</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/AuthClient.AuthUrlConfig.html#AuthUrlConfig-boolean-java.lang.String-boolean-java.lang.String-">AuthUrlConfig(boolean, String, boolean, String)</a></span> - Constructor for class com.smartcar.sdk.<a href="com/smartcar/sdk/AuthClient.AuthUrlConfig.html" title="class in com.smartcar.sdk">AuthClient.AuthUrlConfig</a></dt>
+<dd>
+<div class="block">Initializes a new AuthUrlconfig.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/AuthClient.AuthUrlConfig.html#AuthUrlConfig--">AuthUrlConfig()</a></span> - Constructor for class com.smartcar.sdk.<a href="com/smartcar/sdk/AuthClient.AuthUrlConfig.html" title="class in com.smartcar.sdk">AuthClient.AuthUrlConfig</a></dt>
+<dd>
+<div class="block">Initializes a new AuthUrlconfig.</div>
 </dd>
 </dl>
 <a name="I:B">
@@ -223,6 +236,10 @@
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/SmartcarResponse.html#getAge--">getAge()</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/SmartcarResponse.html" title="class in com.smartcar.sdk.data">SmartcarResponse</a></dt>
 <dd>
 <div class="block">Return the age of the response</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/AuthClient.html#getAuthUrl-com.smartcar.sdk.AuthClient.AuthUrlConfig-">getAuthUrl(AuthClient.AuthUrlConfig)</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/AuthClient.html" title="class in com.smartcar.sdk">AuthClient</a></dt>
+<dd>
+<div class="block">Returns the assembled authentication URL.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/AuthClient.html#getAuthUrl-java.lang.String-boolean-com.smartcar.sdk.AuthClient.AuthVehicleInfo-">getAuthUrl(String, boolean, AuthClient.AuthVehicleInfo)</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/AuthClient.html" title="class in com.smartcar.sdk">AuthClient</a></dt>
 <dd>
@@ -331,6 +348,10 @@
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/SmartcarResponse.html#getPaging--">getPaging()</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/SmartcarResponse.html" title="class in com.smartcar.sdk.data">SmartcarResponse</a></dt>
 <dd>
 <div class="block">Return paging information</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/AuthClient.AuthUrlConfig.html#getParams--">getParams()</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/AuthClient.AuthUrlConfig.html" title="class in com.smartcar.sdk">AuthClient.AuthUrlConfig</a></dt>
+<dd>
+<div class="block">A function that creates a map with query params and their values.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/ApplicationPermissions.html#getPermissions--">getPermissions()</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/ApplicationPermissions.html" title="class in com.smartcar.sdk.data">ApplicationPermissions</a></dt>
 <dd>
@@ -501,6 +522,8 @@
 <dd>
 <div class="block">Stores a new expiration timestamp for the current access token.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/AuthClient.AuthUrlConfig.html#setForcePrompt-boolean-">setForcePrompt(boolean)</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/AuthClient.AuthUrlConfig.html" title="class in com.smartcar.sdk">AuthClient.AuthUrlConfig</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/VehicleInfo.html#setId-java.lang.String-">setId(String)</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/VehicleInfo.html" title="class in com.smartcar.sdk.data">VehicleInfo</a></dt>
 <dd>
 <div class="block">Stores the vehicle id</div>
@@ -517,6 +540,8 @@
 <dd>
 <div class="block">Stores the longitude of the vehicle</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/AuthClient.AuthUrlConfig.html#setMake-java.lang.String-">setMake(String)</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/AuthClient.AuthUrlConfig.html" title="class in com.smartcar.sdk">AuthClient.AuthUrlConfig</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/AuthClient.AuthVehicleInfo.Builder.html#setMake-java.lang.String-">setMake(String)</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/AuthClient.AuthVehicleInfo.Builder.html" title="class in com.smartcar.sdk">AuthClient.AuthVehicleInfo.Builder</a></dt>
 <dd>
 <div class="block">Sets the make on the Builder.</div>
@@ -557,6 +582,10 @@
 <dd>
 <div class="block">Stores a new refresh token.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/AuthClient.AuthUrlConfig.html#setSingleSelect-boolean-">setSingleSelect(boolean)</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/AuthClient.AuthUrlConfig.html" title="class in com.smartcar.sdk">AuthClient.AuthUrlConfig</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/AuthClient.AuthUrlConfig.html#setState-java.lang.String-">setState(String)</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/AuthClient.AuthUrlConfig.html" title="class in com.smartcar.sdk">AuthClient.AuthUrlConfig</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/SmartcarResponse.html#setUnitSystem-java.lang.String-">setUnitSystem(String)</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/SmartcarResponse.html" title="class in com.smartcar.sdk.data">SmartcarResponse</a></dt>
 <dd>
 <div class="block">Stores the unit system of the response</div>
