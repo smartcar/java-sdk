@@ -164,6 +164,7 @@ public class Vehicle extends ApiClient {
         for(String vehiclePermission: this.permissions()) {
           if (permission.equals(vehiclePermission)) {
             commonPermissions++;
+            break;
           }
         }
       }
