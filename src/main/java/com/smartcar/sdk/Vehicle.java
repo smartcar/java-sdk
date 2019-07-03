@@ -8,6 +8,9 @@ import okhttp3.RequestBody;
 import javax.json.Json;
 import javax.json.JsonObject;
 
+import java.util.List;
+import java.util.Arrays;
+
 /**
  * Smartcar Vehicle API Object
  */
@@ -127,7 +130,7 @@ public class Vehicle extends ApiClient {
   }
 
   /**
-   * Send request to the /permissions endpoint
+   * Checks if vehicle has permission, sends request to the /permissions endpoint
    *
    * @param permission the permission to check on the vehicle
    *
@@ -136,19 +139,16 @@ public class Vehicle extends ApiClient {
    */
   public boolean hasPermissions(String permission) throws SmartcarException {
     try {
-      for(String vehiclePermission: this.permissions()){
-        if(vehiclePermission.equals(permission))
-          return true;
-      }
-
-      return false;
+      List<String> vehiclePermissions = Arrays.asList(this.permissions());
+      
+      return vehiclePermissions.contains(permission);
     } catch (SmartcarException exception) {
       throw exception;
     }
   }
 
   /**
-   * Send request to the /permissions endpoint
+   * Checks if vehicle has permissions, sends request to the /permissions endpoint
    *
    * @param permissions the permissions to check on the vehicle
    *
@@ -157,18 +157,10 @@ public class Vehicle extends ApiClient {
    */
   public boolean hasPermissions(String[] permissions) throws SmartcarException {
     try {
-      int commonPermissions = 0;
+      List<String> vehiclePermissions = Arrays.asList(this.permissions());
+      List<String> requestedPermissions = Arrays.asList(permissions);
 
-      for(String permission: permissions){
-        for(String vehiclePermission: this.permissions()) {
-          if (permission.equals(vehiclePermission)) {
-            commonPermissions++;
-            break;
-          }
-        }
-      }
-
-      return(commonPermissions == permissions.length) ? true : false;
+      return vehiclePermissions.containsAll(requestedPermissions);
     } catch (SmartcarException exception) {
       throw exception;
     }

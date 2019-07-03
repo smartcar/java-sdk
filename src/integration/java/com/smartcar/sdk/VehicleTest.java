@@ -45,11 +45,21 @@ public class VehicleTest extends IntegrationTest {
     }
 
     /**
-     * Tests that the application permissions can be obtained.
+     * Tests that the vehicle permissions can be obtained.
      */
     @Test(groups = "vehicle")
     public void testPermissions() throws SmartcarException {
         String[] permissions = this.vehicle.permissions();
+    }
+
+    /**
+     * Tests that the vehicle has certain permissions.
+     */
+    @Test(groups = "vehicle")
+    public void testHasPermissions() throws SmartcarException {
+        boolean hasPermission = this.vehicle.hasPermissions("read_odometer");
+        boolean hasPermissions = this.vehicle.hasPermissions(new String[]
+                {"read_odometer", "read_location"});
     }
 
     /**
