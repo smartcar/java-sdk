@@ -126,7 +126,6 @@ public class Vehicle extends ApiClient {
     return this.call("permissions", "GET", null, ApplicationPermissions.class).getData().getPermissions();
   }
 
-
   /**
    * Send request to the /permissions endpoint
    *
