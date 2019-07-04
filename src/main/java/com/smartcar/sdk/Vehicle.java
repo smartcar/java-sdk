@@ -8,6 +8,7 @@ import okhttp3.RequestBody;
 import javax.json.Json;
 import javax.json.JsonObject;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
 
@@ -140,6 +141,7 @@ public class Vehicle extends ApiClient {
   public boolean hasPermissions(String permission) throws SmartcarException {
     try {
       List<String> vehiclePermissions = Arrays.asList(this.permissions());
+      permission = permission.replaceFirst("^required:", "");
 
       return vehiclePermissions.contains(permission);
     } catch (SmartcarException exception) {
@@ -158,7 +160,11 @@ public class Vehicle extends ApiClient {
   public boolean hasPermissions(String[] permissions) throws SmartcarException {
     try {
       List<String> vehiclePermissions = Arrays.asList(this.permissions());
-      List<String> requestedPermissions = Arrays.asList(permissions);
+      List<String> requestedPermissions = new ArrayList<>();
+
+      for(String permission: permissions) {
+        requestedPermissions.add(permission.replaceFirst("^required:", ""));
+      }
 
       return vehiclePermissions.containsAll(requestedPermissions);
     } catch (SmartcarException exception) {

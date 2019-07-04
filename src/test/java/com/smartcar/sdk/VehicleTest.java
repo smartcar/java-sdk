@@ -87,8 +87,8 @@ public class VehicleTest {
 
     PowerMockito.doReturn(res).when(this.subject).call("permissions", "GET", null, ApplicationPermissions.class);
 
-    Assert.assertTrue(this.subject.hasPermissions("read_odometer"));
-    Assert.assertTrue(this.subject.hasPermissions(new String[] {"read_odometer", "read_vehicle_info"}));
+    Assert.assertTrue(this.subject.hasPermissions("required:read_odometer"));
+    Assert.assertTrue(this.subject.hasPermissions(new String[] {"read_odometer", "required:read_vehicle_info"}));
   }
 
   @Test
