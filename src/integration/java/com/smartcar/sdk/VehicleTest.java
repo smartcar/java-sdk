@@ -58,8 +58,8 @@ public class VehicleTest extends IntegrationTest {
      */
     @Test(groups = "vehicle")
     public void testHasPermissions() throws SmartcarException {
-        Assert.assertTrue(this.vehicle.hasPermissions("read_odometer"));
-        Assert.assertTrue(this.vehicle.hasPermissions(new String[] {"read_odometer", "read_location"}));
+        Assert.assertTrue(this.vehicle.hasPermissions("required:read_odometer"));
+        Assert.assertTrue(this.vehicle.hasPermissions(new String[] {"read_odometer", "required:read_location"}));
 
         Assert.assertFalse(this.vehicle.hasPermissions("read_ignition"));
         Assert.assertFalse(this.vehicle.hasPermissions(new String[] {"read_odometer", "read_ignition"}));
