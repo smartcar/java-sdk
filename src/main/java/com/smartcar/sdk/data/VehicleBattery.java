@@ -11,7 +11,7 @@ public class VehicleBattery extends ApiData {
    * Initializes a new instance of the VehicleBattery
    *
    * @param range The estimated remaining distance the car can travel
-   *   (in kms or miles).
+   *   (in kms or miles). To set unit, {@link com.smartcar.sdk.Vehicle#setUnitSystem(Vehicle.UnitSystem)}.
    * @param percentRemaining The remaining level of charge in the battery
    *   (in percent).
    */

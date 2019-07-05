@@ -12,11 +12,11 @@ public class VehicleFuel extends ApiData {
    * Initializes a new instance of the VehicleFuel
    *
    * @param range The estimated remaining distance the car can travel
-   *   (in kms or miles).
+   *   (in kms or miles). To set unit, {@link com.smartcar.sdk.Vehicle#setUnitSystem(Vehicle.UnitSystem)}.
    * @param percentRemaining The remaining level of fuel in the tank
    *   (in percent).
    * @param amountRemaining - The amount of fuel in the tank (in liters of
-   *   gallons (US)).
+   *   gallons (US)). To set unit, {@link com.smartcar.sdk.Vehicle#setUnitSystem(Vehicle.UnitSystem)}.
    */
   public VehicleFuel(final double range, final double percentRemaining, final double amountRemaining) {
     this.range = range;
