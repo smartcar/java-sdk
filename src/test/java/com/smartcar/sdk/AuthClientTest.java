@@ -698,8 +698,7 @@ public class AuthClientTest extends PowerMockTestCase {
         "&redirect_uri=" + this.sampleRedirectUriEncoded +
         "&scope=read_vehicle_info%20read_location%20read_odometer" +
         "&mode=test" +
-        "&approval_prompt=auto" +
-        "&single_select=false";
+        "&approval_prompt=auto";
 
     assertEquals(actualAuthUrl, expectedAuthUrl);
   }

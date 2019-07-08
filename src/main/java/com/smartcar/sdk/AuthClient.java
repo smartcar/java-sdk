@@ -313,8 +313,8 @@ public class AuthClient extends ApiClient {
   }
 
   /**
-   * A class that creates a custom AuthUrlConfig object, which is used
-   * when generating an authentication URL.
+   * A class that represents a custom AuthUrlConfig object, used
+   * for generating authentication URLs.
    */
   public static class AuthUrlConfig {
     private boolean forcePrompt;
@@ -325,20 +325,23 @@ public class AuthClient extends ApiClient {
     /** 
      * A function that creates a map with query params and their values.
      */
-    public HashMap getParams() {
-      HashMap<String, String> list = new HashMap<>();
+    public HashMap getConfigOptions() {
+      HashMap<String, Object> configOptions = new HashMap<>();
 
-      list.put("single_select", this.singleSelect ? "true" : "false");
-      list.put("approval_prompt", this.forcePrompt ? "force" : "auto");
+      configOptions.put("approval_prompt", this.forcePrompt ? "force" : "auto");
+
+      if(this.singleSelect) {
+        configOptions.put("single_select", "true");
+      }
 
       if(this.state != null) {
-          list.put("state", this.state);
+          configOptions.put("state", this.state);
       }
       if(this.make != null){
-        list.put("make", this.make);
+        configOptions.put("make", this.make);
       }
 
-      return list;
+      return configOptions;
     }
 
     public void setMake(String make) {
@@ -358,7 +361,7 @@ public class AuthClient extends ApiClient {
     }
 
     /**
-    * Initializes a new AuthUrlconfig.
+    * Initializes a new AuthUrlConfig.
     *
     * @param forcePrompt whether to force the approval prompt to show every auth.
     * @param make a vehicle make.
@@ -383,11 +386,11 @@ public class AuthClient extends ApiClient {
   /**
    * Returns the assembled authentication URL.
    *
-   * @param options an object containing query params to generate auth URL.
+   * @param authUrlConfig an object containing query params to generate auth URL.
    *
    * @return the authentication URL
    */
-  public String getAuthUrl(AuthUrlConfig options) {
+  public String getAuthUrl(AuthUrlConfig authUrlConfig) {
     HttpUrl.Builder urlBuilder = HttpUrl.parse(this.urlAuthorize).newBuilder()
         .addQueryParameter("response_type", "code")
         .addQueryParameter("client_id", this.clientId)
@@ -396,11 +399,13 @@ public class AuthClient extends ApiClient {
     if(this.scope != null) {
       urlBuilder.addQueryParameter("scope", Utils.join(this.scope, " "));
     }
-    urlBuilder.addQueryParameter("mode", this.testMode ? "test" : "live");
+    if(this.testMode) {
+      urlBuilder.addQueryParameter("mode", "test");
+    }
 
-    HashMap<String, String> map = options.getParams();
+    HashMap<String, String> map = authUrlConfig.getConfigOptions();
 
-    for (Entry<String, String> entry: map.entrySet()){
+    for(Entry<String, String> entry : map.entrySet()) {
       urlBuilder.addQueryParameter(entry.getKey(), entry.getValue());
     }
 
