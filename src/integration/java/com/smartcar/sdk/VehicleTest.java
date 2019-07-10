@@ -1,6 +1,7 @@
 package com.smartcar.sdk;
 
 import com.smartcar.sdk.data.*;
+import org.testng.Assert;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
@@ -45,11 +46,23 @@ public class VehicleTest extends IntegrationTest {
     }
 
     /**
-     * Tests that the application permissions can be obtained.
+     * Tests that the vehicle permissions can be obtained.
      */
     @Test(groups = "vehicle")
     public void testPermissions() throws SmartcarException {
         String[] permissions = this.vehicle.permissions();
+    }
+
+    /**
+     * Tests that the vehicle has certain permissions.
+     */
+    @Test(groups = "vehicle")
+    public void testHasPermissions() throws SmartcarException {
+        Assert.assertTrue(this.vehicle.hasPermissions("required:read_odometer"));
+        Assert.assertTrue(this.vehicle.hasPermissions(new String[] {"read_odometer", "required:read_location"}));
+
+        Assert.assertFalse(this.vehicle.hasPermissions("read_ignition"));
+        Assert.assertFalse(this.vehicle.hasPermissions(new String[] {"read_odometer", "read_ignition"}));
     }
 
     /**

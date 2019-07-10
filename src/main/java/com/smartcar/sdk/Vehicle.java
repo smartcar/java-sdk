@@ -8,6 +8,10 @@ import okhttp3.RequestBody;
 import javax.json.Json;
 import javax.json.JsonObject;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Arrays;
+
 /**
  * Smartcar Vehicle API Object
  */
@@ -124,6 +128,48 @@ public class Vehicle extends ApiClient {
    */
   public String[] permissions() throws SmartcarException {
     return this.call("permissions", "GET", null, ApplicationPermissions.class).getData().getPermissions();
+  }
+
+  /**
+   * Checks if permissions granted to a vehicle contain the specified permission.
+   *
+   * @param permission Permission to check
+   *
+   * @return Whether the vehicle has the specified permission
+   * @throws SmartcarException if the request is unsuccessful
+   */
+  public boolean hasPermissions(String permission) throws SmartcarException {
+    try {
+      List<String> vehiclePermissions = Arrays.asList(this.permissions());
+      permission = permission.replaceFirst("^required:", "");
+
+      return vehiclePermissions.contains(permission);
+    } catch (SmartcarException exception) {
+      throw exception;
+    }
+  }
+
+  /**
+   * Checks if permissions granted to a vehicle contain the specified permissions.
+   *
+   * @param permissions Permissions to check
+   *
+   * @return Whether the vehicle has the specified permissions
+   * @throws SmartcarException if the request is unsuccessful
+   */
+  public boolean hasPermissions(String[] permissions) throws SmartcarException {
+    try {
+      List<String> vehiclePermissions = Arrays.asList(this.permissions());
+      List<String> requestedPermissions = new ArrayList<>();
+
+      for(String permission: permissions) {
+        requestedPermissions.add(permission.replaceFirst("^required:", ""));
+      }
+
+      return vehiclePermissions.containsAll(requestedPermissions);
+    } catch (SmartcarException exception) {
+      throw exception;
+    }
   }
 
   /**
