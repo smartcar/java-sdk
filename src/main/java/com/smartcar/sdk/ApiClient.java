@@ -9,6 +9,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import org.joda.time.DateTime;
+import java.util.concurrent.TimeUnit;
 
 import java.io.IOException;
 
@@ -29,7 +30,9 @@ abstract class ApiClient {
       System.getProperty("java.vm.name")
   );
 
-  private static OkHttpClient client = new OkHttpClient();
+  private static OkHttpClient client = new OkHttpClient.Builder()
+    .callTimeout(300, TimeUnit.SECONDS)
+    .build();
   static GsonBuilder gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
 
   public static String urlApi = ApiClient.URL_API;
