@@ -6,10 +6,7 @@ jdk:
 
 sudo: required
 
-branches:
-  except:
-    # Don't run on tag pushes
-    - /^v\d+\.\d+\.\d+$/
+if: tag IS blank # do not build tags
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -21,6 +18,13 @@ cache:
     - $HOME/.gradle/wrapper/
 
 script:
+  # Check if readme has been generated
+  - gradle markdown
+  - test -z "$(git diff --name-only | grep '^README.md$')"
+
+  - gradle javadoc
+  - test -z "$(git diff --name-only | grep 'docs/')"
+
   - gradle check
   - gradle jacocoTestReport
   - bash <(curl -s https://codecov.io/bash) -cF test
@@ -29,6 +33,13 @@ script:
 
 services:
   - docker
+
+stages:
+  - test
+  - name: tag
+    if: branch = master
+  - name: publish
+    if: branch = master
 
 jobs:
   include:
@@ -44,8 +55,6 @@ jobs:
         - provider: script
           skip_cleanup: true
           script: echo -e "machine github.com\n  login $CI_USER_TOKEN" >> ~/.netrc && git push origin "v${SDK_VERSION}"
-          on:
-            branch: master
     - stage: publish
       language: java
       jdk: openjdk8
@@ -54,5 +63,3 @@ jobs:
         - provider: script
           skip_cleanup: true
           script: gradle bintrayUpload
-          on:
-            branch: master
