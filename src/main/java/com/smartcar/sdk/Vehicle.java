@@ -133,7 +133,7 @@ public class Vehicle extends ApiClient {
   /**
    * Checks if permissions granted to a vehicle contain the specified permission.
    *
-   * @param permission Check if the vehicle has this permission granted
+   * @param permission Permission to check
    *
    * @return Whether the vehicle has the specified permission
    * @throws SmartcarException if the request is unsuccessful
@@ -152,7 +152,7 @@ public class Vehicle extends ApiClient {
   /**
    * Checks if permissions granted to a vehicle contain the specified permissions.
    *
-   * @param permissions Check if the vehicle has these permissions granted
+   * @param permissions Permissions to check
    *
    * @return Whether the vehicle has the specified permissions
    * @throws SmartcarException if the request is unsuccessful
