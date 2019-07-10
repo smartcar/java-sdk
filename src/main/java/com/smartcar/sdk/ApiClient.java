@@ -31,7 +31,8 @@ abstract class ApiClient {
   );
 
   private static OkHttpClient client = new OkHttpClient.Builder()
-    .callTimeout(300, TimeUnit.SECONDS)
+    .readTimeout(300, TimeUnit.SECONDS)
+    .callTimeout(360, TimeUnit.SECONDS)
     .build();
   static GsonBuilder gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
 
