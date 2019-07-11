@@ -365,7 +365,10 @@ public class AuthClient extends ApiClient {
     *
     * @param forcePrompt whether to force the approval prompt to show every auth.
     * @param make a vehicle make.
-    * @param singleSelect boolean which limits the number of vehicles a user can select to 1.
+    * @param singleSelect  sets the behavior of the grant dialog displayed to the user.
+    * If set to true, single_select limits the user to selecting only one vehicle.
+    * Defaults to false. See the <a href="https://smartcar.com/docs/guides/single-select/">Single Select guide</a>
+    * for more information.
     * @param state arbitrary string to be returned to the redirect URI.
     */
     public AuthUrlConfig(boolean forcePrompt, String make, boolean singleSelect, String state){

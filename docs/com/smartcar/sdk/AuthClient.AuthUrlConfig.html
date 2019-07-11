@@ -114,8 +114,8 @@ var activeTableTab = "activeTableTab";
 <br>
 <pre>public static class <span class="typeNameLabel">AuthClient.AuthUrlConfig</span>
 extends java.lang.Object</pre>
-<div class="block">A class that creates a custom AuthUrlConfig object, which is used
- when generating an authentication URL.</div>
+<div class="block">A class that represents a custom AuthUrlConfig object, used
+ for generating authentication URLs.</div>
 </li>
 </ul>
 </div>
@@ -143,7 +143,7 @@ extends java.lang.Object</pre>
              java.lang.String&nbsp;make,
              boolean&nbsp;singleSelect,
              java.lang.String&nbsp;state)</code>
-<div class="block">Initializes a new AuthUrlconfig.</div>
+<div class="block">Initializes a new AuthUrlConfig.</div>
 </td>
 </tr>
 </table>
@@ -163,7 +163,7 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>java.util.HashMap</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/AuthClient.AuthUrlConfig.html#getParams--">getParams</a></span>()</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/AuthClient.AuthUrlConfig.html#getConfigOptions--">getConfigOptions</a></span>()</code>
 <div class="block">A function that creates a map with query params and their values.</div>
 </td>
 </tr>
@@ -215,12 +215,15 @@ extends java.lang.Object</pre>
                      java.lang.String&nbsp;make,
                      boolean&nbsp;singleSelect,
                      java.lang.String&nbsp;state)</pre>
-<div class="block">Initializes a new AuthUrlconfig.</div>
+<div class="block">Initializes a new AuthUrlConfig.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>forcePropmt</code> - whether to force the approval prompt to tsho every auth.</dd>
+<dd><code>forcePrompt</code> - whether to force the approval prompt to show every auth.</dd>
 <dd><code>make</code> - a vehicle make.</dd>
-<dd><code>singleSelect</code> - boolean which limits the number of vehicles a user can select to 1.</dd>
+<dd><code>singleSelect</code> - sets the behavior of the grant dialog displayed to the user.
+ If set to true, single_select limits the user to selecting only one vehicle.
+ Defaults to false. See the <a href="https://smartcar.com/docs/guides/single-select/">Single Select guide</a>
+ for more information.</dd>
 <dd><code>state</code> - arbitrary string to be returned to the redirect URI.</dd>
 </dl>
 </li>
@@ -243,13 +246,13 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="getParams--">
+<a name="getConfigOptions--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getParams</h4>
-<pre>public&nbsp;java.util.HashMap&nbsp;getParams()</pre>
+<h4>getConfigOptions</h4>
+<pre>public&nbsp;java.util.HashMap&nbsp;getConfigOptions()</pre>
 <div class="block">A function that creates a map with query params and their values.</div>
 </li>
 </ul>
