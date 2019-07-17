@@ -254,7 +254,7 @@ public class AuthClient extends ApiClient {
   }
 
   /**
-   * @deprecated  reason is the preferred method is now @AuthUrlBuilder.
+   * @deprecated  in 2.1.0, reason is the preferred method is now @AuthUrlBuilder.
    *
    * A class that creates a custom AuthVehicleInfo object, which can be used
    * when generating an authentication URL.
@@ -359,7 +359,7 @@ public class AuthClient extends ApiClient {
   }
 
   /**
-   * @deprecated  reason is the preferred method is now @AuthUrlBuilder.
+   * @deprecated  in 2.1.0, reason is the preferred method is now @AuthUrlBuilder.
    *
    * Returns the assembled authentication URL.
    *
@@ -402,7 +402,7 @@ public class AuthClient extends ApiClient {
   }
 
   /**
-   * @deprecated  reason is the preferred method is now @AuthUrlBuilder.
+   * @deprecated  in 2.1.0, reason is the preferred method is now @AuthUrlBuilder.
    *
    * Returns the assembled authentication URL.
    *
@@ -416,7 +416,7 @@ public class AuthClient extends ApiClient {
   }
 
   /**
-   * @deprecated  reason is the preferred method is now @AuthUrlBuilder.
+   * @deprecated  in 2.1.0, reason is the preferred method is now @AuthUrlBuilder.
    *
    * Returns the assembled authentication URL.
    *
@@ -430,7 +430,7 @@ public class AuthClient extends ApiClient {
   }
 
   /**
-   * @deprecated  reason is the preferred method is now @AuthUrlBuilder.
+   * @deprecated  in 2.1.0, reason is the preferred method is now @AuthUrlBuilder.
    *
    * Returns the assembled authentication URL.
    *
@@ -445,7 +445,7 @@ public class AuthClient extends ApiClient {
   }
 
   /**
-   * @deprecated  reason is the preferred method is now @AuthUrlBuilder.
+   * @deprecated  in 2.1.0, reason is the preferred method is now @AuthUrlBuilder.
    *
    * Returns the assembled authentication URL.
    *
@@ -461,7 +461,7 @@ public class AuthClient extends ApiClient {
   }
 
   /**
-   * @deprecated  reason is the preferred method is now @AuthUrlBuilder.
+   * @deprecated  in 2.1.0, reason is the preferred method is now @AuthUrlBuilder.
    *
    * Returns the assembled authentication URL.
    *
@@ -477,7 +477,7 @@ public class AuthClient extends ApiClient {
   }
 
   /**
-   * @deprecated  reason is the preferred method is now @AuthUrlBuilder.
+   * @deprecated  in 2.1.0, reason is the preferred method is now @AuthUrlBuilder.
    *
    * Returns the assembled authentication URL.
    *
@@ -492,7 +492,7 @@ public class AuthClient extends ApiClient {
   }
 
   /**
-   * @deprecated  reason is the preferred method is now @AuthUrlBuilder.
+   * @deprecated  in 2.1.0, reason is the preferred method is now @AuthUrlBuilder.
    *
    * Returns the assembled authentication URL.
    *
