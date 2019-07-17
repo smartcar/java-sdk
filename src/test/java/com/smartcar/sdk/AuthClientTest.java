@@ -685,6 +685,66 @@ public class AuthClientTest extends PowerMockTestCase {
   }
 
   /**
+   * Tests that Auth URL generation produces the expected URL string when
+   * AuthUrlBuilder is used setting all params.
+   */
+  @Test
+  public void testAuthUrlBuilder() {
+    AuthClient client = new AuthClient(
+            this.sampleClientId,
+            this.sampleClientSecret,
+            this.sampleRedirectUri,
+            this.sampleScope,
+            true
+    );
+    String authUrl = client.new AuthUrlBuilder()
+            .setApprovalPrompt(true)
+            .setState("state")
+            .setSingleSelect(true)
+            .setMakeBypass("TESLA")
+            .build();
+
+    String expectedAuthUrl = "https://connect.smartcar.com/oauth/authorize" +
+            "?response_type=code" +
+            "&client_id=" + this.sampleClientId +
+            "&redirect_uri=" + this.sampleRedirectUriEncoded +
+            "&mode=test" +
+            "&scope=read_vehicle_info%20read_location%20read_odometer" +
+            "&approval_prompt=force" +
+            "&state=state" +
+            "&single_select=true" +
+            "&make=TESLA";
+
+    assertEquals(authUrl, expectedAuthUrl);
+  }
+
+  /**
+   * Tests that Auth URL generation produces the expected URL string when
+   * AuthUrlBuilder is used empty.
+   */
+  @Test
+  public void testEmptyAuthUrlBuilder() {
+    AuthClient client = new AuthClient(
+            this.sampleClientId,
+            this.sampleClientSecret,
+            this.sampleRedirectUri,
+            this.sampleScope,
+            false
+    );
+    String authUrl = client.new AuthUrlBuilder()
+            .build();
+
+    String expectedAuthUrl = "https://connect.smartcar.com/oauth/authorize" +
+            "?response_type=code" +
+            "&client_id=" + this.sampleClientId +
+            "&redirect_uri=" + this.sampleRedirectUriEncoded +
+            "&mode=live" +
+            "&scope=read_vehicle_info%20read_location%20read_odometer";
+
+    assertEquals(authUrl, expectedAuthUrl);
+  }
+
+  /**
    * Verifies that exchanging a code returns a valid Auth object containing
    * a token.
    *
