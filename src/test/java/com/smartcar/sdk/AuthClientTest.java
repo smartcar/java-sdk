@@ -697,10 +697,12 @@ public class AuthClientTest extends PowerMockTestCase {
             this.sampleScope,
             true
     );
+    String vin = "1234567890ABCDEFG";
     String authUrl = client.new AuthUrlBuilder()
             .setApprovalPrompt(true)
             .setState("state")
             .setSingleSelect(true)
+            .setSingleSelectVin(vin)
             .setMakeBypass("TESLA")
             .build();
 
@@ -713,6 +715,7 @@ public class AuthClientTest extends PowerMockTestCase {
             "&approval_prompt=force" +
             "&state=state" +
             "&single_select=true" +
+            "&single_select_vin=" + vin +
             "&make=TESLA";
 
     assertEquals(authUrl, expectedAuthUrl);
