@@ -254,15 +254,18 @@ public class AuthClient extends ApiClient {
   }
 
   /**
+   * @deprecated as of 2.1.0. Please use @AuthUrlBuilder.
+   *
    * A class that creates a custom AuthVehicleInfo object, which can be used
    * when generating an authentication URL.
    */
+  @Deprecated
   public static class AuthVehicleInfo {
     private String make;
 
     /**
      * Assigns optional and required properties on the AuthVehicleInfo object.
-     * 
+     *
      * @param builder the builder to obtain the properties from
      */
     private AuthVehicleInfo (Builder builder) {
@@ -271,7 +274,7 @@ public class AuthClient extends ApiClient {
 
     /**
     * Returns the make assigned to AuthVehicleInfo
-    * 
+    *
     * @return the make of the vehicle
     */
     public String getMake() {
@@ -279,7 +282,7 @@ public class AuthClient extends ApiClient {
     }
 
     /**
-     * Builder class that allows for optional properties on AuthVehicleInfo 
+     * Builder class that allows for optional properties on AuthVehicleInfo
      */
     public static class Builder {
       private String make;
@@ -287,8 +290,8 @@ public class AuthClient extends ApiClient {
       /**
        * Sets the make on the Builder. Including a make allows the user to bypass the car brand
        * selection screen.
-       * 
-       * @param make name of the make of a vehicle. For a list of supported makes, please see 
+       *
+       * @param make name of the make of a vehicle. For a list of supported makes, please see
        * <a href="https://smartcar.com/docs/api#request-authorization">our API Reference</a>
        *
        * @return the builder with a make property added
@@ -300,7 +303,7 @@ public class AuthClient extends ApiClient {
 
       /**
        * Instantiates a new AuthVehicleInfo object, which will also have any optional properties
-       * that are already set on the Builder object that is calling this method. 
+       * that are already set on the Builder object that is calling this method.
        *
        * @return a new instantiation of the AuthVehicleInfo class
        */
@@ -311,6 +314,53 @@ public class AuthClient extends ApiClient {
   }
 
   /**
+   * A class that creates a custom AuthUrlBuilder object, used
+   * for generating authentication URLs.
+   */
+  public class AuthUrlBuilder {
+    private HttpUrl.Builder urlBuilder;
+
+    public AuthUrlBuilder() {
+      urlBuilder = HttpUrl.parse(AuthClient.this.urlAuthorize).newBuilder()
+              .addQueryParameter("response_type", "code")
+              .addQueryParameter("client_id", AuthClient.this.clientId)
+              .addQueryParameter("redirect_uri", AuthClient.this.redirectUri)
+              .addQueryParameter("mode", AuthClient.this.testMode ? "test" : "live");
+      if (AuthClient.this.scope.length != 0) {
+        urlBuilder.addQueryParameter("scope", Utils.join(AuthClient.this.scope, " "));
+      }
+    }
+
+    public AuthUrlBuilder setState(String state) {
+      if (state != "") {
+        urlBuilder.addQueryParameter("state", state);
+      }
+      return this;
+    }
+
+    public AuthUrlBuilder setApprovalPrompt(boolean approvalPrompt) {
+      urlBuilder.addQueryParameter("approval_prompt", approvalPrompt ? "force" : "auto");
+      return this;
+    }
+
+    public AuthUrlBuilder setSingleSelect(boolean singleSelect) {
+      urlBuilder.addQueryParameter("single_select", Boolean.toString(singleSelect));
+      return this;
+    }
+
+    public AuthUrlBuilder setMakeBypass(String make) {
+      urlBuilder.addQueryParameter("make", make);
+      return this;
+    }
+
+    public String build() {
+      return urlBuilder.build().toString();
+    }
+  }
+
+  /**
+   * @deprecated as of 2.1.0. Please use @AuthUrlBuilder.
+   *
    * Returns the assembled authentication URL.
    *
    * @param state an arbitrary string to be returned to the redirect URI
@@ -320,6 +370,7 @@ public class AuthClient extends ApiClient {
    *
    * @return the authentication URL
    */
+  @Deprecated
   public String getAuthUrl(String state, boolean forcePrompt, AuthVehicleInfo authVehicleInfo) {
     HttpUrl.Builder urlBuilder = HttpUrl.parse(this.urlAuthorize).newBuilder()
         .addQueryParameter("response_type", "code")
@@ -351,28 +402,36 @@ public class AuthClient extends ApiClient {
   }
 
   /**
+   * @deprecated as of 2.1.0. Please use @AuthUrlBuilder.
+   *
    * Returns the assembled authentication URL.
    *
    * @param state an arbitrary string to be returned to the redirect URI
    *
    * @return the authentication URL
    */
+  @Deprecated
   public String getAuthUrl(String state) {
     return this.getAuthUrl(state, false, null);
   }
 
   /**
+   * @deprecated as of 2.1.0. Please use @AuthUrlBuilder.
+   *
    * Returns the assembled authentication URL.
    *
    * @param forcePrompt whether to force the approval prompt to show every auth
    *
    * @return the authentication URL
    */
+  @Deprecated
   public String getAuthUrl(boolean forcePrompt) {
     return this.getAuthUrl(null, forcePrompt, null);
   }
 
   /**
+   * @deprecated as of 2.1.0. Please use @AuthUrlBuilder.
+   *
    * Returns the assembled authentication URL.
    *
    * @param authVehicleInfo an optional AuthVehicleInfo object. Including the
@@ -380,11 +439,14 @@ public class AuthClient extends ApiClient {
    *
    * @return the authentication URL
    */
+  @Deprecated
   public String getAuthUrl(AuthVehicleInfo authVehicleInfo) {
     return this.getAuthUrl(null, false, authVehicleInfo);
   }
 
   /**
+   * @deprecated as of 2.1.0. Please use @AuthUrlBuilder.
+   *
    * Returns the assembled authentication URL.
    *
    * @param state an arbitrary string to be returned to the redirect URI
@@ -393,11 +455,14 @@ public class AuthClient extends ApiClient {
    *
    * @return the authentication URL
    */
+  @Deprecated
   public String getAuthUrl(String state, AuthVehicleInfo authVehicleInfo) {
     return this.getAuthUrl(state, false, authVehicleInfo);
   }
 
   /**
+   * @deprecated as of 2.1.0. Please use @AuthUrlBuilder.
+   *
    * Returns the assembled authentication URL.
    *
    * @param forcePrompt whether to force the approval prompt to show every auth
@@ -406,11 +471,14 @@ public class AuthClient extends ApiClient {
    *
    * @return the authentication URL
    */
+  @Deprecated
   public String getAuthUrl(boolean forcePrompt, AuthVehicleInfo authVehicleInfo) {
     return this.getAuthUrl(null, forcePrompt, authVehicleInfo);
   }
 
   /**
+   * @deprecated as of 2.1.0. Please use @AuthUrlBuilder.
+   *
    * Returns the assembled authentication URL.
    *
    * @param state an arbitrary string to be returned to the redirect URI
@@ -418,15 +486,19 @@ public class AuthClient extends ApiClient {
    *
    * @return the authentication URL
    */
+  @Deprecated
   public String getAuthUrl(String state, boolean forcePrompt) {
     return this.getAuthUrl(state, forcePrompt, null);
   }
 
   /**
+   * @deprecated as of 2.1.0. Please use @AuthUrlBuilder.
+   *
    * Returns the assembled authentication URL.
    *
    * @return the authentication URL
    */
+  @Deprecated
   public String getAuthUrl() {
     return this.getAuthUrl(null, false, null);
   }
@@ -470,17 +542,17 @@ public class AuthClient extends ApiClient {
 
   /**
    * Determine if a vehicle is compatible with the Smartcar API and the provided permissions.
-   * A compatible vehicle is a vehicle that: 
+   * A compatible vehicle is a vehicle that:
    * <ol>
-   * <li> 
-   * has the hardware required for internet connectivity, 
-   * </li>
-   * <li> 
-   * belongs to the makes and models Smartcar supports, and  
+   * <li>
+   * has the hardware required for internet connectivity,
    * </li>
    * <li>
-   * supports the permissions. 
-   * </li> 
+   * belongs to the makes and models Smartcar supports, and
+   * </li>
+   * <li>
+   * supports the permissions.
+   * </li>
    * </ol>
    * @param vin the VIN (Vehicle Identification Number) of the vehicle.
    * @param scope An array of permissions. The valid permissions are found in the API Reference.
@@ -494,7 +566,7 @@ public class AuthClient extends ApiClient {
         .addPathSegment("compatibility")
         .addQueryParameter("vin", vin)
         .addQueryParameter("scope", String.join(" ", scope))
-        .build(); 
+        .build();
 
     Request request = new Request.Builder()
         .url(url)
