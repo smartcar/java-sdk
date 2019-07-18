@@ -254,7 +254,7 @@ public class AuthClient extends ApiClient {
   }
 
   /**
-   * @deprecated  in 2.1.0, reason is the preferred method is now @AuthUrlBuilder.
+   * @deprecated as of 2.1.0. Please use @AuthUrlBuilder.
    *
    * A class that creates a custom AuthVehicleInfo object, which can be used
    * when generating an authentication URL.
@@ -318,16 +318,16 @@ public class AuthClient extends ApiClient {
    * for generating authentication URLs.
    */
   public class AuthUrlBuilder {
-    HttpUrl.Builder urlBuilder;
+    private HttpUrl.Builder urlBuilder;
 
     public AuthUrlBuilder() {
-      this.urlBuilder = HttpUrl.parse(AuthClient.this.urlAuthorize).newBuilder()
+      urlBuilder = HttpUrl.parse(AuthClient.this.urlAuthorize).newBuilder()
               .addQueryParameter("response_type", "code")
               .addQueryParameter("client_id", AuthClient.this.clientId)
               .addQueryParameter("redirect_uri", AuthClient.this.redirectUri)
               .addQueryParameter("mode", AuthClient.this.testMode ? "test" : "live");
       if (AuthClient.this.scope.length != 0) {
-        this.urlBuilder.addQueryParameter("scope", Utils.join(AuthClient.this.scope, " "));
+        urlBuilder.addQueryParameter("scope", Utils.join(AuthClient.this.scope, " "));
       }
     }
 
@@ -354,12 +354,12 @@ public class AuthClient extends ApiClient {
     }
 
     public String build() {
-      return this.urlBuilder.build().toString();
+      return urlBuilder.build().toString();
     }
   }
 
   /**
-   * @deprecated  in 2.1.0, reason is the preferred method is now @AuthUrlBuilder.
+   * @deprecated as of 2.1.0. Please use @AuthUrlBuilder.
    *
    * Returns the assembled authentication URL.
    *
@@ -402,7 +402,7 @@ public class AuthClient extends ApiClient {
   }
 
   /**
-   * @deprecated  in 2.1.0, reason is the preferred method is now @AuthUrlBuilder.
+   * @deprecated as of 2.1.0. Please use @AuthUrlBuilder.
    *
    * Returns the assembled authentication URL.
    *
@@ -416,7 +416,7 @@ public class AuthClient extends ApiClient {
   }
 
   /**
-   * @deprecated  in 2.1.0, reason is the preferred method is now @AuthUrlBuilder.
+   * @deprecated as of 2.1.0. Please use @AuthUrlBuilder.
    *
    * Returns the assembled authentication URL.
    *
@@ -430,7 +430,7 @@ public class AuthClient extends ApiClient {
   }
 
   /**
-   * @deprecated  in 2.1.0, reason is the preferred method is now @AuthUrlBuilder.
+   * @deprecated as of 2.1.0. Please use @AuthUrlBuilder.
    *
    * Returns the assembled authentication URL.
    *
@@ -445,7 +445,7 @@ public class AuthClient extends ApiClient {
   }
 
   /**
-   * @deprecated  in 2.1.0, reason is the preferred method is now @AuthUrlBuilder.
+   * @deprecated as of 2.1.0. Please use @AuthUrlBuilder.
    *
    * Returns the assembled authentication URL.
    *
@@ -461,7 +461,7 @@ public class AuthClient extends ApiClient {
   }
 
   /**
-   * @deprecated  in 2.1.0, reason is the preferred method is now @AuthUrlBuilder.
+   * @deprecated as of 2.1.0. Please use @AuthUrlBuilder.
    *
    * Returns the assembled authentication URL.
    *
@@ -477,7 +477,7 @@ public class AuthClient extends ApiClient {
   }
 
   /**
-   * @deprecated  in 2.1.0, reason is the preferred method is now @AuthUrlBuilder.
+   * @deprecated as of 2.1.0. Please use @AuthUrlBuilder.
    *
    * Returns the assembled authentication URL.
    *
@@ -492,7 +492,7 @@ public class AuthClient extends ApiClient {
   }
 
   /**
-   * @deprecated  in 2.1.0, reason is the preferred method is now @AuthUrlBuilder.
+   * @deprecated as of 2.1.0. Please use @AuthUrlBuilder.
    *
    * Returns the assembled authentication URL.
    *
