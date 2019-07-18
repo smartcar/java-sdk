@@ -137,6 +137,10 @@
 </a>
 <h2 class="title">B</h2>
 <dl>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/Vehicle.html#battery--">battery()</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/Vehicle.html" title="class in com.smartcar.sdk">Vehicle</a></dt>
+<dd>
+<div class="block">Send request to the /battery endpoint</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/AuthClient.AuthVehicleInfo.Builder.html#build--">build()</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/AuthClient.AuthVehicleInfo.Builder.html" title="class in com.smartcar.sdk">AuthClient.AuthVehicleInfo.Builder</a></dt>
 <dd>
 <div class="block">Instantiates a new AuthVehicleInfo object, which will also have any optional properties
@@ -157,6 +161,10 @@
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/Vehicle.html#call-java.lang.String-java.lang.String-okhttp3.RequestBody-">call(String, String, RequestBody)</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/Vehicle.html" title="class in com.smartcar.sdk">Vehicle</a></dt>
 <dd>
 <div class="block">Executes an API request under the VehicleIds endpoint.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/Vehicle.html#charge--">charge()</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/Vehicle.html" title="class in com.smartcar.sdk">Vehicle</a></dt>
+<dd>
+<div class="block">Send request to the /charge endpoint</div>
 </dd>
 <dt><a href="com/smartcar/sdk/package-summary.html">com.smartcar.sdk</a> - package com.smartcar.sdk</dt>
 <dd>
@@ -206,6 +214,10 @@
 <dl>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/SmartcarException.html#Factory-okhttp3.Response-">Factory(Response)</a></span> - Static method in exception com.smartcar.sdk.<a href="com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/Vehicle.html#fuel--">fuel()</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/Vehicle.html" title="class in com.smartcar.sdk">Vehicle</a></dt>
+<dd>
+<div class="block">Send request to the /fuel endpoint</div>
+</dd>
 </dl>
 <a name="I:G">
 <!--   -->
@@ -223,6 +235,10 @@
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/SmartcarResponse.html#getAge--">getAge()</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/SmartcarResponse.html" title="class in com.smartcar.sdk.data">SmartcarResponse</a></dt>
 <dd>
 <div class="block">Return the age of the response</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/VehicleFuel.html#getAmountRemaining--">getAmountRemaining()</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/VehicleFuel.html" title="class in com.smartcar.sdk.data">VehicleFuel</a></dt>
+<dd>
+<div class="block">Returns the fuel amount remaining</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/AuthClient.html#getAuthUrl-java.lang.String-boolean-com.smartcar.sdk.AuthClient.AuthVehicleInfo-">getAuthUrl(String, boolean, AuthClient.AuthVehicleInfo)</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/AuthClient.html" title="class in com.smartcar.sdk">AuthClient</a></dt>
 <dd>
@@ -288,6 +304,10 @@
 <dd>
 <div class="block">Returns the vehicle id.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/VehicleCharge.html#getIsPluggedIn--">getIsPluggedIn()</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/VehicleCharge.html" title="class in com.smartcar.sdk.data">VehicleCharge</a></dt>
+<dd>
+<div class="block">Returns whether charging cable is plugged in</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/VehicleLocation.html#getLatitude--">getLatitude()</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/VehicleLocation.html" title="class in com.smartcar.sdk.data">VehicleLocation</a></dt>
 <dd>
 <div class="block">Returns the latitude of the vehicle</div>
@@ -332,9 +352,25 @@
 <dd>
 <div class="block">Return paging information</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/VehicleBattery.html#getPercentRemaining--">getPercentRemaining()</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/VehicleBattery.html" title="class in com.smartcar.sdk.data">VehicleBattery</a></dt>
+<dd>
+<div class="block">Returns the battery percent remaining</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/VehicleFuel.html#getPercentRemaining--">getPercentRemaining()</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/VehicleFuel.html" title="class in com.smartcar.sdk.data">VehicleFuel</a></dt>
+<dd>
+<div class="block">Returns the fuel percent remaining</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/ApplicationPermissions.html#getPermissions--">getPermissions()</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/ApplicationPermissions.html" title="class in com.smartcar.sdk.data">ApplicationPermissions</a></dt>
 <dd>
 <div class="block">Returns the application permissions</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/VehicleBattery.html#getRange--">getRange()</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/VehicleBattery.html" title="class in com.smartcar.sdk.data">VehicleBattery</a></dt>
+<dd>
+<div class="block">Returns the battery range</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/VehicleFuel.html#getRange--">getRange()</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/VehicleFuel.html" title="class in com.smartcar.sdk.data">VehicleFuel</a></dt>
+<dd>
+<div class="block">Returns the fuel range</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/Auth.html#getRefreshExpiration--">getRefreshExpiration()</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/Auth.html" title="class in com.smartcar.sdk.data">Auth</a></dt>
 <dd>
@@ -343,6 +379,10 @@
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/Auth.html#getRefreshToken--">getRefreshToken()</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/Auth.html" title="class in com.smartcar.sdk.data">Auth</a></dt>
 <dd>
 <div class="block">Returns the currently stored refresh token.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/VehicleCharge.html#getState--">getState()</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/VehicleCharge.html" title="class in com.smartcar.sdk.data">VehicleCharge</a></dt>
+<dd>
+<div class="block">Returns the charge state</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/SmartcarException.html#getStatusCode--">getStatusCode()</a></span> - Method in exception com.smartcar.sdk.<a href="com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></dt>
 <dd>
@@ -495,6 +535,10 @@
 <dd>
 <div class="block">Stores the age of the response</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/VehicleFuel.html#setAmountRemaining-double-">setAmountRemaining(double)</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/VehicleFuel.html" title="class in com.smartcar.sdk.data">VehicleFuel</a></dt>
+<dd>
+<div class="block">Stores the fuel amount remaining</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/Compatibility.html#setCompatible-boolean-">setCompatible(boolean)</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/Compatibility.html" title="class in com.smartcar.sdk.data">Compatibility</a></dt>
 <dd>
 <div class="block">Sets the compatible variable</div>
@@ -518,6 +562,10 @@
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/VehicleInfo.html#setId-java.lang.String-">setId(String)</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/VehicleInfo.html" title="class in com.smartcar.sdk.data">VehicleInfo</a></dt>
 <dd>
 <div class="block">Stores the vehicle id</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/VehicleCharge.html#setIsPluggedIn-boolean-">setIsPluggedIn(boolean)</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/VehicleCharge.html" title="class in com.smartcar.sdk.data">VehicleCharge</a></dt>
+<dd>
+<div class="block">Stores whether charging cable is plugged in</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/VehicleLocation.html#setLatitude-double-">setLatitude(double)</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/VehicleLocation.html" title="class in com.smartcar.sdk.data">VehicleLocation</a></dt>
 <dd>
@@ -559,9 +607,25 @@
 <dd>
 <div class="block">Stores the paging information</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/VehicleBattery.html#setPercentRemaining-double-">setPercentRemaining(double)</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/VehicleBattery.html" title="class in com.smartcar.sdk.data">VehicleBattery</a></dt>
+<dd>
+<div class="block">Stores the battery percent remaining</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/VehicleFuel.html#setPercentRemaining-double-">setPercentRemaining(double)</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/VehicleFuel.html" title="class in com.smartcar.sdk.data">VehicleFuel</a></dt>
+<dd>
+<div class="block">Stores the fuel percent remaining</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/ApplicationPermissions.html#setPermissions-java.lang.String:A-">setPermissions(String[])</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/ApplicationPermissions.html" title="class in com.smartcar.sdk.data">ApplicationPermissions</a></dt>
 <dd>
 <div class="block">Stores the application permissions</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/VehicleBattery.html#setRange-double-">setRange(double)</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/VehicleBattery.html" title="class in com.smartcar.sdk.data">VehicleBattery</a></dt>
+<dd>
+<div class="block">Stores the battery range</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/VehicleFuel.html#setRange-double-">setRange(double)</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/VehicleFuel.html" title="class in com.smartcar.sdk.data">VehicleFuel</a></dt>
+<dd>
+<div class="block">Stores the fuel range</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/Auth.html#setRefreshExpiration-java.util.Date-">setRefreshExpiration(Date)</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/Auth.html" title="class in com.smartcar.sdk.data">Auth</a></dt>
 <dd>
@@ -570,6 +634,10 @@
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/Auth.html#setRefreshToken-java.lang.String-">setRefreshToken(String)</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/Auth.html" title="class in com.smartcar.sdk.data">Auth</a></dt>
 <dd>
 <div class="block">Stores a new refresh token.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/VehicleCharge.html#setState-java.lang.String-">setState(String)</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/VehicleCharge.html" title="class in com.smartcar.sdk.data">VehicleCharge</a></dt>
+<dd>
+<div class="block">Stores the charge state</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/SmartcarResponse.html#setUnitSystem-java.lang.String-">setUnitSystem(String)</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/SmartcarResponse.html" title="class in com.smartcar.sdk.data">SmartcarResponse</a></dt>
 <dd>
@@ -649,6 +717,12 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/SmartcarResponse.html#toString--">toString()</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/SmartcarResponse.html" title="class in com.smartcar.sdk.data">SmartcarResponse</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/VehicleBattery.html#toString--">toString()</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/VehicleBattery.html" title="class in com.smartcar.sdk.data">VehicleBattery</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/VehicleCharge.html#toString--">toString()</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/VehicleCharge.html" title="class in com.smartcar.sdk.data">VehicleCharge</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/VehicleFuel.html#toString--">toString()</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/VehicleFuel.html" title="class in com.smartcar.sdk.data">VehicleFuel</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/VehicleIds.html#toString--">toString()</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/VehicleIds.html" title="class in com.smartcar.sdk.data">VehicleIds</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/VehicleInfo.html#toString--">toString()</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/VehicleInfo.html" title="class in com.smartcar.sdk.data">VehicleInfo</a></dt>
@@ -702,6 +776,30 @@ the order they are declared.</div>
 </dd>
 <dt><a href="com/smartcar/sdk/Vehicle.UnitSystem.html" title="enum in com.smartcar.sdk"><span class="typeNameLink">Vehicle.UnitSystem</span></a> - Enum in <a href="com/smartcar/sdk/package-summary.html">com.smartcar.sdk</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/smartcar/sdk/data/VehicleBattery.html" title="class in com.smartcar.sdk.data"><span class="typeNameLink">VehicleBattery</span></a> - Class in <a href="com/smartcar/sdk/data/package-summary.html">com.smartcar.sdk.data</a></dt>
+<dd>
+<div class="block">POJO for Smartcar /battery endpoint</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/VehicleBattery.html#VehicleBattery-double-double-">VehicleBattery(double, double)</a></span> - Constructor for class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/VehicleBattery.html" title="class in com.smartcar.sdk.data">VehicleBattery</a></dt>
+<dd>
+<div class="block">Initializes a new instance of the VehicleBattery</div>
+</dd>
+<dt><a href="com/smartcar/sdk/data/VehicleCharge.html" title="class in com.smartcar.sdk.data"><span class="typeNameLink">VehicleCharge</span></a> - Class in <a href="com/smartcar/sdk/data/package-summary.html">com.smartcar.sdk.data</a></dt>
+<dd>
+<div class="block">POJO for Smartcar /charge endpoint</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/VehicleCharge.html#VehicleCharge-java.lang.String-boolean-">VehicleCharge(String, boolean)</a></span> - Constructor for class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/VehicleCharge.html" title="class in com.smartcar.sdk.data">VehicleCharge</a></dt>
+<dd>
+<div class="block">Initializes a new instance of the VehicleCharge</div>
+</dd>
+<dt><a href="com/smartcar/sdk/data/VehicleFuel.html" title="class in com.smartcar.sdk.data"><span class="typeNameLink">VehicleFuel</span></a> - Class in <a href="com/smartcar/sdk/data/package-summary.html">com.smartcar.sdk.data</a></dt>
+<dd>
+<div class="block">POJO for Smartcar /fuel endpoint</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/VehicleFuel.html#VehicleFuel-double-double-double-">VehicleFuel(double, double, double)</a></span> - Constructor for class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/VehicleFuel.html" title="class in com.smartcar.sdk.data">VehicleFuel</a></dt>
+<dd>
+<div class="block">Initializes a new instance of the VehicleFuel</div>
+</dd>
 <dt><a href="com/smartcar/sdk/data/VehicleIds.html" title="class in com.smartcar.sdk.data"><span class="typeNameLink">VehicleIds</span></a> - Class in <a href="com/smartcar/sdk/data/package-summary.html">com.smartcar.sdk.data</a></dt>
 <dd>
 <div class="block">POJO for Smartcar /vehicles endpoint.</div>

@@ -193,6 +193,39 @@ public class Vehicle extends ApiClient {
   }
 
   /**
+   * Send request to the /fuel endpoint
+   *
+   * @return the fuel status of the vehicle
+   *
+   * @throws SmartcarException if the request is unsuccessful
+   */
+  public SmartcarResponse<VehicleFuel> fuel() throws SmartcarException {
+    return this.call("fuel", "GET", null, VehicleFuel.class);
+  }
+
+  /**
+   * Send request to the /battery endpoint
+   *
+   * @return the battery status of the vehicle
+   *
+   * @throws SmartcarException if the request is unsuccessful
+   */
+  public SmartcarResponse<VehicleBattery> battery() throws SmartcarException {
+    return this.call("battery", "GET", null, VehicleBattery.class);
+  }
+
+  /**
+   * Send request to the /charge endpoint
+   *
+   * @return the charge status of the vehicle
+   *
+   * @throws SmartcarException if the request is unsuccessful
+   */
+  public SmartcarResponse<VehicleCharge> charge() throws SmartcarException {
+    return this.call("charge", "GET", null, VehicleCharge.class);
+  }
+
+  /**
    * Send request to the /location endpoint
    *
    * @return the location of the vehicle

@@ -36,7 +36,10 @@ abstract class IntegrationTest {
             "read_vehicle_info",
             "read_vin",
             "read_location",
-            "read_odometer"
+            "read_odometer",
+            "read_fuel",
+            "read_battery",
+            "read_charge"
     };
 
     WebDriver driver;

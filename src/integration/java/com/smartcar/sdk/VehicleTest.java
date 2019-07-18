@@ -74,6 +74,30 @@ public class VehicleTest extends IntegrationTest {
     }
 
     /**
+     * Tests that the fuel status can be obtained.
+     */
+    @Test(groups = "vehicle")
+    public void testFuel() throws SmartcarException {
+        SmartcarResponse response = this.vehicle.fuel();
+    }
+
+    /**
+     * Tests that the battery status can be obtained.
+     */
+    @Test(groups = "vehicle")
+    public void testBattery() throws SmartcarException {
+        SmartcarResponse response = this.vehicle.battery();
+    }
+
+    /**
+     * Tests that the charging status can be obtained.
+     */
+    @Test(groups = "vehicle")
+    public void testCharge() throws SmartcarException {
+        SmartcarResponse response = this.vehicle.charge();
+    }
+
+    /**
      * Tests that the vehicle's location can be obtained.
      */
     @Test(groups = "vehicle")

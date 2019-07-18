@@ -131,6 +131,54 @@ public class VehicleTest {
   }
 
   @Test
+  public void testFuel() throws Exception {
+    double range = 1234;
+    double percentRemaining = 0.43;
+    double amountRemaining = 7;
+    VehicleFuel expected = new VehicleFuel(range, percentRemaining, amountRemaining);
+    String unitSystem = "metric";
+    Date age = new Date();
+    SmartcarResponse res = new SmartcarResponse<>(expected, unitSystem, age);
+
+    PowerMockito.doReturn(res).when(this.subject).call("fuel", "GET", null, VehicleFuel.class);
+
+    SmartcarResponse fuel = this.subject.fuel();
+
+    Assert.assertEquals(res, fuel);
+  }
+
+  @Test
+  public void testBattery() throws Exception {
+    double range = 1234;
+    double percentRemaining = 0.43;
+    VehicleBattery expected = new VehicleBattery(range, percentRemaining);
+    String unitSystem = "metric";
+    Date age = new Date();
+    SmartcarResponse res = new SmartcarResponse<>(expected, unitSystem, age);
+
+    PowerMockito.doReturn(res).when(this.subject).call("battery", "GET", null, VehicleBattery.class);
+
+    SmartcarResponse battery = this.subject.battery();
+
+    Assert.assertEquals(res, battery);
+  }
+
+  @Test
+  public void testCharge() throws Exception {
+    String state = "CHARGING";
+    boolean isPluggedIn = true;
+    VehicleCharge expected = new VehicleCharge(state, isPluggedIn);
+    Date age = new Date();
+    SmartcarResponse res = new SmartcarResponse<>(expected, null, age);
+
+    PowerMockito.doReturn(res).when(this.subject).call("charge", "GET", null, VehicleCharge.class);
+
+    SmartcarResponse charge = this.subject.charge();
+
+    Assert.assertEquals(res, charge);
+  }
+
+  @Test
   public void testLocation() throws Exception {
     double expectedLongitude = 124.3;
     double expectedLatitude = 431.1;
