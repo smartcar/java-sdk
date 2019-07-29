@@ -12,7 +12,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -59,8 +58,9 @@ abstract class IntegrationTest {
                     this.authScope,
                     this.authDevelopment
             );
+            String authUrl = this.authClient.new AuthUrlBuilder().build();
 
-            String authCode = this.getAuthCode(authClient.getAuthUrl(), this.authOemUsername, this.authOemPassword);
+            String authCode = this.getAuthCode(authUrl, this.authOemUsername, this.authOemPassword);
 
             IntegrationTest.auth = authClient.exchangeCode(authCode);
         }
@@ -79,14 +79,12 @@ abstract class IntegrationTest {
      * @throws Exception if the auth code could not be obtained
      */
     private String getAuthCode(String connectAuthUrl, String oemUsername, String oemPassword) throws Exception {
-        String oemAuthUrl = null;
-
         this.startDriver();
 
         // 1 -- Initiate the OAuth 2.0 flow at https://connect.smartcar.com
         this.driver.get(connectAuthUrl);
 
-        WebElement teslaButton = this.driver.findElement(By.cssSelector("button[data-make='TESLA']"));
+        WebElement teslaButton = this.driver.findElement(By.cssSelector("button[data-make='CHEVROLET']"));
 
         // 2 -- Find the Mock OEM button, and navigate to the Mock OEM login page.
         teslaButton.click();

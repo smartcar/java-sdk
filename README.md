@@ -11,7 +11,7 @@ download links are also provided below.
 
 ### Gradle
 ```groovy
-compile "com.smartcar.sdk:java-sdk:2.1.0"
+compile "com.smartcar.sdk:java-sdk:2.1.1"
 ```
 
 ### Maven
@@ -19,14 +19,14 @@ compile "com.smartcar.sdk:java-sdk:2.1.0"
 <dependency>
   <groupId>com.smartcar.sdk</groupId>
   <artifactId>java-sdk</artifactId>
-  <version>2.1.0</version>
+  <version>2.1.1</version>
 </dependency>
 ```
 
 ### Jar Direct Download
-* [java-sdk-2.1.0.jar](https://bintray.com/smartcar/library/download_file?file_path=com%2Fsmartcar%2Fsdk%2Fjava-sdk%2F2.1.0%2Fjava-sdk-2.1.0.jar)
-* [java-sdk-2.1.0-sources.jar](https://bintray.com/smartcar/library/download_file?file_path=com%2Fsmartcar%2Fsdk%2Fjava-sdk%2F2.1.0%2Fjava-sdk-2.1.0-sources.jar)
-* [java-sdk-2.1.0-docs.jar](https://bintray.com/smartcar/library/download_file?file_path=com%2Fsmartcar%2Fsdk%2Fjava-sdk%2F2.1.0%2Fjava-sdk-2.1.0-docs.jar)
+* [java-sdk-2.1.1.jar](https://bintray.com/smartcar/library/download_file?file_path=com%2Fsmartcar%2Fsdk%2Fjava-sdk%2F2.1.1%2Fjava-sdk-2.1.1.jar)
+* [java-sdk-2.1.1-sources.jar](https://bintray.com/smartcar/library/download_file?file_path=com%2Fsmartcar%2Fsdk%2Fjava-sdk%2F2.1.1%2Fjava-sdk-2.1.1-sources.jar)
+* [java-sdk-2.1.1-docs.jar](https://bintray.com/smartcar/library/download_file?file_path=com%2Fsmartcar%2Fsdk%2Fjava-sdk%2F2.1.1%2Fjava-sdk-2.1.1-docs.jar)
 
 
 ## Usage
@@ -59,7 +59,14 @@ a valid access token for the target vehicle.
     AuthClient authClient = new AuthClient(clientId, clientSecret, redirectUri, scope, development);
 
     // Retrieve the auth URL to start the OAuth flow.
-    String authUrl = authClient.getAuthUrl();
+    String authUrl = authClient.new AuthUrlBuilder()
+            .setApprovalPrompt(true)
+            .setState("some state")
+            .build();
+
+    // DEPRECATED
+    // Retrieve the auth URL to start the OAuth flow.
+    // String authUrl = authClient.getAuthUrl();
     ```
 
 3.  Allow the user to complete their portion of the OAuth flow using the
@@ -126,5 +133,5 @@ start making requests to vehicles.
 [ci-url]: https://travis-ci.com/smartcar/java-sdk
 [coverage-image]: https://codecov.io/gh/smartcar/java-sdk/branch/master/graph/badge.svg?token=nZAITx7w3X
 [coverage-url]: https://codecov.io/gh/smartcar/java-sdk
-[javadoc-image]: https://img.shields.io/badge/javadoc-2.1.0-brightgreen.svg
+[javadoc-image]: https://img.shields.io/badge/javadoc-2.1.1-brightgreen.svg
 [javadoc-url]: https://smartcar.github.io/java-sdk
