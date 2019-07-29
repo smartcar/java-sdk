@@ -84,7 +84,7 @@ abstract class IntegrationTest {
         // 1 -- Initiate the OAuth 2.0 flow at https://connect.smartcar.com
         this.driver.get(connectAuthUrl);
 
-        WebElement teslaButton = this.driver.findElement(By.cssSelector("button[data-make='AUDI']"));
+        WebElement teslaButton = this.driver.findElement(By.cssSelector("button[data-make='CHEVROLET']"));
 
         // 2 -- Find the Mock OEM button, and navigate to the Mock OEM login page.
         teslaButton.click();
