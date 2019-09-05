@@ -13,6 +13,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
+import java.util.List;
 
 /**
  * Provides all shared functionality among integration tests.
@@ -84,23 +85,32 @@ abstract class IntegrationTest {
         // 1 -- Initiate the OAuth 2.0 flow at https://connect.smartcar.com
         this.driver.get(connectAuthUrl);
 
-        WebElement teslaButton = this.driver.findElement(By.cssSelector("button[data-make='CHEVROLET']"));
+        // Click continue on preamble screen.
+        this.driver.findElement(By.id("continue-button")).click();
 
         // 2 -- Find the Mock OEM button, and navigate to the Mock OEM login page.
-        teslaButton.click();
+        this.driver.findElement(By.cssSelector("button[data-make='CHEVROLET']")).click();
 
         this.wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input#username")));
 
         // 3 -- Enter OEM user credentials and submit the form.
-        this.driver.findElement(By.cssSelector("input#username")).sendKeys(oemUsername);
-        this.driver.findElement(By.cssSelector("input#password")).sendKeys(oemPassword);
-        this.driver.findElement(By.cssSelector("#sign-in-button")).submit();
+        this.driver.findElement(By.id("username")).sendKeys(oemUsername);
+        this.driver.findElement(By.id("password")).sendKeys(oemPassword);
+        this.driver.findElement(By.id("sign-in-button")).submit();
 
         // 4 -- Approve/grant access to the checked vehicles bu submitting the next form.
         this.driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         this.wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".page-content")));
 
-        this.driver.findElement(By.cssSelector("#approval-button")).click();
+        // Select Chevy Volt by unclicking all the boxes and then clicking the Volt
+        // This is needed because the Volt is the only one that has all the endpoints needed.
+        List<WebElement> elements = this.driver.findElements(By.className("input-button-custom"));
+        for (int i=0; i<elements.size();i++){
+            elements.get(i).click();
+        }
+        this.driver.findElement(By.cssSelector("span[data-model='Volt']")).click();
+
+        this.driver.findElement(By.id("approval-button")).click();
 
         // 5 -- After the triggered redirect, parse the redirect URL's query string for the auth code.
         URL redirectUrl = new URL(this.driver.getCurrentUrl());
