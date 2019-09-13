@@ -74,4 +74,46 @@ public class SmartcarExceptionTest extends PowerMockTestCase {
     Assert.assertEquals(ex.getError(), expectedError);
     Assert.assertEquals(ex.getStatusCode(), expectedStatusCode);
   }
+
+  /**
+   * Test SmartcarException.Factory with error_description
+   */
+  @Test
+  public void testSmartcarExceptionFactoryWithErrorDescription() throws Exception {
+    String expectedMessage = "expected message";
+    String response = Json.createObjectBuilder()
+              .add("error_description", expectedMessage)
+              .build()
+              .toString();
+    Response mockResponse = mock(Response.class);
+    ResponseBody mockResponseBody = mock(ResponseBody.class);
+
+    when(mockResponse.body()).thenReturn(mockResponseBody);
+    when(mockResponseBody.string()).thenReturn(response);
+
+    SmartcarException ex = SmartcarException.Factory(mockResponse);
+
+    Assert.assertEquals(ex.getMessage(), expectedMessage);
+  }
+
+  /**
+   * Test SmartcarException.Factory with message
+   */
+  @Test
+  public void testSmartcarExceptionFactoryWithMessage() throws Exception {
+    String expectedMessage = "expected message";
+    String response = Json.createObjectBuilder()
+              .add("message", expectedMessage)
+              .build()
+              .toString();
+    Response mockResponse = mock(Response.class);
+    ResponseBody mockResponseBody = mock(ResponseBody.class);
+
+    when(mockResponse.body()).thenReturn(mockResponseBody);
+    when(mockResponseBody.string()).thenReturn(response);
+
+    SmartcarException ex = SmartcarException.Factory(mockResponse);
+
+    Assert.assertEquals(ex.getMessage(), expectedMessage);
+  }
 }

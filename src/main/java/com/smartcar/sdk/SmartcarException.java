@@ -76,14 +76,25 @@ public class SmartcarException extends java.lang.Exception {
   public static SmartcarException Factory(final Response response) throws IOException {
     JsonObject body = gson.fromJson(response.body().string(), JsonObject.class);
 
-    String code = null;
-    JsonElement codeElement = body.get("code");
-    if (codeElement != null) {
-      code = codeElement.getAsString();
-    }
-    String message = body.get("message").getAsString();
-    String error = body.get("error").getAsString();
     int statusCode = response.code();
+
+    String code = "";
+    if (body.has("code")) {
+      code = body.get("code").getAsString();
+    }
+
+    String message = "";
+    if (body.has("message")) {
+      message = body.get("message").getAsString();
+    } else if (body.has("error_description")) {
+      message = body.get("error_description").getAsString();
+    }
+
+    String error = "";
+    if (body.has("error")) {
+      error = body.get("error").getAsString();
+    }
+
     return new SmartcarException(statusCode, error, message, code);
   }
 }
