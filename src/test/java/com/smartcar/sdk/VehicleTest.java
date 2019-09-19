@@ -148,6 +148,39 @@ public class VehicleTest {
   }
 
   @Test
+  public void testOil() throws Exception {
+    double lifeRemaining = 0.86;
+    VehicleOil expected = new VehicleOil(lifeRemaining);
+    Date age = new Date();
+    SmartcarResponse res = new SmartcarResponse<>(expected, null, age);
+
+    PowerMockito.doReturn(res).when(this.subject).call("engine/oil", "GET", null, VehicleOil.class);
+
+    SmartcarResponse fuel = this.subject.oil();
+
+    Assert.assertEquals(res, fuel);
+  }
+
+  @Test
+  public void testTirePressure() throws Exception {
+    double frontLeft = 223.0;
+    double frontRight = 218.0;
+    double backLeft = 228.0;
+    double backRight = 218.0;
+
+    VehicleTirePressure expected = new VehicleTirePressure(frontLeft, frontRight, backLeft, backRight);
+    String unitSystem = "metric";
+    Date age = new Date();
+    SmartcarResponse res = new SmartcarResponse<>(expected, unitSystem, age);
+
+    PowerMockito.doReturn(res).when(this.subject).call("tires/pressure", "GET", null, VehicleTirePressure.class);
+
+    SmartcarResponse tirePressure = this.subject.tirePressure();
+
+    Assert.assertEquals(res, tirePressure);
+  }
+
+  @Test
   public void testBattery() throws Exception {
     double range = 1234;
     double percentRemaining = 0.43;

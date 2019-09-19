@@ -204,6 +204,28 @@ public class Vehicle extends ApiClient {
   }
 
   /**
+   * Send request to the /engine/oil endpoint
+   *
+   * @return the engine oil status of the vehicle
+   *
+   * @throws SmartcarException if the request is unsuccessful
+   */
+  public SmartcarResponse<VehicleOil> oil() throws SmartcarException {
+    return this.call("engine/oil", "GET", null, VehicleOil.class);
+  }
+
+  /**
+   * Send request to the /tires/pressure endpoint
+   *
+   * @return the tire pressure status of the vehicle
+   *
+   * @throws SmartcarException if the request is unsuccessful
+   */
+  public SmartcarResponse<VehicleTirePressure> tirePressure() throws SmartcarException {
+    return this.call("tires/pressure", "GET", null, VehicleTirePressure.class);
+  }
+
+  /**
    * Send request to the /battery endpoint
    *
    * @return the battery status of the vehicle
