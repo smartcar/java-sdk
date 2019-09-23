@@ -106,6 +106,22 @@ public class VehicleTest extends IntegrationTest {
     }
 
     /**
+     * Tests that the vehicle's oil status can be obtained.
+     */
+    @Test(groups = "vehicle")
+    public void testOil() throws SmartcarException {
+        SmartcarResponse response = this.vehicle.oil();
+    }
+
+     /**
+     * Tests that the vehicle's tire pressure can be obtained.
+     */
+    @Test(groups = "vehicle")
+    public void testTirePressure() throws SmartcarException {
+        SmartcarResponse response = this.vehicle.tirePressure();
+    }
+
+    /**
      * Tests that the vehicle lock action works.
      */
     @Test(groups = "vehicle")

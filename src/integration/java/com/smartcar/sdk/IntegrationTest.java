@@ -38,6 +38,8 @@ abstract class IntegrationTest {
             "read_location",
             "read_odometer",
             "read_fuel",
+            "read_tires",
+            "read_engine_oil",
             "read_battery",
             "read_charge"
     };
