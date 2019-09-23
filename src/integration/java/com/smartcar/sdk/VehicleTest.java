@@ -121,7 +121,6 @@ public class VehicleTest extends IntegrationTest {
         SmartcarResponse response = this.vehicle.tirePressure();
     }
 
-
     /**
      * Tests that the vehicle lock action works.
      */
