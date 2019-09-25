@@ -9,8 +9,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import org.joda.time.DateTime;
+import org.apache.commons.text.CaseUtils;
 import java.util.concurrent.TimeUnit;
-
 import java.io.IOException;
 
 /**
@@ -34,7 +34,15 @@ abstract class ApiClient {
     .readTimeout(300, TimeUnit.SECONDS)
     .callTimeout(360, TimeUnit.SECONDS)
     .build();
-  static GsonBuilder gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
+
+  private static String toCamelCase(String fieldName) {
+    if (fieldName.contains("_")) { // checks for snake case
+      return CaseUtils.toCamelCase(fieldName, false, new char[]{'_'});
+    }
+    return fieldName;
+  }
+
+  static GsonBuilder gson = new GsonBuilder().setFieldNamingStrategy((field) -> toCamelCase(field.getName()));
 
   public static String urlApi = ApiClient.URL_API;
 
