@@ -7,24 +7,29 @@ import okhttp3.RequestBody;
 
 import javax.json.Json;
 import javax.json.JsonObject;
+import javax.sound.midi.SysexMessage;
+import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
+
+import okio.Buffer;
+import java.io.IOException;
 
 /**
  * Smartcar Vehicle API Object
  */
 public class Vehicle extends ApiClient {
   public enum UnitSystem {
-    DEFAULT,
     IMPERIAL,
     METRIC,
   }
 
   private String vehicleId;
   private String accessToken;
-  private Vehicle.UnitSystem unitSystem = UnitSystem.DEFAULT;
+  private Vehicle.UnitSystem unitSystem = UnitSystem.METRIC;
 
   /**
    * Initializes a new Vehicle.
@@ -66,7 +71,6 @@ public class Vehicle extends ApiClient {
    */
   protected <T extends ApiData> SmartcarResponse<T> call(String path, String method, RequestBody body, Class<T> type) throws SmartcarException {
     HttpUrl url = HttpUrl.parse(Vehicle.URL_API).newBuilder()
-        // addPathSegments will take care of adding leading `/`
         .addPathSegments("vehicles")
         .addPathSegments(this.vehicleId)
         .addPathSegments(path)
@@ -77,6 +81,7 @@ public class Vehicle extends ApiClient {
         .header("Authorization", "Bearer " + this.accessToken)
         .addHeader("User-Agent", Vehicle.USER_AGENT)
         .method(method, body)
+        .header("sc-unit-system", this.unitSystem.name().toLowerCase())
         .build();
 
     return Vehicle.execute(request, type);
@@ -287,6 +292,38 @@ public class Vehicle extends ApiClient {
 
     this.call("security", "POST", body);
   }
+
+
+  /**
+   * Send request to the /engine/oil endpoint
+   *
+   * @return the engine oil status of the vehicle
+   *
+   * @throws SmartcarException if the request is unsuccessful
+   */
+  public BatchResponse batch(ArrayList<String> paths) throws SmartcarException {
+
+    JsonArrayBuilder endpoints = Json.createArrayBuilder();
+    for (String path : paths) {
+      endpoints.add(Json.createObjectBuilder().add("path", path).build());
+    }
+    JsonArray requests = endpoints.build();
+
+    String unit = this.unitSystem.name().toLowerCase();
+    JsonObject headers = Json.createObjectBuilder()
+      .add("sc-unit-system", unit)
+      .build();
+    JsonObject json = Json.createObjectBuilder()
+      .add("headers", headers)
+      .add("requests", requests)
+      .build();
+
+    this.gson.registerTypeAdapter(BatchResponse.class, new BatchDeserializer());
+    RequestBody body = RequestBody.create(JSON, json.toString());
+    SmartcarResponse<BatchResponse> smartcarBatch = this.call("batch", "POST", body, BatchResponse.class);
+    return smartcarBatch.getData();
+  }
+
 
   /**
    * Returns the currently stored vehicle ID.

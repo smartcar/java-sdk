@@ -4,6 +4,8 @@ import com.smartcar.sdk.data.*;
 import org.testng.Assert;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Integration Test Suite: /vehicles/:id
@@ -135,6 +137,23 @@ public class VehicleTest extends IntegrationTest {
     @Test(groups = "vehicle")
     public void testActionUnlock() throws SmartcarException {
         this.vehicle.unlock();
+    }
+
+    /**
+     * Tests that the batch request method works.
+     */
+    @Test(groups = "vehicle")
+    public void testBatch() throws SmartcarException {
+        ArrayList<String> paths = new ArrayList<>();
+        paths.add("/odometer");
+        paths.add("/fuel");
+
+
+        BatchResponse response = this.vehicle.batch(paths);
+
+
+        SmartcarResponse<VehicleOdometer> odo = response.get("/odometer");
+        SmartcarResponse<VehicleFuel> fuel = response.get("/fuel");
     }
 
     /**

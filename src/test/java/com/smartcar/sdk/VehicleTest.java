@@ -1,5 +1,7 @@
 package com.smartcar.sdk;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.smartcar.sdk.data.*;
 import okhttp3.RequestBody;
 import org.powermock.api.mockito.PowerMockito;
@@ -12,7 +14,10 @@ import javax.json.Json;
 import javax.json.JsonObject;
 import java.util.Date;
 import java.util.UUID;
+import java.util.ArrayList;
+import java.util.HashMap;
 
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.refEq;
 /**
@@ -258,5 +263,53 @@ public class VehicleTest {
       .when(this.subject, "call", eq("security"), eq("POST"), refEq(body));
 
     this.subject.lock();
+  }
+
+  @Test
+  public void testBatch() throws Exception {
+    HashMap<String, String> headers = new HashMap<>();
+    headers.put("sc-unit-system", "metric");
+
+
+    HashMap<String, String> odometerPath = new HashMap<>();
+    headers.put("path", "/odometer");
+
+    HashMap<String, String> fuelPath = new HashMap<>();
+    headers.put("path", "/fuel");
+
+
+     JsonObject json = Json.createObjectBuilder()
+      .add("headers", Json.createObjectBuilder()
+          .add("sc-unit-system", "metric"))
+      .add("requests", Json.createArrayBuilder()
+          .add(Json.createObjectBuilder()
+            .add("path", "/odometer")
+            .build()
+          )
+          .add(Json.createObjectBuilder()
+            .add("path", "/fuel")
+            .build()
+          )
+          .build()
+      )
+      .build();
+
+    RequestBody body = RequestBody.create(Vehicle.JSON, json.toString());
+    String expectedJson = "[{\"headers\":{\"unitSystem\":\"metric\"},\"path\":\"/odometer\",\"code\":200,\"body\":{\"distance\":32768}}]";
+    JsonParser parser = new JsonParser();
+    JsonElement parsed = parser.parse(expectedJson);
+
+    BatchResponse expectedBatch = new BatchResponse(parsed.getAsJsonArray());
+    SmartcarResponse<BatchResponse> res = new SmartcarResponse(expectedBatch);
+    ArrayList<String> paths = new ArrayList<>();
+    paths.add("/odometer");
+
+    PowerMockito.doReturn(res).when(this.subject, "call", eq("batch"), eq("POST"), refEq(body), refEq(BatchResponse.class));
+    BatchResponse batch = this.subject.batch(paths);
+
+
+    SmartcarResponse<VehicleOdometer> odo = batch.get("/odometer");
+    VehicleOdometer expectedOdo = new VehicleOdometer(32768);
+    Assert.assertEquals(odo.getData().toString(), expectedOdo.toString());
   }
 }
