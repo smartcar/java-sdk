@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.List;
 
 /**
- * Provides all shared functionality among integration tests.
+ * Provides all shared functionality among the integration tests.
  */
 abstract class IntegrationTest {
     private static final int WEBDRIVER_DEFAULT_TIMEOUT_SECONDS = 10;
