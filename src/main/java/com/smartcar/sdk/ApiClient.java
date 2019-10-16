@@ -63,7 +63,7 @@ abstract class ApiClient {
   }
 
   /**
-   * Sends the specified request, returning the raw response body.
+   * Sends the specified request returning the raw response body.
    *
    * @param request the desired request to transmit
    *
