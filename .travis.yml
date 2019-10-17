@@ -1,7 +1,6 @@
 language: java
 
 jdk:
-  - oraclejdk8
   - openjdk8
 
 sudo: required
@@ -19,16 +18,16 @@ cache:
 
 script:
   # Check if readme has been generated
-  - gradle markdown
+  - ./gradlew markdown
   - test -z "$(git diff --name-only | grep '^README.md$')"
 
-  - gradle javadoc
+  - ./gradlew javadoc
   - test -z "$(git diff --name-only | grep 'docs/')"
 
-  - gradle check
-  - gradle jacocoTestReport
+  - ./gradlew check
+  - ./gradlew jacocoTestReport
   - bash <(curl -s https://codecov.io/bash) -cF test
-  - gradle jacocoIntegrationReport
+  - ./gradlew jacocoIntegrationReport
   - bash <(curl -s https://codecov.io/bash) -cF integration
 
 services:
@@ -62,4 +61,4 @@ jobs:
       deploy:
         - provider: script
           skip_cleanup: true
-          script: gradle bintrayUpload
+          script: ./gradlew bintrayUpload
