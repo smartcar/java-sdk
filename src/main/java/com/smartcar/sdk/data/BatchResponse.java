@@ -1,15 +1,17 @@
 package com.smartcar.sdk.data;
 
-import com.smartcar.sdk.SmartcarException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
-import org.joda.time.DateTime;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.GsonBuilder;
+import com.smartcar.sdk.SmartcarException;
+
 import org.apache.commons.text.CaseUtils;
-import java.util.HashMap;
-import java.util.Iterator;
+import org.joda.time.DateTime;
 
 public class BatchResponse extends ApiData {
   private Map<String, JsonObject> responseData = new HashMap<>();
@@ -38,13 +40,14 @@ public class BatchResponse extends ApiData {
 
   public <T extends ApiData> SmartcarResponse<T> get(String path) throws SmartcarException {
     JsonObject res = this.responseData.get(path);
-
     Integer code = res.get("code").getAsInt();
-    if (code != 200) {
-      // TODO : handle error
-      System.out.println("ERROR");
-    }
     JsonObject body = res.get("body").getAsJsonObject();
+
+    if (code != 200) {
+      String errorMessage = body.get("message").getAsString();
+      throw new SmartcarException(errorMessage);
+    }
+
     JsonElement header = res.get("headers");
     Class<T> dataType = getClassByPath(path);
 

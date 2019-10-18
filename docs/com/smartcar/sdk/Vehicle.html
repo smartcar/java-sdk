@@ -209,7 +209,7 @@ extends java.lang.Object</pre>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code><a href="../../../com/smartcar/sdk/data/BatchResponse.html" title="class in com.smartcar.sdk.data">BatchResponse</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Vehicle.html#batch-java.util.ArrayList-">batch</a></span>(java.util.ArrayList&lt;java.lang.String&gt;&nbsp;paths)</code>
-<div class="block">Send request to the /engine/oil endpoint</div>
+<div class="block">Send request to the /batch endpoint</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
@@ -789,10 +789,11 @@ extends java.lang.Object</pre>
 <h4>batch</h4>
 <pre>public&nbsp;<a href="../../../com/smartcar/sdk/data/BatchResponse.html" title="class in com.smartcar.sdk.data">BatchResponse</a>&nbsp;batch(java.util.ArrayList&lt;java.lang.String&gt;&nbsp;paths)
                     throws <a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
-<div class="block">Send request to the /engine/oil endpoint</div>
+<div class="block">Send request to the /batch endpoint</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the engine oil status of the vehicle</dd>
+<dd>the BatchResponse object containing the response
+ from all the requested endpoints</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - if the request is unsuccessful</dd>
 </dl>
