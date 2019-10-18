@@ -298,7 +298,7 @@ public class Vehicle extends ApiClient {
    *
    * @throws SmartcarException if the request is unsuccessful
    */
-  public BatchResponse batch(ArrayList<String> paths) throws SmartcarException {
+  public BatchResponse batch(List<String> paths) throws SmartcarException {
 
     JsonArrayBuilder endpoints = Json.createArrayBuilder();
     for (String path : paths) {
