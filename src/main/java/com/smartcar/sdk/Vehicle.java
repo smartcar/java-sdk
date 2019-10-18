@@ -7,16 +7,12 @@ import okhttp3.RequestBody;
 
 import javax.json.Json;
 import javax.json.JsonObject;
-import javax.sound.midi.SysexMessage;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
-
-import okio.Buffer;
-import java.io.IOException;
 
 /**
  * Smartcar Vehicle API Object
@@ -295,9 +291,10 @@ public class Vehicle extends ApiClient {
 
 
   /**
-   * Send request to the /engine/oil endpoint
+   * Send request to the /batch endpoint
    *
-   * @return the engine oil status of the vehicle
+   * @return the BatchResponse object containing the response
+   * from all the requested endpoints
    *
    * @throws SmartcarException if the request is unsuccessful
    */
