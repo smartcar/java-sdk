@@ -144,7 +144,7 @@ public class VehicleTest extends IntegrationTest {
      */
     @Test(groups = "vehicle")
     public void testBatch() throws SmartcarException {
-        ArrayList<String> paths = new ArrayList<>();
+        List<String> paths = new ArrayList<>();
         paths.add("/odometer");
         paths.add("/fuel");
 

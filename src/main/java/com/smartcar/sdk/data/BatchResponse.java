@@ -12,13 +12,13 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 public class BatchResponse extends ApiData {
-  private HashMap<String, JsonObject> responseData = new HashMap<>();
+  private Map<String, JsonObject> responseData = new HashMap<>();
 
   public BatchResponse(JsonArray responses) {
 
     Iterator<JsonElement> responseIterator = responses.iterator();
 
-    while (responseIterator.hasNext()){
+    while (responseIterator.hasNext()) {
       JsonObject res = responseIterator.next().getAsJsonObject();
       String path = res.get("path").getAsString();
       this.responseData.put(path, res);
