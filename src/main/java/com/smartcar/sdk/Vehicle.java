@@ -293,6 +293,8 @@ public class Vehicle extends ApiClient {
   /**
    * Send request to the /batch endpoint
    *
+   * @param paths the paths of endpoints to send requests to (ex. "/odometer", "/location", ...)
+   *
    * @return the BatchResponse object containing the response
    * from all the requested endpoints
    *

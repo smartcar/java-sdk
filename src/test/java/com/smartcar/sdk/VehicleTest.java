@@ -1,30 +1,50 @@
 package com.smartcar.sdk;
 
+import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.refEq;
+import static org.mockito.Matchers.any;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.UUID;
+
+import javax.json.Json;
+import javax.json.JsonObject;
+
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import com.smartcar.sdk.data.*;
-import okhttp3.RequestBody;
+import com.smartcar.sdk.data.ApiData;
+import com.smartcar.sdk.data.ApplicationPermissions;
+import com.smartcar.sdk.data.BatchResponse;
+import com.smartcar.sdk.data.ResponsePaging;
+import com.smartcar.sdk.data.SmartcarResponse;
+import com.smartcar.sdk.data.VehicleBattery;
+import com.smartcar.sdk.data.VehicleCharge;
+import com.smartcar.sdk.data.VehicleFuel;
+import com.smartcar.sdk.data.VehicleInfo;
+import com.smartcar.sdk.data.VehicleLocation;
+import com.smartcar.sdk.data.VehicleOdometer;
+import com.smartcar.sdk.data.VehicleOil;
+import com.smartcar.sdk.data.VehicleTirePressure;
+import com.smartcar.sdk.data.VehicleVin;
+
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import javax.json.Json;
-import javax.json.JsonObject;
-import java.util.Date;
-import java.util.UUID;
-import java.util.ArrayList;
-import java.util.HashMap;
+import okhttp3.RequestBody;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.refEq;
+
 /**
  * Test Suite: Vehicle
  */
 //@RunWith(PowerMockRunner.class)
-@PrepareForTest(Vehicle.class)
+@PrepareForTest({
+  Vehicle.class,
+  SmartcarException.class
+})
 public class VehicleTest {
 
   private final String vehicleId = UUID.randomUUID().toString();
@@ -267,18 +287,7 @@ public class VehicleTest {
 
   @Test
   public void testBatch() throws Exception {
-    HashMap<String, String> headers = new HashMap<>();
-    headers.put("sc-unit-system", "metric");
-
-
-    HashMap<String, String> odometerPath = new HashMap<>();
-    headers.put("path", "/odometer");
-
-    HashMap<String, String> fuelPath = new HashMap<>();
-    headers.put("path", "/fuel");
-
-
-     JsonObject json = Json.createObjectBuilder()
+    JsonObject json = Json.createObjectBuilder()
       .add("headers", Json.createObjectBuilder()
           .add("sc-unit-system", "metric"))
       .add("requests", Json.createArrayBuilder()
@@ -293,23 +302,48 @@ public class VehicleTest {
           .build()
       )
       .build();
-
     RequestBody body = RequestBody.create(Vehicle.JSON, json.toString());
     String expectedJson = "[{\"headers\":{\"unitSystem\":\"metric\"},\"path\":\"/odometer\",\"code\":200,\"body\":{\"distance\":32768}}]";
     JsonParser parser = new JsonParser();
     JsonElement parsed = parser.parse(expectedJson);
-
     BatchResponse expectedBatch = new BatchResponse(parsed.getAsJsonArray());
     SmartcarResponse<BatchResponse> res = new SmartcarResponse(expectedBatch);
     ArrayList<String> paths = new ArrayList<>();
     paths.add("/odometer");
-
     PowerMockito.doReturn(res).when(this.subject, "call", eq("batch"), eq("POST"), refEq(body), refEq(BatchResponse.class));
-    BatchResponse batch = this.subject.batch(paths);
 
+    BatchResponse batch = this.subject.batch(paths);
 
     SmartcarResponse<VehicleOdometer> odo = batch.get("/odometer");
     VehicleOdometer expectedOdo = new VehicleOdometer(32768);
     Assert.assertEquals(odo.getData().toString(), expectedOdo.toString());
   }
-}
+
+  @Test
+  public void testBatchGetError() throws Exception {
+     JsonObject json = Json.createObjectBuilder()
+      .add("headers", Json.createObjectBuilder()
+          .add("sc-unit-system", "metric"))
+      .add("requests", Json.createArrayBuilder()
+          .add(Json.createObjectBuilder()
+            .add("path", "/odometer")
+            .build()
+          )
+          .build()
+      )
+      .build();
+    RequestBody body = RequestBody.create(Vehicle.JSON, json.toString());
+    String expectedJson = "[{\"headers\":{\"unitSystem\":\"metric\"},\"path\":\"/odometer\",\"code\":200,\"body\":{\"distance\":32768}}]";
+    JsonParser parser = new JsonParser();
+    JsonElement parsed = parser.parse(expectedJson);
+    BatchResponse expectedBatch = new BatchResponse(parsed.getAsJsonArray());
+    SmartcarResponse<BatchResponse> res = new SmartcarResponse(expectedBatch);
+    ArrayList<String> paths = new ArrayList<>();
+    paths.add("/odometer");
+    PowerMockito.doReturn(res).when(this.subject, "call", eq("batch"), eq("POST"), refEq(body), refEq(BatchResponse.class));
+
+    BatchResponse batch = this.subject.batch(paths);
+
+    Assert.assertThrows(SmartcarException.class, () -> batch.get("/tires/pressure"));
+    Assert.assertThrows(SmartcarException.class, () -> batch.get("/invalid"));
+  }

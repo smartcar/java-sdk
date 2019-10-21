@@ -40,12 +40,21 @@ public class BatchResponse extends ApiData {
 
   public <T extends ApiData> SmartcarResponse<T> get(String path) throws SmartcarException {
     JsonObject res = this.responseData.get(path);
-    Integer code = res.get("code").getAsInt();
+    if (res == null) {
+      throw new SmartcarException("There is no response for the path: " + path);
+    }
+    Integer statusCode = res.get("code").getAsInt();
     JsonObject body = res.get("body").getAsJsonObject();
 
-    if (code != 200) {
-      String errorMessage = body.get("message").getAsString();
-      throw new SmartcarException(errorMessage);
+    if (statusCode != 200) {
+      String message = body.get("message").getAsString();
+      String error = body.get("error").getAsString();
+      String code = "";
+      if (body.has("code")) {
+        code = body.get("code").getAsString();
+      }
+
+      throw new SmartcarException(statusCode, error, message, code);
     }
 
     JsonElement header = res.get("headers");
