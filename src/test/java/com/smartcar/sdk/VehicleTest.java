@@ -39,7 +39,6 @@ import okhttp3.RequestBody;
 /**
  * Test Suite: Vehicle
  */
-//@RunWith(PowerMockRunner.class)
 @PrepareForTest({
   Vehicle.class,
   SmartcarException.class
@@ -361,23 +360,24 @@ public class VehicleTest {
       )
       .build();
     RequestBody body = RequestBody.create(Vehicle.JSON, json.toString());
-    String expectedJson = "[{\"headers\":{\"unitSystem\":\"metric\"},\"path\":\"/sunroof\",\"code\":501,\"body\":{\"error\":\"vehicle_not_capable_error\", \"message\": \"Vehicle is not capable of performing request.\"}}]";
+    String expectedJson = "[{\"headers\":{\"unitSystem\":\"metric\"},\"path\":\"/odometer\",\"code\":409,\"body\":{\"error\":\"vehicle_state_error\", \"message\": \"Vehicle state cannot be determined.\", \"code\" : \"VS_000\"}}]";
     JsonParser parser = new JsonParser();
     JsonElement parsed = parser.parse(expectedJson);
     BatchResponse expectedBatch = new BatchResponse(parsed.getAsJsonArray());
     SmartcarResponse<BatchResponse> res = new SmartcarResponse(expectedBatch);
     ArrayList<String> paths = new ArrayList<>();
-    paths.add("/sunroof");
+    paths.add("/odometer");
     PowerMockito.doReturn(res).when(this.subject, "call", eq("batch"), eq("POST"), refEq(body), refEq(BatchResponse.class));
 
     BatchResponse batch = this.subject.batch(paths);
 
     try {
-      batch.get("/sunroof");
+      batch.get("/odometer");
     } catch(SmartcarException e) {
-      Assert.assertEquals(e.getStatusCode(), 501);
-      Assert.assertEquals(e.getMessage(), "Vehicle is not capable of performing request.");
-      Assert.assertEquals(e.getError(), "vehicle_not_capable_error");
+      Assert.assertEquals(e.getStatusCode(), 409);
+      Assert.assertEquals(e.getMessage(), "Vehicle state cannot be determined.");
+      Assert.assertEquals(e.getError(), "vehicle_state_error");
+      Assert.assertEquals(e.getCode(), "VS_000");
     }
   }
 }
