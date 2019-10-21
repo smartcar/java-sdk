@@ -2,7 +2,6 @@ package com.smartcar.sdk;
 
 import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.refEq;
-import static org.mockito.Matchers.any;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -347,3 +346,38 @@ public class VehicleTest {
     Assert.assertThrows(SmartcarException.class, () -> batch.get("/tires/pressure"));
     Assert.assertThrows(SmartcarException.class, () -> batch.get("/invalid"));
   }
+
+  @Test
+  public void testBatchHTTPError() throws Exception {
+     JsonObject json = Json.createObjectBuilder()
+      .add("headers", Json.createObjectBuilder()
+          .add("sc-unit-system", "metric"))
+      .add("requests", Json.createArrayBuilder()
+          .add(Json.createObjectBuilder()
+            .add("path", "/sunroof")
+            .build()
+          )
+          .build()
+      )
+      .build();
+    RequestBody body = RequestBody.create(Vehicle.JSON, json.toString());
+    String expectedJson = "[{\"headers\":{\"unitSystem\":\"metric\"},\"path\":\"/sunroof\",\"code\":501,\"body\":{\"error\":\"vehicle_not_capable_error\", \"message\": \"Vehicle is not capable of performing request.\"}}]";
+    JsonParser parser = new JsonParser();
+    JsonElement parsed = parser.parse(expectedJson);
+    BatchResponse expectedBatch = new BatchResponse(parsed.getAsJsonArray());
+    SmartcarResponse<BatchResponse> res = new SmartcarResponse(expectedBatch);
+    ArrayList<String> paths = new ArrayList<>();
+    paths.add("/sunroof");
+    PowerMockito.doReturn(res).when(this.subject, "call", eq("batch"), eq("POST"), refEq(body), refEq(BatchResponse.class));
+
+    BatchResponse batch = this.subject.batch(paths);
+
+    try {
+      batch.get("/sunroof");
+    } catch(SmartcarException e) {
+      Assert.assertEquals(e.getStatusCode(), 501);
+      Assert.assertEquals(e.getMessage(), "Vehicle is not capable of performing request.");
+      Assert.assertEquals(e.getError(), "vehicle_not_capable_error");
+    }
+  }
+}
