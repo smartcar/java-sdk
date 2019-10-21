@@ -168,8 +168,8 @@ public class VehicleTest extends IntegrationTest {
 
         BatchResponse response = this.vehicle.batch(paths);
 
-        SmartcarResponse<VehicleOdometer> odo = response.get("/odometer");
-        SmartcarResponse<VehicleFuel> fuel = response.get("/fuel");
+        SmartcarResponse<VehicleOdometer> odo = response.odometer();
+        SmartcarResponse<VehicleFuel> fuel = response.fuel();
     }
 
     /**

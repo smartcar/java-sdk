@@ -312,7 +312,7 @@ public class VehicleTest {
 
     BatchResponse batch = this.subject.batch(paths);
 
-    SmartcarResponse<VehicleOdometer> odo = batch.get("/odometer");
+    SmartcarResponse<VehicleOdometer> odo = batch.odometer();
     VehicleOdometer expectedOdo = new VehicleOdometer(32768);
     Assert.assertEquals(odo.getData().toString(), expectedOdo.toString());
   }
@@ -342,8 +342,7 @@ public class VehicleTest {
 
     BatchResponse batch = this.subject.batch(paths);
 
-    Assert.assertThrows(SmartcarException.class, () -> batch.get("/tires/pressure"));
-    Assert.assertThrows(SmartcarException.class, () -> batch.get("/invalid"));
+    Assert.assertThrows(SmartcarException.class, () -> batch.tirePressure());
   }
 
   @Test
@@ -372,7 +371,7 @@ public class VehicleTest {
     BatchResponse batch = this.subject.batch(paths);
 
     try {
-      batch.get("/odometer");
+      batch.odometer();
     } catch(SmartcarException e) {
       Assert.assertEquals(e.getStatusCode(), 409);
       Assert.assertEquals(e.getMessage(), "Vehicle state cannot be determined.");

@@ -1,7 +1,6 @@
 package com.smartcar.sdk.data;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import com.google.gson.GsonBuilder;
@@ -33,7 +32,7 @@ public class BatchResponse extends ApiData {
     return fieldName;
   }
 
-  public <T extends ApiData> SmartcarResponse<T> get(String path) throws SmartcarException {
+  private <T extends ApiData> SmartcarResponse<T> get(String path, Class<T> dataType) throws SmartcarException {
     JsonObject res = this.responseData.get(path);
     if (res == null) {
       throw new SmartcarException("There is no response for the path: " + path);
@@ -53,7 +52,6 @@ public class BatchResponse extends ApiData {
     }
 
     JsonElement header = res.get("headers");
-    Class<T> dataType = getClassByPath(path);
 
     return createSmartcarResponse(body, header, dataType);
   }
@@ -77,30 +75,42 @@ public class BatchResponse extends ApiData {
     }
   }
 
-  private Class getClassByPath(String path) throws SmartcarException {
-    switch (path) {
-      case "/battery":
-        return VehicleBattery.class;
-      case "/charge":
-        return VehicleCharge.class;
-      case "/fuel":
-        return VehicleFuel.class;
-      case "/":
-        return VehicleInfo.class;
-      case "/location":
-        return VehicleLocation.class;
-      case "/odometer":
-        return VehicleOdometer.class;
-      case "/engine/oil":
-        return VehicleOil.class;
-      case "/tires/pressure":
-        return VehicleTirePressure.class;
-      case "/vin":
-        return VehicleVin.class;
-      default:
-        throw new SmartcarException("Invalid path.");
-      }
+  public SmartcarResponse<VehicleBattery> battery() throws SmartcarException {
+    return get("/battery", VehicleBattery.class);
   }
+
+  public SmartcarResponse<VehicleCharge> charge() throws SmartcarException {
+    return get("/charge", VehicleCharge.class);
+  }
+
+   public SmartcarResponse<VehicleFuel> fuel() throws SmartcarException {
+    return get("/fuel", VehicleFuel.class);
+  }
+
+   public VehicleInfo info() throws SmartcarException {
+    return get("/", VehicleInfo.class).getData();
+  }
+
+  public SmartcarResponse<VehicleLocation> location() throws SmartcarException {
+    return get("/", VehicleLocation.class);
+  }
+
+  public SmartcarResponse<VehicleOdometer> odometer() throws SmartcarException {
+    return get("/odometer", VehicleOdometer.class);
+  }
+
+  public SmartcarResponse<VehicleOil> oil() throws SmartcarException {
+    return get("/engine/oil", VehicleOil.class);
+  }
+
+    public String vin() throws SmartcarException {
+    return get("/vin", VehicleVin.class).getData().getVin();
+  }
+
+   public SmartcarResponse<VehicleTirePressure> tirePressure() throws SmartcarException {
+    return get("/tires/pressure", VehicleTirePressure.class);
+  }
+
 
   /**
    * @return a stringified representation of BatchResponse
