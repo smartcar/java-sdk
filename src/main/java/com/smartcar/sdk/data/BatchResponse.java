@@ -15,35 +15,30 @@ import org.joda.time.DateTime;
 
 public class BatchResponse extends ApiData {
   private Map<String, JsonObject> responseData = new HashMap<>();
+  private static GsonBuilder gson = new GsonBuilder().setFieldNamingStrategy((field) -> toCamelCase(field.getName()));
 
   public BatchResponse(JsonArray responses) {
 
-    Iterator<JsonElement> responseIterator = responses.iterator();
-
-    while (responseIterator.hasNext()) {
-      JsonObject res = responseIterator.next().getAsJsonObject();
+    for (JsonElement response : responses) {
+      JsonObject res = response.getAsJsonObject();
       String path = res.get("path").getAsString();
       this.responseData.put(path, res);
     }
   }
 
-
   private static String toCamelCase(String fieldName) {
     if (fieldName.contains("_")) { // checks for snake case
-      return CaseUtils.toCamelCase(fieldName, false, new char[]{'_'});
+      return CaseUtils.toCamelCase(fieldName, false, '_');
     }
     return fieldName;
   }
-
-  static GsonBuilder gson = new GsonBuilder().setFieldNamingStrategy((field) -> toCamelCase(field.getName()));
-
 
   public <T extends ApiData> SmartcarResponse<T> get(String path) throws SmartcarException {
     JsonObject res = this.responseData.get(path);
     if (res == null) {
       throw new SmartcarException("There is no response for the path: " + path);
     }
-    Integer statusCode = res.get("code").getAsInt();
+    int statusCode = res.get("code").getAsInt();
     JsonObject body = res.get("body").getAsJsonObject();
 
     if (statusCode != 200) {
@@ -82,26 +77,26 @@ public class BatchResponse extends ApiData {
     }
   }
 
-  public <T extends ApiData> Class<T> getClassByPath(String path) throws SmartcarException {
+  private Class getClassByPath(String path) throws SmartcarException {
     switch (path) {
       case "/battery":
-        return (Class<T>) VehicleBattery.class;
+        return VehicleBattery.class;
       case "/charge":
-        return (Class<T>) VehicleCharge.class;
+        return VehicleCharge.class;
       case "/fuel":
-        return (Class<T>) VehicleFuel.class;
+        return VehicleFuel.class;
       case "/":
-        return (Class<T>) VehicleInfo.class;
+        return VehicleInfo.class;
       case "/location":
-        return (Class<T>) VehicleLocation.class;
+        return VehicleLocation.class;
       case "/odometer":
-        return (Class<T>) VehicleOdometer.class;
+        return VehicleOdometer.class;
       case "/engine/oil":
-        return (Class<T>) VehicleOil.class;
+        return VehicleOil.class;
       case "/tires/pressure":
-        return (Class<T>) VehicleTirePressure.class;
+        return VehicleTirePressure.class;
       case "/vin":
-        return (Class<T>) VehicleVin.class;
+        return VehicleVin.class;
       default:
         throw new SmartcarException("Invalid path.");
       }
