@@ -84,7 +84,7 @@ public class BatchResponse extends ApiData {
     }
 
     /**
-     * Send request to the /battery endpoint
+     * Get response from the /battery endpoint
      *
      * @return the battery status of the vehicle
      * @throws SmartcarException if the request is unsuccessful
@@ -94,7 +94,7 @@ public class BatchResponse extends ApiData {
     }
 
     /**
-     * Send request to the /charge endpoint
+     * Get response from the /charge endpoint
      *
      * @return the charge status of the vehicle
      * @throws SmartcarException if the request is unsuccessful
@@ -104,7 +104,7 @@ public class BatchResponse extends ApiData {
     }
 
     /**
-     * Send request to the /fuel endpoint
+     * Get response from the /fuel endpoint
      *
      * @return the fuel status of the vehicle
      * @throws SmartcarException if the request is unsuccessful
@@ -114,7 +114,7 @@ public class BatchResponse extends ApiData {
     }
 
     /**
-     * Send request to the /info endpoint
+     * Get response from the /info endpoint
      *
      * @return VehicleInfo object
      * @throws SmartcarException if the request is unsuccessful
@@ -124,7 +124,7 @@ public class BatchResponse extends ApiData {
     }
 
     /**
-     * Send request to the /vin endpoint
+     * Get response from the /vin endpoint
      *
      * @return the vin of the vehicle
      * @throws SmartcarException if the request is unsuccessful
@@ -134,7 +134,7 @@ public class BatchResponse extends ApiData {
     }
 
     /**
-     * Send request to the /odometer endpoint
+     * Get response from the /odometer endpoint
      *
      * @return the odometer of the vehicle
      * @throws SmartcarException if the request is unsuccessful
@@ -144,7 +144,7 @@ public class BatchResponse extends ApiData {
     }
 
     /**
-     * Send request to the /engine/oil endpoint
+     * Get response from the /engine/oil endpoint
      *
      * @return the engine oil status of the vehicle
      * @throws SmartcarException if the request is unsuccessful
@@ -154,7 +154,7 @@ public class BatchResponse extends ApiData {
     }
 
     /**
-     * Send request to the /vin endpoint
+     * Get response from the /vin endpoint
      *
      * @return the vin of the vehicle
      * @throws SmartcarException if the request is unsuccessful
@@ -164,7 +164,7 @@ public class BatchResponse extends ApiData {
     }
 
     /**
-     * Send request to the /tires/pressure endpoint
+     * Get response from the /tires/pressure endpoint
      *
      * @return the tire pressure status of the vehicle
      * @throws SmartcarException if the request is unsuccessful

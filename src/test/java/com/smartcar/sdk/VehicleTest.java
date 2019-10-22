@@ -311,11 +311,9 @@ public class VehicleTest {
         JsonElement success = loadJsonResource("BatchResponseSuccess");
         BatchResponse expectedBatch = new BatchResponse(success.getAsJsonArray());
         SmartcarResponse<BatchResponse> res = new SmartcarResponse(expectedBatch);
-        ArrayList<String> paths = new ArrayList<>();
-        paths.add("/odometer");
         PowerMockito.doReturn(res).when(this.subject, "call", eq("batch"), eq("POST"), refEq(body), refEq(BatchResponse.class));
 
-        BatchResponse batch = this.subject.batch(paths);
+        BatchResponse batch = this.subject.batch(new String[] {"/odometer"});
 
         SmartcarResponse<VehicleOdometer> odo = batch.odometer();
         VehicleOdometer expectedOdo = new VehicleOdometer(32768);
@@ -339,11 +337,9 @@ public class VehicleTest {
         JsonElement success = loadJsonResource("BatchResponseSuccess");
         BatchResponse expectedBatch = new BatchResponse(success.getAsJsonArray());
         SmartcarResponse<BatchResponse> res = new SmartcarResponse(expectedBatch);
-        ArrayList<String> paths = new ArrayList<>();
-        paths.add("/odometer");
         PowerMockito.doReturn(res).when(this.subject, "call", eq("batch"), eq("POST"), refEq(body), refEq(BatchResponse.class));
 
-        BatchResponse batch = this.subject.batch(paths);
+        BatchResponse batch = this.subject.batch(new String[] {"/odometer"});
 
         Assert.assertThrows(SmartcarException.class, () -> batch.tirePressure());
     }
@@ -365,11 +361,9 @@ public class VehicleTest {
         JsonElement error = loadJsonResource("BatchResponseError");
         BatchResponse expectedBatch = new BatchResponse(error.getAsJsonArray());
         SmartcarResponse<BatchResponse> res = new SmartcarResponse(expectedBatch);
-        ArrayList<String> paths = new ArrayList<>();
-        paths.add("/odometer");
         PowerMockito.doReturn(res).when(this.subject, "call", eq("batch"), eq("POST"), refEq(body), refEq(BatchResponse.class));
 
-        BatchResponse batch = this.subject.batch(paths);
+        BatchResponse batch = this.subject.batch(new String[] {"/odometer"});
 
         try {
             batch.odometer();
