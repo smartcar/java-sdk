@@ -141,6 +141,10 @@
 <div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Builder class that allows for optional properties on AuthVehicleInfo</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/AuthClient.html#authUrlBuilder--">authUrlBuilder()</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/AuthClient.html" title="class in com.smartcar.sdk">AuthClient</a></dt>
+<dd>
+<div class="block">Creates an AuthUrlBuilder</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/AuthClient.AuthUrlBuilder.html#AuthUrlBuilder--">AuthUrlBuilder()</a></span> - Constructor for class com.smartcar.sdk.<a href="com/smartcar/sdk/AuthClient.AuthUrlBuilder.html" title="class in com.smartcar.sdk">AuthClient.AuthUrlBuilder</a></dt>
 <dd>&nbsp;</dd>
 </dl>
@@ -149,7 +153,7 @@
 </a>
 <h2 class="title">B</h2>
 <dl>
-<dt><span class="memberNameLink"><a href="com/smartcar/sdk/Vehicle.html#batch-java.util.ArrayList-">batch(ArrayList&lt;String&gt;)</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/Vehicle.html" title="class in com.smartcar.sdk">Vehicle</a></dt>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/Vehicle.html#batch-java.util.List-">batch(List&lt;String&gt;)</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/Vehicle.html" title="class in com.smartcar.sdk">Vehicle</a></dt>
 <dd>
 <div class="block">Send request to the /batch endpoint</div>
 </dd>
@@ -162,9 +166,17 @@
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/BatchDeserializer.html#BatchDeserializer--">BatchDeserializer()</a></span> - Constructor for class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/BatchDeserializer.html" title="class in com.smartcar.sdk.data">BatchDeserializer</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/smartcar/sdk/data/BatchResponse.html" title="class in com.smartcar.sdk.data"><span class="typeNameLink">BatchResponse</span></a> - Class in <a href="com/smartcar/sdk/data/package-summary.html">com.smartcar.sdk.data</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Smartcar BatchResponse Object</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/BatchResponse.html#BatchResponse-com.google.gson.JsonArray-">BatchResponse(JsonArray)</a></span> - Constructor for class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/BatchResponse.html" title="class in com.smartcar.sdk.data">BatchResponse</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Initializes a new BatchResponse.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/BatchResponse.html#battery--">battery()</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/BatchResponse.html" title="class in com.smartcar.sdk.data">BatchResponse</a></dt>
+<dd>
+<div class="block">Send request to the /battery endpoint</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/Vehicle.html#battery--">battery()</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/Vehicle.html" title="class in com.smartcar.sdk">Vehicle</a></dt>
 <dd>
 <div class="block">Send request to the /battery endpoint</div>
@@ -194,6 +206,10 @@
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/Vehicle.html#call-java.lang.String-java.lang.String-okhttp3.RequestBody-">call(String, String, RequestBody)</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/Vehicle.html" title="class in com.smartcar.sdk">Vehicle</a></dt>
 <dd>
 <div class="block">Executes an API request under the VehicleIds endpoint.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/BatchResponse.html#charge--">charge()</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/BatchResponse.html" title="class in com.smartcar.sdk.data">BatchResponse</a></dt>
+<dd>
+<div class="block">Send request to the /charge endpoint</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/Vehicle.html#charge--">charge()</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/Vehicle.html" title="class in com.smartcar.sdk">Vehicle</a></dt>
 <dd>
@@ -249,6 +265,10 @@
 <dl>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/SmartcarException.html#Factory-okhttp3.Response-">Factory(Response)</a></span> - Static method in exception com.smartcar.sdk.<a href="com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/BatchResponse.html#fuel--">fuel()</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/BatchResponse.html" title="class in com.smartcar.sdk.data">BatchResponse</a></dt>
+<dd>
+<div class="block">Send request to the /fuel endpoint</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/Vehicle.html#fuel--">fuel()</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/Vehicle.html" title="class in com.smartcar.sdk">Vehicle</a></dt>
 <dd>
 <div class="block">Send request to the /fuel endpoint</div>
@@ -259,8 +279,6 @@
 </a>
 <h2 class="title">G</h2>
 <dl>
-<dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/BatchResponse.html#get-java.lang.String-">get(String)</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/BatchResponse.html" title="class in com.smartcar.sdk.data">BatchResponse</a></dt>
-<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/Auth.html#getAccessToken--">getAccessToken()</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/Auth.html" title="class in com.smartcar.sdk.data">Auth</a></dt>
 <dd>
 <div class="block">Returns the currently stored access token.</div>
@@ -349,8 +367,6 @@
 <dd>
 <div class="block">Returns the back right tire pressure</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/BatchResponse.html#getClassByPath-java.lang.String-">getClassByPath(String)</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/BatchResponse.html" title="class in com.smartcar.sdk.data">BatchResponse</a></dt>
-<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/SmartcarException.html#getCode--">getCode()</a></span> - Method in exception com.smartcar.sdk.<a href="com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></dt>
 <dd>
 <div class="block">Returns the vehicle state error code associated with the SmartcarException.</div>
@@ -537,6 +553,10 @@
 </a>
 <h2 class="title">I</h2>
 <dl>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/BatchResponse.html#info--">info()</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/BatchResponse.html" title="class in com.smartcar.sdk.data">BatchResponse</a></dt>
+<dd>
+<div class="block">Send request to the /info endpoint</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/Vehicle.html#info--">info()</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/Vehicle.html" title="class in com.smartcar.sdk">Vehicle</a></dt>
 <dd>
 <div class="block">Send request to the /info endpoint</div>
@@ -559,6 +579,10 @@
 </a>
 <h2 class="title">L</h2>
 <dl>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/BatchResponse.html#location--">location()</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/BatchResponse.html" title="class in com.smartcar.sdk.data">BatchResponse</a></dt>
+<dd>
+<div class="block">Send request to the /vin endpoint</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/Vehicle.html#location--">location()</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/Vehicle.html" title="class in com.smartcar.sdk">Vehicle</a></dt>
 <dd>
 <div class="block">Send request to the /location endpoint</div>
@@ -573,9 +597,17 @@
 </a>
 <h2 class="title">O</h2>
 <dl>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/BatchResponse.html#odometer--">odometer()</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/BatchResponse.html" title="class in com.smartcar.sdk.data">BatchResponse</a></dt>
+<dd>
+<div class="block">Send request to the /odometer endpoint</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/Vehicle.html#odometer--">odometer()</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/Vehicle.html" title="class in com.smartcar.sdk">Vehicle</a></dt>
 <dd>
 <div class="block">Send request to the /odometer endpoint</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/BatchResponse.html#oil--">oil()</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/BatchResponse.html" title="class in com.smartcar.sdk.data">BatchResponse</a></dt>
+<dd>
+<div class="block">Send request to the /engine/oil endpoint</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/Vehicle.html#oil--">oil()</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/Vehicle.html" title="class in com.smartcar.sdk">Vehicle</a></dt>
 <dd>
@@ -826,6 +858,10 @@
 </a>
 <h2 class="title">T</h2>
 <dl>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/BatchResponse.html#tirePressure--">tirePressure()</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/BatchResponse.html" title="class in com.smartcar.sdk.data">BatchResponse</a></dt>
+<dd>
+<div class="block">Send request to the /tires/pressure endpoint</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/Vehicle.html#tirePressure--">tirePressure()</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/Vehicle.html" title="class in com.smartcar.sdk">Vehicle</a></dt>
 <dd>
 <div class="block">Send request to the /tires/pressure endpoint</div>
@@ -992,6 +1028,10 @@ the order they are declared.</div>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/VehicleVin.html#VehicleVin-java.lang.String-">VehicleVin(String)</a></span> - Constructor for class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/VehicleVin.html" title="class in com.smartcar.sdk.data">VehicleVin</a></dt>
 <dd>
 <div class="block">Initializes a new instance of VehicleVin</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/BatchResponse.html#vin--">vin()</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/BatchResponse.html" title="class in com.smartcar.sdk.data">BatchResponse</a></dt>
+<dd>
+<div class="block">Send request to the /vin endpoint</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/Vehicle.html#vin--">vin()</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/Vehicle.html" title="class in com.smartcar.sdk">Vehicle</a></dt>
 <dd>

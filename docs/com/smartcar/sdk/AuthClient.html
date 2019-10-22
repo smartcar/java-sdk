@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":9,"i3":9,"i4":42,"i5":42,"i6":42,"i7":42,"i8":42,"i9":42,"i10":42,"i11":42,"i12":9,"i13":9,"i14":9,"i15":10,"i16":9};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":9,"i4":9,"i5":42,"i6":42,"i7":42,"i8":42,"i9":42,"i10":42,"i11":42,"i12":42,"i13":9,"i14":9,"i15":9,"i16":10,"i17":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -248,31 +248,37 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
+<td class="colFirst"><code><a href="../../../com/smartcar/sdk/AuthClient.AuthUrlBuilder.html" title="class in com.smartcar.sdk">AuthClient.AuthUrlBuilder</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/AuthClient.html#authUrlBuilder--">authUrlBuilder</a></span>()</code>
+<div class="block">Creates an AuthUrlBuilder</div>
+</td>
+</tr>
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/smartcar/sdk/data/Auth.html" title="class in com.smartcar.sdk.data">Auth</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/AuthClient.html#exchangeCode-java.lang.String-">exchangeCode</a></span>(java.lang.String&nbsp;code)</code>
 <div class="block">Exchanges an authorization code for an access token.</div>
 </td>
 </tr>
-<tr id="i1" class="rowColor">
+<tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="../../../com/smartcar/sdk/data/Auth.html" title="class in com.smartcar.sdk.data">Auth</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/AuthClient.html#exchangeRefreshToken-java.lang.String-">exchangeRefreshToken</a></span>(java.lang.String&nbsp;refreshToken)</code>
 <div class="block">Exchanges a refresh token for a new access token.</div>
 </td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>protected static okhttp3.Response</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/AuthClient.html#execute-okhttp3.Request-">execute</a></span>(okhttp3.Request&nbsp;request)</code>
 <div class="block">Sends the specified request, returning the raw response body.</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>protected static &lt;T extends <a href="../../../com/smartcar/sdk/data/ApiData.html" title="class in com.smartcar.sdk.data">ApiData</a>&gt;<br><a href="../../../com/smartcar/sdk/data/SmartcarResponse.html" title="class in com.smartcar.sdk.data">SmartcarResponse</a>&lt;T&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/AuthClient.html#execute-okhttp3.Request-java.lang.Class-">execute</a></span>(okhttp3.Request&nbsp;request,
        java.lang.Class&lt;T&gt;&nbsp;dataType)</code>
 <div class="block">Sends the specified request, parsing the response into the specified type.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/AuthClient.html#getAuthUrl--">getAuthUrl</a></span>()</code>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
@@ -282,7 +288,7 @@ extends java.lang.Object</pre>
 </div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/AuthClient.html#getAuthUrl-com.smartcar.sdk.AuthClient.AuthVehicleInfo-">getAuthUrl</a></span>(<a href="../../../com/smartcar/sdk/AuthClient.AuthVehicleInfo.html" title="class in com.smartcar.sdk">AuthClient.AuthVehicleInfo</a>&nbsp;authVehicleInfo)</code>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
@@ -292,7 +298,7 @@ extends java.lang.Object</pre>
 </div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/AuthClient.html#getAuthUrl-boolean-">getAuthUrl</a></span>(boolean&nbsp;forcePrompt)</code>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
@@ -302,7 +308,7 @@ extends java.lang.Object</pre>
 </div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/AuthClient.html#getAuthUrl-boolean-com.smartcar.sdk.AuthClient.AuthVehicleInfo-">getAuthUrl</a></span>(boolean&nbsp;forcePrompt,
           <a href="../../../com/smartcar/sdk/AuthClient.AuthVehicleInfo.html" title="class in com.smartcar.sdk">AuthClient.AuthVehicleInfo</a>&nbsp;authVehicleInfo)</code>
@@ -313,7 +319,7 @@ extends java.lang.Object</pre>
 </div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/AuthClient.html#getAuthUrl-java.lang.String-">getAuthUrl</a></span>(java.lang.String&nbsp;state)</code>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
@@ -323,7 +329,7 @@ extends java.lang.Object</pre>
 </div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/AuthClient.html#getAuthUrl-java.lang.String-com.smartcar.sdk.AuthClient.AuthVehicleInfo-">getAuthUrl</a></span>(java.lang.String&nbsp;state,
           <a href="../../../com/smartcar/sdk/AuthClient.AuthVehicleInfo.html" title="class in com.smartcar.sdk">AuthClient.AuthVehicleInfo</a>&nbsp;authVehicleInfo)</code>
@@ -334,7 +340,7 @@ extends java.lang.Object</pre>
 </div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/AuthClient.html#getAuthUrl-java.lang.String-boolean-">getAuthUrl</a></span>(java.lang.String&nbsp;state,
           boolean&nbsp;forcePrompt)</code>
@@ -345,7 +351,7 @@ extends java.lang.Object</pre>
 </div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/AuthClient.html#getAuthUrl-java.lang.String-boolean-com.smartcar.sdk.AuthClient.AuthVehicleInfo-">getAuthUrl</a></span>(java.lang.String&nbsp;state,
           boolean&nbsp;forcePrompt,
@@ -357,34 +363,34 @@ extends java.lang.Object</pre>
 </div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/AuthClient.html#getUserId-java.lang.String-">getUserId</a></span>(java.lang.String&nbsp;accessToken)</code>
 <div class="block">Retrieves the user ID of the user authenticated with the specified access
  token.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>static <a href="../../../com/smartcar/sdk/data/SmartcarResponse.html" title="class in com.smartcar.sdk.data">SmartcarResponse</a>&lt;<a href="../../../com/smartcar/sdk/data/VehicleIds.html" title="class in com.smartcar.sdk.data">VehicleIds</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/AuthClient.html#getVehicleIds-java.lang.String-">getVehicleIds</a></span>(java.lang.String&nbsp;accessToken)</code>
 <div class="block">Retrieves all vehicle IDs associated with the authenticated user.</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>static <a href="../../../com/smartcar/sdk/data/SmartcarResponse.html" title="class in com.smartcar.sdk.data">SmartcarResponse</a>&lt;<a href="../../../com/smartcar/sdk/data/VehicleIds.html" title="class in com.smartcar.sdk.data">VehicleIds</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/AuthClient.html#getVehicleIds-java.lang.String-com.smartcar.sdk.data.RequestPaging-">getVehicleIds</a></span>(java.lang.String&nbsp;accessToken,
              <a href="../../../com/smartcar/sdk/data/RequestPaging.html" title="class in com.smartcar.sdk.data">RequestPaging</a>&nbsp;paging)</code>
 <div class="block">Retrieves all vehicle IDs associated with the authenticated user.</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/AuthClient.html#isCompatible-java.lang.String-java.lang.String:A-">isCompatible</a></span>(java.lang.String&nbsp;vin,
             java.lang.String[]&nbsp;scope)</code>
 <div class="block">Determine if a vehicle is compatible with the Smartcar API and the provided permissions.</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>static boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/AuthClient.html#isExpired-java.util.Date-">isExpired</a></span>(java.util.Date&nbsp;expiration)</code>
 <div class="block">Convenience method for determining if an auth token expiration has passed.</div>
@@ -639,6 +645,20 @@ extends java.lang.Object</pre>
 <dd><code>expiration</code> - the expiration date of the token</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>whether or not the token has expired</dd>
+</dl>
+</li>
+</ul>
+<a name="authUrlBuilder--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>authUrlBuilder</h4>
+<pre>public&nbsp;<a href="../../../com/smartcar/sdk/AuthClient.AuthUrlBuilder.html" title="class in com.smartcar.sdk">AuthClient.AuthUrlBuilder</a>&nbsp;authUrlBuilder()</pre>
+<div class="block">Creates an AuthUrlBuilder</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>returns an instance of AuthUrlBuilder</dd>
 </dl>
 </li>
 </ul>

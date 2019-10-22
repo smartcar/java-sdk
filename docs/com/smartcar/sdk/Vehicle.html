@@ -208,7 +208,7 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code><a href="../../../com/smartcar/sdk/data/BatchResponse.html" title="class in com.smartcar.sdk.data">BatchResponse</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Vehicle.html#batch-java.util.ArrayList-">batch</a></span>(java.util.ArrayList&lt;java.lang.String&gt;&nbsp;paths)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Vehicle.html#batch-java.util.List-">batch</a></span>(java.util.List&lt;java.lang.String&gt;&nbsp;paths)</code>
 <div class="block">Send request to the /batch endpoint</div>
 </td>
 </tr>
@@ -781,16 +781,18 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a name="batch-java.util.ArrayList-">
+<a name="batch-java.util.List-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>batch</h4>
-<pre>public&nbsp;<a href="../../../com/smartcar/sdk/data/BatchResponse.html" title="class in com.smartcar.sdk.data">BatchResponse</a>&nbsp;batch(java.util.ArrayList&lt;java.lang.String&gt;&nbsp;paths)
+<pre>public&nbsp;<a href="../../../com/smartcar/sdk/data/BatchResponse.html" title="class in com.smartcar.sdk.data">BatchResponse</a>&nbsp;batch(java.util.List&lt;java.lang.String&gt;&nbsp;paths)
                     throws <a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
 <div class="block">Send request to the /batch endpoint</div>
 <dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>paths</code> - the paths of endpoints to send requests to (ex. "/odometer", "/location", ...)</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the BatchResponse object containing the response
  from all the requested endpoints</dd>

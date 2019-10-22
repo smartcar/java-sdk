@@ -233,6 +233,15 @@ public class AuthClient extends ApiClient {
   }
 
   /**
+   * Creates an AuthUrlBuilder
+   *
+   * @return returns an instance of AuthUrlBuilder
+   */
+  public AuthUrlBuilder authUrlBuilder() {
+    return new AuthUrlBuilder();
+  }
+
+  /**
    * Executes an Auth API request.
    *
    * @param requestBody the request body to be included

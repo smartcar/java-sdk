@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -119,6 +119,7 @@ var activeTableTab = "activeTableTab";
 <br>
 <pre>public class <span class="typeNameLabel">BatchResponse</span>
 extends <a href="../../../../com/smartcar/sdk/data/ApiData.html" title="class in com.smartcar.sdk.data">ApiData</a></pre>
+<div class="block">Smartcar BatchResponse Object</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../serialized-form.html#com.smartcar.sdk.data.BatchResponse">Serialized Form</a></dd>
@@ -141,7 +142,9 @@ extends <a href="../../../../com/smartcar/sdk/data/ApiData.html" title="class in
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/smartcar/sdk/data/BatchResponse.html#BatchResponse-com.google.gson.JsonArray-">BatchResponse</a></span>(com.google.gson.JsonArray&nbsp;responses)</code>&nbsp;</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/smartcar/sdk/data/BatchResponse.html#BatchResponse-com.google.gson.JsonArray-">BatchResponse</a></span>(com.google.gson.JsonArray&nbsp;responses)</code>
+<div class="block">Initializes a new BatchResponse.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -159,17 +162,63 @@ extends <a href="../../../../com/smartcar/sdk/data/ApiData.html" title="class in
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>&lt;T extends <a href="../../../../com/smartcar/sdk/data/ApiData.html" title="class in com.smartcar.sdk.data">ApiData</a>&gt;<br><a href="../../../../com/smartcar/sdk/data/SmartcarResponse.html" title="class in com.smartcar.sdk.data">SmartcarResponse</a>&lt;T&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/smartcar/sdk/data/BatchResponse.html#get-java.lang.String-">get</a></span>(java.lang.String&nbsp;path)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../../../../com/smartcar/sdk/data/SmartcarResponse.html" title="class in com.smartcar.sdk.data">SmartcarResponse</a>&lt;<a href="../../../../com/smartcar/sdk/data/VehicleBattery.html" title="class in com.smartcar.sdk.data">VehicleBattery</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/smartcar/sdk/data/BatchResponse.html#battery--">battery</a></span>()</code>
+<div class="block">Send request to the /battery endpoint</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>&lt;T extends <a href="../../../../com/smartcar/sdk/data/ApiData.html" title="class in com.smartcar.sdk.data">ApiData</a>&gt;<br>java.lang.Class&lt;T&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/smartcar/sdk/data/BatchResponse.html#getClassByPath-java.lang.String-">getClassByPath</a></span>(java.lang.String&nbsp;path)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../../../../com/smartcar/sdk/data/SmartcarResponse.html" title="class in com.smartcar.sdk.data">SmartcarResponse</a>&lt;<a href="../../../../com/smartcar/sdk/data/VehicleCharge.html" title="class in com.smartcar.sdk.data">VehicleCharge</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/smartcar/sdk/data/BatchResponse.html#charge--">charge</a></span>()</code>
+<div class="block">Send request to the /charge endpoint</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
+<td class="colFirst"><code><a href="../../../../com/smartcar/sdk/data/SmartcarResponse.html" title="class in com.smartcar.sdk.data">SmartcarResponse</a>&lt;<a href="../../../../com/smartcar/sdk/data/VehicleFuel.html" title="class in com.smartcar.sdk.data">VehicleFuel</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/smartcar/sdk/data/BatchResponse.html#fuel--">fuel</a></span>()</code>
+<div class="block">Send request to the /fuel endpoint</div>
+</td>
+</tr>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code><a href="../../../../com/smartcar/sdk/data/VehicleInfo.html" title="class in com.smartcar.sdk.data">VehicleInfo</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/smartcar/sdk/data/BatchResponse.html#info--">info</a></span>()</code>
+<div class="block">Send request to the /info endpoint</div>
+</td>
+</tr>
+<tr id="i4" class="altColor">
+<td class="colFirst"><code><a href="../../../../com/smartcar/sdk/data/SmartcarResponse.html" title="class in com.smartcar.sdk.data">SmartcarResponse</a>&lt;<a href="../../../../com/smartcar/sdk/data/VehicleLocation.html" title="class in com.smartcar.sdk.data">VehicleLocation</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/smartcar/sdk/data/BatchResponse.html#location--">location</a></span>()</code>
+<div class="block">Send request to the /vin endpoint</div>
+</td>
+</tr>
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code><a href="../../../../com/smartcar/sdk/data/SmartcarResponse.html" title="class in com.smartcar.sdk.data">SmartcarResponse</a>&lt;<a href="../../../../com/smartcar/sdk/data/VehicleOdometer.html" title="class in com.smartcar.sdk.data">VehicleOdometer</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/smartcar/sdk/data/BatchResponse.html#odometer--">odometer</a></span>()</code>
+<div class="block">Send request to the /odometer endpoint</div>
+</td>
+</tr>
+<tr id="i6" class="altColor">
+<td class="colFirst"><code><a href="../../../../com/smartcar/sdk/data/SmartcarResponse.html" title="class in com.smartcar.sdk.data">SmartcarResponse</a>&lt;<a href="../../../../com/smartcar/sdk/data/VehicleOil.html" title="class in com.smartcar.sdk.data">VehicleOil</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/smartcar/sdk/data/BatchResponse.html#oil--">oil</a></span>()</code>
+<div class="block">Send request to the /engine/oil endpoint</div>
+</td>
+</tr>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code><a href="../../../../com/smartcar/sdk/data/SmartcarResponse.html" title="class in com.smartcar.sdk.data">SmartcarResponse</a>&lt;<a href="../../../../com/smartcar/sdk/data/VehicleTirePressure.html" title="class in com.smartcar.sdk.data">VehicleTirePressure</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/smartcar/sdk/data/BatchResponse.html#tirePressure--">tirePressure</a></span>()</code>
+<div class="block">Send request to the /tires/pressure endpoint</div>
+</td>
+</tr>
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/smartcar/sdk/data/BatchResponse.html#toString--">toString</a></span>()</code>
 <div class="block">Returns the stored data string.</div>
+</td>
+</tr>
+<tr id="i9" class="rowColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/smartcar/sdk/data/BatchResponse.html#vin--">vin</a></span>()</code>
+<div class="block">Send request to the /vin endpoint</div>
 </td>
 </tr>
 </table>
@@ -201,6 +250,11 @@ extends <a href="../../../../com/smartcar/sdk/data/ApiData.html" title="class in
 <li class="blockList">
 <h4>BatchResponse</h4>
 <pre>public&nbsp;BatchResponse(com.google.gson.JsonArray&nbsp;responses)</pre>
+<div class="block">Initializes a new BatchResponse.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>responses</code> - the array of Json response objects</dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -211,31 +265,156 @@ extends <a href="../../../../com/smartcar/sdk/data/ApiData.html" title="class in
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="get-java.lang.String-">
+<a name="battery--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>get</h4>
-<pre>public&nbsp;&lt;T extends <a href="../../../../com/smartcar/sdk/data/ApiData.html" title="class in com.smartcar.sdk.data">ApiData</a>&gt;&nbsp;<a href="../../../../com/smartcar/sdk/data/SmartcarResponse.html" title="class in com.smartcar.sdk.data">SmartcarResponse</a>&lt;T&gt;&nbsp;get(java.lang.String&nbsp;path)
-                                            throws <a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
+<h4>battery</h4>
+<pre>public&nbsp;<a href="../../../../com/smartcar/sdk/data/SmartcarResponse.html" title="class in com.smartcar.sdk.data">SmartcarResponse</a>&lt;<a href="../../../../com/smartcar/sdk/data/VehicleBattery.html" title="class in com.smartcar.sdk.data">VehicleBattery</a>&gt;&nbsp;battery()
+                                         throws <a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
+<div class="block">Send request to the /battery endpoint</div>
 <dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the battery status of the vehicle</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code></dd>
+<dd><code><a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - if the request is unsuccessful</dd>
 </dl>
 </li>
 </ul>
-<a name="getClassByPath-java.lang.String-">
+<a name="charge--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getClassByPath</h4>
-<pre>public&nbsp;&lt;T extends <a href="../../../../com/smartcar/sdk/data/ApiData.html" title="class in com.smartcar.sdk.data">ApiData</a>&gt;&nbsp;java.lang.Class&lt;T&gt;&nbsp;getClassByPath(java.lang.String&nbsp;path)
-                                                      throws <a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
+<h4>charge</h4>
+<pre>public&nbsp;<a href="../../../../com/smartcar/sdk/data/SmartcarResponse.html" title="class in com.smartcar.sdk.data">SmartcarResponse</a>&lt;<a href="../../../../com/smartcar/sdk/data/VehicleCharge.html" title="class in com.smartcar.sdk.data">VehicleCharge</a>&gt;&nbsp;charge()
+                                       throws <a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
+<div class="block">Send request to the /charge endpoint</div>
 <dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the charge status of the vehicle</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code></dd>
+<dd><code><a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - if the request is unsuccessful</dd>
+</dl>
+</li>
+</ul>
+<a name="fuel--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>fuel</h4>
+<pre>public&nbsp;<a href="../../../../com/smartcar/sdk/data/SmartcarResponse.html" title="class in com.smartcar.sdk.data">SmartcarResponse</a>&lt;<a href="../../../../com/smartcar/sdk/data/VehicleFuel.html" title="class in com.smartcar.sdk.data">VehicleFuel</a>&gt;&nbsp;fuel()
+                                   throws <a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
+<div class="block">Send request to the /fuel endpoint</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the fuel status of the vehicle</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - if the request is unsuccessful</dd>
+</dl>
+</li>
+</ul>
+<a name="info--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>info</h4>
+<pre>public&nbsp;<a href="../../../../com/smartcar/sdk/data/VehicleInfo.html" title="class in com.smartcar.sdk.data">VehicleInfo</a>&nbsp;info()
+                 throws <a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
+<div class="block">Send request to the /info endpoint</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>VehicleInfo object</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - if the request is unsuccessful</dd>
+</dl>
+</li>
+</ul>
+<a name="location--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>location</h4>
+<pre>public&nbsp;<a href="../../../../com/smartcar/sdk/data/SmartcarResponse.html" title="class in com.smartcar.sdk.data">SmartcarResponse</a>&lt;<a href="../../../../com/smartcar/sdk/data/VehicleLocation.html" title="class in com.smartcar.sdk.data">VehicleLocation</a>&gt;&nbsp;location()
+                                           throws <a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
+<div class="block">Send request to the /vin endpoint</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the vin of the vehicle</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - if the request is unsuccessful</dd>
+</dl>
+</li>
+</ul>
+<a name="odometer--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>odometer</h4>
+<pre>public&nbsp;<a href="../../../../com/smartcar/sdk/data/SmartcarResponse.html" title="class in com.smartcar.sdk.data">SmartcarResponse</a>&lt;<a href="../../../../com/smartcar/sdk/data/VehicleOdometer.html" title="class in com.smartcar.sdk.data">VehicleOdometer</a>&gt;&nbsp;odometer()
+                                           throws <a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
+<div class="block">Send request to the /odometer endpoint</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the odometer of the vehicle</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - if the request is unsuccessful</dd>
+</dl>
+</li>
+</ul>
+<a name="oil--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>oil</h4>
+<pre>public&nbsp;<a href="../../../../com/smartcar/sdk/data/SmartcarResponse.html" title="class in com.smartcar.sdk.data">SmartcarResponse</a>&lt;<a href="../../../../com/smartcar/sdk/data/VehicleOil.html" title="class in com.smartcar.sdk.data">VehicleOil</a>&gt;&nbsp;oil()
+                                 throws <a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
+<div class="block">Send request to the /engine/oil endpoint</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the engine oil status of the vehicle</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - if the request is unsuccessful</dd>
+</dl>
+</li>
+</ul>
+<a name="vin--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>vin</h4>
+<pre>public&nbsp;java.lang.String&nbsp;vin()
+                     throws <a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
+<div class="block">Send request to the /vin endpoint</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the vin of the vehicle</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - if the request is unsuccessful</dd>
+</dl>
+</li>
+</ul>
+<a name="tirePressure--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>tirePressure</h4>
+<pre>public&nbsp;<a href="../../../../com/smartcar/sdk/data/SmartcarResponse.html" title="class in com.smartcar.sdk.data">SmartcarResponse</a>&lt;<a href="../../../../com/smartcar/sdk/data/VehicleTirePressure.html" title="class in com.smartcar.sdk.data">VehicleTirePressure</a>&gt;&nbsp;tirePressure()
+                                                   throws <a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
+<div class="block">Send request to the /tires/pressure endpoint</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the tire pressure status of the vehicle</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - if the request is unsuccessful</dd>
 </dl>
 </li>
 </ul>
