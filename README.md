@@ -59,14 +59,10 @@ a valid access token for the target vehicle.
     AuthClient authClient = new AuthClient(clientId, clientSecret, redirectUri, scope, development);
 
     // Retrieve the auth URL to start the OAuth flow.
-    String authUrl = authClient.new AuthUrlBuilder()
+    String authUrl = authClient.authUrlBuilder()
             .setApprovalPrompt(true)
             .setState("some state")
             .build();
-
-    // DEPRECATED
-    // Retrieve the auth URL to start the OAuth flow.
-    // String authUrl = authClient.getAuthUrl();
     ```
 
 3.  Allow the user to complete their portion of the OAuth flow using the
