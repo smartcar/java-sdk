@@ -1,6 +1,13 @@
 package com.smartcar.sdk;
 
-import com.smartcar.sdk.data.*;
+import com.smartcar.sdk.data.Auth;
+import com.smartcar.sdk.data.BatchResponse;
+import com.smartcar.sdk.data.SmartcarResponse;
+import com.smartcar.sdk.data.VehicleFuel;
+import com.smartcar.sdk.data.VehicleIds;
+import com.smartcar.sdk.data.VehicleInfo;
+import com.smartcar.sdk.data.VehicleOdometer;
+
 import org.testng.Assert;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
@@ -51,6 +58,16 @@ public class VehicleTest extends IntegrationTest {
     @Test(groups = "vehicle")
     public void testPermissions() throws SmartcarException {
         String[] permissions = this.vehicle.permissions();
+    }
+
+    /**
+     * Tests that the vehicle correctly handles imperial headers.
+     */
+    @Test(groups = "vehicle")
+    public void testImperialHeaders() throws SmartcarException {
+        this.vehicle.setUnitSystem(Vehicle.UnitSystem.IMPERIAL);
+        SmartcarResponse response = this.vehicle.odometer();
+        Assert.assertEquals(response.getUnitSystem(), "imperial");
     }
 
     /**
@@ -135,6 +152,18 @@ public class VehicleTest extends IntegrationTest {
     @Test(groups = "vehicle")
     public void testActionUnlock() throws SmartcarException {
         this.vehicle.unlock();
+    }
+
+    /**
+     * Tests that the batch request method works.
+     */
+    @Test(groups = "vehicle")
+    public void testBatch() throws SmartcarException {
+        String[] paths = {"/fuel", "/odometer"};
+        BatchResponse response = this.vehicle.batch(paths);
+
+        SmartcarResponse<VehicleOdometer> odo = response.odometer();
+        SmartcarResponse<VehicleFuel> fuel = response.fuel();
     }
 
     /**

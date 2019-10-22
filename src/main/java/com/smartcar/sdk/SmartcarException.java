@@ -1,6 +1,5 @@
 package com.smartcar.sdk;
 
-import com.google.gson.JsonElement;
 import okhttp3.Response;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;

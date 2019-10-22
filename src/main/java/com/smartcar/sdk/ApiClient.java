@@ -1,6 +1,5 @@
 package com.smartcar.sdk;
 
-import com.google.gson.FieldNamingPolicy;
 import com.google.gson.GsonBuilder;
 import com.smartcar.sdk.data.ApiData;
 import com.smartcar.sdk.data.SmartcarResponse;

@@ -233,6 +233,15 @@ public class AuthClient extends ApiClient {
   }
 
   /**
+   * Creates an AuthUrlBuilder
+   *
+   * @return returns an instance of AuthUrlBuilder
+   */
+  public AuthUrlBuilder authUrlBuilder() {
+    return new AuthUrlBuilder();
+  }
+
+  /**
    * Executes an Auth API request.
    *
    * @param requestBody the request body to be included
@@ -254,7 +263,7 @@ public class AuthClient extends ApiClient {
   }
 
   /**
-   * @deprecated as of 2.1.0. Please use @AuthUrlBuilder.
+   * @deprecated as of 2.1.0. Please use {@link AuthUrlBuilder} instead.
    *
    * A class that creates a custom AuthVehicleInfo object, which can be used
    * when generating an authentication URL.
@@ -314,8 +323,7 @@ public class AuthClient extends ApiClient {
   }
 
   /**
-   * A class that creates a custom AuthUrlBuilder object, used
-   * for generating authentication URLs.
+   * A builder for creating Authorization URLs. Access through {@link AuthClient#authUrlBuilder()}.
    */
   public class AuthUrlBuilder {
     private HttpUrl.Builder urlBuilder;
@@ -363,7 +371,7 @@ public class AuthClient extends ApiClient {
   }
 
   /**
-   * @deprecated as of 2.1.0. Please use @AuthUrlBuilder.
+   * @deprecated as of 2.1.0. Please use {@link AuthUrlBuilder}.
    *
    * Returns the assembled authentication URL.
    *
@@ -406,7 +414,7 @@ public class AuthClient extends ApiClient {
   }
 
   /**
-   * @deprecated as of 2.1.0. Please use @AuthUrlBuilder.
+   * @deprecated as of 2.1.0. Please use {@link AuthUrlBuilder}.
    *
    * Returns the assembled authentication URL.
    *
@@ -420,7 +428,7 @@ public class AuthClient extends ApiClient {
   }
 
   /**
-   * @deprecated as of 2.1.0. Please use @AuthUrlBuilder.
+   * @deprecated as of 2.1.0. Please use {@link AuthUrlBuilder}.
    *
    * Returns the assembled authentication URL.
    *
@@ -434,7 +442,7 @@ public class AuthClient extends ApiClient {
   }
 
   /**
-   * @deprecated as of 2.1.0. Please use @AuthUrlBuilder.
+   * @deprecated as of 2.1.0. Please use {@link AuthUrlBuilder}.
    *
    * Returns the assembled authentication URL.
    *
@@ -449,7 +457,7 @@ public class AuthClient extends ApiClient {
   }
 
   /**
-   * @deprecated as of 2.1.0. Please use @AuthUrlBuilder.
+   * @deprecated as of 2.1.0. Please use {@link AuthUrlBuilder}.
    *
    * Returns the assembled authentication URL.
    *
@@ -465,7 +473,7 @@ public class AuthClient extends ApiClient {
   }
 
   /**
-   * @deprecated as of 2.1.0. Please use @AuthUrlBuilder.
+   * @deprecated as of 2.1.0. Please use {@link AuthUrlBuilder}.
    *
    * Returns the assembled authentication URL.
    *
@@ -481,7 +489,7 @@ public class AuthClient extends ApiClient {
   }
 
   /**
-   * @deprecated as of 2.1.0. Please use @AuthUrlBuilder.
+   * @deprecated as of 2.1.0. Please use {@link AuthUrlBuilder}.
    *
    * Returns the assembled authentication URL.
    *
@@ -496,7 +504,7 @@ public class AuthClient extends ApiClient {
   }
 
   /**
-   * @deprecated as of 2.1.0. Please use @AuthUrlBuilder.
+   * @deprecated as of 2.1.0. Please use {@link AuthUrlBuilder}.
    *
    * Returns the assembled authentication URL.
    *

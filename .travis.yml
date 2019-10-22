@@ -16,20 +16,6 @@ cache:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
 
-script:
-  # Check if readme has been generated
-  - ./gradlew markdown
-  - test -z "$(git diff --name-only | grep '^README.md$')"
-
-  - ./gradlew javadoc
-  - test -z "$(git diff --name-only | grep 'docs/')"
-
-  - ./gradlew check
-  - ./gradlew jacocoTestReport
-  - bash <(curl -s https://codecov.io/bash) -cF test
-  - ./gradlew jacocoIntegrationReport
-  - bash <(curl -s https://codecov.io/bash) -cF integration
-
 services:
   - docker
 
@@ -42,6 +28,20 @@ stages:
 
 jobs:
   include:
+    - stage: test
+      script:
+        # Check if readme has been generated
+        - ./gradlew markdown
+        - test -z "$(git diff --name-only | grep '^README.md$')"
+
+        - ./gradlew javadoc
+        - test -z "$(git diff --name-only | grep 'docs/')"
+
+        - ./gradlew check
+        - ./gradlew jacocoTestReport
+        - bash <(curl -s https://codecov.io/bash) -cF test
+        - ./gradlew jacocoIntegrationReport
+        - bash <(curl -s https://codecov.io/bash) -cF integration
     - stage: tag
       language: generic
       install: false

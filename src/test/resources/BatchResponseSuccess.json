@@ -1,0 +1,10 @@
+ [{
+        "headers" : {
+            "unitSystem" : "metric"
+        },
+        "path": "/odometer",
+        "code" : 200,
+        "body" : {
+            "distance" : 32768
+        }
+}]

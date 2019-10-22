@@ -124,13 +124,12 @@
 </dd>
 <dt><a href="com/smartcar/sdk/AuthClient.AuthUrlBuilder.html" title="class in com.smartcar.sdk"><span class="typeNameLink">AuthClient.AuthUrlBuilder</span></a> - Class in <a href="com/smartcar/sdk/package-summary.html">com.smartcar.sdk</a></dt>
 <dd>
-<div class="block">A class that creates a custom AuthUrlBuilder object, used
- for generating authentication URLs.</div>
+<div class="block">A builder for creating Authorization URLs.</div>
 </dd>
 <dt><a href="com/smartcar/sdk/AuthClient.AuthVehicleInfo.html" title="class in com.smartcar.sdk"><span class="typeNameLink">AuthClient.AuthVehicleInfo</span></a> - Class in <a href="com/smartcar/sdk/package-summary.html">com.smartcar.sdk</a></dt>
 <dd>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>
-<div class="block"><span class="deprecationComment">as of 2.1.0. Please use @AuthUrlBuilder.
+<div class="block"><span class="deprecationComment">as of 2.1.0. Please use <a href="com/smartcar/sdk/AuthClient.AuthUrlBuilder.html" title="class in com.smartcar.sdk"><code>AuthClient.AuthUrlBuilder</code></a> instead.
 
  A class that creates a custom AuthVehicleInfo object, which can be used
  when generating an authentication URL.</span></div>
@@ -141,6 +140,10 @@
 <div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Builder class that allows for optional properties on AuthVehicleInfo</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/AuthClient.html#authUrlBuilder--">authUrlBuilder()</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/AuthClient.html" title="class in com.smartcar.sdk">AuthClient</a></dt>
+<dd>
+<div class="block">Creates an AuthUrlBuilder</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/AuthClient.AuthUrlBuilder.html#AuthUrlBuilder--">AuthUrlBuilder()</a></span> - Constructor for class com.smartcar.sdk.<a href="com/smartcar/sdk/AuthClient.AuthUrlBuilder.html" title="class in com.smartcar.sdk">AuthClient.AuthUrlBuilder</a></dt>
 <dd>&nbsp;</dd>
 </dl>
@@ -149,6 +152,30 @@
 </a>
 <h2 class="title">B</h2>
 <dl>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/Vehicle.html#batch-java.lang.String:A-">batch(String[])</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/Vehicle.html" title="class in com.smartcar.sdk">Vehicle</a></dt>
+<dd>
+<div class="block">Send request to the /batch endpoint</div>
+</dd>
+<dt><a href="com/smartcar/sdk/data/BatchDeserializer.html" title="class in com.smartcar.sdk.data"><span class="typeNameLink">BatchDeserializer</span></a> - Class in <a href="com/smartcar/sdk/data/package-summary.html">com.smartcar.sdk.data</a></dt>
+<dd>
+<div class="block">BatchDeserializer
+
+ This is a customer deserialization method to be used by the GSON object.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/BatchDeserializer.html#BatchDeserializer--">BatchDeserializer()</a></span> - Constructor for class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/BatchDeserializer.html" title="class in com.smartcar.sdk.data">BatchDeserializer</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/smartcar/sdk/data/BatchResponse.html" title="class in com.smartcar.sdk.data"><span class="typeNameLink">BatchResponse</span></a> - Class in <a href="com/smartcar/sdk/data/package-summary.html">com.smartcar.sdk.data</a></dt>
+<dd>
+<div class="block">Smartcar BatchResponse Object</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/BatchResponse.html#BatchResponse-com.google.gson.JsonArray-">BatchResponse(JsonArray)</a></span> - Constructor for class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/BatchResponse.html" title="class in com.smartcar.sdk.data">BatchResponse</a></dt>
+<dd>
+<div class="block">Initializes a new BatchResponse.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/BatchResponse.html#battery--">battery()</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/BatchResponse.html" title="class in com.smartcar.sdk.data">BatchResponse</a></dt>
+<dd>
+<div class="block">Get response from the /battery endpoint</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/Vehicle.html#battery--">battery()</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/Vehicle.html" title="class in com.smartcar.sdk">Vehicle</a></dt>
 <dd>
 <div class="block">Send request to the /battery endpoint</div>
@@ -179,6 +206,10 @@
 <dd>
 <div class="block">Executes an API request under the VehicleIds endpoint.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/BatchResponse.html#charge--">charge()</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/BatchResponse.html" title="class in com.smartcar.sdk.data">BatchResponse</a></dt>
+<dd>
+<div class="block">Get response from the /charge endpoint</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/Vehicle.html#charge--">charge()</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/Vehicle.html" title="class in com.smartcar.sdk">Vehicle</a></dt>
 <dd>
 <div class="block">Send request to the /charge endpoint</div>
@@ -205,6 +236,8 @@
 </a>
 <h2 class="title">D</h2>
 <dl>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/BatchDeserializer.html#deserialize-com.google.gson.JsonElement-java.lang.reflect.Type-com.google.gson.JsonDeserializationContext-">deserialize(JsonElement, Type, JsonDeserializationContext)</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/BatchDeserializer.html" title="class in com.smartcar.sdk.data">BatchDeserializer</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/Vehicle.html#disconnect--">disconnect()</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/Vehicle.html" title="class in com.smartcar.sdk">Vehicle</a></dt>
 <dd>
 <div class="block">Send request to the /disconnect endpoint</div>
@@ -231,6 +264,10 @@
 <dl>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/SmartcarException.html#Factory-okhttp3.Response-">Factory(Response)</a></span> - Static method in exception com.smartcar.sdk.<a href="com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/BatchResponse.html#fuel--">fuel()</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/BatchResponse.html" title="class in com.smartcar.sdk.data">BatchResponse</a></dt>
+<dd>
+<div class="block">Get response from the /fuel endpoint</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/Vehicle.html#fuel--">fuel()</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/Vehicle.html" title="class in com.smartcar.sdk">Vehicle</a></dt>
 <dd>
 <div class="block">Send request to the /fuel endpoint</div>
@@ -260,7 +297,7 @@
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/AuthClient.html#getAuthUrl-java.lang.String-boolean-com.smartcar.sdk.AuthClient.AuthVehicleInfo-">getAuthUrl(String, boolean, AuthClient.AuthVehicleInfo)</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/AuthClient.html" title="class in com.smartcar.sdk">AuthClient</a></dt>
 <dd>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>
-<div class="block"><span class="deprecationComment">as of 2.1.0. Please use @AuthUrlBuilder.
+<div class="block"><span class="deprecationComment">as of 2.1.0. Please use <a href="com/smartcar/sdk/AuthClient.AuthUrlBuilder.html" title="class in com.smartcar.sdk"><code>AuthClient.AuthUrlBuilder</code></a>.
 
  Returns the assembled authentication URL.</span></div>
 </div>
@@ -268,7 +305,7 @@
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/AuthClient.html#getAuthUrl-java.lang.String-">getAuthUrl(String)</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/AuthClient.html" title="class in com.smartcar.sdk">AuthClient</a></dt>
 <dd>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>
-<div class="block"><span class="deprecationComment">as of 2.1.0. Please use @AuthUrlBuilder.
+<div class="block"><span class="deprecationComment">as of 2.1.0. Please use <a href="com/smartcar/sdk/AuthClient.AuthUrlBuilder.html" title="class in com.smartcar.sdk"><code>AuthClient.AuthUrlBuilder</code></a>.
 
  Returns the assembled authentication URL.</span></div>
 </div>
@@ -276,7 +313,7 @@
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/AuthClient.html#getAuthUrl-boolean-">getAuthUrl(boolean)</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/AuthClient.html" title="class in com.smartcar.sdk">AuthClient</a></dt>
 <dd>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>
-<div class="block"><span class="deprecationComment">as of 2.1.0. Please use @AuthUrlBuilder.
+<div class="block"><span class="deprecationComment">as of 2.1.0. Please use <a href="com/smartcar/sdk/AuthClient.AuthUrlBuilder.html" title="class in com.smartcar.sdk"><code>AuthClient.AuthUrlBuilder</code></a>.
 
  Returns the assembled authentication URL.</span></div>
 </div>
@@ -284,7 +321,7 @@
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/AuthClient.html#getAuthUrl-com.smartcar.sdk.AuthClient.AuthVehicleInfo-">getAuthUrl(AuthClient.AuthVehicleInfo)</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/AuthClient.html" title="class in com.smartcar.sdk">AuthClient</a></dt>
 <dd>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>
-<div class="block"><span class="deprecationComment">as of 2.1.0. Please use @AuthUrlBuilder.
+<div class="block"><span class="deprecationComment">as of 2.1.0. Please use <a href="com/smartcar/sdk/AuthClient.AuthUrlBuilder.html" title="class in com.smartcar.sdk"><code>AuthClient.AuthUrlBuilder</code></a>.
 
  Returns the assembled authentication URL.</span></div>
 </div>
@@ -292,7 +329,7 @@
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/AuthClient.html#getAuthUrl-java.lang.String-com.smartcar.sdk.AuthClient.AuthVehicleInfo-">getAuthUrl(String, AuthClient.AuthVehicleInfo)</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/AuthClient.html" title="class in com.smartcar.sdk">AuthClient</a></dt>
 <dd>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>
-<div class="block"><span class="deprecationComment">as of 2.1.0. Please use @AuthUrlBuilder.
+<div class="block"><span class="deprecationComment">as of 2.1.0. Please use <a href="com/smartcar/sdk/AuthClient.AuthUrlBuilder.html" title="class in com.smartcar.sdk"><code>AuthClient.AuthUrlBuilder</code></a>.
 
  Returns the assembled authentication URL.</span></div>
 </div>
@@ -300,7 +337,7 @@
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/AuthClient.html#getAuthUrl-boolean-com.smartcar.sdk.AuthClient.AuthVehicleInfo-">getAuthUrl(boolean, AuthClient.AuthVehicleInfo)</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/AuthClient.html" title="class in com.smartcar.sdk">AuthClient</a></dt>
 <dd>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>
-<div class="block"><span class="deprecationComment">as of 2.1.0. Please use @AuthUrlBuilder.
+<div class="block"><span class="deprecationComment">as of 2.1.0. Please use <a href="com/smartcar/sdk/AuthClient.AuthUrlBuilder.html" title="class in com.smartcar.sdk"><code>AuthClient.AuthUrlBuilder</code></a>.
 
  Returns the assembled authentication URL.</span></div>
 </div>
@@ -308,7 +345,7 @@
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/AuthClient.html#getAuthUrl-java.lang.String-boolean-">getAuthUrl(String, boolean)</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/AuthClient.html" title="class in com.smartcar.sdk">AuthClient</a></dt>
 <dd>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>
-<div class="block"><span class="deprecationComment">as of 2.1.0. Please use @AuthUrlBuilder.
+<div class="block"><span class="deprecationComment">as of 2.1.0. Please use <a href="com/smartcar/sdk/AuthClient.AuthUrlBuilder.html" title="class in com.smartcar.sdk"><code>AuthClient.AuthUrlBuilder</code></a>.
 
  Returns the assembled authentication URL.</span></div>
 </div>
@@ -316,7 +353,7 @@
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/AuthClient.html#getAuthUrl--">getAuthUrl()</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/AuthClient.html" title="class in com.smartcar.sdk">AuthClient</a></dt>
 <dd>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>
-<div class="block"><span class="deprecationComment">as of 2.1.0. Please use @AuthUrlBuilder.
+<div class="block"><span class="deprecationComment">as of 2.1.0. Please use <a href="com/smartcar/sdk/AuthClient.AuthUrlBuilder.html" title="class in com.smartcar.sdk"><code>AuthClient.AuthUrlBuilder</code></a>.
 
  Returns the assembled authentication URL.</span></div>
 </div>
@@ -515,6 +552,10 @@
 </a>
 <h2 class="title">I</h2>
 <dl>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/BatchResponse.html#info--">info()</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/BatchResponse.html" title="class in com.smartcar.sdk.data">BatchResponse</a></dt>
+<dd>
+<div class="block">Get response from the /info endpoint</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/Vehicle.html#info--">info()</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/Vehicle.html" title="class in com.smartcar.sdk">Vehicle</a></dt>
 <dd>
 <div class="block">Send request to the /info endpoint</div>
@@ -537,6 +578,10 @@
 </a>
 <h2 class="title">L</h2>
 <dl>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/BatchResponse.html#location--">location()</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/BatchResponse.html" title="class in com.smartcar.sdk.data">BatchResponse</a></dt>
+<dd>
+<div class="block">Get response from the /vin endpoint</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/Vehicle.html#location--">location()</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/Vehicle.html" title="class in com.smartcar.sdk">Vehicle</a></dt>
 <dd>
 <div class="block">Send request to the /location endpoint</div>
@@ -551,9 +596,17 @@
 </a>
 <h2 class="title">O</h2>
 <dl>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/BatchResponse.html#odometer--">odometer()</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/BatchResponse.html" title="class in com.smartcar.sdk.data">BatchResponse</a></dt>
+<dd>
+<div class="block">Get response from the /odometer endpoint</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/Vehicle.html#odometer--">odometer()</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/Vehicle.html" title="class in com.smartcar.sdk">Vehicle</a></dt>
 <dd>
 <div class="block">Send request to the /odometer endpoint</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/BatchResponse.html#oil--">oil()</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/BatchResponse.html" title="class in com.smartcar.sdk.data">BatchResponse</a></dt>
+<dd>
+<div class="block">Get response from the /engine/oil endpoint</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/Vehicle.html#oil--">oil()</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/Vehicle.html" title="class in com.smartcar.sdk">Vehicle</a></dt>
 <dd>
@@ -804,6 +857,10 @@
 </a>
 <h2 class="title">T</h2>
 <dl>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/BatchResponse.html#tirePressure--">tirePressure()</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/BatchResponse.html" title="class in com.smartcar.sdk.data">BatchResponse</a></dt>
+<dd>
+<div class="block">Get response from the /tires/pressure endpoint</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/Vehicle.html#tirePressure--">tirePressure()</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/Vehicle.html" title="class in com.smartcar.sdk">Vehicle</a></dt>
 <dd>
 <div class="block">Send request to the /tires/pressure endpoint</div>
@@ -815,6 +872,8 @@
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/ApplicationPermissions.html#toString--">toString()</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/ApplicationPermissions.html" title="class in com.smartcar.sdk.data">ApplicationPermissions</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/Auth.html#toString--">toString()</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/Auth.html" title="class in com.smartcar.sdk.data">Auth</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/BatchResponse.html#toString--">toString()</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/BatchResponse.html" title="class in com.smartcar.sdk.data">BatchResponse</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/Compatibility.html#toString--">toString()</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/Compatibility.html" title="class in com.smartcar.sdk.data">Compatibility</a></dt>
 <dd>
@@ -968,6 +1027,10 @@ the order they are declared.</div>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/VehicleVin.html#VehicleVin-java.lang.String-">VehicleVin(String)</a></span> - Constructor for class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/VehicleVin.html" title="class in com.smartcar.sdk.data">VehicleVin</a></dt>
 <dd>
 <div class="block">Initializes a new instance of VehicleVin</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/BatchResponse.html#vin--">vin()</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/BatchResponse.html" title="class in com.smartcar.sdk.data">BatchResponse</a></dt>
+<dd>
+<div class="block">Get response from the /vin endpoint</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/Vehicle.html#vin--">vin()</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/Vehicle.html" title="class in com.smartcar.sdk">Vehicle</a></dt>
 <dd>

@@ -698,7 +698,7 @@ public class AuthClientTest extends PowerMockTestCase {
             true
     );
     String vin = "1234567890ABCDEFG";
-    String authUrl = client.new AuthUrlBuilder()
+    String authUrl = client.authUrlBuilder()
             .setApprovalPrompt(true)
             .setState("state")
             .setSingleSelect(true)
@@ -734,7 +734,7 @@ public class AuthClientTest extends PowerMockTestCase {
             this.sampleScope,
             false
     );
-    String authUrl = client.new AuthUrlBuilder()
+    String authUrl = client.authUrlBuilder()
             .build();
 
     String expectedAuthUrl = "https://connect.smartcar.com/oauth/authorize" +
