@@ -308,12 +308,7 @@ public class Vehicle extends ApiClient {
     }
     JsonArray requests = endpoints.build();
 
-    String unit = this.unitSystem.name().toLowerCase();
-    JsonObject headers = Json.createObjectBuilder()
-      .add("sc-unit-system", unit)
-      .build();
     JsonObject json = Json.createObjectBuilder()
-      .add("headers", headers)
       .add("requests", requests)
       .build();
 
