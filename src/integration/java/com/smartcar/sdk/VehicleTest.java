@@ -1,8 +1,5 @@
 package com.smartcar.sdk;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.smartcar.sdk.data.Auth;
 import com.smartcar.sdk.data.BatchResponse;
 import com.smartcar.sdk.data.SmartcarResponse;
@@ -162,10 +159,7 @@ public class VehicleTest extends IntegrationTest {
      */
     @Test(groups = "vehicle")
     public void testBatch() throws SmartcarException {
-        List<String> paths = new ArrayList<>();
-        paths.add("/odometer");
-        paths.add("/fuel");
-
+        String[] paths = {"/fuel", "/odometer"};
         BatchResponse response = this.vehicle.batch(paths);
 
         SmartcarResponse<VehicleOdometer> odo = response.odometer();
