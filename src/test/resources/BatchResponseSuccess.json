@@ -1,10 +1,12 @@
- [{
-        "headers" : {
-            "unitSystem" : "metric"
+[
+    {
+        "headers": {
+            "sc-unit-system": "metric"
         },
         "path": "/odometer",
-        "code" : 200,
-        "body" : {
-            "distance" : 32768
+        "code": 200,
+        "body": {
+            "distance": 32768
         }
-}]
+    }
+]

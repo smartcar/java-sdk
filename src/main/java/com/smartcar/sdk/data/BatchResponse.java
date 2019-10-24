@@ -66,15 +66,16 @@ public class BatchResponse extends ApiData {
 
     private <T extends ApiData> SmartcarResponse<T> createSmartcarResponse(JsonElement body, JsonElement header, Class<T> dataType) throws SmartcarException {
         T data = gson.create().fromJson(body, dataType);
+
         String unitHeader;
         try {
-            unitHeader = header.getAsJsonObject().get("unitSystem").getAsString();
+            unitHeader = header.getAsJsonObject().get("sc-unit-system").getAsString();
         } catch (Exception e) {
             unitHeader = null;
         }
         String ageHeader;
         try {
-            ageHeader = header.getAsJsonObject().get("dataAge").getAsString();
+            ageHeader = header.getAsJsonObject().get("sc-data-age").getAsString();
         } catch (Exception e) {
             ageHeader = null;
         }
