@@ -1,6 +1,6 @@
  [{
         "headers" : {
-            "unitSystem" : "metric"
+            "sc-unit-system" : "metric"
         },
         "path": "/odometer",
         "code" : 200,
