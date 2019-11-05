@@ -91,7 +91,7 @@ abstract class IntegrationTest {
         this.driver.findElement(By.id("continue-button")).click();
 
         // 2 -- Find the Mock OEM button, and navigate to the Mock OEM login page.
-        this.driver.findElement(By.cssSelector("button[data-make='CHEVROLET']")).click();
+        this.driver.findElement(By.xpath("//button[@data-make='CHEVROLET' and @class='brand-selector-button']")).click();
 
         this.wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input#username")));
 

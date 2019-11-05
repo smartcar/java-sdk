@@ -341,7 +341,8 @@ public class VehicleTest {
 
         BatchResponse batch = this.subject.batch(new String[] {"/odometer"});
 
-        Assert.assertThrows(SmartcarException.class, () -> batch.tirePressure());
+        // calls tirePressure() but there is no TirePressure data in the batch response
+        Assert.assertThrows(BatchResponseMissingException.class, () -> batch.tirePressure());
     }
 
     @Test

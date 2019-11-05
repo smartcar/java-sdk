@@ -19,8 +19,7 @@ public class VehicleTest extends IntegrationTest {
     private Vehicle vehicle;
 
     /**
-     * Authenticates with the Smartcar platform and initializes
-     * a vehicle.
+     * Authenticates with the Smartcar platform and initializes a vehicle.
      *
      * @throws Exception
      */
@@ -76,10 +75,10 @@ public class VehicleTest extends IntegrationTest {
     @Test(groups = "vehicle")
     public void testHasPermissions() throws SmartcarException {
         Assert.assertTrue(this.vehicle.hasPermissions("required:read_odometer"));
-        Assert.assertTrue(this.vehicle.hasPermissions(new String[] {"read_odometer", "required:read_location"}));
+        Assert.assertTrue(this.vehicle.hasPermissions(new String[] { "read_odometer", "required:read_location" }));
 
         Assert.assertFalse(this.vehicle.hasPermissions("read_ignition"));
-        Assert.assertFalse(this.vehicle.hasPermissions(new String[] {"read_odometer", "read_ignition"}));
+        Assert.assertFalse(this.vehicle.hasPermissions(new String[] { "read_odometer", "read_ignition" }));
     }
 
     /**
@@ -130,7 +129,7 @@ public class VehicleTest extends IntegrationTest {
         SmartcarResponse response = this.vehicle.oil();
     }
 
-     /**
+    /**
      * Tests that the vehicle's tire pressure can be obtained.
      */
     @Test(groups = "vehicle")
@@ -156,9 +155,10 @@ public class VehicleTest extends IntegrationTest {
 
     /**
      * Tests that the batch request method works.
+     *
      */
     @Test(groups = "vehicle")
-    public void testBatch() throws SmartcarException {
+    public void testBatch() throws SmartcarException, BatchResponseMissingException {
         String[] paths = {"/fuel", "/odometer"};
         BatchResponse response = this.vehicle.batch(paths);
 
