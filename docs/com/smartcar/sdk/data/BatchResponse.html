@@ -272,13 +272,17 @@ extends <a href="../../../../com/smartcar/sdk/data/ApiData.html" title="class in
 <li class="blockList">
 <h4>battery</h4>
 <pre>public&nbsp;<a href="../../../../com/smartcar/sdk/data/SmartcarResponse.html" title="class in com.smartcar.sdk.data">SmartcarResponse</a>&lt;<a href="../../../../com/smartcar/sdk/data/VehicleBattery.html" title="class in com.smartcar.sdk.data">VehicleBattery</a>&gt;&nbsp;battery()
-                                         throws <a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
+                                         throws <a href="../../../../com/smartcar/sdk/BatchResponseMissingException.html" title="class in com.smartcar.sdk">BatchResponseMissingException</a>,
+                                                <a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
 <div class="block">Get response from the /battery endpoint</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the battery status of the vehicle</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - if the request is unsuccessful</dd>
+<dd><code><a href="../../../../com/smartcar/sdk/BatchResponseMissingException.html" title="class in com.smartcar.sdk">BatchResponseMissingException</a></code> - if this endpoint was not
+ part of the batch response</dd>
+<dd><code><a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - if the request for this endpoint returned an
+ HTTP error code</dd>
 </dl>
 </li>
 </ul>
@@ -289,13 +293,17 @@ extends <a href="../../../../com/smartcar/sdk/data/ApiData.html" title="class in
 <li class="blockList">
 <h4>charge</h4>
 <pre>public&nbsp;<a href="../../../../com/smartcar/sdk/data/SmartcarResponse.html" title="class in com.smartcar.sdk.data">SmartcarResponse</a>&lt;<a href="../../../../com/smartcar/sdk/data/VehicleCharge.html" title="class in com.smartcar.sdk.data">VehicleCharge</a>&gt;&nbsp;charge()
-                                       throws <a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
+                                       throws <a href="../../../../com/smartcar/sdk/BatchResponseMissingException.html" title="class in com.smartcar.sdk">BatchResponseMissingException</a>,
+                                              <a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
 <div class="block">Get response from the /charge endpoint</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the charge status of the vehicle</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - if the request is unsuccessful</dd>
+<dd><code><a href="../../../../com/smartcar/sdk/BatchResponseMissingException.html" title="class in com.smartcar.sdk">BatchResponseMissingException</a></code> - if this endpoint was not
+ part of the batch response</dd>
+<dd><code><a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - if the request for this endpoint returned an
+ HTTP error code</dd>
 </dl>
 </li>
 </ul>
@@ -306,13 +314,17 @@ extends <a href="../../../../com/smartcar/sdk/data/ApiData.html" title="class in
 <li class="blockList">
 <h4>fuel</h4>
 <pre>public&nbsp;<a href="../../../../com/smartcar/sdk/data/SmartcarResponse.html" title="class in com.smartcar.sdk.data">SmartcarResponse</a>&lt;<a href="../../../../com/smartcar/sdk/data/VehicleFuel.html" title="class in com.smartcar.sdk.data">VehicleFuel</a>&gt;&nbsp;fuel()
-                                   throws <a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
+                                   throws <a href="../../../../com/smartcar/sdk/BatchResponseMissingException.html" title="class in com.smartcar.sdk">BatchResponseMissingException</a>,
+                                          <a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
 <div class="block">Get response from the /fuel endpoint</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the fuel status of the vehicle</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - if the request is unsuccessful</dd>
+<dd><code><a href="../../../../com/smartcar/sdk/BatchResponseMissingException.html" title="class in com.smartcar.sdk">BatchResponseMissingException</a></code> - if this endpoint was not
+ part of the batch response</dd>
+<dd><code><a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - if the request for this endpoint returned an
+ HTTP error code</dd>
 </dl>
 </li>
 </ul>
@@ -323,13 +335,17 @@ extends <a href="../../../../com/smartcar/sdk/data/ApiData.html" title="class in
 <li class="blockList">
 <h4>info</h4>
 <pre>public&nbsp;<a href="../../../../com/smartcar/sdk/data/VehicleInfo.html" title="class in com.smartcar.sdk.data">VehicleInfo</a>&nbsp;info()
-                 throws <a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
+                 throws <a href="../../../../com/smartcar/sdk/BatchResponseMissingException.html" title="class in com.smartcar.sdk">BatchResponseMissingException</a>,
+                        <a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
 <div class="block">Get response from the /info endpoint</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>VehicleInfo object</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - if the request is unsuccessful</dd>
+<dd><code><a href="../../../../com/smartcar/sdk/BatchResponseMissingException.html" title="class in com.smartcar.sdk">BatchResponseMissingException</a></code> - if this endpoint was not
+ part of the batch response</dd>
+<dd><code><a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - if the request for this endpoint +returned an
+ HTTP error code</dd>
 </dl>
 </li>
 </ul>
@@ -340,13 +356,17 @@ extends <a href="../../../../com/smartcar/sdk/data/ApiData.html" title="class in
 <li class="blockList">
 <h4>location</h4>
 <pre>public&nbsp;<a href="../../../../com/smartcar/sdk/data/SmartcarResponse.html" title="class in com.smartcar.sdk.data">SmartcarResponse</a>&lt;<a href="../../../../com/smartcar/sdk/data/VehicleLocation.html" title="class in com.smartcar.sdk.data">VehicleLocation</a>&gt;&nbsp;location()
-                                           throws <a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
+                                           throws <a href="../../../../com/smartcar/sdk/BatchResponseMissingException.html" title="class in com.smartcar.sdk">BatchResponseMissingException</a>,
+                                                  <a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
 <div class="block">Get response from the /vin endpoint</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the vin of the vehicle</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - if the request is unsuccessful</dd>
+<dd><code><a href="../../../../com/smartcar/sdk/BatchResponseMissingException.html" title="class in com.smartcar.sdk">BatchResponseMissingException</a></code> - if this endpoint was not
+ part of the batch response</dd>
+<dd><code><a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - if the request for this endpoint returned an
+ HTTP error code</dd>
 </dl>
 </li>
 </ul>
@@ -357,13 +377,17 @@ extends <a href="../../../../com/smartcar/sdk/data/ApiData.html" title="class in
 <li class="blockList">
 <h4>odometer</h4>
 <pre>public&nbsp;<a href="../../../../com/smartcar/sdk/data/SmartcarResponse.html" title="class in com.smartcar.sdk.data">SmartcarResponse</a>&lt;<a href="../../../../com/smartcar/sdk/data/VehicleOdometer.html" title="class in com.smartcar.sdk.data">VehicleOdometer</a>&gt;&nbsp;odometer()
-                                           throws <a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
+                                           throws <a href="../../../../com/smartcar/sdk/BatchResponseMissingException.html" title="class in com.smartcar.sdk">BatchResponseMissingException</a>,
+                                                  <a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
 <div class="block">Get response from the /odometer endpoint</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the odometer of the vehicle</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - if the request is unsuccessful</dd>
+<dd><code><a href="../../../../com/smartcar/sdk/BatchResponseMissingException.html" title="class in com.smartcar.sdk">BatchResponseMissingException</a></code> - if this endpoint was not
+ part of the batch response</dd>
+<dd><code><a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - if the request for this endpoint returned an
+ HTTP error code</dd>
 </dl>
 </li>
 </ul>
@@ -374,13 +398,17 @@ extends <a href="../../../../com/smartcar/sdk/data/ApiData.html" title="class in
 <li class="blockList">
 <h4>oil</h4>
 <pre>public&nbsp;<a href="../../../../com/smartcar/sdk/data/SmartcarResponse.html" title="class in com.smartcar.sdk.data">SmartcarResponse</a>&lt;<a href="../../../../com/smartcar/sdk/data/VehicleOil.html" title="class in com.smartcar.sdk.data">VehicleOil</a>&gt;&nbsp;oil()
-                                 throws <a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
+                                 throws <a href="../../../../com/smartcar/sdk/BatchResponseMissingException.html" title="class in com.smartcar.sdk">BatchResponseMissingException</a>,
+                                        <a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
 <div class="block">Get response from the /engine/oil endpoint</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the engine oil status of the vehicle</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - if the request is unsuccessful</dd>
+<dd><code><a href="../../../../com/smartcar/sdk/BatchResponseMissingException.html" title="class in com.smartcar.sdk">BatchResponseMissingException</a></code> - if this endpoint was not
+ part of the batch response</dd>
+<dd><code><a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - if the request for this endpoint returned an
+ HTTP error code</dd>
 </dl>
 </li>
 </ul>
@@ -391,13 +419,17 @@ extends <a href="../../../../com/smartcar/sdk/data/ApiData.html" title="class in
 <li class="blockList">
 <h4>vin</h4>
 <pre>public&nbsp;java.lang.String&nbsp;vin()
-                     throws <a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
+                     throws <a href="../../../../com/smartcar/sdk/BatchResponseMissingException.html" title="class in com.smartcar.sdk">BatchResponseMissingException</a>,
+                            <a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
 <div class="block">Get response from the /vin endpoint</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the vin of the vehicle</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - if the request is unsuccessful</dd>
+<dd><code><a href="../../../../com/smartcar/sdk/BatchResponseMissingException.html" title="class in com.smartcar.sdk">BatchResponseMissingException</a></code> - if this endpoint was not
+ part of the batch response</dd>
+<dd><code><a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - if the request for this endpoint returned an
+ HTTP error code</dd>
 </dl>
 </li>
 </ul>
@@ -408,13 +440,17 @@ extends <a href="../../../../com/smartcar/sdk/data/ApiData.html" title="class in
 <li class="blockList">
 <h4>tirePressure</h4>
 <pre>public&nbsp;<a href="../../../../com/smartcar/sdk/data/SmartcarResponse.html" title="class in com.smartcar.sdk.data">SmartcarResponse</a>&lt;<a href="../../../../com/smartcar/sdk/data/VehicleTirePressure.html" title="class in com.smartcar.sdk.data">VehicleTirePressure</a>&gt;&nbsp;tirePressure()
-                                                   throws <a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
+                                                   throws <a href="../../../../com/smartcar/sdk/BatchResponseMissingException.html" title="class in com.smartcar.sdk">BatchResponseMissingException</a>,
+                                                          <a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
 <div class="block">Get response from the /tires/pressure endpoint</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the tire pressure status of the vehicle</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - if the request is unsuccessful</dd>
+<dd><code><a href="../../../../com/smartcar/sdk/BatchResponseMissingException.html" title="class in com.smartcar.sdk">BatchResponseMissingException</a></code> - if this endpoint was not
+ part of the batch response</dd>
+<dd><code><a href="../../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - if the request for this endpoint returned an
+ HTTP error code</dd>
 </dl>
 </li>
 </ul>

@@ -26,6 +26,7 @@ public class Vehicle extends ApiClient {
   private String vehicleId;
   private String accessToken;
   private Vehicle.UnitSystem unitSystem = UnitSystem.METRIC;
+  private String[] permissions;
 
   /**
    * Initializes a new Vehicle.
@@ -128,7 +129,10 @@ public class Vehicle extends ApiClient {
    * @throws SmartcarException if the request is unsuccessful
    */
   public String[] permissions() throws SmartcarException {
-    return this.call("permissions", "GET", null, ApplicationPermissions.class).getData().getPermissions();
+    if (this.permissions == null) {
+       this.permissions = this.call("permissions", "GET", null, ApplicationPermissions.class).getData().getPermissions();
+    }
+    return this.permissions;
   }
 
   /**
