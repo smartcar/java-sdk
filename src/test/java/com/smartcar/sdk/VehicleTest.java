@@ -307,17 +307,23 @@ public class VehicleTest {
                         .build()
                 )
                 .build();
+        String expectedRequestId = "67127d3a-a08a-41f0-8211-f96da36b2d6e";
         RequestBody body = RequestBody.create(Vehicle.JSON, json.toString());
         JsonElement success = loadJsonResource("BatchResponseSuccess");
         BatchResponse expectedBatch = new BatchResponse(success.getAsJsonArray());
         SmartcarResponse<BatchResponse> res = new SmartcarResponse(expectedBatch);
+        res.setRequestId(expectedRequestId);
+
         PowerMockito.doReturn(res).when(this.subject, "call", eq("batch"), eq("POST"), refEq(body), refEq(BatchResponse.class));
 
         BatchResponse batch = this.subject.batch(new String[] {"/odometer"});
+        Assert.assertEquals(batch.getRequestId(), expectedRequestId);
 
         SmartcarResponse<VehicleOdometer> odo = batch.odometer();
         VehicleOdometer expectedOdo = new VehicleOdometer(32768);
         Assert.assertEquals(odo.getData().toString(), expectedOdo.toString());
+        Assert.assertEquals(odo.getUnitSystem(), "metric");
+        Assert.assertEquals(odo.getRequestId(), expectedRequestId);
     }
 
     @Test
