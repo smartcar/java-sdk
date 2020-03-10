@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -180,42 +180,54 @@ extends <a href="../../../../com/smartcar/sdk/data/ApiData.html" title="class in
 </td>
 </tr>
 <tr id="i3" class="rowColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/smartcar/sdk/data/BatchResponse.html#getRequestId--">getRequestId</a></span>()</code>
+<div class="block">Return the Smartcar request id from the response headers</div>
+</td>
+</tr>
+<tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="../../../../com/smartcar/sdk/data/VehicleInfo.html" title="class in com.smartcar.sdk.data">VehicleInfo</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/smartcar/sdk/data/BatchResponse.html#info--">info</a></span>()</code>
 <div class="block">Get response from the /info endpoint</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="../../../../com/smartcar/sdk/data/SmartcarResponse.html" title="class in com.smartcar.sdk.data">SmartcarResponse</a>&lt;<a href="../../../../com/smartcar/sdk/data/VehicleLocation.html" title="class in com.smartcar.sdk.data">VehicleLocation</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/smartcar/sdk/data/BatchResponse.html#location--">location</a></span>()</code>
 <div class="block">Get response from the /vin endpoint</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="../../../../com/smartcar/sdk/data/SmartcarResponse.html" title="class in com.smartcar.sdk.data">SmartcarResponse</a>&lt;<a href="../../../../com/smartcar/sdk/data/VehicleOdometer.html" title="class in com.smartcar.sdk.data">VehicleOdometer</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/smartcar/sdk/data/BatchResponse.html#odometer--">odometer</a></span>()</code>
 <div class="block">Get response from the /odometer endpoint</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="../../../../com/smartcar/sdk/data/SmartcarResponse.html" title="class in com.smartcar.sdk.data">SmartcarResponse</a>&lt;<a href="../../../../com/smartcar/sdk/data/VehicleOil.html" title="class in com.smartcar.sdk.data">VehicleOil</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/smartcar/sdk/data/BatchResponse.html#oil--">oil</a></span>()</code>
 <div class="block">Get response from the /engine/oil endpoint</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i8" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/smartcar/sdk/data/BatchResponse.html#setRequestId-java.lang.String-">setRequestId</a></span>(java.lang.String&nbsp;requestId)</code>
+<div class="block">Sets the Smartcar request id from the response headers</div>
+</td>
+</tr>
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="../../../../com/smartcar/sdk/data/SmartcarResponse.html" title="class in com.smartcar.sdk.data">SmartcarResponse</a>&lt;<a href="../../../../com/smartcar/sdk/data/VehicleTirePressure.html" title="class in com.smartcar.sdk.data">VehicleTirePressure</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/smartcar/sdk/data/BatchResponse.html#tirePressure--">tirePressure</a></span>()</code>
 <div class="block">Get response from the /tires/pressure endpoint</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/smartcar/sdk/data/BatchResponse.html#toString--">toString</a></span>()</code>
 <div class="block">Returns the stored data string.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/smartcar/sdk/data/BatchResponse.html#vin--">vin</a></span>()</code>
 <div class="block">Get response from the /vin endpoint</div>
@@ -265,6 +277,34 @@ extends <a href="../../../../com/smartcar/sdk/data/ApiData.html" title="class in
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a name="getRequestId--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getRequestId</h4>
+<pre>public&nbsp;java.lang.String&nbsp;getRequestId()</pre>
+<div class="block">Return the Smartcar request id from the response headers</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the request id</dd>
+</dl>
+</li>
+</ul>
+<a name="setRequestId-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setRequestId</h4>
+<pre>public&nbsp;void&nbsp;setRequestId(java.lang.String&nbsp;requestId)</pre>
+<div class="block">Sets the Smartcar request id from the response headers</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>requestId</code> - the request id</dd>
+</dl>
+</li>
+</ul>
 <a name="battery--">
 <!--   -->
 </a>
