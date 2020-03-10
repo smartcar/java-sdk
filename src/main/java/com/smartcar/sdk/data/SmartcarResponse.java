@@ -9,6 +9,7 @@ public class SmartcarResponse<T extends ApiData> extends ApiData {
   private T data;
   private String unitSystem;
   private Date age;
+  private String requestId;
   private ResponsePaging paging;
 
   /**
@@ -111,6 +112,24 @@ public class SmartcarResponse<T extends ApiData> extends ApiData {
   }
 
   /**
+   * Return the Smartcar request id from the response headers
+   *
+   * @return the request id
+   */
+  public String getRequestId() {
+    return this.requestId;
+  }
+
+  /**
+   * Stores the age of the response
+   *
+   * @param requestId the request id
+   */
+  public void setRequestId(String requestId) {
+    this.requestId = requestId;
+  }
+
+  /**
    * Return paging information
    *
    * @return the paging information
@@ -137,6 +156,7 @@ public class SmartcarResponse<T extends ApiData> extends ApiData {
             "data=" + data +
             ", unitSystem='" + unitSystem + '\'' +
             ", age=" + age +
+            ", requestId=" + requestId +
             ", paging=" + paging +
             '}';
   }

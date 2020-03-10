@@ -109,16 +109,19 @@ abstract class ApiClient {
 
     T data = ApiClient.gson.create().fromJson(body, dataType);
 
-    String unitHeader = response.header("sc-unit-system");
-
+    String unitSystem = response.header("sc-unit-system");
     String ageHeader = response.header("sc-data-age");
+    String requestId = response.header("sc-request-id");
+
+    SmartcarResponse<T> smartcarResponse = new SmartcarResponse<T>(data);
+    smartcarResponse.setUnitSystem(unitSystem);
+    smartcarResponse.setRequestId(requestId);
 
     if(ageHeader != null) {
       DateTime date = DateTime.parse(ageHeader);
-
-      return new SmartcarResponse<T>(data, unitHeader, date.toDate());
-    } else {
-      return new SmartcarResponse<T>(data, unitHeader, null);
+      smartcarResponse.setAge(date.toDate());
     }
+
+    return smartcarResponse;
   }
 }

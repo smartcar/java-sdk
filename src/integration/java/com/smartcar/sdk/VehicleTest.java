@@ -70,6 +70,16 @@ public class VehicleTest extends IntegrationTest {
     }
 
     /**
+     * Tests that the vehicle correctly handles imperial headers.
+     */
+    @Test(groups = "vehicle")
+    public void testRequestIdHeader() throws SmartcarException {
+        SmartcarResponse response = this.vehicle.odometer();
+        // Request ID is a UUID (36 characters)
+        Assert.assertEquals(response.getRequestId().length(), 36);
+    }
+
+    /**
      * Tests that the vehicle has certain permissions.
      */
     @Test(groups = "vehicle")
