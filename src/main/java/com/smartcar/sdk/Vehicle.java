@@ -318,8 +318,10 @@ public class Vehicle extends ApiClient {
 
     this.gson.registerTypeAdapter(BatchResponse.class, new BatchDeserializer());
     RequestBody body = RequestBody.create(JSON, json.toString());
-    SmartcarResponse<BatchResponse> smartcarBatch = this.call("batch", "POST", body, BatchResponse.class);
-    return smartcarBatch.getData();
+    SmartcarResponse<BatchResponse> response = this.call("batch", "POST", body, BatchResponse.class);
+    BatchResponse batchResponse = response.getData();
+    batchResponse.setRequestId(response.getRequestId());
+    return batchResponse;
   }
 
 

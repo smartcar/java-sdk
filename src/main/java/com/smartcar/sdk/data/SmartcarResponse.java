@@ -121,7 +121,7 @@ public class SmartcarResponse<T extends ApiData> extends ApiData {
   }
 
   /**
-   * Stores the age of the response
+   * Sets the Smartcar request id from the response headers
    *
    * @param requestId the request id
    */

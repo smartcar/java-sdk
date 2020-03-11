@@ -11,6 +11,7 @@ import com.smartcar.sdk.data.VehicleOdometer;
 import org.testng.Assert;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
+import java.util.Date;
 
 /**
  * Integration Test Suite: /vehicles/:id
@@ -67,6 +68,15 @@ public class VehicleTest extends IntegrationTest {
         this.vehicle.setUnitSystem(Vehicle.UnitSystem.IMPERIAL);
         SmartcarResponse response = this.vehicle.odometer();
         Assert.assertEquals(response.getUnitSystem(), "imperial");
+    }
+
+    /**
+     * Tests that the vehicle correctly handles age headers.
+     */
+    @Test(groups = "vehicle")
+    public void testAgeHeaders() throws SmartcarException {
+        SmartcarResponse response = this.vehicle.odometer();
+        Assert.assertTrue(response.getAge() instanceof Date);
     }
 
     /**
@@ -165,7 +175,6 @@ public class VehicleTest extends IntegrationTest {
 
     /**
      * Tests that the batch request method works.
-     *
      */
     @Test(groups = "vehicle")
     public void testBatch() throws SmartcarException, BatchResponseMissingException {
@@ -174,6 +183,22 @@ public class VehicleTest extends IntegrationTest {
 
         SmartcarResponse<VehicleOdometer> odo = response.odometer();
         SmartcarResponse<VehicleFuel> fuel = response.fuel();
+    }
+
+    /**
+     * Tests that the batch response headers are set properly.
+     */
+    @Test(groups = "vehicle")
+    public void testBatchResponseHeaders() throws SmartcarException, BatchResponseMissingException {
+        this.vehicle.setUnitSystem(Vehicle.UnitSystem.IMPERIAL);
+        String[] paths = {"/odometer"};
+        BatchResponse response = this.vehicle.batch(paths);
+        Assert.assertEquals(response.getRequestId().length(), 36);
+
+        SmartcarResponse<VehicleOdometer> odo = response.odometer();
+        Assert.assertEquals(odo.getUnitSystem(), "imperial");
+        Assert.assertEquals(odo.getRequestId().length(), 36);
+        Assert.assertTrue(odo.getAge() instanceof Date);
     }
 
     /**

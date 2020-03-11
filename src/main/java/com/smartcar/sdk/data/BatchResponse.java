@@ -19,6 +19,7 @@ import org.joda.time.DateTime;
  * Smartcar BatchResponse Object
  */
 public class BatchResponse extends ApiData {
+    private String requestId;
     private Map<String, JsonObject> responseData = new HashMap<>();
     private static GsonBuilder gson = new GsonBuilder().setFieldNamingStrategy((field) -> toCamelCase(field.getName()));
 
@@ -69,24 +70,41 @@ public class BatchResponse extends ApiData {
     private <T extends ApiData> SmartcarResponse<T> createSmartcarResponse(JsonElement body, JsonElement header, Class<T> dataType) throws SmartcarException {
         T data = gson.create().fromJson(body, dataType);
 
-        String unitHeader;
+        SmartcarResponse<T> smartcarResponse = new SmartcarResponse<T>(data);
+        smartcarResponse.setRequestId(this.requestId);
+
         try {
-            unitHeader = header.getAsJsonObject().get("sc-unit-system").getAsString();
-        } catch (Exception e) {
-            unitHeader = null;
-        }
-        String ageHeader;
+            String unitSystem = header.getAsJsonObject().get("sc-unit-system").getAsString();
+            smartcarResponse.setUnitSystem(unitSystem);
+        } catch (Exception e) {}
+
         try {
-            ageHeader = header.getAsJsonObject().get("sc-data-age").getAsString();
-        } catch (Exception e) {
-            ageHeader = null;
-        }
-        if (ageHeader != null) {
-            DateTime date = DateTime.parse(ageHeader);
-            return new SmartcarResponse<T>(data, unitHeader, date.toDate());
-        } else {
-            return new SmartcarResponse<T>(data, unitHeader, null);
-        }
+            String ageHeader = header.getAsJsonObject().get("sc-data-age").getAsString();
+            if (ageHeader != null) {
+              DateTime date = DateTime.parse(ageHeader);
+              smartcarResponse.setAge(date.toDate());
+            }
+        } catch (Exception e) {}
+
+        return smartcarResponse;
+    }
+
+    /**
+     * Return the Smartcar request id from the response headers
+     *
+     * @return the request id
+     */
+    public String getRequestId() {
+      return this.requestId;
+    }
+
+    /**
+     * Sets the Smartcar request id from the response headers
+     *
+     * @param requestId the request id
+     */
+    public void setRequestId(String requestId) {
+      this.requestId = requestId;
     }
 
     /**
