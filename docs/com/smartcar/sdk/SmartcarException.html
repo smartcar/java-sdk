@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10};
+var methods = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -151,10 +151,11 @@ extends java.lang.Exception</pre>
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/SmartcarException.html#SmartcarException-int-java.lang.String-java.lang.String-java.lang.String-">SmartcarException</a></span>(int&nbsp;statusCode,
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/SmartcarException.html#SmartcarException-int-java.lang.String-java.lang.String-java.lang.String-java.lang.String-">SmartcarException</a></span>(int&nbsp;statusCode,
                  java.lang.String&nbsp;error,
                  java.lang.String&nbsp;message,
-                 java.lang.String&nbsp;code)</code>&nbsp;</td>
+                 java.lang.String&nbsp;code,
+                 java.lang.String&nbsp;requestId)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/SmartcarException.html#SmartcarException-java.lang.String-">SmartcarException</a></span>(java.lang.String&nbsp;message)</code>
@@ -199,6 +200,12 @@ extends java.lang.Exception</pre>
 </td>
 </tr>
 <tr id="i4" class="altColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/SmartcarException.html#getRequestId--">getRequestId</a></span>()</code>
+<div class="block">Return the Smartcar request id from the response headers</div>
+</td>
+</tr>
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/SmartcarException.html#getStatusCode--">getStatusCode</a></span>()</code>
 <div class="block">Returns the HTTP status code.</div>
@@ -233,7 +240,7 @@ extends java.lang.Exception</pre>
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="SmartcarException-int-java.lang.String-java.lang.String-java.lang.String-">
+<a name="SmartcarException-int-java.lang.String-java.lang.String-java.lang.String-java.lang.String-">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -242,7 +249,8 @@ extends java.lang.Exception</pre>
 <pre>public&nbsp;SmartcarException(int&nbsp;statusCode,
                          java.lang.String&nbsp;error,
                          java.lang.String&nbsp;message,
-                         java.lang.String&nbsp;code)</pre>
+                         java.lang.String&nbsp;code,
+                         java.lang.String&nbsp;requestId)</pre>
 </li>
 </ul>
 <a name="SmartcarException-java.lang.String-">
@@ -322,6 +330,20 @@ extends java.lang.Exception</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the response status code</dd>
+</dl>
+</li>
+</ul>
+<a name="getRequestId--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getRequestId</h4>
+<pre>public&nbsp;java.lang.String&nbsp;getRequestId()</pre>
+<div class="block">Return the Smartcar request id from the response headers</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the request id</dd>
 </dl>
 </li>
 </ul>
