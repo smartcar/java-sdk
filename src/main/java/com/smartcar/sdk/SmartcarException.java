@@ -17,13 +17,15 @@ public class SmartcarException extends java.lang.Exception {
   private String error;
   private String message;
   private String code;
+  private String requestId;
 
-  public SmartcarException(int statusCode, String error, String message, String code) {
+  public SmartcarException(int statusCode, String error, String message, String code, String requestId) {
     super(message);
     this.message = message;
     this.code = code;
     this.error = error;
     this.statusCode = statusCode;
+    this.requestId = requestId;
   }
 
   /**
@@ -72,6 +74,15 @@ public class SmartcarException extends java.lang.Exception {
     return this.statusCode;
   }
 
+  /**
+   * Return the Smartcar request id from the response headers
+   *
+   * @return the request id
+   */
+  public String getRequestId() {
+    return this.requestId;
+  }
+
   public static SmartcarException Factory(final Response response) throws IOException {
     JsonObject body = gson.fromJson(response.body().string(), JsonObject.class);
 
@@ -94,6 +105,8 @@ public class SmartcarException extends java.lang.Exception {
       error = body.get("error").getAsString();
     }
 
-    return new SmartcarException(statusCode, error, message, code);
+    String requestId = response.header("sc-request-id", "");
+
+    return new SmartcarException(statusCode, error, message, code, requestId);
   }
 }

@@ -364,10 +364,12 @@ public class VehicleTest {
                         .build()
                 )
                 .build();
+        String expectedRequestId = "27767d51-3c32-47c0-8521-6f2be21bfb5b";
         RequestBody body = RequestBody.create(Vehicle.JSON, json.toString());
         JsonElement error = loadJsonResource("BatchResponseError");
         BatchResponse expectedBatch = new BatchResponse(error.getAsJsonArray());
         SmartcarResponse<BatchResponse> res = new SmartcarResponse(expectedBatch);
+        res.setRequestId(expectedRequestId);
         PowerMockito.doReturn(res).when(this.subject, "call", eq("batch"), eq("POST"), refEq(body), refEq(BatchResponse.class));
 
         BatchResponse batch = this.subject.batch(new String[] {"/odometer"});
@@ -379,6 +381,7 @@ public class VehicleTest {
             Assert.assertEquals(e.getMessage(), "Vehicle state cannot be determined.");
             Assert.assertEquals(e.getError(), "vehicle_state_error");
             Assert.assertEquals(e.getCode(), "VS_000");
+            Assert.assertEquals(e.getRequestId(), expectedRequestId);
         }
     }
 }
