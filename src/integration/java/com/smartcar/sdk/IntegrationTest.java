@@ -104,13 +104,20 @@ abstract class IntegrationTest {
         this.driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         this.wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".page-content")));
 
-        // Select Chevy Volt by unclicking all the boxes and then clicking the Volt
+        // Select Chevy Volt by unclicking all the boxes except the Volt
         // This is needed because the Volt is the only one that has all the endpoints needed.
-        List<WebElement> elements = this.driver.findElements(By.className("input-button-custom"));
-        for (int i=0; i<elements.size();i++){
-            elements.get(i).click();
+        List<WebElement> elements = this.driver.findElements(By.className("input-button-label"));
+        for (WebElement el : elements) {
+            WebElement vehicleText = el.findElement(By.className("input-button-label-text"));
+            WebElement checkbox = el.findElement(By.className("input-button-custom"));
+            if (vehicleText == null) {
+                throw new Exception("input-button-label-text not found");
+            } else if (checkbox == null) {
+                throw new Exception("input-button-custom not found");
+            } else if (!vehicleText.getText().contains("Volt")) {
+                checkbox.click();
+            }
         }
-        this.driver.findElement(By.cssSelector("span[data-model='Volt']")).click();
 
         this.driver.findElement(By.id("approval-button")).click();
 
