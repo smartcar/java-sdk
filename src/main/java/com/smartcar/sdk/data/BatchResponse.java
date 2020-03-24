@@ -59,7 +59,7 @@ public class BatchResponse extends ApiData {
                 code = body.get("code").getAsString();
             }
 
-            throw new SmartcarException(statusCode, error, message, code);
+            throw new SmartcarException(statusCode, error, message, code, this.requestId);
         }
 
         JsonElement header = res.get("headers");

@@ -11,6 +11,8 @@ import com.google.gson.JsonObject;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.testng.PowerMockTestCase;
+
+import static org.mockito.Matchers.eq;
 import static org.powermock.api.mockito.PowerMockito.mock;
 import static org.powermock.api.mockito.PowerMockito.when;
 
@@ -51,6 +53,7 @@ public class SmartcarExceptionTest extends PowerMockTestCase {
     String expectedError = "expected_error";
     String expectedMessage = "expected message";
     String expectedCode = "VS_000";
+    String expectedRequestId = "011660dc-8322-4064-a972-53826c8dff9c";
     int expectedStatusCode = 200;
 
     String response = Json.createObjectBuilder()
@@ -63,12 +66,14 @@ public class SmartcarExceptionTest extends PowerMockTestCase {
     Response mockResponse = mock(Response.class);
     ResponseBody mockResponseBody = mock(ResponseBody.class);
 
+    when(mockResponse.header(eq("sc-request-id"), eq(""))).thenReturn(expectedRequestId);
     when(mockResponse.body()).thenReturn(mockResponseBody);
     when(mockResponseBody.string()).thenReturn(response);
     when(mockResponse.code()).thenReturn(expectedStatusCode);
 
     SmartcarException ex = SmartcarException.Factory(mockResponse);
 
+    Assert.assertEquals(ex.getRequestId(), expectedRequestId);
     Assert.assertEquals(ex.getCode(), expectedCode);
     Assert.assertEquals(ex.getMessage(), expectedMessage);
     Assert.assertEquals(ex.getError(), expectedError);
