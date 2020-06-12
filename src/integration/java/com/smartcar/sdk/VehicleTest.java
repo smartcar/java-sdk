@@ -174,6 +174,22 @@ public class VehicleTest extends IntegrationTest {
     }
 
     /**
+     * Tests that the vehicle start charge action works.
+     */
+    @Test(groups = "vehicle")
+    public void testActionStartCharge() throws SmartcarException {
+        this.vehicle.startCharge();
+    }
+
+    /**
+     * Tests that the vehicle stop charge action works.
+     */
+    @Test(groups = "vehicle")
+    public void testActionStopCharge() throws SmartcarException {
+        this.vehicle.stopCharge();
+    }
+
+    /**
      * Tests that the batch request method works.
      */
     @Test(groups = "vehicle")
