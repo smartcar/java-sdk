@@ -293,6 +293,35 @@ public class Vehicle extends ApiClient {
     this.call("security", "POST", body);
   }
 
+  /**
+   * Send request to the /charge endpoint to start charging a vehicle
+   *
+   * @throws SmartcarException if the request is unsuccessful
+   */
+  public void startCharge() throws SmartcarException {
+    JsonObject json = Json.createObjectBuilder()
+            .add("action", "START")
+            .build();
+
+    RequestBody body = RequestBody.create(JSON, json.toString());
+
+    this.call("charge", "POST", body);
+  }
+
+  /**
+   * Send request to the /charge endpoint to stop charging a vehicle
+   *
+   * @throws SmartcarException if the request is unsuccessful
+   */
+  public void stopCharge() throws SmartcarException {
+    JsonObject json = Json.createObjectBuilder()
+            .add("action", "STOP")
+            .build();
+
+    RequestBody body = RequestBody.create(JSON, json.toString());
+
+    this.call("charge", "POST", body);
+  }
 
   /**
    * Send request to the /batch endpoint

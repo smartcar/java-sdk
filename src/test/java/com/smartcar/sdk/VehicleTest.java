@@ -291,6 +291,39 @@ public class VehicleTest {
     }
 
     @Test
+    public void testStartCharge() throws Exception {
+
+        ApiData data = new ApiData();
+        SmartcarResponse res = new SmartcarResponse(data);
+        JsonObject json = Json.createObjectBuilder()
+                .add("action", "START")
+                .build();
+        RequestBody body = RequestBody.create(Vehicle.JSON, json.toString());
+
+        PowerMockito.doReturn(res.toString())
+                .when(this.subject, "call", eq("charge"), eq("POST"), refEq(body));
+
+        this.subject.startCharge();
+    }
+
+    @Test
+    public void testStopCharge() throws Exception {
+
+        ApiData data = new ApiData();
+        SmartcarResponse res = new SmartcarResponse(data);
+        JsonObject json = Json.createObjectBuilder()
+                .add("action", "STOP")
+                .build();
+        RequestBody body = RequestBody.create(Vehicle.JSON, json.toString());
+
+
+        PowerMockito.doReturn(res.toString())
+                .when(this.subject, "call", eq("charge"), eq("POST"), refEq(body));
+
+        this.subject.stopCharge();
+    }
+
+    @Test
     public void testBatch() throws Exception {
         JsonObject json = Json.createObjectBuilder()
                 .add("headers", Json.createObjectBuilder()

@@ -41,7 +41,8 @@ abstract class IntegrationTest {
             "read_tires",
             "read_engine_oil",
             "read_battery",
-            "read_charge"
+            "read_charge",
+            "control_charge"
     };
 
     WebDriver driver;
