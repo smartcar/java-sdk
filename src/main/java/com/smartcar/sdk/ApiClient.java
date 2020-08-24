@@ -30,8 +30,7 @@ abstract class ApiClient {
   );
 
   private static OkHttpClient client = new OkHttpClient.Builder()
-    .readTimeout(300, TimeUnit.SECONDS)
-    .callTimeout(360, TimeUnit.SECONDS)
+    .readTimeout(310, TimeUnit.SECONDS)
     .build();
 
   private static String toCamelCase(String fieldName) {
