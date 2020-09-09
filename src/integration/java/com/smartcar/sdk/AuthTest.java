@@ -89,15 +89,15 @@ public class AuthTest extends IntegrationTest {
      * @throws Exception if compatibility cannot be obtained
      */
     @Test
-    public void testIsCompatible() throws Exception {
+    public void testIsCompatibleWithCountry() throws Exception {
 
       String teslaVin = "5YJXCDE22HF068739";
       String audiVin = "WAUAFAFL1GN014882";
       String[] scope = new String[]{"read_location", "read_odometer"}; 
-      String country = "US"
+      String country = "US";
 
       boolean teslaComp = this.authClient.isCompatible(teslaVin, scope, country);
-      boolean audiComp = this.authClient.isCompatible(audiVin, scopem country);
+      boolean audiComp = this.authClient.isCompatible(audiVin, scope, country);
 
       assertTrue(teslaComp);
       assertFalse(audiComp);
