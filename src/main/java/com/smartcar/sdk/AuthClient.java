@@ -595,5 +595,47 @@ public class AuthClient extends ApiClient {
     return AuthClient.execute(request, Compatibility.class)
     	  .getData().getCompatible();
   }
+
+    /**
+   * Determine if a vehicle is compatible with the Smartcar API and the provided permissions for
+   * the specified country.
+   * A compatible vehicle is a vehicle that:
+   * <ol>
+   * <li>
+   * has the hardware required for internet connectivity,
+   * </li>
+   * <li>
+   * belongs to the makes and models Smartcar supports, and
+   * </li>
+   * <li>
+   * supports the permissions.
+   * </li>
+   * </ol>
+   * @param vin the VIN (Vehicle Identification Number) of the vehicle.
+   * @param scope An array of permissions. The valid permissions are found in the API Reference.
+   * @param country A country code according to [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
+   *
+   * @return false if the vehicle is not compatible in the specified country. true if the vehicle is likely compatible.
+   *
+   * @throws SmartcarException when the request is unsuccessful
+   */
+  public boolean isCompatible(String vin, String[] scope, String country) throws SmartcarException {
+    HttpUrl url = HttpUrl.parse(this.urlApi).newBuilder()
+        .addPathSegment("compatibility")
+        .addQueryParameter("vin", vin)
+        .addQueryParameter("scope", String.join(" ", scope))
+        .addQueryParameter("country", country)
+        .build();
+
+    Request request = new Request.Builder()
+        .url(url)
+        .header("Authorization", this.basicAuthorization)
+        .addHeader("User-Agent", AuthClient.USER_AGENT)
+        .get()
+        .build();
+
+    return AuthClient.execute(request, Compatibility.class)
+    	  .getData().getCompatible();
+  }
 }
 
