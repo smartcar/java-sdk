@@ -364,6 +364,11 @@ public class AuthClient extends ApiClient {
       urlBuilder.addQueryParameter("single_select_vin", vin);
       return this;
     }
+ 
+    public AuthUrlBuilder setFlags(String[] flags) {
+      urlBuilder.addQueryParameter("flags", Utils.join(flags, " "));
+      return this;
+    }
 
     public String build() {
       return urlBuilder.build().toString();

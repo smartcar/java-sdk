@@ -698,12 +698,14 @@ public class AuthClientTest extends PowerMockTestCase {
             true
     );
     String vin = "1234567890ABCDEFG";
+    String[] flags = {"country:DE", "flag:suboption"};
     String authUrl = client.authUrlBuilder()
             .setApprovalPrompt(true)
             .setState("state")
             .setSingleSelect(true)
             .setSingleSelectVin(vin)
             .setMakeBypass("TESLA")
+            .setFlags(flags)
             .build();
 
     String expectedAuthUrl = "https://connect.smartcar.com/oauth/authorize" +
@@ -716,7 +718,8 @@ public class AuthClientTest extends PowerMockTestCase {
             "&state=state" +
             "&single_select=true" +
             "&single_select_vin=" + vin +
-            "&make=TESLA";
+            "&make=TESLA" +
+            "&flags=country%3ADE%20flag%3Asuboption";
 
     assertEquals(authUrl, expectedAuthUrl);
   }
