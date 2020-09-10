@@ -73,14 +73,14 @@ abstract class IntegrationTest {
      * @return a new set of auth credentials
      */
     Auth getAuth(String make) throws Exception {
-        AuthClient authClient = new AuthClient(
+        this.authClient = new AuthClient(
             this.authClientId,
             this.authClientSecret,
             this.authRedirectUri,
             this.authScope,
             this.authDevelopment
         );
-        String authUrl = authClient.new AuthUrlBuilder().build();
+        String authUrl = this.authClient.new AuthUrlBuilder().build();
         String authCode = this.getAuthCode(authUrl, this.authOemUsername, this.authOemPassword, make);
 
         Auth auth = authClient.exchangeCode(authCode);
