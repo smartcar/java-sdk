@@ -58,31 +58,21 @@ abstract class IntegrationTest {
      */
     Auth getAuth() throws Exception {
         if(IntegrationTest.auth == null) {
-            this.authClient = new AuthClient(
-                    this.authClientId,
-                    this.authClientSecret,
-                    this.authRedirectUri,
-                    this.authScope,
-                    this.authDevelopment
-            );
-            String authUrl = this.authClient.new AuthUrlBuilder().build();
-
-            String authCode = this.getAuthCode(authUrl, this.authOemUsername, this.authOemPassword, this.authMake);
-
-            IntegrationTest.auth = this.authClient.exchangeCode(authCode);
+            IntegrationTest.auth = this.getAuth(this.authMake);
         }
 
         return IntegrationTest.auth;
     }
 
     /**
-     * Allow for the creation of new Auth credentials with a specified make in addition (or instead) of the
-     * singleton approach of `getAuth`. This method allows for multiple auth credentials per test.
+     * Retrieves auth credentials for a specified make. This method does not
+     * maintain the auth singleton and returns a new auth credential every time
+     * it is invoked.
      *
      * @param make the make to be selected within the auth flow
-     * @return the current auth credentials
+     * @return a new set of auth credentials
      */
-    Auth getSpecificMakeAuth(String make) throws Exception {
+    Auth getAuth(String make) throws Exception {
         AuthClient authClient = new AuthClient(
             this.authClientId,
             this.authClientSecret,
@@ -106,7 +96,7 @@ abstract class IntegrationTest {
      * @return an authorized vehicle
      */
     Vehicle getVehicle(String make) throws Exception {
-        Auth auth = this.getSpecificMakeAuth(make);
+        Auth auth = this.getAuth(make);
         String accessToken = auth.getAccessToken();
 
         SmartcarResponse vehicleIdResponse = AuthClient.getVehicleIds(accessToken);
