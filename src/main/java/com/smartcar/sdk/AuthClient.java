@@ -579,21 +579,7 @@ public class AuthClient extends ApiClient {
    * @throws SmartcarException when the request is unsuccessful
    */
   public boolean isCompatible(String vin, String[] scope) throws SmartcarException {
-    HttpUrl url = HttpUrl.parse(this.urlApi).newBuilder()
-        .addPathSegment("compatibility")
-        .addQueryParameter("vin", vin)
-        .addQueryParameter("scope", String.join(" ", scope))
-        .build();
-
-    Request request = new Request.Builder()
-        .url(url)
-        .header("Authorization", this.basicAuthorization)
-        .addHeader("User-Agent", AuthClient.USER_AGENT)
-        .get()
-        .build();
-
-    return AuthClient.execute(request, Compatibility.class)
-    	  .getData().getCompatible();
+    return isCompatible(vin, scope, null);
   }
 
     /**
@@ -620,12 +606,16 @@ public class AuthClient extends ApiClient {
    * @throws SmartcarException when the request is unsuccessful
    */
   public boolean isCompatible(String vin, String[] scope, String country) throws SmartcarException {
-    HttpUrl url = HttpUrl.parse(this.urlApi).newBuilder()
+    HttpUrl.Builder urlBase = HttpUrl.parse(this.urlApi).newBuilder()
         .addPathSegment("compatibility")
         .addQueryParameter("vin", vin)
-        .addQueryParameter("scope", String.join(" ", scope))
-        .addQueryParameter("country", country)
-        .build();
+        .addQueryParameter("scope", String.join(" ", scope));
+        
+    if (country != null) {
+      urlBase.addQueryParameter("country", country);
+    }
+
+    HttpUrl url = urlBase.build();
 
     Request request = new Request.Builder()
         .url(url)
