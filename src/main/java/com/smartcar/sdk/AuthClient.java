@@ -599,7 +599,7 @@ public class AuthClient extends ApiClient {
    * </ol>
    * @param vin the VIN (Vehicle Identification Number) of the vehicle.
    * @param scope An array of permissions. The valid permissions are found in the API Reference.
-   * @param country A country code according to [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
+   * @param country An optional country code according to [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
    *
    * @return false if the vehicle is not compatible in the specified country. true if the vehicle is likely compatible.
    *
