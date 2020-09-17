@@ -18,6 +18,7 @@ import java.util.Date;
  */
 public class VehicleTest extends IntegrationTest {
     private Vehicle vehicle;
+    private Vehicle eVehicle;
 
     /**
      * Authenticates with the Smartcar platform and initializes a vehicle.
@@ -26,14 +27,9 @@ public class VehicleTest extends IntegrationTest {
      */
     @BeforeSuite
     public void beforeSuite() throws Exception {
-        Auth auth = this.getAuth();
-        String accessToken = auth.getAccessToken();
-
-        SmartcarResponse vehicleIdResponse = AuthClient.getVehicleIds(accessToken);
-        VehicleIds vehicleIdData = (VehicleIds) vehicleIdResponse.getData();
-        String[] vehicleIds = vehicleIdData.getVehicleIds();
-
-        this.vehicle = new Vehicle(vehicleIds[0], this.getAuth().getAccessToken());
+        // we need both types of vehicles to get full coverage of all endpoints
+        this.vehicle = this.getVehicle("CHEVROLET");
+        this.eVehicle = this.getVehicle("TESLA");
     }
 
     /**
@@ -178,7 +174,7 @@ public class VehicleTest extends IntegrationTest {
      */
     @Test(groups = "vehicle")
     public void testActionStartCharge() throws SmartcarException {
-        this.vehicle.startCharge();
+        this.eVehicle.startCharge();
     }
 
     /**
@@ -186,7 +182,7 @@ public class VehicleTest extends IntegrationTest {
      */
     @Test(groups = "vehicle")
     public void testActionStopCharge() throws SmartcarException {
-        this.vehicle.stopCharge();
+        this.eVehicle.stopCharge();
     }
 
     /**

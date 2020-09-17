@@ -1,6 +1,8 @@
 package com.smartcar.sdk;
 
 import com.smartcar.sdk.data.Auth;
+import com.smartcar.sdk.data.SmartcarResponse;
+import com.smartcar.sdk.data.VehicleIds;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -44,6 +46,7 @@ abstract class IntegrationTest {
             "read_charge",
             "control_charge"
     };
+    final String authMake = "CHEVROLET";
 
     WebDriver driver;
     WebDriverWait wait;
@@ -55,21 +58,54 @@ abstract class IntegrationTest {
      */
     Auth getAuth() throws Exception {
         if(IntegrationTest.auth == null) {
-            this.authClient = new AuthClient(
-                    this.authClientId,
-                    this.authClientSecret,
-                    this.authRedirectUri,
-                    this.authScope,
-                    this.authDevelopment
-            );
-            String authUrl = this.authClient.new AuthUrlBuilder().build();
-
-            String authCode = this.getAuthCode(authUrl, this.authOemUsername, this.authOemPassword);
-
-            IntegrationTest.auth = authClient.exchangeCode(authCode);
+            IntegrationTest.auth = this.getAuth(this.authMake);
         }
 
         return IntegrationTest.auth;
+    }
+
+    /**
+     * Retrieves auth credentials for a specified make. This method does not
+     * maintain the auth singleton and returns a new auth credential every time
+     * it is invoked.
+     *
+     * @param make the make to be selected within the auth flow
+     * @return a new set of auth credentials
+     */
+    Auth getAuth(String make) throws Exception {
+        this.authClient = new AuthClient(
+            this.authClientId,
+            this.authClientSecret,
+            this.authRedirectUri,
+            this.authScope,
+            this.authDevelopment
+        );
+        String authUrl = this.authClient.new AuthUrlBuilder().build();
+        String authCode = this.getAuthCode(authUrl, this.authOemUsername, this.authOemPassword, make);
+
+        Auth auth = authClient.exchangeCode(authCode);
+
+        return auth;
+    }
+
+    /**
+     * Obtain a single vehicle of the specified make with an authorization independent
+     * of the auth singleton created using `getAuth`
+     *
+     * @param make the make to be selected within the auth flow
+     * @return an authorized vehicle
+     */
+    Vehicle getVehicle(String make) throws Exception {
+        Auth auth = this.getAuth(make);
+        String accessToken = auth.getAccessToken();
+
+        SmartcarResponse vehicleIdResponse = AuthClient.getVehicleIds(accessToken);
+        VehicleIds vehicleIdData = (VehicleIds) vehicleIdResponse.getData();
+        String[] vehicleIds = vehicleIdData.getVehicleIds();
+
+        Vehicle vehicle = new Vehicle(vehicleIds[0], accessToken);
+
+        return vehicle;
     }
 
     /**
@@ -82,7 +118,7 @@ abstract class IntegrationTest {
      * @return the resulting auth code
      * @throws Exception if the auth code could not be obtained
      */
-    private String getAuthCode(String connectAuthUrl, String oemUsername, String oemPassword) throws Exception {
+    private String getAuthCode(String connectAuthUrl, String oemUsername, String oemPassword, String make) throws Exception {
         this.startDriver();
 
         // 1 -- Initiate the OAuth 2.0 flow at https://connect.smartcar.com
@@ -92,7 +128,7 @@ abstract class IntegrationTest {
         this.driver.findElement(By.id("continue-button")).click();
 
         // 2 -- Find the Mock OEM button, and navigate to the Mock OEM login page.
-        this.driver.findElement(By.xpath("//button[@data-make='CHEVROLET' and @class='brand-selector-button']")).click();
+        this.driver.findElement(By.xpath("//button[@data-make='" + make +"' and @class='brand-selector-button']")).click();
 
         this.wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input#username")));
 
@@ -106,7 +142,8 @@ abstract class IntegrationTest {
         this.wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".page-content")));
 
         // Select Chevy Volt by unclicking all the boxes except the Volt
-        // This is needed because the Volt is the only one that has all the endpoints needed.
+        // Select Tesla Model S by unclicking all the boxes except the Model S
+        // This is needed because the Volt and Model S cover all the endpoints that are needed.
         List<WebElement> elements = this.driver.findElements(By.className("input-button-label"));
         for (WebElement el : elements) {
             WebElement vehicleText = el.findElement(By.className("input-button-label-text"));
@@ -115,7 +152,7 @@ abstract class IntegrationTest {
                 throw new Exception("input-button-label-text not found");
             } else if (checkbox == null) {
                 throw new Exception("input-button-custom not found");
-            } else if (!vehicleText.getText().contains("Volt")) {
+            } else if (!(vehicleText.getText().contains("Volt") || vehicleText.getText().contains("Model S"))) {
                 checkbox.click();
             }
         }
