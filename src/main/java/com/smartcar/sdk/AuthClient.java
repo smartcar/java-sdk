@@ -579,7 +579,7 @@ public class AuthClient extends ApiClient {
    * @throws SmartcarException when the request is unsuccessful
    */
   public boolean isCompatible(String vin, String[] scope) throws SmartcarException {
-    return isCompatible(vin, scope, null);
+    return isCompatible(vin, scope, "US");
   }
 
     /**
@@ -606,16 +606,12 @@ public class AuthClient extends ApiClient {
    * @throws SmartcarException when the request is unsuccessful
    */
   public boolean isCompatible(String vin, String[] scope, String country) throws SmartcarException {
-    HttpUrl.Builder urlBase = HttpUrl.parse(this.urlApi).newBuilder()
+    HttpUrl url = HttpUrl.parse(this.urlApi).newBuilder()
         .addPathSegment("compatibility")
         .addQueryParameter("vin", vin)
-        .addQueryParameter("scope", String.join(" ", scope));
-        
-    if (country != null) {
-      urlBase.addQueryParameter("country", country);
-    }
-
-    HttpUrl url = urlBase.build();
+        .addQueryParameter("scope", String.join(" ", scope))
+        .addQueryParameter("country", country)
+        .build();
 
     Request request = new Request.Builder()
         .url(url)
