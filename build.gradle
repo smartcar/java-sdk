@@ -66,8 +66,8 @@ javadoc {
     classpath = configurations.compile
     destinationDir = file('docs')
 
-    options.header = project.name
-    options.windowTitle = "${project.name} - ${project.version}"
+    options.header = libDescription
+    options.windowTitle = "${libName} - ${libVersion}"
     options.addBooleanOption('notimestamp', true)
 }
 
@@ -78,8 +78,8 @@ javadoc {
  */
 jar {
     manifest {
-        attributes('Implementation-Title': project.name,
-                   'Implementation-Version': project.version)
+        attributes('Implementation-Title': libName,
+                   'Implementation-Version': libVersion)
     }
      from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
