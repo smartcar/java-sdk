@@ -11,7 +11,7 @@ download links are also provided below.
 
 ### Gradle
 ```groovy
-compile "com.smartcar.sdk:java-sdk:2.6.2"
+compile "com.smartcar.sdk:java-sdk:2.6.3"
 ```
 
 ### Maven
@@ -19,14 +19,14 @@ compile "com.smartcar.sdk:java-sdk:2.6.2"
 <dependency>
   <groupId>com.smartcar.sdk</groupId>
   <artifactId>java-sdk</artifactId>
-  <version>2.6.2</version>
+  <version>2.6.3</version>
 </dependency>
 ```
 
 ### Jar Direct Download
-* [java-sdk-2.6.2.jar](https://bintray.com/smartcar/library/download_file?file_path=com%2Fsmartcar%2Fsdk%2Fjava-sdk%2F2.6.2%2Fjava-sdk-2.6.2.jar)
-* [java-sdk-2.6.2-sources.jar](https://bintray.com/smartcar/library/download_file?file_path=com%2Fsmartcar%2Fsdk%2Fjava-sdk%2F2.6.2%2Fjava-sdk-2.6.2-sources.jar)
-* [java-sdk-2.6.2-docs.jar](https://bintray.com/smartcar/library/download_file?file_path=com%2Fsmartcar%2Fsdk%2Fjava-sdk%2F2.6.2%2Fjava-sdk-2.6.2-docs.jar)
+* [java-sdk-2.6.3.jar](https://bintray.com/smartcar/library/download_file?file_path=com%2Fsmartcar%2Fsdk%2Fjava-sdk%2F2.6.3%2Fjava-sdk-2.6.3.jar)
+* [java-sdk-2.6.3-sources.jar](https://bintray.com/smartcar/library/download_file?file_path=com%2Fsmartcar%2Fsdk%2Fjava-sdk%2F2.6.3%2Fjava-sdk-2.6.3-sources.jar)
+* [java-sdk-2.6.3-docs.jar](https://bintray.com/smartcar/library/download_file?file_path=com%2Fsmartcar%2Fsdk%2Fjava-sdk%2F2.6.3%2Fjava-sdk-2.6.3-docs.jar)
 
 
 ## Usage
@@ -129,5 +129,5 @@ start making requests to vehicles.
 [ci-url]: https://travis-ci.com/smartcar/java-sdk
 [coverage-image]: https://codecov.io/gh/smartcar/java-sdk/branch/master/graph/badge.svg?token=nZAITx7w3X
 [coverage-url]: https://codecov.io/gh/smartcar/java-sdk
-[javadoc-image]: https://img.shields.io/badge/javadoc-2.6.2-brightgreen.svg
+[javadoc-image]: https://img.shields.io/badge/javadoc-2.6.3-brightgreen.svg
 [javadoc-url]: https://smartcar.github.io/java-sdk
