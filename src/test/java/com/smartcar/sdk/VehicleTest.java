@@ -20,6 +20,7 @@ import com.smartcar.sdk.data.BatchResponse;
 import com.smartcar.sdk.data.ResponsePaging;
 import com.smartcar.sdk.data.SmartcarResponse;
 import com.smartcar.sdk.data.VehicleBattery;
+import com.smartcar.sdk.data.VehicleBatteryCapacity;
 import com.smartcar.sdk.data.VehicleCharge;
 import com.smartcar.sdk.data.VehicleFuel;
 import com.smartcar.sdk.data.VehicleInfo;
@@ -224,6 +225,21 @@ public class VehicleTest {
         SmartcarResponse battery = this.subject.battery();
 
         Assert.assertEquals(res, battery);
+    }
+    
+    @Test
+    public void testBatteryCapacity() throws Exception {
+        double capacity = 24;
+        VehicleBatteryCapacity expected = new VehicleBatteryCapacity(capacity);
+        String unitSystem = "metric";
+        Date age = new Date();
+        SmartcarResponse res = new SmartcarResponse<>(expected, unitSystem, age);
+
+        PowerMockito.doReturn(res).when(this.subject).call("battery/capacity", "GET", null, VehicleBatteryCapacity.class);
+
+        SmartcarResponse batteryCapacity = this.subject.batteryCapacity();
+
+        Assert.assertEquals(res, batteryCapacity);
     }
 
     @Test

@@ -120,6 +120,14 @@ public class VehicleTest extends IntegrationTest {
     public void testBattery() throws SmartcarException {
         SmartcarResponse response = this.vehicle.battery();
     }
+    
+    /**
+     * Tests that the battery capacity can be obtained.
+     */
+    @Test(groups = "vehicle")
+    public void testBatteryCapacity() throws SmartcarException {
+        SmartcarResponse response = this.vehicle.batteryCapacity();
+    }
 
     /**
      * Tests that the charging status can be obtained.

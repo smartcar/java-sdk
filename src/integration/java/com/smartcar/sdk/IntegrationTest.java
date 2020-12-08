@@ -123,7 +123,6 @@ abstract class IntegrationTest {
 
         // 1 -- Initiate the OAuth 2.0 flow at https://connect.smartcar.com
         this.driver.get(connectAuthUrl);
-
         // Click continue on preamble screen.
         this.driver.findElement(By.id("continue-button")).click();
 
@@ -146,10 +145,10 @@ abstract class IntegrationTest {
         // This is needed because the Volt and Model S cover all the endpoints that are needed.
         List<WebElement> elements = this.driver.findElements(By.className("input-button-label"));
         for (WebElement el : elements) {
-            WebElement vehicleText = el.findElement(By.className("input-button-label-text"));
+            WebElement vehicleText = el.findElement(By.className("input-button-label-text-bordered"));
             WebElement checkbox = el.findElement(By.className("input-button-custom"));
             if (vehicleText == null) {
-                throw new Exception("input-button-label-text not found");
+                throw new Exception("input-button-label-text-bordered not found");
             } else if (checkbox == null) {
                 throw new Exception("input-button-custom not found");
             } else if (!(vehicleText.getText().contains("Volt") || vehicleText.getText().contains("Model S"))) {
