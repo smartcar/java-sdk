@@ -240,6 +240,17 @@ public class Vehicle extends ApiClient {
   public SmartcarResponse<VehicleBattery> battery() throws SmartcarException {
     return this.call("battery", "GET", null, VehicleBattery.class);
   }
+  
+  /**
+   * Send request to the /battery/capacity endpoint
+   *
+   * @return the battery capacity of the vehicle
+   *
+   * @throws SmartcarException if the request is unsuccessful
+   */
+  public SmartcarResponse<VehicleBatteryCapacity> batteryCapacity() throws SmartcarException {
+    return this.call("battery/capacity", "GET", null, VehicleBatteryCapacity.class);
+  }
 
   /**
    * Send request to the /charge endpoint
