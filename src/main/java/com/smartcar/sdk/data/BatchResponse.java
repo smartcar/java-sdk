@@ -122,6 +122,20 @@ public class BatchResponse extends ApiData {
     }
 
     /**
+     * Get response from the battery/capacity endpoint
+     *
+     * @return the battery capacity of the vehicle
+     *
+     * @throws BatchResponseMissingException if this endpoint was not
+     * part of the batch response
+     * @throws SmartcarException if the request for this endpoint returned an
+     * HTTP error code
+     */
+    public SmartcarResponse<VehicleBatteryCapacity> batteryCapacity() throws BatchResponseMissingException, SmartcarException {
+        return get("/battery/capacity", VehicleBatteryCapacity.class);
+    }
+
+    /**
      * Get response from the /charge endpoint
      *
      * @return the charge status of the vehicle
