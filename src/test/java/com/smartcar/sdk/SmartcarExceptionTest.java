@@ -138,19 +138,4 @@ public class SmartcarExceptionTest extends PowerMockTestCase {
 
     Assert.assertEquals(ex.getMessage(), response);
   }
-
-  /**
-   * Test SmartcarException.Factory raising generic exception
-   */
-  @Test
-  public void testSmartcarExceptionFactoryWithGenericException() throws Exception {
-    String response = "raising generic exception";
-    Response mockResponse = mock(Response.class);
-
-    when(mockResponse.body()).thenThrow(new NullPointerException(response));
-
-    SmartcarException ex = SmartcarException.Factory(mockResponse);
-
-    Assert.assertEquals(ex.getMessage(), response);
-  }
 }
