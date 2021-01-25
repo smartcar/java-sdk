@@ -86,12 +86,13 @@ public class SmartcarException extends java.lang.Exception {
 
   public static SmartcarException Factory(final Response response) throws IOException {
     JsonObject body;
+    String bodyString = response.body().string();
     try {
-      body = gson.fromJson(response.body().string(), JsonObject.class);
+      body = gson.fromJson(bodyString, JsonObject.class);
     } catch (com.google.gson.JsonParseException exception) {
       // In case the body is a string. Ex. gateway timeout where LB sends a non json body
       String errorBody = Json.createObjectBuilder()
-              .add("message", response.body().string())
+              .add("message", bodyString)
               .build().toString();
       body = gson.fromJson(errorBody, JsonObject.class);
     } catch (Exception exception) {
