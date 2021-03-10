@@ -7,6 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -214,6 +215,7 @@ abstract class IntegrationTest {
 
     /**
      * Starts a local ChromeDriver for easier debugging of Selenium tests.
+     * Use -Dselenium.debug=true for debugging
      */
     private void startLocalDriver() {
         this.driver = new ChromeDriver();
