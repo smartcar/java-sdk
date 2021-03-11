@@ -216,7 +216,6 @@ abstract class IntegrationTest {
      * Starts a local ChromeDriver for easier debugging of Selenium tests.
      */
     private void startLocalDriver() {
-        System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
         this.driver = new ChromeDriver();
     }
 
