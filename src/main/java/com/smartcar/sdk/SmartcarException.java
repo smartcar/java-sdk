@@ -87,6 +87,7 @@ public class SmartcarException extends java.lang.Exception {
   public static SmartcarException Factory(final Response response) throws IOException {
     JsonObject body;
     String bodyString = response.body().string();
+    System.out.println(bodyString);
     try {
       body = gson.fromJson(bodyString, JsonObject.class);
     } catch (com.google.gson.JsonParseException exception) {

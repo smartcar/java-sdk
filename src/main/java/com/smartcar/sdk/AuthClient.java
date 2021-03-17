@@ -81,10 +81,10 @@ public class AuthClient extends ApiClient {
    *
    * @throws SmartcarException if the request is unsuccessful
    */
-  public static String getUserId(String accessToken) throws SmartcarException {
+  public static String getUserId(String accessToken) throws SmartcarException, SmartcarExceptionV2 {
     // Build Request
     Request request = new Request.Builder()
-        .url(HttpUrl.parse(AuthClient.urlApi + "/user"))
+        .url(HttpUrl.parse(AuthClient.getApiUrl() + "/user"))
         .header("Authorization", "Bearer " + accessToken)
         .addHeader("User-Agent", AuthClient.USER_AGENT)
         .build();
@@ -113,9 +113,9 @@ public class AuthClient extends ApiClient {
    *
    * @throws SmartcarException if the request is unsuccessful
    */
-  public static SmartcarResponse<VehicleIds> getVehicleIds(String accessToken, RequestPaging paging) throws SmartcarException {
+  public static SmartcarResponse<VehicleIds> getVehicleIds(String accessToken, RequestPaging paging) throws SmartcarException, SmartcarExceptionV2 {
     // Build Request
-    HttpUrl.Builder urlBuilder = HttpUrl.parse(AuthClient.urlApi + "/vehicles").newBuilder();
+    HttpUrl.Builder urlBuilder = HttpUrl.parse(AuthClient.getApiUrl() + "/vehicles").newBuilder();
 
     if(paging != null) {
       urlBuilder.addQueryParameter("limit", String.valueOf(paging.getLimit()))
@@ -163,7 +163,7 @@ public class AuthClient extends ApiClient {
    *
    * @throws SmartcarException if the request is unsuccessful
    */
-  public static SmartcarResponse<VehicleIds> getVehicleIds(String accessToken) throws SmartcarException {
+  public static SmartcarResponse<VehicleIds> getVehicleIds(String accessToken) throws SmartcarException, SmartcarExceptionV2 {
     return AuthClient.getVehicleIds(accessToken, null);
   }
 
@@ -250,7 +250,7 @@ public class AuthClient extends ApiClient {
    *
    * @throws SmartcarException if the API request fails
    */
-  private Auth call(RequestBody requestBody) throws SmartcarException {
+  private Auth call(RequestBody requestBody) throws SmartcarException, SmartcarExceptionV2 {
     Request request = new Request.Builder()
         .url(this.urlAccessToken)
         .header("Authorization", this.basicAuthorization)
@@ -529,7 +529,7 @@ public class AuthClient extends ApiClient {
    *
    * @throws SmartcarException when the request is unsuccessful
    */
-  public Auth exchangeCode(String code) throws SmartcarException {
+  public Auth exchangeCode(String code) throws SmartcarException, SmartcarExceptionV2 {
     RequestBody requestBody = new FormBody.Builder()
         .add("grant_type", "authorization_code")
         .add("code", code)
@@ -548,7 +548,7 @@ public class AuthClient extends ApiClient {
    *
    * @throws SmartcarException when the request is unsuccessful
    */
-  public Auth exchangeRefreshToken(String refreshToken) throws SmartcarException {
+  public Auth exchangeRefreshToken(String refreshToken) throws SmartcarException, SmartcarExceptionV2 {
     RequestBody requestBody = new FormBody.Builder()
         .add("grant_type", "refresh_token")
         .add("refresh_token", refreshToken)
@@ -578,7 +578,7 @@ public class AuthClient extends ApiClient {
    *
    * @throws SmartcarException when the request is unsuccessful
    */
-  public boolean isCompatible(String vin, String[] scope) throws SmartcarException {
+  public boolean isCompatible(String vin, String[] scope) throws SmartcarException, SmartcarExceptionV2 {
     return isCompatible(vin, scope, "US");
   }
 
@@ -605,8 +605,9 @@ public class AuthClient extends ApiClient {
    *
    * @throws SmartcarException when the request is unsuccessful
    */
-  public boolean isCompatible(String vin, String[] scope, String country) throws SmartcarException {
-    HttpUrl url = HttpUrl.parse(this.urlApi).newBuilder()
+  public boolean isCompatible(String vin, String[] scope, String country) throws SmartcarException, SmartcarExceptionV2 {
+    String apiUrl = this.getApiUrl();
+    HttpUrl url = HttpUrl.parse(apiUrl).newBuilder()
         .addPathSegment("compatibility")
         .addQueryParameter("vin", vin)
         .addQueryParameter("scope", String.join(" ", scope))

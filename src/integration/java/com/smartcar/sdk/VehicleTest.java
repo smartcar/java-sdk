@@ -36,7 +36,7 @@ public class VehicleTest extends IntegrationTest {
      * Tests that vehicle info can be obtained.
      */
     @Test(groups = "vehicle")
-    public void testInfo() throws SmartcarException {
+    public void testInfo() throws SmartcarException, SmartcarExceptionV2 {
         VehicleInfo info = this.vehicle.info();
     }
 
@@ -44,7 +44,7 @@ public class VehicleTest extends IntegrationTest {
      * Tests that the vehicle VIN can be obtained.
      */
     @Test(groups = "vehicle")
-    public void testVin() throws SmartcarException {
+    public void testVin() throws SmartcarException, SmartcarExceptionV2 {
         String vin = this.vehicle.vin();
     }
 
@@ -52,7 +52,7 @@ public class VehicleTest extends IntegrationTest {
      * Tests that the vehicle permissions can be obtained.
      */
     @Test(groups = "vehicle")
-    public void testPermissions() throws SmartcarException {
+    public void testPermissions() throws SmartcarException, SmartcarExceptionV2 {
         String[] permissions = this.vehicle.permissions();
     }
 
@@ -60,7 +60,7 @@ public class VehicleTest extends IntegrationTest {
      * Tests that the vehicle correctly handles imperial headers.
      */
     @Test(groups = "vehicle")
-    public void testImperialHeaders() throws SmartcarException {
+    public void testImperialHeaders() throws SmartcarException, SmartcarExceptionV2 {
         this.vehicle.setUnitSystem(Vehicle.UnitSystem.IMPERIAL);
         SmartcarResponse response = this.vehicle.odometer();
         Assert.assertEquals(response.getUnitSystem(), "imperial");
@@ -70,7 +70,7 @@ public class VehicleTest extends IntegrationTest {
      * Tests that the vehicle correctly handles age headers.
      */
     @Test(groups = "vehicle")
-    public void testAgeHeaders() throws SmartcarException {
+    public void testAgeHeaders() throws SmartcarException, SmartcarExceptionV2 {
         SmartcarResponse response = this.vehicle.odometer();
         Assert.assertTrue(response.getAge() instanceof Date);
     }
@@ -79,7 +79,7 @@ public class VehicleTest extends IntegrationTest {
      * Tests that the vehicle correctly handles imperial headers.
      */
     @Test(groups = "vehicle")
-    public void testRequestIdHeader() throws SmartcarException {
+    public void testRequestIdHeader() throws SmartcarException, SmartcarExceptionV2 {
         SmartcarResponse response = this.vehicle.odometer();
         // Request ID is a UUID (36 characters)
         Assert.assertEquals(response.getRequestId().length(), 36);
@@ -89,7 +89,7 @@ public class VehicleTest extends IntegrationTest {
      * Tests that the vehicle has certain permissions.
      */
     @Test(groups = "vehicle")
-    public void testHasPermissions() throws SmartcarException {
+    public void testHasPermissions() throws SmartcarException, SmartcarExceptionV2 {
         Assert.assertTrue(this.vehicle.hasPermissions("required:read_odometer"));
         Assert.assertTrue(this.vehicle.hasPermissions(new String[] { "read_odometer", "required:read_location" }));
 
@@ -101,7 +101,7 @@ public class VehicleTest extends IntegrationTest {
      * Tests that the odometer value can be obtained.
      */
     @Test(groups = "vehicle")
-    public void testOdometer() throws SmartcarException {
+    public void testOdometer() throws SmartcarException, SmartcarExceptionV2 {
         SmartcarResponse response = this.vehicle.odometer();
     }
 
@@ -109,7 +109,7 @@ public class VehicleTest extends IntegrationTest {
      * Tests that the fuel status can be obtained.
      */
     @Test(groups = "vehicle")
-    public void testFuel() throws SmartcarException {
+    public void testFuel() throws SmartcarException, SmartcarExceptionV2 {
         SmartcarResponse response = this.vehicle.fuel();
     }
 
@@ -117,7 +117,7 @@ public class VehicleTest extends IntegrationTest {
      * Tests that the battery status can be obtained.
      */
     @Test(groups = "vehicle")
-    public void testBattery() throws SmartcarException {
+    public void testBattery() throws SmartcarException, SmartcarExceptionV2 {
         SmartcarResponse response = this.vehicle.battery();
     }
     
@@ -125,7 +125,7 @@ public class VehicleTest extends IntegrationTest {
      * Tests that the battery capacity can be obtained.
      */
     @Test(groups = "vehicle")
-    public void testBatteryCapacity() throws SmartcarException {
+    public void testBatteryCapacity() throws SmartcarException, SmartcarExceptionV2 {
         SmartcarResponse response = this.vehicle.batteryCapacity();
     }
 
@@ -133,7 +133,7 @@ public class VehicleTest extends IntegrationTest {
      * Tests that the charging status can be obtained.
      */
     @Test(groups = "vehicle")
-    public void testCharge() throws SmartcarException {
+    public void testCharge() throws SmartcarException, SmartcarExceptionV2 {
         SmartcarResponse response = this.vehicle.charge();
     }
 
@@ -141,7 +141,7 @@ public class VehicleTest extends IntegrationTest {
      * Tests that the vehicle's location can be obtained.
      */
     @Test(groups = "vehicle")
-    public void testLocation() throws SmartcarException {
+    public void testLocation() throws SmartcarException, SmartcarExceptionV2 {
         SmartcarResponse response = this.vehicle.location();
     }
 
@@ -149,7 +149,7 @@ public class VehicleTest extends IntegrationTest {
      * Tests that the vehicle's oil status can be obtained.
      */
     @Test(groups = "vehicle")
-    public void testOil() throws SmartcarException {
+    public void testOil() throws SmartcarException, SmartcarExceptionV2 {
         SmartcarResponse response = this.vehicle.oil();
     }
 
@@ -157,7 +157,7 @@ public class VehicleTest extends IntegrationTest {
      * Tests that the vehicle's tire pressure can be obtained.
      */
     @Test(groups = "vehicle")
-    public void testTirePressure() throws SmartcarException {
+    public void testTirePressure() throws SmartcarException, SmartcarExceptionV2 {
         SmartcarResponse response = this.vehicle.tirePressure();
     }
 
@@ -165,7 +165,7 @@ public class VehicleTest extends IntegrationTest {
      * Tests that the vehicle lock action works.
      */
     @Test(groups = "vehicle")
-    public void testActionLock() throws SmartcarException {
+    public void testActionLock() throws SmartcarException, SmartcarExceptionV2 {
         this.vehicle.lock();
     }
 
@@ -173,7 +173,7 @@ public class VehicleTest extends IntegrationTest {
      * Tests that the vehicle unlock action works.
      */
     @Test(groups = "vehicle")
-    public void testActionUnlock() throws SmartcarException {
+    public void testActionUnlock() throws SmartcarException, SmartcarExceptionV2 {
         this.vehicle.unlock();
     }
 
@@ -181,7 +181,7 @@ public class VehicleTest extends IntegrationTest {
      * Tests that the vehicle start charge action works.
      */
     @Test(groups = "vehicle")
-    public void testActionStartCharge() throws SmartcarException {
+    public void testActionStartCharge() throws SmartcarException, SmartcarExceptionV2 {
         this.eVehicle.startCharge();
     }
 
@@ -189,7 +189,7 @@ public class VehicleTest extends IntegrationTest {
      * Tests that the vehicle stop charge action works.
      */
     @Test(groups = "vehicle")
-    public void testActionStopCharge() throws SmartcarException {
+    public void testActionStopCharge() throws SmartcarException, SmartcarExceptionV2 {
         this.eVehicle.stopCharge();
     }
 
@@ -197,7 +197,7 @@ public class VehicleTest extends IntegrationTest {
      * Tests that the batch request method works.
      */
     @Test(groups = "vehicle")
-    public void testBatch() throws SmartcarException, BatchResponseMissingException {
+    public void testBatch() throws SmartcarException, BatchResponseMissingException, SmartcarExceptionV2 {
         String[] paths = {"/fuel", "/odometer"};
         BatchResponse response = this.vehicle.batch(paths);
 
@@ -209,7 +209,7 @@ public class VehicleTest extends IntegrationTest {
      * Tests that the batch response headers are set properly.
      */
     @Test(groups = "vehicle")
-    public void testBatchResponseHeaders() throws SmartcarException, BatchResponseMissingException {
+    public void testBatchResponseHeaders() throws SmartcarException, BatchResponseMissingException, SmartcarExceptionV2 {
         this.vehicle.setUnitSystem(Vehicle.UnitSystem.IMPERIAL);
         String[] paths = {"/odometer"};
         BatchResponse response = this.vehicle.batch(paths);
@@ -225,7 +225,18 @@ public class VehicleTest extends IntegrationTest {
      * Tests that access for the current application can be revoked.
      */
     @Test(dependsOnGroups = "vehicle")
-    public void testDisconnect() throws SmartcarException {
+    public void testDisconnect() throws SmartcarException, SmartcarExceptionV2 {
         this.vehicle.disconnect();
+    }
+
+    /**
+     * Tests setting the api version to 2.0 and getting the api url that is used for subsequent requests
+     */
+    @Test
+    public void testSetApiVersion() throws SmartcarException, SmartcarExceptionV2 {
+        this.vehicle.setApiVersion("2.0");
+        String url = Vehicle.getApiUrl();
+        Assert.assertEquals(url, "https://api.smartcar.com/v2.0");
+        this.vehicle.setApiVersion("1.0");
     }
 }
