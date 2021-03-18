@@ -92,7 +92,8 @@ abstract class ApiClient {
       Response response = ApiClient.client.newCall(request).execute();
 
       if(!response.isSuccessful()) {
-        if (ApiClient.API_VERSION == "2.0") {
+        String url = String.valueOf(request.url());
+        if (url.contains("v2.0")) {
           throw SmartcarExceptionV2.Factory(response);
         }
         throw SmartcarException.Factory(response);

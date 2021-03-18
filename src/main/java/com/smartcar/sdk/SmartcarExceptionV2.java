@@ -10,24 +10,14 @@ import java.io.IOException;
 /**
  * Thrown when the Smartcar API V2 library encounters a problem.
  */
-public class SmartcarExceptionV2 extends Exception {
+public class SmartcarExceptionV2 extends SmartcarException {
 
   static Gson gson = new Gson();
-
-  // standard error properties
-  private int statusCode;
-  private String code;
-  private String requestId;
   private String type;
   private String description;
   private String resolution;
   private String detail;
   private String docURL;
-
-  // oauth error properties
-  private String error;
-  private String errorDescription;
-  private String errorURI;
 
   public SmartcarExceptionV2(String type, String code, String description, String resolution, String detail, String docURL, int statusCode, String requestId) {
     super(description);
@@ -47,16 +37,8 @@ public class SmartcarExceptionV2 extends Exception {
    * @param message a message associated with the exception
    */
   public SmartcarExceptionV2(final String message) {
+    super(message);
     this.description = message;
-  }
-  
-  /**
-   * Returns the vehicle state error code associated with the SmartcarExceptionV2.
-   *
-   * @return the vehicle state error code
-   */
-  public String getCode() {
-    return this.code;
   }
 
   /**
@@ -104,23 +86,6 @@ public class SmartcarExceptionV2 extends Exception {
     return this.detail;
   }
 
-  /**
-   * Returns the HTTP status code.
-   *
-   * @return the response status code
-   */
-  public int getStatusCode() {
-    return this.statusCode;
-  }
-
-  /**
-   * Return the Smartcar request id from the response headers
-   *
-   * @return the request id
-   */
-  public String getRequestId() {
-    return this.requestId;
-  }
 
   public static SmartcarExceptionV2 Factory(final Response response) throws IOException {
     JsonObject body;

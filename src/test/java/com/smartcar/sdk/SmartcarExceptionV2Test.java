@@ -80,30 +80,9 @@ public class SmartcarExceptionV2Test extends PowerMockTestCase {
     Assert.assertEquals(ex.getType(), expectedType);
     Assert.assertEquals(ex.getDescription(), expectedDescription);
     Assert.assertEquals(ex.getResolution(), expectedResolution);
-    Assert.assertEquals(ex.getDocURL(), null);
-    Assert.assertEquals(ex.getDetail(), null);
+    Assert.assertNull(ex.getDocURL());
+    Assert.assertNull(ex.getDetail());
     Assert.assertEquals(ex.getStatusCode(), expectedStatusCode);
-  }
-
-  /**
-   * Test SmartcarExceptionV2.Factory with error_description
-   */
-  @Test
-  public void testSmartcarExceptionV2FactoryWithErrorDescription() throws Exception {
-    String expectedMessage = "expected message";
-    String response = Json.createObjectBuilder()
-              .add("error_description", expectedMessage)
-              .build()
-              .toString();
-    Response mockResponse = mock(Response.class);
-    ResponseBody mockResponseBody = mock(ResponseBody.class);
-
-    when(mockResponse.body()).thenReturn(mockResponseBody);
-    when(mockResponseBody.string()).thenReturn(response);
-
-    SmartcarExceptionV2 ex = SmartcarExceptionV2.Factory(mockResponse);
-
-    Assert.assertEquals(ex.getDescription(), expectedMessage);
   }
 
   /**
