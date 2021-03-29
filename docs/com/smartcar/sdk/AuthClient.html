@@ -840,8 +840,7 @@ public&nbsp;java.lang.String&nbsp;getAuthUrl()</pre>
 <li class="blockList">
 <h4>exchangeCode</h4>
 <pre>public&nbsp;<a href="../../../com/smartcar/sdk/data/Auth.html" title="class in com.smartcar.sdk.data">Auth</a>&nbsp;exchangeCode(java.lang.String&nbsp;code)
-                  throws <a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a>,
-                         <a href="../../../com/smartcar/sdk/SmartcarExceptionV2.html" title="class in com.smartcar.sdk">SmartcarExceptionV2</a></pre>
+                  throws <a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
 <div class="block">Exchanges an authorization code for an access token.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -850,7 +849,6 @@ public&nbsp;java.lang.String&nbsp;getAuthUrl()</pre>
 <dd>the requested access token</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - when the request is unsuccessful</dd>
-<dd><code><a href="../../../com/smartcar/sdk/SmartcarExceptionV2.html" title="class in com.smartcar.sdk">SmartcarExceptionV2</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -861,8 +859,7 @@ public&nbsp;java.lang.String&nbsp;getAuthUrl()</pre>
 <li class="blockList">
 <h4>exchangeRefreshToken</h4>
 <pre>public&nbsp;<a href="../../../com/smartcar/sdk/data/Auth.html" title="class in com.smartcar.sdk.data">Auth</a>&nbsp;exchangeRefreshToken(java.lang.String&nbsp;refreshToken)
-                          throws <a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a>,
-                                 <a href="../../../com/smartcar/sdk/SmartcarExceptionV2.html" title="class in com.smartcar.sdk">SmartcarExceptionV2</a></pre>
+                          throws <a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
 <div class="block">Exchanges a refresh token for a new access token.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -871,7 +868,6 @@ public&nbsp;java.lang.String&nbsp;getAuthUrl()</pre>
 <dd>the requested access token</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - when the request is unsuccessful</dd>
-<dd><code><a href="../../../com/smartcar/sdk/SmartcarExceptionV2.html" title="class in com.smartcar.sdk">SmartcarExceptionV2</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -883,8 +879,7 @@ public&nbsp;java.lang.String&nbsp;getAuthUrl()</pre>
 <h4>isCompatible</h4>
 <pre>public&nbsp;boolean&nbsp;isCompatible(java.lang.String&nbsp;vin,
                             java.lang.String[]&nbsp;scope)
-                     throws <a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a>,
-                            <a href="../../../com/smartcar/sdk/SmartcarExceptionV2.html" title="class in com.smartcar.sdk">SmartcarExceptionV2</a></pre>
+                     throws <a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
 <div class="block">Determine if a vehicle is compatible with the Smartcar API and the provided permissions.
  A compatible vehicle is a vehicle that:
  <ol>
@@ -906,7 +901,6 @@ public&nbsp;java.lang.String&nbsp;getAuthUrl()</pre>
 <dd>false if the vehicle is not compatible. true if the vehicle is likely compatible.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - when the request is unsuccessful</dd>
-<dd><code><a href="../../../com/smartcar/sdk/SmartcarExceptionV2.html" title="class in com.smartcar.sdk">SmartcarExceptionV2</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -919,8 +913,7 @@ public&nbsp;java.lang.String&nbsp;getAuthUrl()</pre>
 <pre>public&nbsp;boolean&nbsp;isCompatible(java.lang.String&nbsp;vin,
                             java.lang.String[]&nbsp;scope,
                             java.lang.String&nbsp;country)
-                     throws <a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a>,
-                            <a href="../../../com/smartcar/sdk/SmartcarExceptionV2.html" title="class in com.smartcar.sdk">SmartcarExceptionV2</a></pre>
+                     throws <a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
 <div class="block">Determine if a vehicle is compatible with the Smartcar API and the provided permissions for
  the specified country.
  A compatible vehicle is a vehicle that:
@@ -944,7 +937,6 @@ public&nbsp;java.lang.String&nbsp;getAuthUrl()</pre>
 <dd>false if the vehicle is not compatible in the specified country. true if the vehicle is likely compatible.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - when the request is unsuccessful</dd>
-<dd><code><a href="../../../com/smartcar/sdk/SmartcarExceptionV2.html" title="class in com.smartcar.sdk">SmartcarExceptionV2</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -969,8 +961,7 @@ public&nbsp;java.lang.String&nbsp;getAuthUrl()</pre>
 <li class="blockList">
 <h4>execute</h4>
 <pre>protected static&nbsp;okhttp3.Response&nbsp;execute(okhttp3.Request&nbsp;request)
-                                   throws <a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a>,
-                                          <a href="../../../com/smartcar/sdk/SmartcarExceptionV2.html" title="class in com.smartcar.sdk">SmartcarExceptionV2</a></pre>
+                                   throws <a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
 <div class="block">Sends the specified request, returning the raw response body.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -979,7 +970,6 @@ public&nbsp;java.lang.String&nbsp;getAuthUrl()</pre>
 <dd>the response body</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - if the request is unsuccessful</dd>
-<dd><code><a href="../../../com/smartcar/sdk/SmartcarExceptionV2.html" title="class in com.smartcar.sdk">SmartcarExceptionV2</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -991,8 +981,7 @@ public&nbsp;java.lang.String&nbsp;getAuthUrl()</pre>
 <h4>execute</h4>
 <pre>protected static&nbsp;&lt;T extends <a href="../../../com/smartcar/sdk/data/ApiData.html" title="class in com.smartcar.sdk.data">ApiData</a>&gt;&nbsp;<a href="../../../com/smartcar/sdk/data/SmartcarResponse.html" title="class in com.smartcar.sdk.data">SmartcarResponse</a>&lt;T&gt;&nbsp;execute(okhttp3.Request&nbsp;request,
                                                                  java.lang.Class&lt;T&gt;&nbsp;dataType)
-                                                          throws <a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a>,
-                                                                 <a href="../../../com/smartcar/sdk/SmartcarExceptionV2.html" title="class in com.smartcar.sdk">SmartcarExceptionV2</a></pre>
+                                                          throws <a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
 <div class="block">Sends the specified request, parsing the response into the specified type.
  Wraps the request with the unitSystem and age meta data.</div>
 <dl>
@@ -1005,7 +994,6 @@ public&nbsp;java.lang.String&nbsp;getAuthUrl()</pre>
 <dd>the wrapped response</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - if the request is unsuccessful</dd>
-<dd><code><a href="../../../com/smartcar/sdk/SmartcarExceptionV2.html" title="class in com.smartcar.sdk">SmartcarExceptionV2</a></code></dd>
 </dl>
 </li>
 </ul>
