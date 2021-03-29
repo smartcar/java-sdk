@@ -109,7 +109,7 @@ public class AuthTest extends IntegrationTest {
      * @throws SmartcarException if the request fails
      */
     @Test
-    public void testGetUserId() throws SmartcarException, SmartcarExceptionV2 {
+    public void testGetUserId() throws SmartcarException {
         String userId = AuthClient.getUserId(this.accessToken);
 
         assertNotNull(userId);
@@ -123,7 +123,7 @@ public class AuthTest extends IntegrationTest {
      * @throws SmartcarException if the request fails
      */
     @Test
-    public void testGetVehicleIds() throws SmartcarException, SmartcarExceptionV2 {
+    public void testGetVehicleIds() throws SmartcarException {
         SmartcarResponse<VehicleIds> vehicleIdsResponse = AuthClient.getVehicleIds(this.accessToken);
         VehicleIds vehicleIdsData = vehicleIdsResponse.getData();
         String[] vehicleIds = vehicleIdsData.getVehicleIds();

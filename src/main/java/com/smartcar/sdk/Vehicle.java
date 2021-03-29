@@ -66,7 +66,7 @@ public class Vehicle extends ApiClient {
    *
    * @throws SmartcarException if the request is unsuccessful
    */
-  protected <T extends ApiData> SmartcarResponse<T> call(String path, String method, RequestBody body, Class<T> type) throws SmartcarException, SmartcarExceptionV2 {
+  protected <T extends ApiData> SmartcarResponse<T> call(String path, String method, RequestBody body, Class<T> type) throws SmartcarException {
     HttpUrl url = HttpUrl.parse(Vehicle.getApiUrl()).newBuilder()
         .addPathSegments("vehicles")
         .addPathSegments(this.vehicleId)
@@ -95,7 +95,7 @@ public class Vehicle extends ApiClient {
    *
    * @throws SmartcarException if the request is unsuccessful
    */
-  protected String call(String path, String method, RequestBody body) throws SmartcarException, SmartcarExceptionV2 {
+  protected String call(String path, String method, RequestBody body) throws SmartcarException {
     return this.call(path, method, body, ApiData.class).toString();
   }
 
@@ -106,7 +106,7 @@ public class Vehicle extends ApiClient {
    *
    * @throws SmartcarException if the request is unsuccessful
    */
-  public VehicleInfo info() throws SmartcarException, SmartcarExceptionV2 {
+  public VehicleInfo info() throws SmartcarException {
     return this.call("", "GET", null, VehicleInfo.class).getData();
   }
 
@@ -117,7 +117,7 @@ public class Vehicle extends ApiClient {
    *
    * @throws SmartcarException if the request is unsuccessful
    */
-  public String vin() throws SmartcarException, SmartcarExceptionV2 {
+  public String vin() throws SmartcarException {
     return this.call("vin", "GET", null, VehicleVin.class).getData().getVin();
   }
 
@@ -128,7 +128,7 @@ public class Vehicle extends ApiClient {
    *
    * @throws SmartcarException if the request is unsuccessful
    */
-  public String[] permissions() throws SmartcarException, SmartcarExceptionV2 {
+  public String[] permissions() throws SmartcarException {
     if (this.permissions == null) {
        this.permissions = this.call("permissions", "GET", null, ApplicationPermissions.class).getData().getPermissions();
     }
@@ -143,7 +143,7 @@ public class Vehicle extends ApiClient {
    * @return Whether the vehicle has the specified permission
    * @throws SmartcarException if the request is unsuccessful
    */
-  public boolean hasPermissions(String permission) throws SmartcarException, SmartcarExceptionV2 {
+  public boolean hasPermissions(String permission) throws SmartcarException {
     try {
       List<String> vehiclePermissions = Arrays.asList(this.permissions());
       permission = permission.replaceFirst("^required:", "");
@@ -162,7 +162,7 @@ public class Vehicle extends ApiClient {
    * @return Whether the vehicle has the specified permissions
    * @throws SmartcarException if the request is unsuccessful
    */
-  public boolean hasPermissions(String[] permissions) throws SmartcarException, SmartcarExceptionV2 {
+  public boolean hasPermissions(String[] permissions) throws SmartcarException {
     try {
       List<String> vehiclePermissions = Arrays.asList(this.permissions());
       List<String> requestedPermissions = new ArrayList<>();
@@ -182,7 +182,7 @@ public class Vehicle extends ApiClient {
    *
    * @throws SmartcarException if the request is unsuccessful
    */
-  public void disconnect() throws SmartcarException, SmartcarExceptionV2 {
+  public void disconnect() throws SmartcarException {
     this.call("application", "DELETE", null);
   }
 
@@ -193,7 +193,7 @@ public class Vehicle extends ApiClient {
    *
    * @throws SmartcarException if the request is unsuccessful
    */
-  public SmartcarResponse<VehicleOdometer> odometer() throws SmartcarException, SmartcarExceptionV2 {
+  public SmartcarResponse<VehicleOdometer> odometer() throws SmartcarException {
     return this.call("odometer", "GET", null, VehicleOdometer.class);
   }
 
@@ -204,7 +204,7 @@ public class Vehicle extends ApiClient {
    *
    * @throws SmartcarException if the request is unsuccessful
    */
-  public SmartcarResponse<VehicleFuel> fuel() throws SmartcarException, SmartcarExceptionV2 {
+  public SmartcarResponse<VehicleFuel> fuel() throws SmartcarException {
     return this.call("fuel", "GET", null, VehicleFuel.class);
   }
 
@@ -215,7 +215,7 @@ public class Vehicle extends ApiClient {
    *
    * @throws SmartcarException if the request is unsuccessful
    */
-  public SmartcarResponse<VehicleOil> oil() throws SmartcarException, SmartcarExceptionV2 {
+  public SmartcarResponse<VehicleOil> oil() throws SmartcarException {
     return this.call("engine/oil", "GET", null, VehicleOil.class);
   }
 
@@ -226,7 +226,7 @@ public class Vehicle extends ApiClient {
    *
    * @throws SmartcarException if the request is unsuccessful
    */
-  public SmartcarResponse<VehicleTirePressure> tirePressure() throws SmartcarException, SmartcarExceptionV2 {
+  public SmartcarResponse<VehicleTirePressure> tirePressure() throws SmartcarException {
     return this.call("tires/pressure", "GET", null, VehicleTirePressure.class);
   }
 
@@ -237,7 +237,7 @@ public class Vehicle extends ApiClient {
    *
    * @throws SmartcarException if the request is unsuccessful
    */
-  public SmartcarResponse<VehicleBattery> battery() throws SmartcarException, SmartcarExceptionV2 {
+  public SmartcarResponse<VehicleBattery> battery() throws SmartcarException {
     return this.call("battery", "GET", null, VehicleBattery.class);
   }
   
@@ -248,7 +248,7 @@ public class Vehicle extends ApiClient {
    *
    * @throws SmartcarException if the request is unsuccessful
    */
-  public SmartcarResponse<VehicleBatteryCapacity> batteryCapacity() throws SmartcarException, SmartcarExceptionV2 {
+  public SmartcarResponse<VehicleBatteryCapacity> batteryCapacity() throws SmartcarException {
     return this.call("battery/capacity", "GET", null, VehicleBatteryCapacity.class);
   }
 
@@ -259,7 +259,7 @@ public class Vehicle extends ApiClient {
    *
    * @throws SmartcarException if the request is unsuccessful
    */
-  public SmartcarResponse<VehicleCharge> charge() throws SmartcarException, SmartcarExceptionV2 {
+  public SmartcarResponse<VehicleCharge> charge() throws SmartcarException {
     return this.call("charge", "GET", null, VehicleCharge.class);
   }
 
@@ -270,7 +270,7 @@ public class Vehicle extends ApiClient {
    *
    * @throws SmartcarException if the request is unsuccessful
    */
-  public SmartcarResponse<VehicleLocation> location() throws SmartcarException, SmartcarExceptionV2 {
+  public SmartcarResponse<VehicleLocation> location() throws SmartcarException {
     return this.call("location", "GET", null, VehicleLocation.class);
   }
 
@@ -279,7 +279,7 @@ public class Vehicle extends ApiClient {
    *
    * @throws SmartcarException if the request is unsuccessful
    */
-  public void unlock() throws SmartcarException, SmartcarExceptionV2 {
+  public void unlock() throws SmartcarException {
     JsonObject json = Json.createObjectBuilder()
       .add("action", "UNLOCK")
       .build();
@@ -294,7 +294,7 @@ public class Vehicle extends ApiClient {
    *
    * @throws SmartcarException if the request is unsuccessful
    */
-  public void lock() throws SmartcarException, SmartcarExceptionV2 {
+  public void lock() throws SmartcarException {
     JsonObject json = Json.createObjectBuilder()
       .add("action", "LOCK")
       .build();
@@ -309,7 +309,7 @@ public class Vehicle extends ApiClient {
    *
    * @throws SmartcarException if the request is unsuccessful
    */
-  public void startCharge() throws SmartcarException, SmartcarExceptionV2 {
+  public void startCharge() throws SmartcarException {
     JsonObject json = Json.createObjectBuilder()
             .add("action", "START")
             .build();
@@ -324,7 +324,7 @@ public class Vehicle extends ApiClient {
    *
    * @throws SmartcarException if the request is unsuccessful
    */
-  public void stopCharge() throws SmartcarException, SmartcarExceptionV2 {
+  public void stopCharge() throws SmartcarException {
     JsonObject json = Json.createObjectBuilder()
             .add("action", "STOP")
             .build();
@@ -344,7 +344,7 @@ public class Vehicle extends ApiClient {
    *
    * @throws SmartcarException if the request is unsuccessful
    */
-  public BatchResponse batch(String[] paths) throws SmartcarException, SmartcarExceptionV2 {
+  public BatchResponse batch(String[] paths) throws SmartcarException {
 
     JsonArrayBuilder endpoints = Json.createArrayBuilder();
     for (String path : paths) {

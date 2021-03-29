@@ -87,7 +87,7 @@ abstract class ApiClient {
    *
    * @throws SmartcarException if the request is unsuccessful
    */
-  protected static Response execute(Request request) throws SmartcarException, SmartcarExceptionV2 {
+  protected static Response execute(Request request) throws SmartcarException {
     try {
       Response response = ApiClient.client.newCall(request).execute();
 
@@ -118,7 +118,7 @@ abstract class ApiClient {
    *
    * @throws SmartcarException if the request is unsuccessful
    */
-  protected static <T extends ApiData> SmartcarResponse<T> execute(Request request, Class<T> dataType) throws SmartcarException, SmartcarExceptionV2 {
+  protected static <T extends ApiData> SmartcarResponse<T> execute(Request request, Class<T> dataType) throws SmartcarException {
     Response response = ApiClient.execute(request);
     String body = null;
 

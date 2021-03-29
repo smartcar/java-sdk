@@ -529,7 +529,7 @@ public class AuthClient extends ApiClient {
    *
    * @throws SmartcarException when the request is unsuccessful
    */
-  public Auth exchangeCode(String code) throws SmartcarException, SmartcarExceptionV2 {
+  public Auth exchangeCode(String code) throws SmartcarException {
     RequestBody requestBody = new FormBody.Builder()
         .add("grant_type", "authorization_code")
         .add("code", code)
@@ -548,7 +548,7 @@ public class AuthClient extends ApiClient {
    *
    * @throws SmartcarException when the request is unsuccessful
    */
-  public Auth exchangeRefreshToken(String refreshToken) throws SmartcarException, SmartcarExceptionV2 {
+  public Auth exchangeRefreshToken(String refreshToken) throws SmartcarException {
     RequestBody requestBody = new FormBody.Builder()
         .add("grant_type", "refresh_token")
         .add("refresh_token", refreshToken)
@@ -578,7 +578,7 @@ public class AuthClient extends ApiClient {
    *
    * @throws SmartcarException when the request is unsuccessful
    */
-  public boolean isCompatible(String vin, String[] scope) throws SmartcarException, SmartcarExceptionV2 {
+  public boolean isCompatible(String vin, String[] scope) throws SmartcarException {
     return isCompatible(vin, scope, "US");
   }
 
@@ -605,7 +605,7 @@ public class AuthClient extends ApiClient {
    *
    * @throws SmartcarException when the request is unsuccessful
    */
-  public boolean isCompatible(String vin, String[] scope, String country) throws SmartcarException, SmartcarExceptionV2 {
+  public boolean isCompatible(String vin, String[] scope, String country) throws SmartcarException {
     String apiUrl = this.getApiUrl();
     HttpUrl url = HttpUrl.parse(apiUrl).newBuilder()
         .addPathSegment("compatibility")
