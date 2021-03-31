@@ -60,7 +60,6 @@ public class SmartcarExceptionTest extends PowerMockTestCase {
             .add("error", expectedError)
             .add("message", expectedMessage)
             .add("code", expectedCode)
-            .add("foo", "bar")
             .build()
             .toString();
 

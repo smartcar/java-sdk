@@ -16,10 +16,10 @@ public class SmartcarExceptionV2 extends SmartcarException {
   private String type;
   private String description;
   private String resolution;
-  private String detail;
+  private String[] detail;
   private String docURL;
 
-  public SmartcarExceptionV2(String type, String code, String description, String resolution, String detail, String docURL, int statusCode, String requestId) {
+  public SmartcarExceptionV2(String type, String code, String description, String resolution, String[] detail, String docURL, int statusCode, String requestId) {
     super(description);
     this.type = type;
     this.code = code;
@@ -82,7 +82,7 @@ public class SmartcarExceptionV2 extends SmartcarException {
    *
    * @return the error details
    */
-  public String getDetail() {
+  public String[] getDetail() {
     return this.detail;
   }
 

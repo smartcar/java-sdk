@@ -1,25 +1,8 @@
 package com.smartcar.sdk;
 
-import com.smartcar.sdk.data.*;
 import com.smartcar.sdk.data.VehicleOil;
-import com.smartcar.sdk.data.ApiData;
-import okhttp3.MediaType;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
-import okio.BufferedSource;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import com.smartcar.sdk.data.*;
-import javax.json.JsonObject;
-import javax.json.Json;
-import org.json.JSONObject;
-
-import java.io.IOException;
-
-import okhttp3.Interceptor;
-import okhttp3.MediaType;
-import okhttp3.Request;
-import okhttp3.ResponseBody;
 
 /**
  * Test Suite: ApiClient

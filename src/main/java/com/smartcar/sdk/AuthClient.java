@@ -81,7 +81,7 @@ public class AuthClient extends ApiClient {
    *
    * @throws SmartcarException if the request is unsuccessful
    */
-  public static String getUserId(String accessToken) throws SmartcarException, SmartcarExceptionV2 {
+  public static String getUserId(String accessToken) throws SmartcarException {
     // Build Request
     Request request = new Request.Builder()
         .url(HttpUrl.parse(AuthClient.getApiUrl() + "/user"))
@@ -113,7 +113,7 @@ public class AuthClient extends ApiClient {
    *
    * @throws SmartcarException if the request is unsuccessful
    */
-  public static SmartcarResponse<VehicleIds> getVehicleIds(String accessToken, RequestPaging paging) throws SmartcarException, SmartcarExceptionV2 {
+  public static SmartcarResponse<VehicleIds> getVehicleIds(String accessToken, RequestPaging paging) throws SmartcarException {
     // Build Request
     HttpUrl.Builder urlBuilder = HttpUrl.parse(AuthClient.getApiUrl() + "/vehicles").newBuilder();
 
@@ -163,7 +163,7 @@ public class AuthClient extends ApiClient {
    *
    * @throws SmartcarException if the request is unsuccessful
    */
-  public static SmartcarResponse<VehicleIds> getVehicleIds(String accessToken) throws SmartcarException, SmartcarExceptionV2 {
+  public static SmartcarResponse<VehicleIds> getVehicleIds(String accessToken) throws SmartcarException {
     return AuthClient.getVehicleIds(accessToken, null);
   }
 
@@ -250,7 +250,7 @@ public class AuthClient extends ApiClient {
    *
    * @throws SmartcarException if the API request fails
    */
-  private Auth call(RequestBody requestBody) throws SmartcarException, SmartcarExceptionV2 {
+  private Auth call(RequestBody requestBody) throws SmartcarException {
     Request request = new Request.Builder()
         .url(this.urlAccessToken)
         .header("Authorization", this.basicAuthorization)
