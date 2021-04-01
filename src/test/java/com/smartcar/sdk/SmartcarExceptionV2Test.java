@@ -70,6 +70,7 @@ public class SmartcarExceptionV2Test extends PowerMockTestCase {
 
     when(mockResponse.header(eq("sc-request-id"), eq(""))).thenReturn(expectedRequestId);
     when(mockResponse.body()).thenReturn(mockResponseBody);
+    when(mockResponse.header("Content-Type")).thenReturn("application/json");
     when(mockResponseBody.string()).thenReturn(errorString);
     when(mockResponse.code()).thenReturn(expectedStatusCode);
 
@@ -99,6 +100,7 @@ public class SmartcarExceptionV2Test extends PowerMockTestCase {
     ResponseBody mockResponseBody = mock(ResponseBody.class);
 
     when(mockResponse.body()).thenReturn(mockResponseBody);
+    when(mockResponse.header("Content-Type")).thenReturn("application/json");
     when(mockResponseBody.string()).thenReturn(response);
 
     SmartcarExceptionV2 ex = SmartcarExceptionV2.Factory(mockResponse);
@@ -116,6 +118,7 @@ public class SmartcarExceptionV2Test extends PowerMockTestCase {
     ResponseBody mockResponseBody = mock(ResponseBody.class);
 
     when(mockResponse.body()).thenReturn(mockResponseBody);
+    when(mockResponse.header("Content-Type")).thenReturn("text/plain");
     when(mockResponseBody.string()).thenReturn(response);
 
     SmartcarExceptionV2 ex = SmartcarExceptionV2.Factory(mockResponse);

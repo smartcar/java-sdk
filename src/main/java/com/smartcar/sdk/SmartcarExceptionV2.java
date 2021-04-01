@@ -88,23 +88,15 @@ public class SmartcarExceptionV2 extends SmartcarException {
 
 
   public static SmartcarExceptionV2 Factory(final Response response) throws IOException {
-    JsonObject body;
+    JsonObject body = new JsonObject();
     String bodyString = response.body().string();
-    System.out.println(bodyString);
-    try {
+    String contentType = response.header("Content-Type");
+
+    if (contentType.equals("application/json")) {
       body = gson.fromJson(bodyString, JsonObject.class);
-    } catch (com.google.gson.JsonParseException exception) {
+    } else {
       // In case the body is a string. Ex. gateway timeout where LB sends a non json body
-      String errorBody = Json.createObjectBuilder()
-              .add("description", bodyString)
-              .build().toString();
-      body = gson.fromJson(errorBody, JsonObject.class);
-    } catch (Exception exception) {
-      // Any other exception converting it to SmartcarExceptionV2
-      String errorBody = Json.createObjectBuilder()
-              .add("description", exception.getMessage())
-              .build().toString();
-      body = gson.fromJson(errorBody, JsonObject.class);
+      body.addProperty("description", bodyString);
     }
     return gson.fromJson(body, SmartcarExceptionV2.class);
   }
