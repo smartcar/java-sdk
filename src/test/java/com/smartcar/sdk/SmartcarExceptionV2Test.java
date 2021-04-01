@@ -56,14 +56,16 @@ public class SmartcarExceptionV2Test extends PowerMockTestCase {
     String expectedRequestId = "011660dc-8322-4064-a972-53826c8dff9c";
     int expectedStatusCode = 200;
 
-    String errorString = "{\"type\": \"" + expectedType + "\"," +
-      "\"code\": \"" + expectedCode + "\"," +
-      "\"description\": \"" + expectedDescription + "\"," +
-      "\"docURL\": null," +
-      "\"statusCode\": 200," +
-            "\"resolution\": \"" + expectedResolution + "\"," +
-            "\"detail\": null," +
-      "\"requestId\": \"" + expectedRequestId + "\"}";
+    String errorString = Json.createObjectBuilder()
+            .add("type", expectedType)
+            .add("code", expectedCode)
+            .add("description", expectedDescription)
+            .addNull("docURL")
+            .add("statusCode", 200)
+            .add("resolution", expectedResolution)
+            .addNull("detail")
+            .add("requestId", expectedRequestId)
+            .build().toString();
 
     Response mockResponse = mock(Response.class);
     ResponseBody mockResponseBody = mock(ResponseBody.class);
