@@ -12,6 +12,7 @@ import com.google.gson.JsonObject;
 import com.smartcar.sdk.BatchResponseMissingException;
 import com.smartcar.sdk.SmartcarException;
 
+import com.smartcar.sdk.SmartcarExceptionV2;
 import org.apache.commons.text.CaseUtils;
 
 /**
@@ -51,14 +52,45 @@ public class BatchResponse extends ApiData {
         JsonObject body = res.get("body").getAsJsonObject();
 
         if (statusCode != 200) {
-            String message = body.get("message").getAsString();
-            String error = body.get("error").getAsString();
-            String code = "";
-            if (body.has("code")) {
-                code = body.get("code").getAsString();
+            if (body.has("description")) {
+                // handle v2 error format
+                String type = body.get("type").getAsString();
+                String code = body.get("code").getAsString();
+                String description = body.get("description").getAsString();
+                JsonElement resolutionElement = body.get("resolution");
+                String resolution = null;
+                if (!resolutionElement.isJsonNull()) {
+                    resolution = body.get("resolution").getAsString();
+                }
+
+                JsonElement detailElement = body.get("detail");
+                String[] detail = new String[1];
+                if (!detailElement.isJsonNull()) {
+                    JsonArray detailJson = detailElement.getAsJsonArray();
+                    detail = new String[detailJson.size()];
+                    for (int i = 0; i < detailJson.size(); i++) {
+                        detail[i] = detailJson.get(i).getAsString();
+                    }
+                }
+
+                String docURL = null;
+                JsonElement docURLElement = body.get("docURL");
+                if (!docURLElement.isJsonNull()) {
+                    docURL = docURLElement.getAsString();
+                }
+                throw new SmartcarExceptionV2(type, code, description, resolution, detail, docURL, statusCode, this.requestId);
+            } else if (body.has("message")) {
+                String message = body.get("message").getAsString();
+                String error = body.get("error").getAsString();
+                String code = "";
+                if (body.has("code")) {
+                    code = body.get("code").getAsString();
+                }
+                throw new SmartcarException(statusCode, error, message, code, this.requestId);
+            } else {
+                throw new SmartcarException("Unknown error response");
             }
 
-            throw new SmartcarException(statusCode, error, message, code, this.requestId);
         }
 
         JsonElement header = res.get("headers");
