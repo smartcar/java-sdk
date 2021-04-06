@@ -34,7 +34,6 @@ testSets {
  * @plugin org.unbroken-dome.test-sets
  */
 dependencies {
-    compile 'com.github.mrmike:ok2curl:0.4.5'
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.squareup.okhttp3:okhttp:3.12.0'
     compile 'javax.json:javax.json-api:1.0'
@@ -44,7 +43,6 @@ dependencies {
 
     testCompile sourceSets.main.output
     testCompile 'com.squareup.okhttp3:mockwebserver:3.4.1'
-    testCompile 'org.json:json:20160810'
     testCompile 'org.powermock:powermock-release-with-testng-mockito-dependencies:1.6.2'
     testCompile 'org.testng:testng:6.9.12'
 
