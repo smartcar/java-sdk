@@ -172,11 +172,11 @@ extends <a href="../../../com/smartcar/sdk/SmartcarException.html" title="class 
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/SmartcarExceptionV2.html#SmartcarExceptionV2-java.lang.String-java.lang.String-java.lang.String-java.lang.String-java.lang.String-java.lang.String-int-java.lang.String-">SmartcarExceptionV2</a></span>(java.lang.String&nbsp;type,
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/SmartcarExceptionV2.html#SmartcarExceptionV2-java.lang.String-java.lang.String-java.lang.String-java.lang.String-java.lang.String:A-java.lang.String-int-java.lang.String-">SmartcarExceptionV2</a></span>(java.lang.String&nbsp;type,
                    java.lang.String&nbsp;code,
                    java.lang.String&nbsp;description,
                    java.lang.String&nbsp;resolution,
-                   java.lang.String&nbsp;detail,
+                   java.lang.String[]&nbsp;detail,
                    java.lang.String&nbsp;docURL,
                    int&nbsp;statusCode,
                    java.lang.String&nbsp;requestId)</code>&nbsp;</td>
@@ -207,7 +207,7 @@ extends <a href="../../../com/smartcar/sdk/SmartcarException.html" title="class 
 </td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>java.lang.String</code></td>
+<td class="colFirst"><code>java.lang.String[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/SmartcarExceptionV2.html#getDetail--">getDetail</a></span>()</code>
 <div class="block">Returns the error details if available for this exception.</div>
 </td>
@@ -266,7 +266,7 @@ extends <a href="../../../com/smartcar/sdk/SmartcarException.html" title="class 
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="SmartcarExceptionV2-java.lang.String-java.lang.String-java.lang.String-java.lang.String-java.lang.String-java.lang.String-int-java.lang.String-">
+<a name="SmartcarExceptionV2-java.lang.String-java.lang.String-java.lang.String-java.lang.String-java.lang.String:A-java.lang.String-int-java.lang.String-">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -276,7 +276,7 @@ extends <a href="../../../com/smartcar/sdk/SmartcarException.html" title="class 
                            java.lang.String&nbsp;code,
                            java.lang.String&nbsp;description,
                            java.lang.String&nbsp;resolution,
-                           java.lang.String&nbsp;detail,
+                           java.lang.String[]&nbsp;detail,
                            java.lang.String&nbsp;docURL,
                            int&nbsp;statusCode,
                            java.lang.String&nbsp;requestId)</pre>
@@ -366,7 +366,7 @@ extends <a href="../../../com/smartcar/sdk/SmartcarException.html" title="class 
 <ul class="blockList">
 <li class="blockList">
 <h4>getDetail</h4>
-<pre>public&nbsp;java.lang.String&nbsp;getDetail()</pre>
+<pre>public&nbsp;java.lang.String[]&nbsp;getDetail()</pre>
 <div class="block">Returns the error details if available for this exception.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
