@@ -161,7 +161,7 @@ check.dependsOn integration
  * @plugin jacoco
  */
 jacoco {
-    reportsDir = file("${buildDir}/reports/coverage")
+    reportsDirectory = file("${buildDir}/reports/coverage")
 }
 
 /**
