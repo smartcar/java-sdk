@@ -7,8 +7,10 @@ import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import org.joda.time.DateTime;
 import org.apache.commons.text.CaseUtils;
+
+import java.time.Instant;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 import java.io.IOException;
 
@@ -116,9 +118,9 @@ abstract class ApiClient {
     smartcarResponse.setUnitSystem(unitSystem);
     smartcarResponse.setRequestId(requestId);
 
-    if(ageHeader != null) {
-      DateTime date = DateTime.parse(ageHeader);
-      smartcarResponse.setAge(date.toDate());
+    if (ageHeader != null) {
+      Instant age = Instant.parse(ageHeader);
+      smartcarResponse.setAge(Date.from(age));
     }
 
     return smartcarResponse;

@@ -1,5 +1,7 @@
 package com.smartcar.sdk.data;
 
+import java.time.Instant;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,9 +13,6 @@ import com.smartcar.sdk.BatchResponseMissingException;
 import com.smartcar.sdk.SmartcarException;
 
 import org.apache.commons.text.CaseUtils;
-import org.joda.time.DateTime;
-
-
 
 /**
  * Smartcar BatchResponse Object
@@ -81,8 +80,8 @@ public class BatchResponse extends ApiData {
         try {
             String ageHeader = header.getAsJsonObject().get("sc-data-age").getAsString();
             if (ageHeader != null) {
-              DateTime date = DateTime.parse(ageHeader);
-              smartcarResponse.setAge(date.toDate());
+              Instant age = Instant.parse(ageHeader);
+              smartcarResponse.setAge(Date.from(age));
             }
         } catch (Exception e) {}
 
