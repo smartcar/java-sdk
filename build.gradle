@@ -70,9 +70,9 @@ javadoc {
 jar {
     manifest {
         attributes('Implementation-Title': libName,
-                   'Implementation-Version': libVersion)
+                'Implementation-Version': libVersion)
     }
-     from {
+    from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }
 }
@@ -83,7 +83,7 @@ jar {
  *
  * @plugin com.avast.gradle.docker-compose
  */
-if(!System.properties.containsKey('selenium.debug')) {
+if (!System.properties.containsKey('selenium.debug')) {
     dockerCompose.isRequiredBy integration
 }
 
@@ -140,7 +140,7 @@ tasks.withType(Test) {
  * @plugin java
  */
 integration {
-    if(!System.properties.containsKey('selenium.debug')) {
+    if (!System.properties.containsKey('selenium.debug')) {
         doFirst {
             def seleniumInfo = dockerCompose.servicesInfos['selenium-hub'].firstContainer
 
@@ -272,17 +272,17 @@ publishing {
                 root.appendNode('description', libDescription)
                 root.appendNode('url', libUrl)
                 root.appendNode('licenses').
-                    appendNode('license').
+                        appendNode('license').
                         appendNode('name', licenseName).parent().
                         appendNode('url', licenseUrl).parent().
                         appendNode('distribution', 'repo')
                 root.appendNode('developers').
-                    appendNode('developer').
+                        appendNode('developer').
                         appendNode('id', developerId).parent().
                         appendNode('name', developerName).parent().
                         appendNode('email', developerEmail)
                 root.appendNode('scm').
-                    appendNode('url', vcsRepoUrl).parent()
+                        appendNode('url', vcsRepoUrl).parent()
             }
         }
     }
