@@ -42,6 +42,13 @@ public class SmartcarExceptionV2 extends SmartcarException {
   }
 
   /**
+   * Returns the error message
+   *
+   * @return message
+   */
+  public String getMessage() { return this.type + ":" + this.code + " - " + this.description; }
+
+  /**
    * Returns the error type associated with the SmartcarExceptionV2.
    *
    * @return the error type

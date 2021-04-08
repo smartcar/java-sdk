@@ -86,10 +86,11 @@ public class SmartcarExceptionV2Test extends PowerMockTestCase {
     Assert.assertNull(ex.getDocURL());
     Assert.assertNull(ex.getDetail());
     Assert.assertEquals(ex.getStatusCode(), expectedStatusCode);
+    Assert.assertEquals(ex.getMessage(), "ACCOUNT_STATE:INVALID_CREDENTIALS - expected description");
   }
 
   /**
-   * Test SmartcarExceptionV2.Factory with message
+   * Test SmartcarExceptionV2.Factory with description
    */
   @Test
   public void testSmartcarExceptionV2FactoryWithMessage() throws Exception {
