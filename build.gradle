@@ -1,14 +1,18 @@
 plugins {
     id 'java-library'
+    id 'maven-publish'
+    id 'signing'
 
     id 'com.adarshr.test-logger' version '2.1.1'
     id 'com.avast.gradle.docker-compose' version '0.14.0'
-    id 'com.jfrog.bintray' version '1.8.5'
+    id 'io.github.gradle-nexus.publish-plugin' version '1.0.0'
     id 'org.unbroken-dome.test-sets' version '3.0.1'
 }
 
 apply plugin: 'jacoco'
-apply plugin: 'maven-publish'
+
+group libGroup
+version libVersion
 
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
@@ -203,67 +207,74 @@ task markdown(type: Copy) {
 }
 
 /**
- * Configures Bintray publishing.
- *
- * @plugin com.jfrog.bintray
- */
-bintray {
-    user = bintrayUser
-    key = bintrayKey
-    publish = true
-    publications = ['SmartcarPublication']
-    pkg {
-        repo = bintrayRepo
-        name = libName
-        userOrg = bintrayOrg
-        licenses = [licenseId]
-        desc = libDescription
-        websiteUrl = developerWebsite
-        issueTrackerUrl = developerIssues
-        vcsUrl = vcsRepoUrl
-        publicDownloadNumbers = true
-        githubRepo = vcsGithubRepo
-        version {
-            name = libVersion
-            vcsTag = 'v' + libVersion
-            released = new Date()
-        }
-    }
-}
-
-/**
  * Configures packaging of modules/artifacts to publish.
  *
  * @plugin maven-publish
  */
 publishing {
     publications {
-        SmartcarPublication(MavenPublication) {
+        main(MavenPublication) {
             from components.java
-            artifact sourcesJar
-            artifact javadocJar
-            groupId libGroup
-            artifactId libName
-            version libVersion
-            pom.withXml {
-                def root = asNode()
 
-                root.appendNode('name', libName)
-                root.appendNode('description', libDescription)
-                root.appendNode('url', libUrl)
-                root.appendNode('licenses').
-                        appendNode('license').
-                        appendNode('name', licenseName).parent().
-                        appendNode('url', licenseUrl).parent().
-                        appendNode('distribution', 'repo')
-                root.appendNode('developers').
-                        appendNode('developer').
-                        appendNode('id', developerId).parent().
-                        appendNode('name', developerName).parent().
-                        appendNode('email', developerEmail)
-                root.appendNode('scm').
-                        appendNode('url', vcsRepoUrl).parent()
+            artifactId libName
+
+            pom {
+                // https://central.sonatype.org/publish/requirements/#sufficient-metadata
+                name = libName
+                description = 'Java SDK for the Smartcar platform'
+                url = 'https://github.com/smartcar/java-sdk'
+
+                licenses {
+                    license {
+                        name = 'MIT License'
+                        url = 'https://opensource.org/licenses/MIT'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id = 'smartcar'
+                        name = 'Smartcar'
+                        email = 'hello@smartcar.com'
+                    }
+                }
+
+                scm {
+                    connection = 'scm:git:git://github.com/smartcar/java-sdk.git'
+                    developerConnection = 'scm:git:ssh://github.com:smartcar/java-sdk.git'
+                    url = 'https://github.com/smartcar/java-sdk.git'
+                }
             }
         }
     }
+
+}
+
+/**
+ * Requires the following environment variables to be set:
+ *  - ORG_GRADLE_PROJECT_sonatypeUsername
+ *  - ORG_GRADLE_PROJECT_sonatypePassword
+ *
+ * @see https://github.com/gradle-nexus/publish-plugin
+ */
+nexusPublishing {
+    repositories {
+        sonatype {
+            nexusUrl.set uri('https://s01.oss.sonatype.org/service/local/')
+            snapshotRepositoryUrl.set uri('https://s01.oss.sonatype.org/content/repositories/snapshots/')
+            stagingProfileId = '117eb260e0ad59'
+        }
+    }
+}
+
+/**
+ * Requires the following environment variables to be set:
+ *  - ORG_GRADLE_PROJECT_signingKey
+ *  - ORG_GRADLE_PROJECT_signingPassword
+ *
+ * @see https://docs.gradle.org/current/userguide/signing_plugin.html#sec:in-memory-keys
+ */
+signing {
+    useInMemoryPgpKeys findProperty("signingKey"), findProperty("signingPassword")
+    sign publishing.publications.main
 }
