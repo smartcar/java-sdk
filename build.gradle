@@ -1,17 +1,22 @@
 plugins {
+    id 'java-library'
+
     id 'com.adarshr.test-logger' version '2.1.1'
     id 'com.avast.gradle.docker-compose' version '0.14.0'
     id 'com.jfrog.bintray' version '1.8.5'
     id 'org.unbroken-dome.test-sets' version '3.0.1'
 }
 
-apply plugin: 'java'
-apply plugin: 'java-library'
 apply plugin: 'jacoco'
 apply plugin: 'maven-publish'
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+
+    withJavadocJar()
+    withSourcesJar()
+}
 
 repositories {
     mavenCentral()
@@ -58,8 +63,6 @@ dependencies {
  * @plugin java
  */
 javadoc {
-    source = sourceSets.main.allJava
-    classpath = configurations.compile
     destinationDir = file('docs')
 
     options.header = libDescription
@@ -90,34 +93,6 @@ jar {
  */
 if (!System.properties.containsKey('selenium.debug')) {
     dockerCompose.isRequiredBy integration
-}
-
-/**
- * Generates a jar with sources.
- *
- * @plugin java
- */
-task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
-}
-
-/**
- * Generates a jar with generated Javadoc.
- *
- * @plugin java
- */
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'docs'
-    from javadoc.destinationDir
-}
-
-/**
- * Defines additional artifacts to be generated.
- */
-artifacts {
-    archives sourcesJar
-    archives javadocJar
 }
 
 /**
