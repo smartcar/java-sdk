@@ -1,4 +1,4 @@
-# Smartcar Java SDK [![Build Status][ci-image]][ci-url] [![Code Coverage][coverage-image]][coverage-url] [![JavaDoc][javadoc-image]][javadoc-url]
+# Smartcar Java SDK [![Build Status][ci-image]][ci-url] [![Code Coverage][coverage-image]][coverage-url] [![JavaDoc][javadoc-image]][javadoc-url] [![Maven Central](https://img.shields.io/maven-central/v/com.smartcar.sdk/java-sdk.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.smartcar.sdk%22%20AND%20a:%22java-sdk%22)
 
 ## Resources
  * [Smartcar Developer Dashboard][smartcar-developer]
@@ -6,8 +6,7 @@
  * [Smartcar Java SDK Documentation][smartcar-sdk-javadoc]
 
 ## Installation
-The recommended method for obtaining the SDK is via Gradle or Maven. Direct
-download links are also provided below.
+The recommended method for obtaining the SDK is via Gradle or Maven through the Maven Central repository. Direct download links are also provided below.
 
 ### Gradle
 ```groovy
@@ -24,10 +23,11 @@ compile "com.smartcar.sdk:java-sdk:2.7.6"
 ```
 
 ### Jar Direct Download
-* [java-sdk-2.7.6.jar](https://bintray.com/smartcar/library/download_file?file_path=com%2Fsmartcar%2Fsdk%2Fjava-sdk%2F2.7.6%2Fjava-sdk-2.7.6.jar)
-* [java-sdk-2.7.6-sources.jar](https://bintray.com/smartcar/library/download_file?file_path=com%2Fsmartcar%2Fsdk%2Fjava-sdk%2F2.7.6%2Fjava-sdk-2.7.6-sources.jar)
-* [java-sdk-2.7.6-docs.jar](https://bintray.com/smartcar/library/download_file?file_path=com%2Fsmartcar%2Fsdk%2Fjava-sdk%2F2.7.6%2Fjava-sdk-2.7.6-docs.jar)
+* [java-sdk-2.7.6.jar](https://search.maven.org/remotecontent?filepath=com/smartcar/sdk/java-sdk/2.7.6/java-sdk-2.7.6.jar)
+* [java-sdk-2.7.6-sources.jar](https://search.maven.org/remotecontent?filepath=com/smartcar/sdk/java-sdk/2.7.6/java-sdk-2.7.6-sources.jar)
+* [java-sdk-2.7.6-javadoc.jar](https://search.maven.org/remotecontent?filepath=com/smartcar/sdk/java-sdk/2.7.6/java-sdk-2.7.6-javadoc.jar)
 
+Signatures and other downloads available at [Maven Central](https://search.maven.org/artifact/com.smartcar.sdk/java-sdk/2.7.6/jar).
 
 ## Usage
 
