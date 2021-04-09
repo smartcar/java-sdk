@@ -44,7 +44,7 @@ jobs:
         - bash <(curl -s https://codecov.io/bash) -cF integration
     - stage: tag
       language: generic
-      install: false
+      install: skip
       script:
         - git config --global user.email "ci@smartcar.com"
         - git config --global user.name "Travis CI User"
