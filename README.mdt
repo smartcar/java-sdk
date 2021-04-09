@@ -1,4 +1,4 @@
-# Smartcar Java SDK [![Build Status][ci-image]][ci-url] [![Code Coverage][coverage-image]][coverage-url] [![JavaDoc][javadoc-image]][javadoc-url]
+# Smartcar Java SDK [![Build Status][ci-image]][ci-url] [![Code Coverage][coverage-image]][coverage-url] [![JavaDoc][javadoc-image]][javadoc-url] [![Maven Central](https://img.shields.io/maven-central/v/com.smartcar.sdk/java-sdk.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.smartcar.sdk%22%20AND%20a:%22java-sdk%22)
 
 ## Resources
  * [Smartcar Developer Dashboard][smartcar-developer]
@@ -6,8 +6,7 @@
  * [Smartcar Java SDK Documentation][smartcar-sdk-javadoc]
 
 ## Installation
-The recommended method for obtaining the SDK is via Gradle or Maven. Direct
-download links are also provided below.
+The recommended method for obtaining the SDK is via Gradle or Maven through the Maven Central repository. Direct download links are also provided below.
 
 ### Gradle
 ```groovy
@@ -24,10 +23,11 @@ compile "${libGroup}:${libName}:${libVersion}"
 ```
 
 ### Jar Direct Download
-* [${libName}-${libVersion}.jar](https://bintray.com/smartcar/library/download_file?file_path=com%2Fsmartcar%2Fsdk%2Fjava-sdk%2F${libVersion}%2Fjava-sdk-${libVersion}.jar)
-* [${libName}-${libVersion}-sources.jar](https://bintray.com/smartcar/library/download_file?file_path=com%2Fsmartcar%2Fsdk%2Fjava-sdk%2F${libVersion}%2Fjava-sdk-${libVersion}-sources.jar)
-* [${libName}-${libVersion}-docs.jar](https://bintray.com/smartcar/library/download_file?file_path=com%2Fsmartcar%2Fsdk%2Fjava-sdk%2F${libVersion}%2Fjava-sdk-${libVersion}-docs.jar)
+* [${libName}-${libVersion}.jar](https://search.maven.org/remotecontent?filepath=com/smartcar/sdk/java-sdk/${libVersion}/java-sdk-${libVersion}.jar)
+* [${libName}-${libVersion}-sources.jar](https://search.maven.org/remotecontent?filepath=com/smartcar/sdk/java-sdk/${libVersion}/java-sdk-${libVersion}-sources.jar)
+* [${libName}-${libVersion}-javadoc.jar](https://search.maven.org/remotecontent?filepath=com/smartcar/sdk/java-sdk/${libVersion}/java-sdk-${libVersion}-javadoc.jar)
 
+Signatures and other downloads available at [Maven Central](https://search.maven.org/artifact/com.smartcar.sdk/java-sdk/${libVersion}/jar).
 
 ## Usage
 
