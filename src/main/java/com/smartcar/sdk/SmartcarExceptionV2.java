@@ -13,7 +13,7 @@ import java.io.IOException;
 public class SmartcarExceptionV2 extends SmartcarException {
 
   static Gson gson = new Gson();
-  private String type;
+  private String type = null;
   private String description;
   private String resolution;
   private String[] detail;
@@ -46,7 +46,12 @@ public class SmartcarExceptionV2 extends SmartcarException {
    *
    * @return message
    */
-  public String getMessage() { return this.type + ":" + this.code + " - " + this.description; }
+  public String getMessage() {
+    if (this.type != null) {
+      return this.type + ":" + this.code + " - " + this.description;
+    }
+    return this.description;
+  }
 
   /**
    * Returns the error type associated with the SmartcarExceptionV2.

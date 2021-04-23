@@ -55,7 +55,11 @@ public class BatchResponse extends ApiData {
             if (body.has("description")) {
                 // handle v2 error format
                 String type = body.get("type").getAsString();
-                String code = body.get("code").getAsString();
+                JsonElement codeElement = body.get("code");
+                String code = null;
+                if (!codeElement.isJsonNull()) {
+                    code = codeElement.getAsString();
+                }
                 String description = body.get("description").getAsString();
                 JsonElement resolutionElement = body.get("resolution");
                 String resolution = null;
@@ -69,7 +73,7 @@ public class BatchResponse extends ApiData {
                     JsonArray detailJson = detailElement.getAsJsonArray();
                     detail = new String[detailJson.size()];
                     for (int i = 0; i < detailJson.size(); i++) {
-                        detail[i] = detailJson.get(i).getAsString();
+                        detail[i] = detailJson.get(i).getAsJsonObject().toString();
                     }
                 }
 

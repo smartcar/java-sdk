@@ -41,6 +41,7 @@ public class SmartcarExceptionV2Test extends PowerMockTestCase {
     }
     catch (SmartcarExceptionV2 ex) {
       Assert.assertEquals(ex.getDescription(), testMessage);
+      Assert.assertEquals(ex.getMessage(), testMessage);
     }
   }
 

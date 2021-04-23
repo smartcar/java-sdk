@@ -1,0 +1,32 @@
+[
+  {
+    "headers": {
+      "sc-unit-system": "metric"
+    },
+    "path": "/odometer",
+    "code": 400,
+    "body": {
+      "code": null,
+      "description": "Request invalid or malformed. Please check for missing parameters, spelling and casing mistakes, and other syntax issues.",
+      "detail": [
+        {
+          "field": [
+            "requests"
+          ],
+          "message": "\"requests\" is required"
+        },
+        {
+          "field": [
+            "request"
+          ],
+          "message": "\"request\" is not allowed"
+        }
+      ],
+      "docURL": "https://smartcar.com/docs/errors/v2.0/other-errors/#validation",
+      "requestId": "614d7c59-3a0f-4d20-a564-185693594ea8",
+      "resolution": null,
+      "statusCode": 400,
+      "type": "VALIDATION"
+    }
+  }
+]
