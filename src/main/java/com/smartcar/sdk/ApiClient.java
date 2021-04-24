@@ -65,7 +65,7 @@ abstract class ApiClient {
    *
    * @param version API version to set
    */
-  public void setApiVersion(String version) {
+  public static void setApiVersion(String version) {
     ApiClient.API_VERSION = version;
   }
 

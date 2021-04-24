@@ -234,9 +234,9 @@ public class VehicleTest extends IntegrationTest {
      */
     @Test
     public void testSetApiVersion() throws SmartcarException {
-        this.vehicle.setApiVersion("2.0");
+        Vehicle.setApiVersion("2.0");
         String url = Vehicle.getApiUrl();
         Assert.assertEquals(url, "https://api.smartcar.com/v2.0");
-        this.vehicle.setApiVersion("1.0");
+        Vehicle.setApiVersion("1.0");
     }
 }
