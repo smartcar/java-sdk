@@ -867,15 +867,9 @@ public class AuthClientTest extends PowerMockTestCase {
    */
   @Test
   public void testSetApiVersion() {
-    AuthClient testSubject = new AuthClient(
-            this.sampleClientId,
-            this.sampleClientSecret,
-            this.sampleRedirectUri,
-            this.sampleTestMode
-    );
-    testSubject.setApiVersion("2.0");
+    AuthClient.setApiVersion("2.0");
     String url = AuthClient.getApiUrl();
     Assert.assertEquals(url, "https://api.smartcar.com/v2.0");
-    testSubject.setApiVersion("1.0");
+    AuthClient.setApiVersion("1.0");
   }
 }
