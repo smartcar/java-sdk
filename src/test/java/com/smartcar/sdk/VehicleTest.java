@@ -5,7 +5,6 @@ import static org.mockito.Matchers.refEq;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
 
@@ -431,6 +430,82 @@ public class VehicleTest {
             Assert.assertEquals(e.getError(), "vehicle_state_error");
             Assert.assertEquals(e.getCode(), "VS_000");
             Assert.assertEquals(e.getRequestId(), expectedRequestId);
+        }
+    }
+    @Test
+    public void testBatchHTTPErrorV2() throws Exception {
+        JsonObject json = Json.createObjectBuilder()
+                .add("headers", Json.createObjectBuilder()
+                        .add("sc-unit-system", "metric"))
+                .add("requests", Json.createArrayBuilder()
+                        .add(Json.createObjectBuilder()
+                                .add("path", "/sunroof")
+                                .build()
+                        )
+                        .build()
+                )
+                .build();
+        String expectedRequestId = "27767d51-3c32-47c0-8521-6f2be21bfb5b";
+        RequestBody body = RequestBody.create(Vehicle.JSON, json.toString());
+        JsonElement error = loadJsonResource("BatchResponseErrorV2");
+        BatchResponse expectedBatch = new BatchResponse(error.getAsJsonArray());
+        SmartcarResponse<BatchResponse> res = new SmartcarResponse(expectedBatch);
+        res.setRequestId(expectedRequestId);
+        PowerMockito.doReturn(res).when(this.subject, "call", eq("batch"), eq("POST"), refEq(body), refEq(BatchResponse.class));
+
+        BatchResponse batch = this.subject.batch(new String[] {"/odometer"});
+
+        try {
+            batch.odometer();
+        } catch (SmartcarExceptionV2 e) {
+            Assert.assertEquals(e.getStatusCode(), 409);
+            Assert.assertEquals(e.getDescription(), "Door is open.");
+            Assert.assertEquals(e.getType(), "VEHICLE_STATE");
+            Assert.assertEquals(e.getCode(), "DOOR_OPEN");
+            Assert.assertEquals(e.getRequestId(), expectedRequestId);
+            Assert.assertNull(e.getDocURL());
+            Assert.assertNull(e.getResolution());
+            Assert.assertEquals(e.getDetail().length, 0);
+            Assert.assertEquals(e.getMessage(), "VEHICLE_STATE:DOOR_OPEN - Door is open.");
+        }
+    }
+
+    @Test
+    public void testBatchHTTPErrorV2WithDetail() throws Exception {
+        JsonObject json = Json.createObjectBuilder()
+                .add("headers", Json.createObjectBuilder()
+                        .add("sc-unit-system", "metric"))
+                .add("requests", Json.createArrayBuilder()
+                        .add(Json.createObjectBuilder()
+                                .add("path", "/sunroof")
+                                .build()
+                        )
+                        .build()
+                )
+                .build();
+        String expectedRequestId = "614d7c59-3a0f-4d20-a564-185693594ea8";
+        RequestBody body = RequestBody.create(Vehicle.JSON, json.toString());
+        JsonElement error = loadJsonResource("BatchResponseErrorV2WithDetail");
+        BatchResponse expectedBatch = new BatchResponse(error.getAsJsonArray());
+        SmartcarResponse<BatchResponse> res = new SmartcarResponse(expectedBatch);
+        res.setRequestId(expectedRequestId);
+        PowerMockito.doReturn(res).when(this.subject, "call", eq("batch"), eq("POST"), refEq(body), refEq(BatchResponse.class));
+
+        BatchResponse batch = this.subject.batch(new String[] {"/odometer"});
+
+        try {
+            batch.odometer();
+        } catch (SmartcarExceptionV2 e) {
+            Assert.assertEquals(e.getStatusCode(), 400);
+            Assert.assertEquals(e.getDescription(), "Request invalid or malformed. Please check for missing parameters, spelling and casing mistakes, and other syntax issues.");
+            Assert.assertEquals(e.getType(), "VALIDATION");
+            Assert.assertNull(e.getCode());
+            Assert.assertEquals(e.getRequestId(), expectedRequestId);
+            Assert.assertEquals(e.getDocURL(), "https://smartcar.com/docs/errors/v2.0/other-errors/#validation");
+            Assert.assertNull(e.getResolution());
+            Assert.assertEquals(e.getDetail()[0], "{\"field\":[\"requests\"],\"message\":\"\\\"requests\\\" is required\"}");
+            Assert.assertEquals(e.getDetail()[1], "{\"field\":[\"request\"],\"message\":\"\\\"request\\\" is not allowed\"}");
+            Assert.assertEquals(e.getMessage(), "VALIDATION:null - Request invalid or malformed. Please check for missing parameters, spelling and casing mistakes, and other syntax issues.");
         }
     }
 }

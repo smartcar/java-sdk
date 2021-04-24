@@ -1,13 +1,8 @@
 package com.smartcar.sdk;
 
-import com.smartcar.sdk.data.*;
 import com.smartcar.sdk.data.VehicleOil;
-import com.smartcar.sdk.data.ApiData;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import com.smartcar.sdk.data.*;
-import javax.json.JsonObject;
-import javax.json.Json;
 
 /**
  * Test Suite: ApiClient

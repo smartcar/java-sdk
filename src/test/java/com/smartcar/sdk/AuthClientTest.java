@@ -20,6 +20,7 @@ import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.testng.PowerMockTestCase;
 import org.powermock.reflect.Whitebox;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import javax.json.Json;
@@ -858,5 +859,23 @@ public class AuthClientTest extends PowerMockTestCase {
     boolean compatibilityWScopes = testSubject.isCompatible("vin", scope);
 
     assertEquals(compatibilityWScopes, expected.getCompatible());
+  }
+
+
+  /**
+   * Tests setting the api version to 2.0 and getting the api url that is used for subsequent requests
+   */
+  @Test
+  public void testSetApiVersion() {
+    AuthClient testSubject = new AuthClient(
+            this.sampleClientId,
+            this.sampleClientSecret,
+            this.sampleRedirectUri,
+            this.sampleTestMode
+    );
+    testSubject.setApiVersion("2.0");
+    String url = AuthClient.getApiUrl();
+    Assert.assertEquals(url, "https://api.smartcar.com/v2.0");
+    testSubject.setApiVersion("1.0");
   }
 }

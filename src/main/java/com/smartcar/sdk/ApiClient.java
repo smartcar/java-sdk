@@ -20,8 +20,8 @@ import java.io.IOException;
 abstract class ApiClient {
   public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
   private static final String SDK_VERSION = ApiClient.getSdkVersion();
-  private static final String API_VERSION = "v1.0";
-  protected static final String URL_API = "https://api.smartcar.com/" + ApiClient.API_VERSION;
+  private static String API_VERSION = "1.0";
+  protected static final String URL_API = "https://api.smartcar.com";
   protected static final String USER_AGENT = String.format(
       "Smartcar/%s (%s; %s) Java v%s %s",
       ApiClient.SDK_VERSION,
@@ -44,8 +44,6 @@ abstract class ApiClient {
 
   static GsonBuilder gson = new GsonBuilder().setFieldNamingStrategy((field) -> toCamelCase(field.getName()));
 
-  public static String urlApi = ApiClient.URL_API;
-
   /**
    * Retrieves the SDK version, falling back to DEVELOPMENT if we're not running
    * from a jar.
@@ -60,6 +58,24 @@ abstract class ApiClient {
     }
 
     return version;
+  }
+  
+  /**
+   * Sets the API version
+   *
+   * @param version API version to set
+   */
+  public void setApiVersion(String version) {
+    ApiClient.API_VERSION = version;
+  }
+
+  /**
+   * Gets the URL used for API requests
+   *
+   * @return
+   */
+  static String getApiUrl() {
+    return ApiClient.URL_API + "/v" + ApiClient.API_VERSION;
   }
 
   /**
@@ -76,6 +92,10 @@ abstract class ApiClient {
       Response response = ApiClient.client.newCall(request).execute();
 
       if(!response.isSuccessful()) {
+        String url = String.valueOf(request.url());
+        if (url.contains("v2.0")) {
+          throw SmartcarExceptionV2.Factory(response);
+        }
         throw SmartcarException.Factory(response);
       }
       else {

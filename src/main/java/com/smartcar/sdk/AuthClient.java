@@ -84,7 +84,7 @@ public class AuthClient extends ApiClient {
   public static String getUserId(String accessToken) throws SmartcarException {
     // Build Request
     Request request = new Request.Builder()
-        .url(HttpUrl.parse(AuthClient.urlApi + "/user"))
+        .url(HttpUrl.parse(AuthClient.getApiUrl() + "/user"))
         .header("Authorization", "Bearer " + accessToken)
         .addHeader("User-Agent", AuthClient.USER_AGENT)
         .build();
@@ -115,7 +115,7 @@ public class AuthClient extends ApiClient {
    */
   public static SmartcarResponse<VehicleIds> getVehicleIds(String accessToken, RequestPaging paging) throws SmartcarException {
     // Build Request
-    HttpUrl.Builder urlBuilder = HttpUrl.parse(AuthClient.urlApi + "/vehicles").newBuilder();
+    HttpUrl.Builder urlBuilder = HttpUrl.parse(AuthClient.getApiUrl() + "/vehicles").newBuilder();
 
     if(paging != null) {
       urlBuilder.addQueryParameter("limit", String.valueOf(paging.getLimit()))
@@ -606,7 +606,8 @@ public class AuthClient extends ApiClient {
    * @throws SmartcarException when the request is unsuccessful
    */
   public boolean isCompatible(String vin, String[] scope, String country) throws SmartcarException {
-    HttpUrl url = HttpUrl.parse(this.urlApi).newBuilder()
+    String apiUrl = this.getApiUrl();
+    HttpUrl url = HttpUrl.parse(apiUrl).newBuilder()
         .addPathSegment("compatibility")
         .addQueryParameter("vin", vin)
         .addQueryParameter("scope", String.join(" ", scope))

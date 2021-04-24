@@ -67,7 +67,7 @@ public class Vehicle extends ApiClient {
    * @throws SmartcarException if the request is unsuccessful
    */
   protected <T extends ApiData> SmartcarResponse<T> call(String path, String method, RequestBody body, Class<T> type) throws SmartcarException {
-    HttpUrl url = HttpUrl.parse(Vehicle.URL_API).newBuilder()
+    HttpUrl url = HttpUrl.parse(Vehicle.getApiUrl()).newBuilder()
         .addPathSegments("vehicles")
         .addPathSegments(this.vehicleId)
         .addPathSegments(path)

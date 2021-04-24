@@ -228,4 +228,15 @@ public class VehicleTest extends IntegrationTest {
     public void testDisconnect() throws SmartcarException {
         this.vehicle.disconnect();
     }
+
+    /**
+     * Tests setting the api version to 2.0 and getting the api url that is used for subsequent requests
+     */
+    @Test
+    public void testSetApiVersion() throws SmartcarException {
+        this.vehicle.setApiVersion("2.0");
+        String url = Vehicle.getApiUrl();
+        Assert.assertEquals(url, "https://api.smartcar.com/v2.0");
+        this.vehicle.setApiVersion("1.0");
+    }
 }

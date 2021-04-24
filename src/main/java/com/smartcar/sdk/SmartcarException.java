@@ -14,11 +14,11 @@ public class SmartcarException extends java.lang.Exception {
 
   static Gson gson = new Gson();
 
-  private int statusCode;
+  protected int statusCode;
   private String error;
   private String message;
-  private String code;
-  private String requestId;
+  protected String code;
+  protected String requestId;
 
   public SmartcarException(int statusCode, String error, String message, String code, String requestId) {
     super(message);

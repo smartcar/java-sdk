@@ -214,6 +214,7 @@ abstract class IntegrationTest {
 
     /**
      * Starts a local ChromeDriver for easier debugging of Selenium tests.
+     * Use -Dselenium.debug=true for debugging
      */
     private void startLocalDriver() {
         this.driver = new ChromeDriver();
