@@ -104,7 +104,7 @@ public class SmartcarExceptionV2Test extends PowerMockTestCase {
     ResponseBody mockResponseBody = mock(ResponseBody.class);
 
     when(mockResponse.body()).thenReturn(mockResponseBody);
-    when(mockResponse.header("Content-Type")).thenReturn("application/json");
+    when(mockResponse.header("Content-Type")).thenReturn("application/json; charset");
     when(mockResponseBody.string()).thenReturn(response);
 
     SmartcarExceptionV2 ex = SmartcarExceptionV2.Factory(mockResponse);

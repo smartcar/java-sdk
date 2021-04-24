@@ -88,7 +88,7 @@ public class SmartcarExceptionV2 extends SmartcarException {
   public String getDocURL() {
     return this.docURL;
   }
-  
+
   /**
    * Returns the error details if available for this exception.
    *
@@ -104,7 +104,7 @@ public class SmartcarExceptionV2 extends SmartcarException {
     String bodyString = response.body().string();
     String contentType = response.header("Content-Type");
 
-    if (contentType.equals("application/json")) {
+    if (contentType.contains("application/json")) {
       body = gson.fromJson(bodyString, JsonObject.class);
     } else {
       // In case the body is a string. Ex. gateway timeout where LB sends a non json body
