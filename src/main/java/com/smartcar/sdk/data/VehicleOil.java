@@ -38,8 +38,6 @@ public class VehicleOil extends ApiData {
    */
   @Override
   public String toString() {
-    return this.getClass().getName() + "{" +
-            "lifeRemaining=" + lifeRemaining +
-            '}';
+    return this.getClass().getName() + "{" + "lifeRemaining=" + lifeRemaining + '}';
   }
 }

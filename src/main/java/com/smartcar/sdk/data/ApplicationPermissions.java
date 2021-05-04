@@ -58,9 +58,12 @@ public class ApplicationPermissions extends ApiData {
 
   @Override
   public String toString() {
-    return this.getClass().getName() + "{" +
-            "paging=" + paging +
-            ", permissions=" + Arrays.toString(permissions) +
-            '}';
+    return this.getClass().getName()
+        + "{"
+        + "paging="
+        + paging
+        + ", permissions="
+        + Arrays.toString(permissions)
+        + '}';
   }
 }

@@ -20,7 +20,11 @@ public class Auth extends ApiData {
    * @param expiration the access token expiration timestamp
    * @param refreshExpiration the refresh token expiration timestamp
    */
-  public Auth(final String accessToken, final String refreshToken, final Date expiration, final Date refreshExpiration) {
+  public Auth(
+      final String accessToken,
+      final String refreshToken,
+      final Date expiration,
+      final Date refreshExpiration) {
     this.accessToken = accessToken;
     this.refreshToken = refreshToken;
     this.expiration = expiration;
@@ -113,11 +117,18 @@ public class Auth extends ApiData {
    */
   @Override
   public String toString() {
-    return this.getClass().getName() + "{" +
-            "accessToken='" + accessToken + '\'' +
-            ", refreshToken='" + refreshToken + '\'' +
-            ", expiration=" + expiration +
-            ", refreshExpiration=" + refreshExpiration +
-            '}';
+    return this.getClass().getName()
+        + "{"
+        + "accessToken='"
+        + accessToken
+        + '\''
+        + ", refreshToken='"
+        + refreshToken
+        + '\''
+        + ", expiration="
+        + expiration
+        + ", refreshExpiration="
+        + refreshExpiration
+        + '}';
   }
 }

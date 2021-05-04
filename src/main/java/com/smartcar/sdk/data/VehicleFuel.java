@@ -18,7 +18,8 @@ public class VehicleFuel extends ApiData {
    * @param amountRemaining - The amount of fuel in the tank (in liters of
    *   gallons (US)). To set unit, {@link com.smartcar.sdk.Vehicle#setUnitSystem(Vehicle.UnitSystem)}.
    */
-  public VehicleFuel(final double range, final double percentRemaining, final double amountRemaining) {
+  public VehicleFuel(
+      final double range, final double percentRemaining, final double amountRemaining) {
     this.range = range;
     this.percentRemaining = percentRemaining;
     this.amountRemaining = amountRemaining;
@@ -83,10 +84,14 @@ public class VehicleFuel extends ApiData {
    */
   @Override
   public String toString() {
-    return this.getClass().getName() + "{" +
-            "range=" + range +
-            "percentRemaining=" + percentRemaining +
-            "amountRemaining=" + amountRemaining +
-            '}';
+    return this.getClass().getName()
+        + "{"
+        + "range="
+        + range
+        + "percentRemaining="
+        + percentRemaining
+        + "amountRemaining="
+        + amountRemaining
+        + '}';
   }
 }

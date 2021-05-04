@@ -60,9 +60,6 @@ public class VehicleCharge extends ApiData {
    */
   @Override
   public String toString() {
-    return this.getClass().getName() + "{" +
-            "state=" + state +
-            "isPluggedIn=" + isPluggedIn +
-            '}';
+    return this.getClass().getName() + "{" + "state=" + state + "isPluggedIn=" + isPluggedIn + '}';
   }
 }

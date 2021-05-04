@@ -59,9 +59,6 @@ public class ResponsePaging extends ApiData {
    */
   @Override
   public String toString() {
-    return this.getClass().getName() + "{" +
-            "count=" + count +
-            ", offset=" + offset +
-            '}';
+    return this.getClass().getName() + "{" + "count=" + count + ", offset=" + offset + '}';
   }
 }

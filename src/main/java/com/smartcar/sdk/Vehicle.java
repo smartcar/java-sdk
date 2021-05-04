@@ -39,7 +39,7 @@ public class Vehicle extends ApiClient {
     this.vehicleId = vehicleId;
     this.accessToken = accessToken;
 
-    if(unitSystem != null) {
+    if (unitSystem != null) {
       this.unitSystem = unitSystem;
     }
   }
@@ -66,20 +66,24 @@ public class Vehicle extends ApiClient {
    *
    * @throws SmartcarException if the request is unsuccessful
    */
-  protected <T extends ApiData> SmartcarResponse<T> call(String path, String method, RequestBody body, Class<T> type) throws SmartcarException {
-    HttpUrl url = HttpUrl.parse(Vehicle.getApiUrl()).newBuilder()
-        .addPathSegments("vehicles")
-        .addPathSegments(this.vehicleId)
-        .addPathSegments(path)
-        .build();
+  protected <T extends ApiData> SmartcarResponse<T> call(
+      String path, String method, RequestBody body, Class<T> type) throws SmartcarException {
+    HttpUrl url =
+        HttpUrl.parse(Vehicle.getApiUrl())
+            .newBuilder()
+            .addPathSegments("vehicles")
+            .addPathSegments(this.vehicleId)
+            .addPathSegments(path)
+            .build();
 
-    Request request = new Request.Builder()
-        .url(url)
-        .header("Authorization", "Bearer " + this.accessToken)
-        .addHeader("User-Agent", Vehicle.USER_AGENT)
-        .method(method, body)
-        .header("SC-Unit-System", this.unitSystem.name().toLowerCase())
-        .build();
+    Request request =
+        new Request.Builder()
+            .url(url)
+            .header("Authorization", "Bearer " + this.accessToken)
+            .addHeader("User-Agent", Vehicle.USER_AGENT)
+            .method(method, body)
+            .header("SC-Unit-System", this.unitSystem.name().toLowerCase())
+            .build();
 
     return Vehicle.execute(request, type);
   }
@@ -130,7 +134,10 @@ public class Vehicle extends ApiClient {
    */
   public String[] permissions() throws SmartcarException {
     if (this.permissions == null) {
-       this.permissions = this.call("permissions", "GET", null, ApplicationPermissions.class).getData().getPermissions();
+      this.permissions =
+          this.call("permissions", "GET", null, ApplicationPermissions.class)
+              .getData()
+              .getPermissions();
     }
     return this.permissions;
   }
@@ -167,7 +174,7 @@ public class Vehicle extends ApiClient {
       List<String> vehiclePermissions = Arrays.asList(this.permissions());
       List<String> requestedPermissions = new ArrayList<>();
 
-      for(String permission: permissions) {
+      for (String permission : permissions) {
         requestedPermissions.add(permission.replaceFirst("^required:", ""));
       }
 
@@ -240,7 +247,7 @@ public class Vehicle extends ApiClient {
   public SmartcarResponse<VehicleBattery> battery() throws SmartcarException {
     return this.call("battery", "GET", null, VehicleBattery.class);
   }
-  
+
   /**
    * Send request to the /battery/capacity endpoint
    *
@@ -280,9 +287,7 @@ public class Vehicle extends ApiClient {
    * @throws SmartcarException if the request is unsuccessful
    */
   public void unlock() throws SmartcarException {
-    JsonObject json = Json.createObjectBuilder()
-      .add("action", "UNLOCK")
-      .build();
+    JsonObject json = Json.createObjectBuilder().add("action", "UNLOCK").build();
 
     RequestBody body = RequestBody.create(JSON, json.toString());
 
@@ -295,9 +300,7 @@ public class Vehicle extends ApiClient {
    * @throws SmartcarException if the request is unsuccessful
    */
   public void lock() throws SmartcarException {
-    JsonObject json = Json.createObjectBuilder()
-      .add("action", "LOCK")
-      .build();
+    JsonObject json = Json.createObjectBuilder().add("action", "LOCK").build();
 
     RequestBody body = RequestBody.create(JSON, json.toString());
 
@@ -310,9 +313,7 @@ public class Vehicle extends ApiClient {
    * @throws SmartcarException if the request is unsuccessful
    */
   public void startCharge() throws SmartcarException {
-    JsonObject json = Json.createObjectBuilder()
-            .add("action", "START")
-            .build();
+    JsonObject json = Json.createObjectBuilder().add("action", "START").build();
 
     RequestBody body = RequestBody.create(JSON, json.toString());
 
@@ -325,9 +326,7 @@ public class Vehicle extends ApiClient {
    * @throws SmartcarException if the request is unsuccessful
    */
   public void stopCharge() throws SmartcarException {
-    JsonObject json = Json.createObjectBuilder()
-            .add("action", "STOP")
-            .build();
+    JsonObject json = Json.createObjectBuilder().add("action", "STOP").build();
 
     RequestBody body = RequestBody.create(JSON, json.toString());
 
@@ -352,18 +351,16 @@ public class Vehicle extends ApiClient {
     }
     JsonArray requests = endpoints.build();
 
-    JsonObject json = Json.createObjectBuilder()
-      .add("requests", requests)
-      .build();
+    JsonObject json = Json.createObjectBuilder().add("requests", requests).build();
 
     this.gson.registerTypeAdapter(BatchResponse.class, new BatchDeserializer());
     RequestBody body = RequestBody.create(JSON, json.toString());
-    SmartcarResponse<BatchResponse> response = this.call("batch", "POST", body, BatchResponse.class);
+    SmartcarResponse<BatchResponse> response =
+        this.call("batch", "POST", body, BatchResponse.class);
     BatchResponse batchResponse = response.getData();
     batchResponse.setRequestId(response.getRequestId());
     return batchResponse;
   }
-
 
   /**
    * Returns the currently stored vehicle ID.

@@ -10,7 +10,10 @@ import java.io.Serializable;
  * The base object representing parsed API response data.
  */
 public class ApiData<T> implements Serializable {
-  private static Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
+  private static Gson gson =
+      new GsonBuilder()
+          .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+          .create();
 
   private T data;
 

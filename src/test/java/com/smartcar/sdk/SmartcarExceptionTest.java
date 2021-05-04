@@ -7,7 +7,6 @@ import okhttp3.ResponseBody;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.testng.PowerMockTestCase;
@@ -21,14 +20,13 @@ import javax.json.Json;
  * Test Suite: SmartcarException
  */
 @PrepareForTest({
-    SmartcarException.class,
-    Gson.class,
-    JsonObject.class,
-    Response.class,
-    ResponseBody.class,
+  SmartcarException.class,
+  Gson.class,
+  JsonObject.class,
+  Response.class,
+  ResponseBody.class,
 })
 @PowerMockIgnore("javax.net.ssl.*")
-
 public class SmartcarExceptionTest extends PowerMockTestCase {
   /**
    * Test throwing an SmartcarException with a message.
@@ -39,8 +37,7 @@ public class SmartcarExceptionTest extends PowerMockTestCase {
 
     try {
       throw new SmartcarException(testMessage);
-    }
-    catch (SmartcarException ex) {
+    } catch (SmartcarException ex) {
       Assert.assertEquals(ex.getMessage(), testMessage);
     }
   }
@@ -56,7 +53,8 @@ public class SmartcarExceptionTest extends PowerMockTestCase {
     String expectedRequestId = "011660dc-8322-4064-a972-53826c8dff9c";
     int expectedStatusCode = 200;
 
-    String response = Json.createObjectBuilder()
+    String response =
+        Json.createObjectBuilder()
             .add("error", expectedError)
             .add("message", expectedMessage)
             .add("code", expectedCode)
@@ -86,10 +84,8 @@ public class SmartcarExceptionTest extends PowerMockTestCase {
   @Test
   public void testSmartcarExceptionFactoryWithErrorDescription() throws Exception {
     String expectedMessage = "expected message";
-    String response = Json.createObjectBuilder()
-              .add("error_description", expectedMessage)
-              .build()
-              .toString();
+    String response =
+        Json.createObjectBuilder().add("error_description", expectedMessage).build().toString();
     Response mockResponse = mock(Response.class);
     ResponseBody mockResponseBody = mock(ResponseBody.class);
 
@@ -107,10 +103,7 @@ public class SmartcarExceptionTest extends PowerMockTestCase {
   @Test
   public void testSmartcarExceptionFactoryWithMessage() throws Exception {
     String expectedMessage = "expected message";
-    String response = Json.createObjectBuilder()
-              .add("message", expectedMessage)
-              .build()
-              .toString();
+    String response = Json.createObjectBuilder().add("message", expectedMessage).build().toString();
     Response mockResponse = mock(Response.class);
     ResponseBody mockResponseBody = mock(ResponseBody.class);
 

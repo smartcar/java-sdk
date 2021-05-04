@@ -18,10 +18,10 @@ public class VehicleInfo extends ApiData {
    * @param year year of the vehicle
    */
   public VehicleInfo(final String id, final String make, final String model, final int year) {
-     this.id = id;
-     this.make = make;
-     this.model = model;
-     this.year = year;
+    this.id = id;
+    this.make = make;
+    this.model = model;
+    this.year = year;
   }
 
   /**
@@ -101,11 +101,19 @@ public class VehicleInfo extends ApiData {
    */
   @Override
   public String toString() {
-    return this.getClass().getName() + "{" +
-            "id='" + id + '\'' +
-            ", make='" + make + '\'' +
-            ", model='" + model + '\'' +
-            ", year=" + year +
-            '}';
+    return this.getClass().getName()
+        + "{"
+        + "id='"
+        + id
+        + '\''
+        + ", make='"
+        + make
+        + '\''
+        + ", model='"
+        + model
+        + '\''
+        + ", year="
+        + year
+        + '}';
   }
 }

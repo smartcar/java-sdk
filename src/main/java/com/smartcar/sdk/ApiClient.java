@@ -22,27 +22,27 @@ abstract class ApiClient {
   private static final String SDK_VERSION = ApiClient.getSdkVersion();
   private static String API_VERSION = "1.0";
   protected static final String URL_API = "https://api.smartcar.com";
-  protected static final String USER_AGENT = String.format(
-      "Smartcar/%s (%s; %s) Java v%s %s",
-      ApiClient.SDK_VERSION,
-      System.getProperty("os.name"),
-      System.getProperty("os.arch"),
-      System.getProperty("java.version"),
-      System.getProperty("java.vm.name")
-  );
+  protected static final String USER_AGENT =
+      String.format(
+          "Smartcar/%s (%s; %s) Java v%s %s",
+          ApiClient.SDK_VERSION,
+          System.getProperty("os.name"),
+          System.getProperty("os.arch"),
+          System.getProperty("java.version"),
+          System.getProperty("java.vm.name"));
 
-  private static OkHttpClient client = new OkHttpClient.Builder()
-    .readTimeout(310, TimeUnit.SECONDS)
-    .build();
+  private static OkHttpClient client =
+      new OkHttpClient.Builder().readTimeout(310, TimeUnit.SECONDS).build();
 
   private static String toCamelCase(String fieldName) {
     if (fieldName.contains("_")) { // checks for snake case
-      return CaseUtils.toCamelCase(fieldName, false, new char[]{'_'});
+      return CaseUtils.toCamelCase(fieldName, false, new char[] {'_'});
     }
     return fieldName;
   }
 
-  static GsonBuilder gson = new GsonBuilder().setFieldNamingStrategy((field) -> toCamelCase(field.getName()));
+  static GsonBuilder gson =
+      new GsonBuilder().setFieldNamingStrategy((field) -> toCamelCase(field.getName()));
 
   /**
    * Retrieves the SDK version, falling back to DEVELOPMENT if we're not running
@@ -53,13 +53,13 @@ abstract class ApiClient {
   private static String getSdkVersion() {
     String version = ApiClient.class.getPackage().getImplementationVersion();
 
-    if(version == null) {
+    if (version == null) {
       version = "DEVELOPMENT";
     }
 
     return version;
   }
-  
+
   /**
    * Sets the API version
    *
@@ -91,14 +91,13 @@ abstract class ApiClient {
     try {
       Response response = ApiClient.client.newCall(request).execute();
 
-      if(!response.isSuccessful()) {
+      if (!response.isSuccessful()) {
         String url = String.valueOf(request.url());
         if (url.contains("v2.0")) {
           throw SmartcarExceptionV2.Factory(response);
         }
         throw SmartcarException.Factory(response);
-      }
-      else {
+      } else {
         return response;
       }
     } catch (IOException ex) {
@@ -118,7 +117,8 @@ abstract class ApiClient {
    *
    * @throws SmartcarException if the request is unsuccessful
    */
-  protected static <T extends ApiData> SmartcarResponse<T> execute(Request request, Class<T> dataType) throws SmartcarException {
+  protected static <T extends ApiData> SmartcarResponse<T> execute(
+      Request request, Class<T> dataType) throws SmartcarException {
     Response response = ApiClient.execute(request);
     String body = null;
 

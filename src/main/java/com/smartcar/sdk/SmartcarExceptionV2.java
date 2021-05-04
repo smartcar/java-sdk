@@ -19,7 +19,15 @@ public class SmartcarExceptionV2 extends SmartcarException {
   private String[] detail;
   private String docURL;
 
-  public SmartcarExceptionV2(String type, String code, String description, String resolution, String[] detail, String docURL, int statusCode, String requestId) {
+  public SmartcarExceptionV2(
+      String type,
+      String code,
+      String description,
+      String resolution,
+      String[] detail,
+      String docURL,
+      int statusCode,
+      String requestId) {
     super(description);
     this.type = type;
     this.code = code;
@@ -97,7 +105,6 @@ public class SmartcarExceptionV2 extends SmartcarException {
   public String[] getDetail() {
     return this.detail;
   }
-
 
   public static SmartcarExceptionV2 Factory(final Response response) throws IOException {
     JsonObject body = new JsonObject();

@@ -20,7 +20,8 @@ public class SmartcarResponse<T extends ApiData> extends ApiData {
    * @param age age of the response
    * @param paging the paging information included with the response
    */
-  public SmartcarResponse(final T data, final String unitSystem, final Date age, final ResponsePaging paging) {
+  public SmartcarResponse(
+      final T data, final String unitSystem, final Date age, final ResponsePaging paging) {
     this.data = data;
     this.unitSystem = unitSystem;
     this.age = age;
@@ -49,10 +50,10 @@ public class SmartcarResponse<T extends ApiData> extends ApiData {
   }
 
   /**
-  * Initializes an instance of SmartcarResponse
-  *
-  * @param data  Object extending the ApiData
-  */
+   * Initializes an instance of SmartcarResponse
+   *
+   * @param data  Object extending the ApiData
+   */
   public SmartcarResponse(final T data) {
     this(data, null, null);
   }
@@ -152,12 +153,19 @@ public class SmartcarResponse<T extends ApiData> extends ApiData {
    */
   @Override
   public String toString() {
-    return this.getClass().getName() + "{" +
-            "data=" + data +
-            ", unitSystem='" + unitSystem + '\'' +
-            ", age=" + age +
-            ", requestId=" + requestId +
-            ", paging=" + paging +
-            '}';
+    return this.getClass().getName()
+        + "{"
+        + "data="
+        + data
+        + ", unitSystem='"
+        + unitSystem
+        + '\''
+        + ", age="
+        + age
+        + ", requestId="
+        + requestId
+        + ", paging="
+        + paging
+        + '}';
   }
 }

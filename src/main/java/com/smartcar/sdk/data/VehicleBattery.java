@@ -61,9 +61,12 @@ public class VehicleBattery extends ApiData {
    */
   @Override
   public String toString() {
-    return this.getClass().getName() + "{" +
-            "range=" + range +
-            "percentRemaining=" + percentRemaining +
-            '}';
+    return this.getClass().getName()
+        + "{"
+        + "range="
+        + range
+        + "percentRemaining="
+        + percentRemaining
+        + '}';
   }
 }
