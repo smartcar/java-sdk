@@ -20,7 +20,8 @@ public class SmartcarException extends java.lang.Exception {
   protected String code;
   protected String requestId;
 
-  public SmartcarException(int statusCode, String error, String message, String code, String requestId) {
+  public SmartcarException(
+      int statusCode, String error, String message, String code, String requestId) {
     super(message);
     this.message = message;
     this.code = code;
@@ -37,7 +38,6 @@ public class SmartcarException extends java.lang.Exception {
   public SmartcarException(final String message) {
     this.message = message;
   }
-
 
   /**
    * Returns the vehicle state error code associated with the SmartcarException.
@@ -91,15 +91,12 @@ public class SmartcarException extends java.lang.Exception {
       body = gson.fromJson(bodyString, JsonObject.class);
     } catch (com.google.gson.JsonParseException exception) {
       // In case the body is a string. Ex. gateway timeout where LB sends a non json body
-      String errorBody = Json.createObjectBuilder()
-              .add("message", bodyString)
-              .build().toString();
+      String errorBody = Json.createObjectBuilder().add("message", bodyString).build().toString();
       body = gson.fromJson(errorBody, JsonObject.class);
     } catch (Exception exception) {
       // Any other exception converting it to SmartcarException
-      String errorBody = Json.createObjectBuilder()
-              .add("message", exception.getMessage())
-              .build().toString();
+      String errorBody =
+          Json.createObjectBuilder().add("message", exception.getMessage()).build().toString();
       body = gson.fromJson(errorBody, JsonObject.class);
     }
 

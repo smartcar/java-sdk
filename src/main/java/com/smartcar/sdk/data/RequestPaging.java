@@ -59,9 +59,6 @@ public class RequestPaging extends ApiData {
    */
   @Override
   public String toString() {
-    return this.getClass().getName() + "{" +
-            "limit=" + limit +
-            ", offset=" + offset +
-            '}';
+    return this.getClass().getName() + "{" + "limit=" + limit + ", offset=" + offset + '}';
   }
 }

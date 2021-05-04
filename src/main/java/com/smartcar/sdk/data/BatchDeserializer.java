@@ -19,11 +19,12 @@ import java.lang.reflect.Type;
  * from /batch. This method allows us to send the JSON data through the
  * BatchResponse constructor.
  *
-*/
+ */
 public class BatchDeserializer implements JsonDeserializer<BatchResponse> {
-    public BatchResponse deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
-        JsonObject fullResponse = json.getAsJsonObject();
-        JsonElement responsesElement = fullResponse.get("responses");
-        return new BatchResponse(responsesElement.getAsJsonArray());
-    }
+  public BatchResponse deserialize(
+      JsonElement json, Type typeOfT, JsonDeserializationContext context) {
+    JsonObject fullResponse = json.getAsJsonObject();
+    JsonElement responsesElement = fullResponse.get("responses");
+    return new BatchResponse(responsesElement.getAsJsonArray());
   }
+}

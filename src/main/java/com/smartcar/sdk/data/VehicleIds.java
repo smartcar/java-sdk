@@ -40,8 +40,6 @@ public class VehicleIds extends ApiData {
    */
   @Override
   public String toString() {
-    return this.getClass().getName() + "{" +
-            "vehicleIds=" + Arrays.toString(vehicleIds) +
-            '}';
+    return this.getClass().getName() + "{" + "vehicleIds=" + Arrays.toString(vehicleIds) + '}';
   }
 }

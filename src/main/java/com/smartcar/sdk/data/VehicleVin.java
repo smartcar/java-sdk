@@ -38,8 +38,6 @@ public class VehicleVin extends ApiData {
    */
   @Override
   public String toString() {
-    return this.getClass().getName() + "{" +
-            "vin='" + vin + '\'' +
-            '}';
+    return this.getClass().getName() + "{" + "vin='" + vin + '\'' + '}';
   }
 }

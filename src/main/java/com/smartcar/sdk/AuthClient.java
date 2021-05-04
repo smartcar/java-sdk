@@ -55,8 +55,7 @@ public class AuthClient extends ApiClient {
           jsonObject.get("access_token").getAsString(),
           jsonObject.get("refresh_token").getAsString(),
           expiration.getTime(),
-          refreshExpiration.getTime()
-      );
+          refreshExpiration.getTime());
     }
   }
 
@@ -83,11 +82,12 @@ public class AuthClient extends ApiClient {
    */
   public static String getUserId(String accessToken) throws SmartcarException {
     // Build Request
-    Request request = new Request.Builder()
-        .url(HttpUrl.parse(AuthClient.getApiUrl() + "/user"))
-        .header("Authorization", "Bearer " + accessToken)
-        .addHeader("User-Agent", AuthClient.USER_AGENT)
-        .build();
+    Request request =
+        new Request.Builder()
+            .url(HttpUrl.parse(AuthClient.getApiUrl() + "/user"))
+            .header("Authorization", "Bearer " + accessToken)
+            .addHeader("User-Agent", AuthClient.USER_AGENT)
+            .build();
 
     // Execute Request
     Response response = AuthClient.execute(request);
@@ -113,21 +113,24 @@ public class AuthClient extends ApiClient {
    *
    * @throws SmartcarException if the request is unsuccessful
    */
-  public static SmartcarResponse<VehicleIds> getVehicleIds(String accessToken, RequestPaging paging) throws SmartcarException {
+  public static SmartcarResponse<VehicleIds> getVehicleIds(String accessToken, RequestPaging paging)
+      throws SmartcarException {
     // Build Request
     HttpUrl.Builder urlBuilder = HttpUrl.parse(AuthClient.getApiUrl() + "/vehicles").newBuilder();
 
-    if(paging != null) {
-      urlBuilder.addQueryParameter("limit", String.valueOf(paging.getLimit()))
+    if (paging != null) {
+      urlBuilder
+          .addQueryParameter("limit", String.valueOf(paging.getLimit()))
           .addQueryParameter("offset", String.valueOf(paging.getOffset()));
     }
 
     HttpUrl url = urlBuilder.build();
-    Request request = new Request.Builder()
-        .url(url)
-        .header("Authorization", "Bearer " + accessToken)
-        .addHeader("User-Agent", AuthClient.USER_AGENT)
-        .build();
+    Request request =
+        new Request.Builder()
+            .url(url)
+            .header("Authorization", "Bearer " + accessToken)
+            .addHeader("User-Agent", AuthClient.USER_AGENT)
+            .build();
 
     // Execute Request
     Response response = AuthClient.execute(request);
@@ -142,7 +145,8 @@ public class AuthClient extends ApiClient {
     }
 
     JsonObject jsonPaging = json.get("paging").getAsJsonObject();
-    ResponsePaging responsePaging = new ResponsePaging(jsonPaging.get("count").getAsInt(), jsonPaging.get("offset").getAsInt());
+    ResponsePaging responsePaging =
+        new ResponsePaging(jsonPaging.get("count").getAsInt(), jsonPaging.get("offset").getAsInt());
     JsonArray vehicles = json.get("vehicles").getAsJsonArray();
     int count = vehicles.size();
     String[] data = new String[count];
@@ -163,7 +167,8 @@ public class AuthClient extends ApiClient {
    *
    * @throws SmartcarException if the request is unsuccessful
    */
-  public static SmartcarResponse<VehicleIds> getVehicleIds(String accessToken) throws SmartcarException {
+  public static SmartcarResponse<VehicleIds> getVehicleIds(String accessToken)
+      throws SmartcarException {
     return AuthClient.getVehicleIds(accessToken, null);
   }
 
@@ -187,7 +192,8 @@ public class AuthClient extends ApiClient {
    * @param scope the permission scope requested
    * @param testMode launch the Smartcar auth flow in test mode
    */
-  public AuthClient(String clientId, String clientSecret, String redirectUri, String[] scope, boolean testMode) {
+  public AuthClient(
+      String clientId, String clientSecret, String redirectUri, String[] scope, boolean testMode) {
     this.clientId = clientId;
     this.basicAuthorization = Credentials.basic(clientId, clientSecret);
     this.redirectUri = redirectUri;
@@ -251,13 +257,14 @@ public class AuthClient extends ApiClient {
    * @throws SmartcarException if the API request fails
    */
   private Auth call(RequestBody requestBody) throws SmartcarException {
-    Request request = new Request.Builder()
-        .url(this.urlAccessToken)
-        .header("Authorization", this.basicAuthorization)
-        .header("Content-Type", "application/x-www-form-urlencoded")
-        .addHeader("User-Agent", AuthClient.USER_AGENT)
-        .post(requestBody)
-        .build();
+    Request request =
+        new Request.Builder()
+            .url(this.urlAccessToken)
+            .header("Authorization", this.basicAuthorization)
+            .header("Content-Type", "application/x-www-form-urlencoded")
+            .addHeader("User-Agent", AuthClient.USER_AGENT)
+            .post(requestBody)
+            .build();
 
     return AuthClient.execute(request, Auth.class).getData();
   }
@@ -277,15 +284,15 @@ public class AuthClient extends ApiClient {
      *
      * @param builder the builder to obtain the properties from
      */
-    private AuthVehicleInfo (Builder builder) {
+    private AuthVehicleInfo(Builder builder) {
       this.make = builder.make;
     }
 
     /**
-    * Returns the make assigned to AuthVehicleInfo
-    *
-    * @return the make of the vehicle
-    */
+     * Returns the make assigned to AuthVehicleInfo
+     *
+     * @return the make of the vehicle
+     */
     public String getMake() {
       return this.make;
     }
@@ -329,7 +336,9 @@ public class AuthClient extends ApiClient {
     private HttpUrl.Builder urlBuilder;
 
     public AuthUrlBuilder() {
-      urlBuilder = HttpUrl.parse(AuthClient.this.urlAuthorize).newBuilder()
+      urlBuilder =
+          HttpUrl.parse(AuthClient.this.urlAuthorize)
+              .newBuilder()
               .addQueryParameter("response_type", "code")
               .addQueryParameter("client_id", AuthClient.this.clientId)
               .addQueryParameter("redirect_uri", AuthClient.this.redirectUri)
@@ -360,11 +369,12 @@ public class AuthClient extends ApiClient {
       urlBuilder.addQueryParameter("single_select", Boolean.toString(singleSelect));
       return this;
     }
+
     public AuthUrlBuilder setSingleSelectVin(String vin) {
       urlBuilder.addQueryParameter("single_select_vin", vin);
       return this;
     }
- 
+
     public AuthUrlBuilder setFlags(String[] flags) {
       urlBuilder.addQueryParameter("flags", Utils.join(flags, " "));
       return this;
@@ -389,28 +399,30 @@ public class AuthClient extends ApiClient {
    */
   @Deprecated
   public String getAuthUrl(String state, boolean forcePrompt, AuthVehicleInfo authVehicleInfo) {
-    HttpUrl.Builder urlBuilder = HttpUrl.parse(this.urlAuthorize).newBuilder()
-        .addQueryParameter("response_type", "code")
-        .addQueryParameter("client_id", this.clientId)
-        .addQueryParameter("redirect_uri", this.redirectUri)
-        .addQueryParameter("approval_prompt", forcePrompt ? "force" : "auto");
+    HttpUrl.Builder urlBuilder =
+        HttpUrl.parse(this.urlAuthorize)
+            .newBuilder()
+            .addQueryParameter("response_type", "code")
+            .addQueryParameter("client_id", this.clientId)
+            .addQueryParameter("redirect_uri", this.redirectUri)
+            .addQueryParameter("approval_prompt", forcePrompt ? "force" : "auto");
 
-    if(state != null) {
+    if (state != null) {
       urlBuilder.addQueryParameter("state", state);
     }
 
-    if(this.scope != null) {
+    if (this.scope != null) {
       urlBuilder.addQueryParameter("scope", Utils.join(this.scope, " "));
     }
 
-    if(this.testMode) {
+    if (this.testMode) {
       urlBuilder.addQueryParameter("mode", "test");
     } else {
       urlBuilder.addQueryParameter("mode", "live");
     }
 
-    if(authVehicleInfo != null) {
-      if(authVehicleInfo.getMake() != null) {
+    if (authVehicleInfo != null) {
+      if (authVehicleInfo.getMake() != null) {
         urlBuilder.addQueryParameter("make", authVehicleInfo.getMake());
       }
     }
@@ -530,11 +542,12 @@ public class AuthClient extends ApiClient {
    * @throws SmartcarException when the request is unsuccessful
    */
   public Auth exchangeCode(String code) throws SmartcarException {
-    RequestBody requestBody = new FormBody.Builder()
-        .add("grant_type", "authorization_code")
-        .add("code", code)
-        .add("redirect_uri", this.redirectUri)
-        .build();
+    RequestBody requestBody =
+        new FormBody.Builder()
+            .add("grant_type", "authorization_code")
+            .add("code", code)
+            .add("redirect_uri", this.redirectUri)
+            .build();
 
     return this.call(requestBody);
   }
@@ -549,10 +562,11 @@ public class AuthClient extends ApiClient {
    * @throws SmartcarException when the request is unsuccessful
    */
   public Auth exchangeRefreshToken(String refreshToken) throws SmartcarException {
-    RequestBody requestBody = new FormBody.Builder()
-        .add("grant_type", "refresh_token")
-        .add("refresh_token", refreshToken)
-        .build();
+    RequestBody requestBody =
+        new FormBody.Builder()
+            .add("grant_type", "refresh_token")
+            .add("refresh_token", refreshToken)
+            .build();
 
     return this.call(requestBody);
   }
@@ -582,7 +596,7 @@ public class AuthClient extends ApiClient {
     return isCompatible(vin, scope, "US");
   }
 
-    /**
+  /**
    * Determine if a vehicle is compatible with the Smartcar API and the provided permissions for
    * the specified country.
    * A compatible vehicle is a vehicle that:
@@ -607,22 +621,23 @@ public class AuthClient extends ApiClient {
    */
   public boolean isCompatible(String vin, String[] scope, String country) throws SmartcarException {
     String apiUrl = this.getApiUrl();
-    HttpUrl url = HttpUrl.parse(apiUrl).newBuilder()
-        .addPathSegment("compatibility")
-        .addQueryParameter("vin", vin)
-        .addQueryParameter("scope", String.join(" ", scope))
-        .addQueryParameter("country", country)
-        .build();
+    HttpUrl url =
+        HttpUrl.parse(apiUrl)
+            .newBuilder()
+            .addPathSegment("compatibility")
+            .addQueryParameter("vin", vin)
+            .addQueryParameter("scope", String.join(" ", scope))
+            .addQueryParameter("country", country)
+            .build();
 
-    Request request = new Request.Builder()
-        .url(url)
-        .header("Authorization", this.basicAuthorization)
-        .addHeader("User-Agent", AuthClient.USER_AGENT)
-        .get()
-        .build();
+    Request request =
+        new Request.Builder()
+            .url(url)
+            .header("Authorization", this.basicAuthorization)
+            .addHeader("User-Agent", AuthClient.USER_AGENT)
+            .get()
+            .build();
 
-    return AuthClient.execute(request, Compatibility.class)
-    	  .getData().getCompatible();
+    return AuthClient.execute(request, Compatibility.class).getData().getCompatible();
   }
 }
-

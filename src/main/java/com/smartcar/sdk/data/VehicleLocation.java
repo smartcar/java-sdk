@@ -59,9 +59,12 @@ public class VehicleLocation extends ApiData {
    */
   @Override
   public String toString() {
-    return this.getClass().getName() + "{" +
-            "latitude=" + latitude +
-            ", longitude=" + longitude +
-            '}';
+    return this.getClass().getName()
+        + "{"
+        + "latitude="
+        + latitude
+        + ", longitude="
+        + longitude
+        + '}';
   }
 }

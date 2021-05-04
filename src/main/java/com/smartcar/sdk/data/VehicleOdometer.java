@@ -38,8 +38,6 @@ public class VehicleOdometer extends ApiData {
    */
   @Override
   public String toString() {
-    return this.getClass().getName() + "{" +
-            "distance=" + distance +
-            '}';
+    return this.getClass().getName() + "{" + "distance=" + distance + '}';
   }
 }

@@ -46,14 +46,14 @@ import static org.testng.Assert.*;
  * Test Suite: AuthClient
  */
 @PrepareForTest({
-    AuthClient.class,
-    Gson.class,
-    HttpUrl.class,
-    JsonArray.class,
-    JsonObject.class,
-    Request.class,
-    Response.class,
-    ResponseBody.class
+  AuthClient.class,
+  Gson.class,
+  HttpUrl.class,
+  JsonArray.class,
+  JsonObject.class,
+  Request.class,
+  Response.class,
+  ResponseBody.class
 })
 @PowerMockIgnore("javax.net.ssl.*")
 public class AuthClientTest extends PowerMockTestCase {
@@ -68,11 +68,8 @@ public class AuthClientTest extends PowerMockTestCase {
   // Sample AuthClient.getAuthUrl Args
   private final String sampleState = "s4mpl3st4t3";
   private final boolean sampleForcePrompt = true;
-  private final AuthClient.AuthVehicleInfo sampleAuthVehicleInfo = new AuthClient.AuthVehicleInfo.Builder()
-    .setMake("TESLA")
-    .build();
-
-
+  private final AuthClient.AuthVehicleInfo sampleAuthVehicleInfo =
+      new AuthClient.AuthVehicleInfo.Builder().setMake("TESLA").build();
 
   // Sample AuthClient.exchangeCode Arg
   private final String sampleCode = "";
@@ -94,13 +91,13 @@ public class AuthClientTest extends PowerMockTestCase {
    */
   @BeforeMethod
   private void beforeMethod() {
-    this.subject = new AuthClient(
-        this.sampleClientId,
-        this.sampleClientSecret,
-        this.sampleRedirectUri,
-        this.sampleScope,
-        this.sampleTestMode
-    );
+    this.subject =
+        new AuthClient(
+            this.sampleClientId,
+            this.sampleClientSecret,
+            this.sampleRedirectUri,
+            this.sampleScope,
+            this.sampleTestMode);
   }
 
   /**
@@ -113,7 +110,7 @@ public class AuthClientTest extends PowerMockTestCase {
     // Setup
     String expectedUserId = "9c58a58f-579e-4fce-b2fc-53a518271b8c";
 
-    // Mock: okhttp 
+    // Mock: okhttp
     mockStatic(HttpUrl.class);
     Request.Builder mockBuilder = mock(Request.Builder.class);
     Request mockRequest = mock(Request.class);
@@ -127,10 +124,7 @@ public class AuthClientTest extends PowerMockTestCase {
     Response mockResponse = mock(Response.class);
     ResponseBody mockResponseBody = mock(ResponseBody.class);
 
-    String response = Json.createObjectBuilder()
-            .add("id", expectedUserId)
-            .build()
-            .toString();
+    String response = Json.createObjectBuilder().add("id", expectedUserId).build().toString();
 
     when(mockResponse.body()).thenReturn(mockResponseBody);
     when(mockResponseBody.string()).thenReturn(response);
@@ -168,8 +162,8 @@ public class AuthClientTest extends PowerMockTestCase {
     ResponseBody mockResponseBody = mock(ResponseBody.class);
 
     // Mock: ApiClient.execute()
-     spy(ApiClient.class);
-     doReturn(mockResponse).when(ApiClient.class, "execute", mockRequest);
+    spy(ApiClient.class);
+    doReturn(mockResponse).when(ApiClient.class, "execute", mockRequest);
 
     when(mockResponse.body()).thenReturn(mockResponseBody);
     when(mockResponseBody.string()).thenThrow(IOException.class);
@@ -177,7 +171,7 @@ public class AuthClientTest extends PowerMockTestCase {
     // Execute
     try {
       AuthClient.getUserId(this.fakeAccessToken);
-    } catch(Exception e) {
+    } catch (Exception e) {
       assertEquals(e.getClass(), SmartcarException.class);
     }
   }
@@ -212,7 +206,7 @@ public class AuthClientTest extends PowerMockTestCase {
     // Execute
     try {
       AuthClient.getUserId(this.fakeAccessToken);
-    } catch(Exception e) {
+    } catch (Exception e) {
       assertEquals(e.getClass(), NullPointerException.class);
     }
   }
@@ -225,12 +219,13 @@ public class AuthClientTest extends PowerMockTestCase {
   @Test
   public void testGetVehicleIds() throws Exception {
     // Setup
-    String[] expectedVehicleIds = new String[]{
-        "9f3a9f2b-1ee2-41ea-a1ae-a06a527282ad",
-        "219fac76-40c7-401d-92b5-d3a1f85bb89e",
-        "c66f9e9d-08f1-4050-bec5-06e4ed677305",
-        "33e10fcb-71f7-4661-94ad-6c87e1f5a2fe"
-    };
+    String[] expectedVehicleIds =
+        new String[] {
+          "9f3a9f2b-1ee2-41ea-a1ae-a06a527282ad",
+          "219fac76-40c7-401d-92b5-d3a1f85bb89e",
+          "c66f9e9d-08f1-4050-bec5-06e4ed677305",
+          "33e10fcb-71f7-4661-94ad-6c87e1f5a2fe"
+        };
     int expectedCount = expectedVehicleIds.length;
     int expectedOffset = 0;
 
@@ -244,7 +239,8 @@ public class AuthClientTest extends PowerMockTestCase {
 
     when(HttpUrl.parse(any(String.class))).thenReturn(mockUrl);
     when(mockUrl.newBuilder()).thenReturn(mockUrlBuilder);
-    when(mockUrlBuilder.addQueryParameter(any(String.class), any(String.class))).thenReturn(mockUrlBuilder);
+    when(mockUrlBuilder.addQueryParameter(any(String.class), any(String.class)))
+        .thenReturn(mockUrlBuilder);
     when(mockUrlBuilder.build()).thenReturn(mockUrl);
 
     Request.Builder mockRequestBuilder = mock(Request.Builder.class);
@@ -252,8 +248,10 @@ public class AuthClientTest extends PowerMockTestCase {
 
     whenNew(Request.Builder.class).withNoArguments().thenReturn(mockRequestBuilder);
     when(mockRequestBuilder.url(any(HttpUrl.class))).thenReturn(mockRequestBuilder);
-    when(mockRequestBuilder.header(any(String.class), any(String.class))).thenReturn(mockRequestBuilder);
-    when(mockRequestBuilder.addHeader(any(String.class), any(String.class))).thenReturn(mockRequestBuilder);
+    when(mockRequestBuilder.header(any(String.class), any(String.class)))
+        .thenReturn(mockRequestBuilder);
+    when(mockRequestBuilder.addHeader(any(String.class), any(String.class)))
+        .thenReturn(mockRequestBuilder);
     when(mockRequestBuilder.build()).thenReturn(mockRequest);
 
     Response mockResponse = mock(Response.class);
@@ -294,7 +292,7 @@ public class AuthClientTest extends PowerMockTestCase {
 
     JsonElement[] mockJsonElements = new JsonElement[expectedCount];
 
-    for(int i = 0; i < expectedCount; i++) {
+    for (int i = 0; i < expectedCount; i++) {
       mockJsonElements[i] = mock(JsonElement.class);
 
       when(mockJsonElements[i].getAsString()).thenReturn(expectedVehicleIds[i]);
@@ -302,7 +300,8 @@ public class AuthClientTest extends PowerMockTestCase {
     }
 
     // Execute
-    SmartcarResponse<VehicleIds> actual = AuthClient.getVehicleIds(this.fakeAccessToken, mockRequestPaging);
+    SmartcarResponse<VehicleIds> actual =
+        AuthClient.getVehicleIds(this.fakeAccessToken, mockRequestPaging);
 
     // Assert
     assertEquals(actual.getData().getVehicleIds(), expectedVehicleIds);
@@ -329,7 +328,8 @@ public class AuthClientTest extends PowerMockTestCase {
 
     when(HttpUrl.parse(any(String.class))).thenReturn(mockUrl);
     when(mockUrl.newBuilder()).thenReturn(mockUrlBuilder);
-    when(mockUrlBuilder.addQueryParameter(any(String.class), any(String.class))).thenReturn(mockUrlBuilder);
+    when(mockUrlBuilder.addQueryParameter(any(String.class), any(String.class)))
+        .thenReturn(mockUrlBuilder);
     when(mockUrlBuilder.build()).thenReturn(mockUrl);
 
     Request.Builder mockRequestBuilder = mock(Request.Builder.class);
@@ -337,8 +337,10 @@ public class AuthClientTest extends PowerMockTestCase {
 
     whenNew(Request.Builder.class).withNoArguments().thenReturn(mockRequestBuilder);
     when(mockRequestBuilder.url(any(HttpUrl.class))).thenReturn(mockRequestBuilder);
-    when(mockRequestBuilder.header(any(String.class), any(String.class))).thenReturn(mockRequestBuilder);
-    when(mockRequestBuilder.addHeader(any(String.class), any(String.class))).thenReturn(mockRequestBuilder);
+    when(mockRequestBuilder.header(any(String.class), any(String.class)))
+        .thenReturn(mockRequestBuilder);
+    when(mockRequestBuilder.addHeader(any(String.class), any(String.class)))
+        .thenReturn(mockRequestBuilder);
     when(mockRequestBuilder.build()).thenReturn(mockRequest);
 
     Response mockResponse = mock(Response.class);
@@ -354,7 +356,7 @@ public class AuthClientTest extends PowerMockTestCase {
     // Execute
     try {
       AuthClient.getVehicleIds(this.fakeAccessToken, mockRequestPaging);
-    } catch(Exception e) {
+    } catch (Exception e) {
       assertEquals(e.getClass(), SmartcarException.class);
     }
   }
@@ -369,11 +371,14 @@ public class AuthClientTest extends PowerMockTestCase {
    * @throws ClassNotFoundException if the custom deserializer cannot be found
    */
   @Test
-  public void testAuthCustomDeserializer() throws IllegalAccessException, InvocationTargetException, InstantiationException, ClassNotFoundException {
+  public void testAuthCustomDeserializer()
+      throws IllegalAccessException, InvocationTargetException, InstantiationException,
+          ClassNotFoundException {
     // Setup
     Class clazz = Whitebox.getInnerClassType(AuthClient.class, "AuthDeserializer");
     Constructor constructor = Whitebox.getConstructor(clazz, AuthClient.class);
-    JsonDeserializer<Auth> authDeserializer = (JsonDeserializer<Auth>) constructor.newInstance(this.subject);
+    JsonDeserializer<Auth> authDeserializer =
+        (JsonDeserializer<Auth>) constructor.newInstance(this.subject);
 
     // Mock: JsonElement
     JsonElement mockJson = mock(JsonElement.class);
@@ -416,40 +421,46 @@ public class AuthClientTest extends PowerMockTestCase {
    */
   @Test
   public void testAuthClientConstructorTestModeWithAllValidArgsProducesExpectedAuthUrl() {
-    AuthClient testSubject = new AuthClient(
-        this.sampleClientId,
-        this.sampleClientSecret,
-        this.sampleRedirectUri,
-        this.sampleScope,
-        this.sampleTestMode
-    );
-    String expectedAuthUrl = "https://connect.smartcar.com/oauth/authorize" +
-        "?response_type=code" +
-        "&client_id=" + this.sampleClientId +
-        "&redirect_uri=" + this.sampleRedirectUriEncoded +
-        "&approval_prompt=auto" +
-        "&scope=read_vehicle_info%20read_location%20read_odometer" +
-        "&mode=test";
+    AuthClient testSubject =
+        new AuthClient(
+            this.sampleClientId,
+            this.sampleClientSecret,
+            this.sampleRedirectUri,
+            this.sampleScope,
+            this.sampleTestMode);
+    String expectedAuthUrl =
+        "https://connect.smartcar.com/oauth/authorize"
+            + "?response_type=code"
+            + "&client_id="
+            + this.sampleClientId
+            + "&redirect_uri="
+            + this.sampleRedirectUriEncoded
+            + "&approval_prompt=auto"
+            + "&scope=read_vehicle_info%20read_location%20read_odometer"
+            + "&mode=test";
 
     assertEquals(testSubject.getAuthUrl(), expectedAuthUrl);
   }
 
   @Test
   public void testAuthClientConstructorLiveModeWithAllValidArgsProducesExpectedAuthUrl() {
-    AuthClient testSubject = new AuthClient(
-        this.sampleClientId,
-        this.sampleClientSecret,
-        this.sampleRedirectUri,
-        this.sampleScope,
-        false
-    );
-    String expectedAuthUrl = "https://connect.smartcar.com/oauth/authorize" +
-        "?response_type=code" +
-        "&client_id=" + this.sampleClientId +
-        "&redirect_uri=" + this.sampleRedirectUriEncoded +
-        "&approval_prompt=auto" +
-        "&scope=read_vehicle_info%20read_location%20read_odometer" +
-        "&mode=live";
+    AuthClient testSubject =
+        new AuthClient(
+            this.sampleClientId,
+            this.sampleClientSecret,
+            this.sampleRedirectUri,
+            this.sampleScope,
+            false);
+    String expectedAuthUrl =
+        "https://connect.smartcar.com/oauth/authorize"
+            + "?response_type=code"
+            + "&client_id="
+            + this.sampleClientId
+            + "&redirect_uri="
+            + this.sampleRedirectUriEncoded
+            + "&approval_prompt=auto"
+            + "&scope=read_vehicle_info%20read_location%20read_odometer"
+            + "&mode=live";
 
     assertEquals(testSubject.getAuthUrl(), expectedAuthUrl);
   }
@@ -460,18 +471,21 @@ public class AuthClientTest extends PowerMockTestCase {
    */
   @Test
   public void testAuthClientConstructorWithDevelopmentProducesExpectedAuthUrl() {
-    AuthClient testSubject = new AuthClient(
-        this.sampleClientId,
-        this.sampleClientSecret,
-        this.sampleRedirectUri,
-        this.sampleTestMode
-    );
-    String expectedAuthUrl = "https://connect.smartcar.com/oauth/authorize" +
-        "?response_type=code" +
-        "&client_id=" + this.sampleClientId +
-        "&redirect_uri=" + this.sampleRedirectUriEncoded +
-        "&approval_prompt=auto" +
-        "&mode=test";
+    AuthClient testSubject =
+        new AuthClient(
+            this.sampleClientId,
+            this.sampleClientSecret,
+            this.sampleRedirectUri,
+            this.sampleTestMode);
+    String expectedAuthUrl =
+        "https://connect.smartcar.com/oauth/authorize"
+            + "?response_type=code"
+            + "&client_id="
+            + this.sampleClientId
+            + "&redirect_uri="
+            + this.sampleRedirectUriEncoded
+            + "&approval_prompt=auto"
+            + "&mode=test";
 
     assertEquals(testSubject.getAuthUrl(), expectedAuthUrl);
   }
@@ -482,19 +496,19 @@ public class AuthClientTest extends PowerMockTestCase {
    */
   @Test
   public void testAuthClientConstructorWithScopeProducesExpectedAuthUrl() {
-    AuthClient testSubject = new AuthClient(
-        this.sampleClientId,
-        this.sampleClientSecret,
-        this.sampleRedirectUri,
-        this.sampleScope
-    );
-    String expectedAuthUrl = "https://connect.smartcar.com/oauth/authorize" +
-        "?response_type=code" +
-        "&client_id=" + this.sampleClientId +
-        "&redirect_uri=" + this.sampleRedirectUriEncoded +
-        "&approval_prompt=auto" +
-        "&scope=read_vehicle_info%20read_location%20read_odometer" +
-        "&mode=live";
+    AuthClient testSubject =
+        new AuthClient(
+            this.sampleClientId, this.sampleClientSecret, this.sampleRedirectUri, this.sampleScope);
+    String expectedAuthUrl =
+        "https://connect.smartcar.com/oauth/authorize"
+            + "?response_type=code"
+            + "&client_id="
+            + this.sampleClientId
+            + "&redirect_uri="
+            + this.sampleRedirectUriEncoded
+            + "&approval_prompt=auto"
+            + "&scope=read_vehicle_info%20read_location%20read_odometer"
+            + "&mode=live";
 
     assertEquals(testSubject.getAuthUrl(), expectedAuthUrl);
   }
@@ -505,17 +519,17 @@ public class AuthClientTest extends PowerMockTestCase {
    */
   @Test
   public void testAuthClientConstructorWithoutOptionalArgsProducesExpectedAuthUrl() {
-    AuthClient testSubject = new AuthClient(
-        this.sampleClientId,
-        this.sampleClientSecret,
-        this.sampleRedirectUri
-    );
-    String expectedAuthUrl = "https://connect.smartcar.com/oauth/authorize" +
-        "?response_type=code" +
-        "&client_id=" + this.sampleClientId +
-        "&redirect_uri=" + this.sampleRedirectUriEncoded +
-        "&approval_prompt=auto" +
-        "&mode=live";
+    AuthClient testSubject =
+        new AuthClient(this.sampleClientId, this.sampleClientSecret, this.sampleRedirectUri);
+    String expectedAuthUrl =
+        "https://connect.smartcar.com/oauth/authorize"
+            + "?response_type=code"
+            + "&client_id="
+            + this.sampleClientId
+            + "&redirect_uri="
+            + this.sampleRedirectUriEncoded
+            + "&approval_prompt=auto"
+            + "&mode=live";
 
     assertEquals(testSubject.getAuthUrl(), expectedAuthUrl);
   }
@@ -526,20 +540,23 @@ public class AuthClientTest extends PowerMockTestCase {
    */
   @Test
   public void testGetAuthUrlWithStateAndForcePromptAndAuthVehicleInfoProducesExpectedAuthUrl() {
-    String actualAuthUrl = this.subject.getAuthUrl(
-        this.sampleState,
-        this.sampleForcePrompt,
-        this.sampleAuthVehicleInfo
-    );
-    String expectedAuthUrl = "https://connect.smartcar.com/oauth/authorize" +
-        "?response_type=code" +
-        "&client_id=" + this.sampleClientId +
-        "&redirect_uri=" + this.sampleRedirectUriEncoded +
-        "&approval_prompt=force" +
-        "&state=" + this.sampleState +
-        "&scope=read_vehicle_info%20read_location%20read_odometer" +
-        "&mode=test" +
-        "&make=" + this.sampleAuthVehicleInfo.getMake();
+    String actualAuthUrl =
+        this.subject.getAuthUrl(
+            this.sampleState, this.sampleForcePrompt, this.sampleAuthVehicleInfo);
+    String expectedAuthUrl =
+        "https://connect.smartcar.com/oauth/authorize"
+            + "?response_type=code"
+            + "&client_id="
+            + this.sampleClientId
+            + "&redirect_uri="
+            + this.sampleRedirectUriEncoded
+            + "&approval_prompt=force"
+            + "&state="
+            + this.sampleState
+            + "&scope=read_vehicle_info%20read_location%20read_odometer"
+            + "&mode=test"
+            + "&make="
+            + this.sampleAuthVehicleInfo.getMake();
 
     assertEquals(actualAuthUrl, expectedAuthUrl);
   }
@@ -550,18 +567,19 @@ public class AuthClientTest extends PowerMockTestCase {
    */
   @Test
   public void testGetAuthUrlWithStateAndForcePromptProducesExpectedAuthUrl() {
-    String actualAuthUrl = this.subject.getAuthUrl(
-        this.sampleState,
-        this.sampleForcePrompt
-    );
-    String expectedAuthUrl = "https://connect.smartcar.com/oauth/authorize" +
-        "?response_type=code" +
-        "&client_id=" + this.sampleClientId +
-        "&redirect_uri=" + this.sampleRedirectUriEncoded +
-        "&approval_prompt=force" +
-        "&state=" + this.sampleState +
-        "&scope=read_vehicle_info%20read_location%20read_odometer" +
-        "&mode=test";
+    String actualAuthUrl = this.subject.getAuthUrl(this.sampleState, this.sampleForcePrompt);
+    String expectedAuthUrl =
+        "https://connect.smartcar.com/oauth/authorize"
+            + "?response_type=code"
+            + "&client_id="
+            + this.sampleClientId
+            + "&redirect_uri="
+            + this.sampleRedirectUriEncoded
+            + "&approval_prompt=force"
+            + "&state="
+            + this.sampleState
+            + "&scope=read_vehicle_info%20read_location%20read_odometer"
+            + "&mode=test";
 
     assertEquals(actualAuthUrl, expectedAuthUrl);
   }
@@ -572,19 +590,21 @@ public class AuthClientTest extends PowerMockTestCase {
    */
   @Test
   public void testGetAuthUrlWithStateAndAndAuthVehicleInfoProducesExpectedAuthUrl() {
-    String actualAuthUrl = this.subject.getAuthUrl(
-        this.sampleState,
-        this.sampleAuthVehicleInfo
-    );
-    String expectedAuthUrl = "https://connect.smartcar.com/oauth/authorize" +
-        "?response_type=code" +
-        "&client_id=" + this.sampleClientId +
-        "&redirect_uri=" + this.sampleRedirectUriEncoded +
-        "&approval_prompt=auto" +
-        "&state=" + this.sampleState +
-        "&scope=read_vehicle_info%20read_location%20read_odometer" +
-        "&mode=test" +
-        "&make=" + this.sampleAuthVehicleInfo.getMake();
+    String actualAuthUrl = this.subject.getAuthUrl(this.sampleState, this.sampleAuthVehicleInfo);
+    String expectedAuthUrl =
+        "https://connect.smartcar.com/oauth/authorize"
+            + "?response_type=code"
+            + "&client_id="
+            + this.sampleClientId
+            + "&redirect_uri="
+            + this.sampleRedirectUriEncoded
+            + "&approval_prompt=auto"
+            + "&state="
+            + this.sampleState
+            + "&scope=read_vehicle_info%20read_location%20read_odometer"
+            + "&mode=test"
+            + "&make="
+            + this.sampleAuthVehicleInfo.getMake();
 
     assertEquals(actualAuthUrl, expectedAuthUrl);
   }
@@ -595,18 +615,20 @@ public class AuthClientTest extends PowerMockTestCase {
    */
   @Test
   public void testGetAuthUrlWithForcePromptAndAuthVehicleInfoProducesExpectedAuthUrl() {
-    String actualAuthUrl = this.subject.getAuthUrl(
-        this.sampleForcePrompt,
-        this.sampleAuthVehicleInfo
-    );
-    String expectedAuthUrl = "https://connect.smartcar.com/oauth/authorize" +
-        "?response_type=code" +
-        "&client_id=" + this.sampleClientId +
-        "&redirect_uri=" + this.sampleRedirectUriEncoded +
-        "&approval_prompt=force" +
-        "&scope=read_vehicle_info%20read_location%20read_odometer" +
-        "&mode=test" +
-        "&make=" + this.sampleAuthVehicleInfo.getMake();
+    String actualAuthUrl =
+        this.subject.getAuthUrl(this.sampleForcePrompt, this.sampleAuthVehicleInfo);
+    String expectedAuthUrl =
+        "https://connect.smartcar.com/oauth/authorize"
+            + "?response_type=code"
+            + "&client_id="
+            + this.sampleClientId
+            + "&redirect_uri="
+            + this.sampleRedirectUriEncoded
+            + "&approval_prompt=force"
+            + "&scope=read_vehicle_info%20read_location%20read_odometer"
+            + "&mode=test"
+            + "&make="
+            + this.sampleAuthVehicleInfo.getMake();
 
     assertEquals(actualAuthUrl, expectedAuthUrl);
   }
@@ -618,14 +640,18 @@ public class AuthClientTest extends PowerMockTestCase {
   @Test
   public void testGetAuthUrlWithState() {
     String actualAuthUrl = this.subject.getAuthUrl(this.sampleState);
-    String expectedAuthUrl = "https://connect.smartcar.com/oauth/authorize" +
-        "?response_type=code" +
-        "&client_id=" + this.sampleClientId +
-        "&redirect_uri=" + this.sampleRedirectUriEncoded +
-        "&approval_prompt=auto" +
-        "&state=" + this.sampleState +
-        "&scope=read_vehicle_info%20read_location%20read_odometer" +
-        "&mode=test";
+    String expectedAuthUrl =
+        "https://connect.smartcar.com/oauth/authorize"
+            + "?response_type=code"
+            + "&client_id="
+            + this.sampleClientId
+            + "&redirect_uri="
+            + this.sampleRedirectUriEncoded
+            + "&approval_prompt=auto"
+            + "&state="
+            + this.sampleState
+            + "&scope=read_vehicle_info%20read_location%20read_odometer"
+            + "&mode=test";
 
     assertEquals(actualAuthUrl, expectedAuthUrl);
   }
@@ -637,13 +663,16 @@ public class AuthClientTest extends PowerMockTestCase {
   @Test
   public void testGetAuthUrlWithForcePrompt() {
     String actualAuthUrl = this.subject.getAuthUrl(this.sampleForcePrompt);
-    String expectedAuthUrl = "https://connect.smartcar.com/oauth/authorize" +
-        "?response_type=code" +
-        "&client_id=" + this.sampleClientId +
-        "&redirect_uri=" + this.sampleRedirectUriEncoded +
-        "&approval_prompt=force" +
-        "&scope=read_vehicle_info%20read_location%20read_odometer" +
-        "&mode=test";
+    String expectedAuthUrl =
+        "https://connect.smartcar.com/oauth/authorize"
+            + "?response_type=code"
+            + "&client_id="
+            + this.sampleClientId
+            + "&redirect_uri="
+            + this.sampleRedirectUriEncoded
+            + "&approval_prompt=force"
+            + "&scope=read_vehicle_info%20read_location%20read_odometer"
+            + "&mode=test";
 
     assertEquals(actualAuthUrl, expectedAuthUrl);
   }
@@ -655,15 +684,19 @@ public class AuthClientTest extends PowerMockTestCase {
   @Test
   public void testGetAuthUrlWithAuthVehicleInfo() {
     String actualAuthUrl = this.subject.getAuthUrl(this.sampleAuthVehicleInfo);
-    String expectedAuthUrl = "https://connect.smartcar.com/oauth/authorize" +
-        "?response_type=code" +
-        "&client_id=" + this.sampleClientId +
-        "&redirect_uri=" + this.sampleRedirectUriEncoded +
-        "&approval_prompt=auto" +
-        "&scope=read_vehicle_info%20read_location%20read_odometer" +
-        "&mode=test" +
-        "&make=" + this.sampleAuthVehicleInfo.getMake();
-        
+    String expectedAuthUrl =
+        "https://connect.smartcar.com/oauth/authorize"
+            + "?response_type=code"
+            + "&client_id="
+            + this.sampleClientId
+            + "&redirect_uri="
+            + this.sampleRedirectUriEncoded
+            + "&approval_prompt=auto"
+            + "&scope=read_vehicle_info%20read_location%20read_odometer"
+            + "&mode=test"
+            + "&make="
+            + this.sampleAuthVehicleInfo.getMake();
+
     assertEquals(actualAuthUrl, expectedAuthUrl);
   }
 
@@ -674,13 +707,16 @@ public class AuthClientTest extends PowerMockTestCase {
   @Test
   public void testGetAuthUrlWithNoArgs() {
     String actualAuthUrl = this.subject.getAuthUrl();
-    String expectedAuthUrl = "https://connect.smartcar.com/oauth/authorize" +
-        "?response_type=code" +
-        "&client_id=" + this.sampleClientId +
-        "&redirect_uri=" + this.sampleRedirectUriEncoded +
-        "&approval_prompt=auto" +
-        "&scope=read_vehicle_info%20read_location%20read_odometer" +
-        "&mode=test";
+    String expectedAuthUrl =
+        "https://connect.smartcar.com/oauth/authorize"
+            + "?response_type=code"
+            + "&client_id="
+            + this.sampleClientId
+            + "&redirect_uri="
+            + this.sampleRedirectUriEncoded
+            + "&approval_prompt=auto"
+            + "&scope=read_vehicle_info%20read_location%20read_odometer"
+            + "&mode=test";
 
     assertEquals(actualAuthUrl, expectedAuthUrl);
   }
@@ -691,16 +727,18 @@ public class AuthClientTest extends PowerMockTestCase {
    */
   @Test
   public void testAuthUrlBuilder() {
-    AuthClient client = new AuthClient(
+    AuthClient client =
+        new AuthClient(
             this.sampleClientId,
             this.sampleClientSecret,
             this.sampleRedirectUri,
             this.sampleScope,
-            true
-    );
+            true);
     String vin = "1234567890ABCDEFG";
     String[] flags = {"country:DE", "flag:suboption"};
-    String authUrl = client.authUrlBuilder()
+    String authUrl =
+        client
+            .authUrlBuilder()
             .setApprovalPrompt(true)
             .setState("state")
             .setSingleSelect(true)
@@ -709,18 +747,22 @@ public class AuthClientTest extends PowerMockTestCase {
             .setFlags(flags)
             .build();
 
-    String expectedAuthUrl = "https://connect.smartcar.com/oauth/authorize" +
-            "?response_type=code" +
-            "&client_id=" + this.sampleClientId +
-            "&redirect_uri=" + this.sampleRedirectUriEncoded +
-            "&mode=test" +
-            "&scope=read_vehicle_info%20read_location%20read_odometer" +
-            "&approval_prompt=force" +
-            "&state=state" +
-            "&single_select=true" +
-            "&single_select_vin=" + vin +
-            "&make=TESLA" +
-            "&flags=country%3ADE%20flag%3Asuboption";
+    String expectedAuthUrl =
+        "https://connect.smartcar.com/oauth/authorize"
+            + "?response_type=code"
+            + "&client_id="
+            + this.sampleClientId
+            + "&redirect_uri="
+            + this.sampleRedirectUriEncoded
+            + "&mode=test"
+            + "&scope=read_vehicle_info%20read_location%20read_odometer"
+            + "&approval_prompt=force"
+            + "&state=state"
+            + "&single_select=true"
+            + "&single_select_vin="
+            + vin
+            + "&make=TESLA"
+            + "&flags=country%3ADE%20flag%3Asuboption";
 
     assertEquals(authUrl, expectedAuthUrl);
   }
@@ -731,22 +773,24 @@ public class AuthClientTest extends PowerMockTestCase {
    */
   @Test
   public void testEmptyAuthUrlBuilder() {
-    AuthClient client = new AuthClient(
+    AuthClient client =
+        new AuthClient(
             this.sampleClientId,
             this.sampleClientSecret,
             this.sampleRedirectUri,
             this.sampleScope,
-            false
-    );
-    String authUrl = client.authUrlBuilder()
-            .build();
+            false);
+    String authUrl = client.authUrlBuilder().build();
 
-    String expectedAuthUrl = "https://connect.smartcar.com/oauth/authorize" +
-            "?response_type=code" +
-            "&client_id=" + this.sampleClientId +
-            "&redirect_uri=" + this.sampleRedirectUriEncoded +
-            "&mode=live" +
-            "&scope=read_vehicle_info%20read_location%20read_odometer";
+    String expectedAuthUrl =
+        "https://connect.smartcar.com/oauth/authorize"
+            + "?response_type=code"
+            + "&client_id="
+            + this.sampleClientId
+            + "&redirect_uri="
+            + this.sampleRedirectUriEncoded
+            + "&mode=live"
+            + "&scope=read_vehicle_info%20read_location%20read_odometer";
 
     assertEquals(authUrl, expectedAuthUrl);
   }
@@ -760,26 +804,25 @@ public class AuthClientTest extends PowerMockTestCase {
   @Test
   public void testExchangeCode() throws Exception {
     // Setup
-    AuthClient testSubject = spy(new AuthClient(
-        this.sampleClientId,
-        this.sampleClientSecret,
-        this.sampleRedirectUri,
-        this.sampleScope,
-        this.sampleTestMode
-    ));
+    AuthClient testSubject =
+        spy(
+            new AuthClient(
+                this.sampleClientId,
+                this.sampleClientSecret,
+                this.sampleRedirectUri,
+                this.sampleScope,
+                this.sampleTestMode));
 
-    Auth expected = new Auth(
-        this.fakeAccessToken,
-        this.fakeRefreshToken,
-        this.fakeExpiration,
-        this.fakeRefreshExpiration
-    );
+    Auth expected =
+        new Auth(
+            this.fakeAccessToken,
+            this.fakeRefreshToken,
+            this.fakeExpiration,
+            this.fakeRefreshExpiration);
 
     // Mocks
     spy(ApiClient.class);
-    PowerMockito.doReturn(
-          spy(new SmartcarResponse<Auth>(expected))
-        )
+    PowerMockito.doReturn(spy(new SmartcarResponse<Auth>(expected)))
         .when(ApiClient.class, "execute", any(), any());
 
     // Execute
@@ -798,26 +841,26 @@ public class AuthClientTest extends PowerMockTestCase {
   @Test
   public void testExchangeRefreshToken() throws Exception {
     // Setup
-    AuthClient testSubject = spy(new AuthClient(
-        this.sampleClientId,
-        this.sampleClientSecret,
-        this.sampleRedirectUri,
-        this.sampleScope,
-        this.sampleTestMode
-    ));
+    AuthClient testSubject =
+        spy(
+            new AuthClient(
+                this.sampleClientId,
+                this.sampleClientSecret,
+                this.sampleRedirectUri,
+                this.sampleScope,
+                this.sampleTestMode));
 
-    Auth expected = new Auth(
-        this.fakeAccessToken,
-        this.fakeRefreshToken,
-        this.fakeExpiration,
-        this.fakeRefreshExpiration);
+    Auth expected =
+        new Auth(
+            this.fakeAccessToken,
+            this.fakeRefreshToken,
+            this.fakeExpiration,
+            this.fakeRefreshExpiration);
 
     // Mocks
     spy(ApiClient.class);
     spy(SmartcarResponse.class);
-    PowerMockito.doReturn(
-          spy(new SmartcarResponse<Auth>(expected))
-        )
+    PowerMockito.doReturn(spy(new SmartcarResponse<Auth>(expected)))
         .when(ApiClient.class, "execute", any(), any());
 
     // Execute
@@ -828,39 +871,37 @@ public class AuthClientTest extends PowerMockTestCase {
   }
 
   /**
-   * Verifies that compatibility is returned. 
+   * Verifies that compatibility is returned.
    *
    * @throws Exception on failure
    */
   @Test
   public void testIsCompatible() throws Exception {
     // Setup
-    AuthClient testSubject = spy(new AuthClient(
-        this.sampleClientId,
-        this.sampleClientSecret,
-        this.sampleRedirectUri,
-        this.sampleScope,
-        this.sampleTestMode
-    ));
+    AuthClient testSubject =
+        spy(
+            new AuthClient(
+                this.sampleClientId,
+                this.sampleClientSecret,
+                this.sampleRedirectUri,
+                this.sampleScope,
+                this.sampleTestMode));
 
     Compatibility expected = new Compatibility(true);
-    
+
     // Execute with scope
-    String[] scope = new String[]{"read_location", "read_odometer"}; 
-    
+    String[] scope = new String[] {"read_location", "read_odometer"};
+
     // Mocks
     spy(ApiClient.class);
     spy(SmartcarResponse.class);
-    PowerMockito.doReturn(
-          spy(new SmartcarResponse<Compatibility>(expected))
-        )
+    PowerMockito.doReturn(spy(new SmartcarResponse<Compatibility>(expected)))
         .when(ApiClient.class, "execute", argThat(new CompatibilityRequest()), any());
 
     boolean compatibilityWScopes = testSubject.isCompatible("vin", scope);
 
     assertEquals(compatibilityWScopes, expected.getCompatible());
   }
-
 
   /**
    * Tests setting the api version to 2.0 and getting the api url that is used for subsequent requests

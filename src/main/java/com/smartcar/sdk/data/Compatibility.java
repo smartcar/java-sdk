@@ -40,9 +40,10 @@ public class Compatibility extends ApiData {
    */
   @Override
   public String toString() {
-    return this.getClass().getName() + "{" +
-      "compatible=" + Boolean.toString(this.compatible) +
-      "}";
+    return this.getClass().getName()
+        + "{"
+        + "compatible="
+        + Boolean.toString(this.compatible)
+        + "}";
   }
-
 }

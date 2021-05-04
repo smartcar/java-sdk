@@ -14,12 +14,7 @@ public class UtilsTest {
   @Test
   public void testJoin() {
     String separator = ", ";
-    String[] data = {
-        "unus",
-        "duo",
-        "tres",
-        "quattor"
-    };
+    String[] data = {"unus", "duo", "tres", "quattor"};
 
     String expected = "unus, duo, tres, quattor";
 

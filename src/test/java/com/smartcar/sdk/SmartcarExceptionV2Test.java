@@ -20,14 +20,13 @@ import static org.powermock.api.mockito.PowerMockito.when;
  * Test Suite: SmartcarExceptionV2
  */
 @PrepareForTest({
-    SmartcarExceptionV2.class,
-    Gson.class,
-    JsonObject.class,
-    Response.class,
-    ResponseBody.class,
+  SmartcarExceptionV2.class,
+  Gson.class,
+  JsonObject.class,
+  Response.class,
+  ResponseBody.class,
 })
 @PowerMockIgnore("javax.net.ssl.*")
-
 public class SmartcarExceptionV2Test extends PowerMockTestCase {
   /**
    * Test throwing an SmartcarExceptionV2 with a message.
@@ -38,8 +37,7 @@ public class SmartcarExceptionV2Test extends PowerMockTestCase {
 
     try {
       throw new SmartcarExceptionV2(testMessage);
-    }
-    catch (SmartcarExceptionV2 ex) {
+    } catch (SmartcarExceptionV2 ex) {
       Assert.assertEquals(ex.getDescription(), testMessage);
       Assert.assertEquals(ex.getMessage(), testMessage);
     }
@@ -57,7 +55,8 @@ public class SmartcarExceptionV2Test extends PowerMockTestCase {
     String expectedRequestId = "011660dc-8322-4064-a972-53826c8dff9c";
     int expectedStatusCode = 200;
 
-    String errorString = Json.createObjectBuilder()
+    String errorString =
+        Json.createObjectBuilder()
             .add("type", expectedType)
             .add("code", expectedCode)
             .add("description", expectedDescription)
@@ -66,7 +65,8 @@ public class SmartcarExceptionV2Test extends PowerMockTestCase {
             .add("resolution", expectedResolution)
             .addNull("detail")
             .add("requestId", expectedRequestId)
-            .build().toString();
+            .build()
+            .toString();
 
     Response mockResponse = mock(Response.class);
     ResponseBody mockResponseBody = mock(ResponseBody.class);
@@ -87,7 +87,8 @@ public class SmartcarExceptionV2Test extends PowerMockTestCase {
     Assert.assertNull(ex.getDocURL());
     Assert.assertNull(ex.getDetail());
     Assert.assertEquals(ex.getStatusCode(), expectedStatusCode);
-    Assert.assertEquals(ex.getMessage(), "ACCOUNT_STATE:INVALID_CREDENTIALS - expected description");
+    Assert.assertEquals(
+        ex.getMessage(), "ACCOUNT_STATE:INVALID_CREDENTIALS - expected description");
   }
 
   /**
@@ -96,10 +97,8 @@ public class SmartcarExceptionV2Test extends PowerMockTestCase {
   @Test
   public void testSmartcarExceptionV2FactoryWithMessage() throws Exception {
     String expectedMessage = "expected message";
-    String response = Json.createObjectBuilder()
-              .add("description", expectedMessage)
-              .build()
-              .toString();
+    String response =
+        Json.createObjectBuilder().add("description", expectedMessage).build().toString();
     Response mockResponse = mock(Response.class);
     ResponseBody mockResponseBody = mock(ResponseBody.class);
 
