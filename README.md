@@ -10,7 +10,7 @@ The recommended method for obtaining the SDK is via Gradle or Maven through the 
 
 ### Gradle
 ```groovy
-compile "com.smartcar.sdk:java-sdk:2.8.1"
+compile "com.smartcar.sdk:java-sdk:2.8.2"
 ```
 
 ### Maven
@@ -18,16 +18,16 @@ compile "com.smartcar.sdk:java-sdk:2.8.1"
 <dependency>
   <groupId>com.smartcar.sdk</groupId>
   <artifactId>java-sdk</artifactId>
-  <version>2.8.1</version>
+  <version>2.8.2</version>
 </dependency>
 ```
 
 ### Jar Direct Download
-* [java-sdk-2.8.1.jar](https://search.maven.org/remotecontent?filepath=com/smartcar/sdk/java-sdk/2.8.1/java-sdk-2.8.1.jar)
-* [java-sdk-2.8.1-sources.jar](https://search.maven.org/remotecontent?filepath=com/smartcar/sdk/java-sdk/2.8.1/java-sdk-2.8.1-sources.jar)
-* [java-sdk-2.8.1-javadoc.jar](https://search.maven.org/remotecontent?filepath=com/smartcar/sdk/java-sdk/2.8.1/java-sdk-2.8.1-javadoc.jar)
+* [java-sdk-2.8.2.jar](https://search.maven.org/remotecontent?filepath=com/smartcar/sdk/java-sdk/2.8.2/java-sdk-2.8.2.jar)
+* [java-sdk-2.8.2-sources.jar](https://search.maven.org/remotecontent?filepath=com/smartcar/sdk/java-sdk/2.8.2/java-sdk-2.8.2-sources.jar)
+* [java-sdk-2.8.2-javadoc.jar](https://search.maven.org/remotecontent?filepath=com/smartcar/sdk/java-sdk/2.8.2/java-sdk-2.8.2-javadoc.jar)
 
-Signatures and other downloads available at [Maven Central](https://search.maven.org/artifact/com.smartcar.sdk/java-sdk/2.8.1/jar).
+Signatures and other downloads available at [Maven Central](https://search.maven.org/artifact/com.smartcar.sdk/java-sdk/2.8.2/jar).
 
 ## Usage
 
@@ -129,5 +129,5 @@ start making requests to vehicles.
 [ci-url]: https://travis-ci.com/smartcar/java-sdk
 [coverage-image]: https://codecov.io/gh/smartcar/java-sdk/branch/master/graph/badge.svg?token=nZAITx7w3X
 [coverage-url]: https://codecov.io/gh/smartcar/java-sdk
-[javadoc-image]: https://img.shields.io/badge/javadoc-2.8.1-brightgreen.svg
+[javadoc-image]: https://img.shields.io/badge/javadoc-2.8.2-brightgreen.svg
 [javadoc-url]: https://smartcar.github.io/java-sdk
