@@ -3,14 +3,6 @@ package com.smartcar.sdk;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.refEq;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.util.Date;
-import java.util.UUID;
-
-import javax.json.Json;
-import javax.json.JsonObject;
-
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.smartcar.sdk.data.ApiData;
@@ -28,14 +20,18 @@ import com.smartcar.sdk.data.VehicleOdometer;
 import com.smartcar.sdk.data.VehicleOil;
 import com.smartcar.sdk.data.VehicleTirePressure;
 import com.smartcar.sdk.data.VehicleVin;
-
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.Date;
+import java.util.UUID;
+import javax.json.Json;
+import javax.json.JsonObject;
+import okhttp3.RequestBody;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
-import okhttp3.RequestBody;
 
 /**
  * Test Suite: Vehicle

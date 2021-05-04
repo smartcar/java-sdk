@@ -12,17 +12,16 @@ import com.smartcar.sdk.data.RequestPaging;
 import com.smartcar.sdk.data.ResponsePaging;
 import com.smartcar.sdk.data.SmartcarResponse;
 import com.smartcar.sdk.data.VehicleIds;
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.Calendar;
+import java.util.Date;
 import okhttp3.Credentials;
 import okhttp3.FormBody;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-
-import java.io.IOException;
-import java.lang.reflect.Type;
-import java.util.Calendar;
-import java.util.Date;
 
 /**
  * Smartcar OAuth 2.0 Authentication Client

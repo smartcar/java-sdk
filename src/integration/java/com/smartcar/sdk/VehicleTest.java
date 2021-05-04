@@ -5,11 +5,10 @@ import com.smartcar.sdk.data.SmartcarResponse;
 import com.smartcar.sdk.data.VehicleFuel;
 import com.smartcar.sdk.data.VehicleInfo;
 import com.smartcar.sdk.data.VehicleOdometer;
-
+import java.util.Date;
 import org.testng.Assert;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
-import java.util.Date;
 
 /**
  * Integration Test Suite: /vehicles/:id

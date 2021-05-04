@@ -1,17 +1,16 @@
 package com.smartcar.sdk;
 
-import com.smartcar.sdk.data.Auth;
-import com.smartcar.sdk.data.SmartcarResponse;
-import com.smartcar.sdk.data.VehicleIds;
-import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.Test;
-
-import java.net.MalformedURLException;
-
+import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertNotEquals;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
-import static org.testng.Assert.assertFalse;
+
+import com.smartcar.sdk.data.Auth;
+import com.smartcar.sdk.data.SmartcarResponse;
+import com.smartcar.sdk.data.VehicleIds;
+import java.net.MalformedURLException;
+import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.Test;
 
 /**
  * Integration Test Suite: Authentication
