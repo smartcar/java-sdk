@@ -1,8 +1,6 @@
 package com.smartcar.sdk.data;
 
-/**
- * POJO for Smartcar /vin endpoint
- */
+/** POJO for Smartcar /vin endpoint */
 public class VehicleVin extends ApiData {
   private String vin;
 
@@ -33,9 +31,7 @@ public class VehicleVin extends ApiData {
     this.vin = vin;
   }
 
-  /**
-   * @return a stringified representation of VehicleVin
-   */
+  /** @return a stringified representation of VehicleVin */
   @Override
   public String toString() {
     return this.getClass().getName() + "{" + "vin='" + vin + '\'' + '}';

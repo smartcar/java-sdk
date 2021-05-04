@@ -13,9 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import org.apache.commons.text.CaseUtils;
 
-/**
- * Smartcar BatchResponse Object
- */
+/** Smartcar BatchResponse Object */
 public class BatchResponse extends ApiData {
   private String requestId;
   private Map<String, JsonObject> responseData = new HashMap<>();
@@ -150,11 +148,8 @@ public class BatchResponse extends ApiData {
    * Get response from the /battery endpoint
    *
    * @return the battery status of the vehicle
-   *
-   * @throws BatchResponseMissingException if this endpoint was not
-   * part of the batch response
-   * @throws SmartcarException if the request for this endpoint returned an
-   * HTTP error code
+   * @throws BatchResponseMissingException if this endpoint was not part of the batch response
+   * @throws SmartcarException if the request for this endpoint returned an HTTP error code
    */
   public SmartcarResponse<VehicleBattery> battery()
       throws BatchResponseMissingException, SmartcarException {
@@ -165,11 +160,8 @@ public class BatchResponse extends ApiData {
    * Get response from the battery/capacity endpoint
    *
    * @return the battery capacity of the vehicle
-   *
-   * @throws BatchResponseMissingException if this endpoint was not
-   * part of the batch response
-   * @throws SmartcarException if the request for this endpoint returned an
-   * HTTP error code
+   * @throws BatchResponseMissingException if this endpoint was not part of the batch response
+   * @throws SmartcarException if the request for this endpoint returned an HTTP error code
    */
   public SmartcarResponse<VehicleBatteryCapacity> batteryCapacity()
       throws BatchResponseMissingException, SmartcarException {
@@ -180,11 +172,8 @@ public class BatchResponse extends ApiData {
    * Get response from the /charge endpoint
    *
    * @return the charge status of the vehicle
-   *
-   * @throws BatchResponseMissingException if this endpoint was not
-   * part of the batch response
-   * @throws SmartcarException if the request for this endpoint returned an
-   * HTTP error code
+   * @throws BatchResponseMissingException if this endpoint was not part of the batch response
+   * @throws SmartcarException if the request for this endpoint returned an HTTP error code
    */
   public SmartcarResponse<VehicleCharge> charge()
       throws BatchResponseMissingException, SmartcarException {
@@ -195,11 +184,8 @@ public class BatchResponse extends ApiData {
    * Get response from the /fuel endpoint
    *
    * @return the fuel status of the vehicle
-   *
-   * @throws BatchResponseMissingException if this endpoint was not
-   * part of the batch response
-   * @throws SmartcarException if the request for this endpoint returned an
-   * HTTP error code
+   * @throws BatchResponseMissingException if this endpoint was not part of the batch response
+   * @throws SmartcarException if the request for this endpoint returned an HTTP error code
    */
   public SmartcarResponse<VehicleFuel> fuel()
       throws BatchResponseMissingException, SmartcarException {
@@ -210,11 +196,8 @@ public class BatchResponse extends ApiData {
    * Get response from the /info endpoint
    *
    * @return VehicleInfo object
-   *
-   * @throws BatchResponseMissingException if this endpoint was not
-   * part of the batch response
-   * @throws SmartcarException if the request for this endpoint +returned an
-   * HTTP error code
+   * @throws BatchResponseMissingException if this endpoint was not part of the batch response
+   * @throws SmartcarException if the request for this endpoint +returned an HTTP error code
    */
   public VehicleInfo info() throws BatchResponseMissingException, SmartcarException {
     return get("/", VehicleInfo.class).getData();
@@ -224,11 +207,8 @@ public class BatchResponse extends ApiData {
    * Get response from the /vin endpoint
    *
    * @return the vin of the vehicle
-   *
-   * @throws BatchResponseMissingException if this endpoint was not
-   * part of the batch response
-   * @throws SmartcarException if the request for this endpoint returned an
-   * HTTP error code
+   * @throws BatchResponseMissingException if this endpoint was not part of the batch response
+   * @throws SmartcarException if the request for this endpoint returned an HTTP error code
    */
   public SmartcarResponse<VehicleLocation> location()
       throws BatchResponseMissingException, SmartcarException {
@@ -239,11 +219,8 @@ public class BatchResponse extends ApiData {
    * Get response from the /odometer endpoint
    *
    * @return the odometer of the vehicle
-   *
-   * @throws BatchResponseMissingException if this endpoint was not
-   * part of the batch response
-   * @throws SmartcarException if the request for this endpoint returned an
-   * HTTP error code
+   * @throws BatchResponseMissingException if this endpoint was not part of the batch response
+   * @throws SmartcarException if the request for this endpoint returned an HTTP error code
    */
   public SmartcarResponse<VehicleOdometer> odometer()
       throws BatchResponseMissingException, SmartcarException {
@@ -254,11 +231,8 @@ public class BatchResponse extends ApiData {
    * Get response from the /engine/oil endpoint
    *
    * @return the engine oil status of the vehicle
-   *
-   * @throws BatchResponseMissingException if this endpoint was not
-   * part of the batch response
-   * @throws SmartcarException if the request for this endpoint returned an
-   * HTTP error code
+   * @throws BatchResponseMissingException if this endpoint was not part of the batch response
+   * @throws SmartcarException if the request for this endpoint returned an HTTP error code
    */
   public SmartcarResponse<VehicleOil> oil()
       throws BatchResponseMissingException, SmartcarException {
@@ -269,11 +243,8 @@ public class BatchResponse extends ApiData {
    * Get response from the /vin endpoint
    *
    * @return the vin of the vehicle
-   *
-   * @throws BatchResponseMissingException if this endpoint was not
-   * part of the batch response
-   * @throws SmartcarException if the request for this endpoint returned an
-   * HTTP error code
+   * @throws BatchResponseMissingException if this endpoint was not part of the batch response
+   * @throws SmartcarException if the request for this endpoint returned an HTTP error code
    */
   public String vin() throws BatchResponseMissingException, SmartcarException {
     return get("/vin", VehicleVin.class).getData().getVin();
@@ -283,20 +254,15 @@ public class BatchResponse extends ApiData {
    * Get response from the /tires/pressure endpoint
    *
    * @return the tire pressure status of the vehicle
-   *
-   * @throws BatchResponseMissingException if this endpoint was not
-   * part of the batch response
-   * @throws SmartcarException if the request for this endpoint returned an
-   * HTTP error code
+   * @throws BatchResponseMissingException if this endpoint was not part of the batch response
+   * @throws SmartcarException if the request for this endpoint returned an HTTP error code
    */
   public SmartcarResponse<VehicleTirePressure> tirePressure()
       throws BatchResponseMissingException, SmartcarException {
     return get("/tires/pressure", VehicleTirePressure.class);
   }
 
-  /**
-   * @return a stringified representation of BatchResponse
-   */
+  /** @return a stringified representation of BatchResponse */
   @Override
   public String toString() {
     return responseData.toString();

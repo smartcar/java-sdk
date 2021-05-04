@@ -1,8 +1,6 @@
 package com.smartcar.sdk.data;
 
-/**
- * POJO for Smartcar /odometer endpoint
- */
+/** POJO for Smartcar /odometer endpoint */
 public class VehicleOdometer extends ApiData {
   private double distance;
 
@@ -33,9 +31,7 @@ public class VehicleOdometer extends ApiData {
     this.distance = distance;
   }
 
-  /**
-   * @return a stringified representation of VehicleOdometer
-   */
+  /** @return a stringified representation of VehicleOdometer */
   @Override
   public String toString() {
     return this.getClass().getName() + "{" + "distance=" + distance + '}';

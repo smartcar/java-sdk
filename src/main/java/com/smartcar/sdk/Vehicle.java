@@ -12,9 +12,7 @@ import okhttp3.HttpUrl;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 
-/**
- * Smartcar Vehicle API Object
- */
+/** Smartcar Vehicle API Object */
 public class Vehicle extends ApiClient {
   public enum UnitSystem {
     IMPERIAL,
@@ -59,9 +57,7 @@ public class Vehicle extends ApiClient {
    * @param method the method of the request
    * @param body the body of the request
    * @param type the type into which the response will be parsed
-   *
    * @return the parsed response
-   *
    * @throws SmartcarException if the request is unsuccessful
    */
   protected <T extends ApiData> SmartcarResponse<T> call(
@@ -92,9 +88,7 @@ public class Vehicle extends ApiClient {
    * @param path the path to the sub-endpoint
    * @param method the method of the request
    * @param body the body of the request
-   *
    * @return the response value
-   *
    * @throws SmartcarException if the request is unsuccessful
    */
   protected String call(String path, String method, RequestBody body) throws SmartcarException {
@@ -105,7 +99,6 @@ public class Vehicle extends ApiClient {
    * Send request to the /info endpoint
    *
    * @return VehicleInfo object
-   *
    * @throws SmartcarException if the request is unsuccessful
    */
   public VehicleInfo info() throws SmartcarException {
@@ -116,7 +109,6 @@ public class Vehicle extends ApiClient {
    * Send request to the /vin endpoint
    *
    * @return the vin of the vehicle
-   *
    * @throws SmartcarException if the request is unsuccessful
    */
   public String vin() throws SmartcarException {
@@ -127,7 +119,6 @@ public class Vehicle extends ApiClient {
    * Send request to the /permissions endpoint
    *
    * @return the permission of the application
-   *
    * @throws SmartcarException if the request is unsuccessful
    */
   public String[] permissions() throws SmartcarException {
@@ -144,7 +135,6 @@ public class Vehicle extends ApiClient {
    * Checks if permissions granted to a vehicle contain the specified permission.
    *
    * @param permission Permission to check
-   *
    * @return Whether the vehicle has the specified permission
    * @throws SmartcarException if the request is unsuccessful
    */
@@ -163,7 +153,6 @@ public class Vehicle extends ApiClient {
    * Checks if permissions granted to a vehicle contain the specified permissions.
    *
    * @param permissions Permissions to check
-   *
    * @return Whether the vehicle has the specified permissions
    * @throws SmartcarException if the request is unsuccessful
    */
@@ -195,7 +184,6 @@ public class Vehicle extends ApiClient {
    * Send request to the /odometer endpoint
    *
    * @return the odometer of the vehicle
-   *
    * @throws SmartcarException if the request is unsuccessful
    */
   public SmartcarResponse<VehicleOdometer> odometer() throws SmartcarException {
@@ -206,7 +194,6 @@ public class Vehicle extends ApiClient {
    * Send request to the /fuel endpoint
    *
    * @return the fuel status of the vehicle
-   *
    * @throws SmartcarException if the request is unsuccessful
    */
   public SmartcarResponse<VehicleFuel> fuel() throws SmartcarException {
@@ -217,7 +204,6 @@ public class Vehicle extends ApiClient {
    * Send request to the /engine/oil endpoint
    *
    * @return the engine oil status of the vehicle
-   *
    * @throws SmartcarException if the request is unsuccessful
    */
   public SmartcarResponse<VehicleOil> oil() throws SmartcarException {
@@ -228,7 +214,6 @@ public class Vehicle extends ApiClient {
    * Send request to the /tires/pressure endpoint
    *
    * @return the tire pressure status of the vehicle
-   *
    * @throws SmartcarException if the request is unsuccessful
    */
   public SmartcarResponse<VehicleTirePressure> tirePressure() throws SmartcarException {
@@ -239,7 +224,6 @@ public class Vehicle extends ApiClient {
    * Send request to the /battery endpoint
    *
    * @return the battery status of the vehicle
-   *
    * @throws SmartcarException if the request is unsuccessful
    */
   public SmartcarResponse<VehicleBattery> battery() throws SmartcarException {
@@ -250,7 +234,6 @@ public class Vehicle extends ApiClient {
    * Send request to the /battery/capacity endpoint
    *
    * @return the battery capacity of the vehicle
-   *
    * @throws SmartcarException if the request is unsuccessful
    */
   public SmartcarResponse<VehicleBatteryCapacity> batteryCapacity() throws SmartcarException {
@@ -261,7 +244,6 @@ public class Vehicle extends ApiClient {
    * Send request to the /charge endpoint
    *
    * @return the charge status of the vehicle
-   *
    * @throws SmartcarException if the request is unsuccessful
    */
   public SmartcarResponse<VehicleCharge> charge() throws SmartcarException {
@@ -272,7 +254,6 @@ public class Vehicle extends ApiClient {
    * Send request to the /location endpoint
    *
    * @return the location of the vehicle
-   *
    * @throws SmartcarException if the request is unsuccessful
    */
   public SmartcarResponse<VehicleLocation> location() throws SmartcarException {
@@ -335,10 +316,7 @@ public class Vehicle extends ApiClient {
    * Send request to the /batch endpoint
    *
    * @param paths the paths of endpoints to send requests to (ex. "/odometer", "/location", ...)
-   *
-   * @return the BatchResponse object containing the response
-   * from all the requested endpoints
-   *
+   * @return the BatchResponse object containing the response from all the requested endpoints
    * @throws SmartcarException if the request is unsuccessful
    */
   public BatchResponse batch(String[] paths) throws SmartcarException {

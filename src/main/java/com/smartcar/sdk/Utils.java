@@ -1,15 +1,12 @@
 package com.smartcar.sdk;
 
-/**
- * General package utilities.
- */
+/** General package utilities. */
 class Utils {
   /**
    * Joins the elements of a string array together, delimited by a separator.
    *
    * @param array the array containing values to be joined
    * @param separator the delimiter to insert between each value
-   *
    * @return the joined result
    */
   static String join(String[] array, String separator) {

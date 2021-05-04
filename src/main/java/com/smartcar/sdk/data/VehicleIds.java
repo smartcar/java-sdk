@@ -2,9 +2,7 @@ package com.smartcar.sdk.data;
 
 import java.util.Arrays;
 
-/**
- * POJO for Smartcar /vehicles endpoint.
- */
+/** POJO for Smartcar /vehicles endpoint. */
 public class VehicleIds extends ApiData {
   private String[] vehicleIds;
 
@@ -35,9 +33,7 @@ public class VehicleIds extends ApiData {
     this.vehicleIds = vehicleIds;
   }
 
-  /**
-   * @return a stringified representation of VehicleIds
-   */
+  /** @return a stringified representation of VehicleIds */
   @Override
   public String toString() {
     return this.getClass().getName() + "{" + "vehicleIds=" + Arrays.toString(vehicleIds) + '}';

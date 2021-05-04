@@ -1,8 +1,6 @@
 package com.smartcar.sdk.data;
 
-/**
- * POJO for Smartcar /engine/oil endpoint
- */
+/** POJO for Smartcar /engine/oil endpoint */
 public class VehicleOil extends ApiData {
   private double lifeRemaining;
 
@@ -33,9 +31,7 @@ public class VehicleOil extends ApiData {
     this.lifeRemaining = lifeRemaining;
   }
 
-  /**
-   * @return a stringified representation of VehicleFuel
-   */
+  /** @return a stringified representation of VehicleFuel */
   @Override
   public String toString() {
     return this.getClass().getName() + "{" + "lifeRemaining=" + lifeRemaining + '}';

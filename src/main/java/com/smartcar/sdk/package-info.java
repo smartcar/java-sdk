@@ -1,4 +1,2 @@
-/**
- * Smartcar Java SDK
- */
+/** Smartcar Java SDK */
 package com.smartcar.sdk;

@@ -1,8 +1,6 @@
 package com.smartcar.sdk.data;
 
-/**
- * POJO for Smartcar /location endpodouble
- */
+/** POJO for Smartcar /location endpodouble */
 public class VehicleLocation extends ApiData {
   private double latitude;
   private double longitude;
@@ -54,9 +52,7 @@ public class VehicleLocation extends ApiData {
     this.longitude = longitude;
   }
 
-  /**
-   * @return a stringified representation of VehicleLocation
-   */
+  /** @return a stringified representation of VehicleLocation */
   @Override
   public String toString() {
     return this.getClass().getName()

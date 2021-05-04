@@ -33,9 +33,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-/**
- * Test Suite: Vehicle
- */
+/** Test Suite: Vehicle */
 @PrepareForTest({Vehicle.class, SmartcarException.class})
 public class VehicleTest {
 

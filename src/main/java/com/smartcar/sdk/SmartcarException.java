@@ -6,9 +6,7 @@ import java.io.IOException;
 import javax.json.Json;
 import okhttp3.Response;
 
-/**
- * Thrown when the Smartcar API library encounters a problem.
- */
+/** Thrown when the Smartcar API library encounters a problem. */
 public class SmartcarException extends java.lang.Exception {
 
   static Gson gson = new Gson();

@@ -1,8 +1,6 @@
 package com.smartcar.sdk.data;
 
-/**
- * A container for the compatibility endpoint
- */
+/** A container for the compatibility endpoint */
 public class Compatibility extends ApiData {
   private boolean compatible;
 

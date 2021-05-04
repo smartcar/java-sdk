@@ -3,14 +3,9 @@ package com.smartcar.sdk;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-/**
- * Test Suite: Utils
- */
+/** Test Suite: Utils */
 public class UtilsTest {
-  /**
-   * Verifies that join combines all array elements, delimited by the specified
-   * separator.
-   */
+  /** Verifies that join combines all array elements, delimited by the specified separator. */
   @Test
   public void testJoin() {
     String separator = ", ";
@@ -22,8 +17,8 @@ public class UtilsTest {
   }
 
   /**
-   * Verifies that joining a single element results in only that element as a
-   * string with no usages of the specified separator.
+   * Verifies that joining a single element results in only that element as a string with no usages
+   * of the specified separator.
    */
   @Test
   public void testJoinWithOneElement() {
@@ -35,9 +30,7 @@ public class UtilsTest {
     Assert.assertEquals(Utils.join(data, separator), expected);
   }
 
-  /**
-   * Verifies that joining an empty array results in an empty string.
-   */
+  /** Verifies that joining an empty array results in an empty string. */
   @Test
   public void testJoinWithEmptyArray() {
     String separator = "-";

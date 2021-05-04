@@ -1,16 +1,13 @@
 package com.smartcar.sdk.data;
 
-/**
- * POJO for Smartcar /battery/capacity endpoint
- */
+/** POJO for Smartcar /battery/capacity endpoint */
 public class VehicleBatteryCapacity extends ApiData {
   private double capacity;
 
   /**
    * Initializes a new instance of the VehicleBatteryCapacity
    *
-   * @param capacity The battery capacity of the vehicle
-   *   (in kWh).
+   * @param capacity The battery capacity of the vehicle (in kWh).
    */
   public VehicleBatteryCapacity(final double capacity) {
     this.capacity = capacity;
@@ -34,9 +31,7 @@ public class VehicleBatteryCapacity extends ApiData {
     this.capacity = capacity;
   }
 
-  /**
-   * @return a stringified representation of VehicleBattery
-   */
+  /** @return a stringified representation of VehicleBattery */
   @Override
   public String toString() {
     return this.getClass().getName() + "{" + "capacity=" + capacity + '}';

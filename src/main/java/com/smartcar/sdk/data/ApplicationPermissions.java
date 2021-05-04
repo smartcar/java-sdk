@@ -2,9 +2,7 @@ package com.smartcar.sdk.data;
 
 import java.util.Arrays;
 
-/**
- * POJO for Smartcar /permissions endpoint
- */
+/** POJO for Smartcar /permissions endpoint */
 public class ApplicationPermissions extends ApiData {
   private ResponsePaging paging;
   private String[] permissions;

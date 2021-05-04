@@ -4,9 +4,7 @@ import com.smartcar.sdk.data.VehicleOil;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-/**
- * Test Suite: ApiClient
- */
+/** Test Suite: ApiClient */
 public class ApiClientTest {
 
   @Test

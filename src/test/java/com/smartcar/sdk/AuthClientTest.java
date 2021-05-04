@@ -41,9 +41,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-/**
- * Test Suite: AuthClient
- */
+/** Test Suite: AuthClient */
 @PrepareForTest({
   AuthClient.class,
   Gson.class,
@@ -85,9 +83,7 @@ public class AuthClientTest extends PowerMockTestCase {
   // Subject Under Test
   private AuthClient subject;
 
-  /**
-   * Initializes a basic AuthClient subject under test with simple defaults.
-   */
+  /** Initializes a basic AuthClient subject under test with simple defaults. */
   @BeforeMethod
   private void beforeMethod() {
     this.subject =
@@ -176,8 +172,7 @@ public class AuthClientTest extends PowerMockTestCase {
   }
 
   /**
-   * Tests that a SmartcarException is thrown when the API response body is
-   * null.
+   * Tests that a SmartcarException is thrown when the API response body is null.
    *
    * @throws NullPointerException when an error occurs
    */
@@ -361,10 +356,11 @@ public class AuthClientTest extends PowerMockTestCase {
   }
 
   /**
-   * Tests that the custom Auth deserializer used by gson produces the expected
-   * Auth instance with the correct values.
+   * Tests that the custom Auth deserializer used by gson produces the expected Auth instance with
+   * the correct values.
    *
-   * @throws IllegalAccessException if there is a problem accessing the custom deserializer from this scope
+   * @throws IllegalAccessException if there is a problem accessing the custom deserializer from
+   *     this scope
    * @throws InvocationTargetException when an error occurs inside the custom deserializer
    * @throws InstantiationException if the custom deserializer cannot be instantiated
    * @throws ClassNotFoundException if the custom deserializer cannot be found
@@ -415,9 +411,7 @@ public class AuthClientTest extends PowerMockTestCase {
     assertEquals(actualAuth.getRefreshExpiration(), this.fakeExpiration);
   }
 
-  /**
-   * Tests the constructor providing all required and optional arguments.
-   */
+  /** Tests the constructor providing all required and optional arguments. */
   @Test
   public void testAuthClientConstructorTestModeWithAllValidArgsProducesExpectedAuthUrl() {
     AuthClient testSubject =
@@ -464,10 +458,7 @@ public class AuthClientTest extends PowerMockTestCase {
     assertEquals(testSubject.getAuthUrl(), expectedAuthUrl);
   }
 
-  /**
-   * Tests the constructor, providing all required arguments, and the optional
-   * development flag.
-   */
+  /** Tests the constructor, providing all required arguments, and the optional development flag. */
   @Test
   public void testAuthClientConstructorWithDevelopmentProducesExpectedAuthUrl() {
     AuthClient testSubject =
@@ -489,10 +480,7 @@ public class AuthClientTest extends PowerMockTestCase {
     assertEquals(testSubject.getAuthUrl(), expectedAuthUrl);
   }
 
-  /**
-   * Tests the constructor, providing all required arguments, and the optional
-   * scope argument.
-   */
+  /** Tests the constructor, providing all required arguments, and the optional scope argument. */
   @Test
   public void testAuthClientConstructorWithScopeProducesExpectedAuthUrl() {
     AuthClient testSubject =
@@ -512,10 +500,7 @@ public class AuthClientTest extends PowerMockTestCase {
     assertEquals(testSubject.getAuthUrl(), expectedAuthUrl);
   }
 
-  /**
-   * Tests the constructor, providing all required arguments, and no optional
-   * arguments.
-   */
+  /** Tests the constructor, providing all required arguments, and no optional arguments. */
   @Test
   public void testAuthClientConstructorWithoutOptionalArgsProducesExpectedAuthUrl() {
     AuthClient testSubject =
@@ -534,8 +519,8 @@ public class AuthClientTest extends PowerMockTestCase {
   }
 
   /**
-   * Tests that Auth URL generation produces the expected URL string when
-   * state, forcePrompt, and authVehicleInfo arguments are all specified.
+   * Tests that Auth URL generation produces the expected URL string when state, forcePrompt, and
+   * authVehicleInfo arguments are all specified.
    */
   @Test
   public void testGetAuthUrlWithStateAndForcePromptAndAuthVehicleInfoProducesExpectedAuthUrl() {
@@ -561,8 +546,8 @@ public class AuthClientTest extends PowerMockTestCase {
   }
 
   /**
-   * Tests that Auth URL generation produces the expected URL string when both
-   * state and forcePrompt arguments are specified.
+   * Tests that Auth URL generation produces the expected URL string when both state and forcePrompt
+   * arguments are specified.
    */
   @Test
   public void testGetAuthUrlWithStateAndForcePromptProducesExpectedAuthUrl() {
@@ -584,8 +569,8 @@ public class AuthClientTest extends PowerMockTestCase {
   }
 
   /**
-   * Tests that Auth URL generation produces the expected URL string when both
-   * state and authVehicleInfo arguments are specified.
+   * Tests that Auth URL generation produces the expected URL string when both state and
+   * authVehicleInfo arguments are specified.
    */
   @Test
   public void testGetAuthUrlWithStateAndAndAuthVehicleInfoProducesExpectedAuthUrl() {
@@ -609,8 +594,8 @@ public class AuthClientTest extends PowerMockTestCase {
   }
 
   /**
-   * Tests that Auth URL generation produces the expected URL string when both
-   * state and authVehicleInfo arguments are specified.
+   * Tests that Auth URL generation produces the expected URL string when both state and
+   * authVehicleInfo arguments are specified.
    */
   @Test
   public void testGetAuthUrlWithForcePromptAndAuthVehicleInfoProducesExpectedAuthUrl() {
@@ -633,8 +618,8 @@ public class AuthClientTest extends PowerMockTestCase {
   }
 
   /**
-   * Tests that Auth URL generation produces the expected URL string when the
-   * optional state argument is specified.
+   * Tests that Auth URL generation produces the expected URL string when the optional state
+   * argument is specified.
    */
   @Test
   public void testGetAuthUrlWithState() {
@@ -656,8 +641,8 @@ public class AuthClientTest extends PowerMockTestCase {
   }
 
   /**
-   * Tests that Auth URL generation produces the expected URL string when the
-   * optional forcePrompt argument is specified.
+   * Tests that Auth URL generation produces the expected URL string when the optional forcePrompt
+   * argument is specified.
    */
   @Test
   public void testGetAuthUrlWithForcePrompt() {
@@ -677,8 +662,8 @@ public class AuthClientTest extends PowerMockTestCase {
   }
 
   /**
-   * Tests that Auth URL generation produces the expected URL string when the
-   * optional authVehicleInfo argument is specified.
+   * Tests that Auth URL generation produces the expected URL string when the optional
+   * authVehicleInfo argument is specified.
    */
   @Test
   public void testGetAuthUrlWithAuthVehicleInfo() {
@@ -700,8 +685,8 @@ public class AuthClientTest extends PowerMockTestCase {
   }
 
   /**
-   * Tests that Auth URL generation produces the expected URL string when no
-   * arguments are specified.
+   * Tests that Auth URL generation produces the expected URL string when no arguments are
+   * specified.
    */
   @Test
   public void testGetAuthUrlWithNoArgs() {
@@ -721,8 +706,8 @@ public class AuthClientTest extends PowerMockTestCase {
   }
 
   /**
-   * Tests that Auth URL generation produces the expected URL string when
-   * AuthUrlBuilder is used setting all params.
+   * Tests that Auth URL generation produces the expected URL string when AuthUrlBuilder is used
+   * setting all params.
    */
   @Test
   public void testAuthUrlBuilder() {
@@ -767,8 +752,8 @@ public class AuthClientTest extends PowerMockTestCase {
   }
 
   /**
-   * Tests that Auth URL generation produces the expected URL string when
-   * AuthUrlBuilder is used empty.
+   * Tests that Auth URL generation produces the expected URL string when AuthUrlBuilder is used
+   * empty.
    */
   @Test
   public void testEmptyAuthUrlBuilder() {
@@ -795,8 +780,7 @@ public class AuthClientTest extends PowerMockTestCase {
   }
 
   /**
-   * Verifies that exchanging a code returns a valid Auth object containing
-   * a token.
+   * Verifies that exchanging a code returns a valid Auth object containing a token.
    *
    * @throws Exception on failure
    */
@@ -832,8 +816,7 @@ public class AuthClientTest extends PowerMockTestCase {
   }
 
   /**
-   * Verifies that exchanging a refresh token returns a valid Auth object
-   * containing a token.
+   * Verifies that exchanging a refresh token returns a valid Auth object containing a token.
    *
    * @throws Exception on failure
    */
@@ -903,7 +886,8 @@ public class AuthClientTest extends PowerMockTestCase {
   }
 
   /**
-   * Tests setting the api version to 2.0 and getting the api url that is used for subsequent requests
+   * Tests setting the api version to 2.0 and getting the api url that is used for subsequent
+   * requests
    */
   @Test
   public void testSetApiVersion() {
