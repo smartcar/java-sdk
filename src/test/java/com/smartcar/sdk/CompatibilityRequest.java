@@ -1,6 +1,5 @@
 package com.smartcar.sdk;
 
-import okhttp3.HttpUrl;
 import okhttp3.Request;
 import org.mockito.ArgumentMatcher;
 

@@ -1,10 +1,8 @@
 package com.smartcar.sdk;
 
-import com.smartcar.sdk.data.Auth;
 import com.smartcar.sdk.data.BatchResponse;
 import com.smartcar.sdk.data.SmartcarResponse;
 import com.smartcar.sdk.data.VehicleFuel;
-import com.smartcar.sdk.data.VehicleIds;
 import com.smartcar.sdk.data.VehicleInfo;
 import com.smartcar.sdk.data.VehicleOdometer;
 
