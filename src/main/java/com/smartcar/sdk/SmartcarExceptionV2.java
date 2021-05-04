@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import okhttp3.Response;
 
-import javax.json.Json;
 import java.io.IOException;
 
 /**
