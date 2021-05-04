@@ -1,7 +1,12 @@
 package com.smartcar.sdk;
 
+import static org.mockito.Matchers.eq;
+import static org.powermock.api.mockito.PowerMockito.mock;
+import static org.powermock.api.mockito.PowerMockito.when;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import javax.json.Json;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
@@ -9,12 +14,6 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.testng.PowerMockTestCase;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import javax.json.Json;
-
-import static org.mockito.Matchers.eq;
-import static org.powermock.api.mockito.PowerMockito.mock;
-import static org.powermock.api.mockito.PowerMockito.when;
 
 /**
  * Test Suite: SmartcarExceptionV2

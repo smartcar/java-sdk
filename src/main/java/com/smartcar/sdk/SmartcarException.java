@@ -1,11 +1,10 @@
 package com.smartcar.sdk;
 
-import okhttp3.Response;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-
-import javax.json.Json;
 import java.io.IOException;
+import javax.json.Json;
+import okhttp3.Response;
 
 /**
  * Thrown when the Smartcar API library encounters a problem.

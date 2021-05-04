@@ -1,18 +1,16 @@
 package com.smartcar.sdk;
 
 import com.smartcar.sdk.data.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
 import okhttp3.RequestBody;
-
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonArray;
-import javax.json.JsonArrayBuilder;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Arrays;
 
 /**
  * Smartcar Vehicle API Object

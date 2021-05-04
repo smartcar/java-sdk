@@ -3,16 +3,15 @@ package com.smartcar.sdk;
 import com.google.gson.GsonBuilder;
 import com.smartcar.sdk.data.ApiData;
 import com.smartcar.sdk.data.SmartcarResponse;
+import java.io.IOException;
+import java.time.Instant;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import org.apache.commons.text.CaseUtils;
-
-import java.time.Instant;
-import java.util.Date;
-import java.util.concurrent.TimeUnit;
-import java.io.IOException;
 
 /**
  * Provides the core functionality for API client objects.

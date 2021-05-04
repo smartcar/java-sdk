@@ -1,21 +1,20 @@
 package com.smartcar.sdk;
 
-import org.testng.Assert;
-import org.testng.annotations.Test;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.testng.PowerMockTestCase;
-
 import static org.mockito.Matchers.eq;
 import static org.powermock.api.mockito.PowerMockito.mock;
 import static org.powermock.api.mockito.PowerMockito.when;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import javax.json.Json;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.testng.PowerMockTestCase;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
 /**
  * Test Suite: SmartcarException
  */

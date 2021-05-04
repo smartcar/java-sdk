@@ -1,18 +1,16 @@
 package com.smartcar.sdk.data;
 
-import java.time.Instant;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.smartcar.sdk.BatchResponseMissingException;
 import com.smartcar.sdk.SmartcarException;
-
 import com.smartcar.sdk.SmartcarExceptionV2;
+import java.time.Instant;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import org.apache.commons.text.CaseUtils;
 
 /**
