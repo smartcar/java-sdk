@@ -2,10 +2,7 @@ package com.smartcar.sdk.data;
 
 import java.util.Date;
 
-/**
- * A container for the authentication tokens obtained from the Smartcar OAuth
- * 2.0 service.
- */
+/** A container for the authentication tokens obtained from the Smartcar OAuth 2.0 service. */
 public class Auth extends ApiData {
   private String accessToken;
   private String refreshToken;
@@ -112,9 +109,7 @@ public class Auth extends ApiData {
     this.refreshExpiration = refreshExpiration;
   }
 
-  /**
-   * @return a stringified representation of Auth
-   */
+  /** @return a stringified representation of Auth */
   @Override
   public String toString() {
     return this.getClass().getName()

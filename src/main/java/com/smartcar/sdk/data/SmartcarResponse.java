@@ -2,9 +2,7 @@ package com.smartcar.sdk.data;
 
 import java.util.Date;
 
-/**
- * POJO for Wrapping ApiData with meta data
- */
+/** POJO for Wrapping ApiData with meta data */
 public class SmartcarResponse<T extends ApiData> extends ApiData {
   private T data;
   private String unitSystem;
@@ -52,7 +50,7 @@ public class SmartcarResponse<T extends ApiData> extends ApiData {
   /**
    * Initializes an instance of SmartcarResponse
    *
-   * @param data  Object extending the ApiData
+   * @param data Object extending the ApiData
    */
   public SmartcarResponse(final T data) {
     this(data, null, null);
@@ -148,9 +146,7 @@ public class SmartcarResponse<T extends ApiData> extends ApiData {
     this.paging = paging;
   }
 
-  /**
-   * @return a stringified representation of SmartcarResponse
-   */
+  /** @return a stringified representation of SmartcarResponse */
   @Override
   public String toString() {
     return this.getClass().getName()

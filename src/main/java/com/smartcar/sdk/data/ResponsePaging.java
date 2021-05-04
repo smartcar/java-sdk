@@ -1,8 +1,6 @@
 package com.smartcar.sdk.data;
 
-/**
- * POJO for the paging object
- */
+/** POJO for the paging object */
 public class ResponsePaging extends ApiData {
   private int count;
   private int offset;
@@ -54,9 +52,7 @@ public class ResponsePaging extends ApiData {
     this.offset = offset;
   }
 
-  /**
-   * @return a stringified representation of ResponsePaging
-   */
+  /** @return a stringified representation of ResponsePaging */
   @Override
   public String toString() {
     return this.getClass().getName() + "{" + "count=" + count + ", offset=" + offset + '}';

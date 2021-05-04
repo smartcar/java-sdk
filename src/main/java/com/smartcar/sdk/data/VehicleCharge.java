@@ -1,8 +1,6 @@
 package com.smartcar.sdk.data;
 
-/**
- * POJO for Smartcar /charge endpoint
- */
+/** POJO for Smartcar /charge endpoint */
 public class VehicleCharge extends ApiData {
   private String state;
   private boolean isPluggedIn;
@@ -10,8 +8,8 @@ public class VehicleCharge extends ApiData {
   /**
    * Initializes a new instance of the VehicleCharge
    *
-   * @param state Indicates the current state of the charge system. Can be
-   *   `FULLY_CHARGED`, `CHARGING`, or `NOT_CHARGING`.
+   * @param state Indicates the current state of the charge system. Can be `FULLY_CHARGED`,
+   *     `CHARGING`, or `NOT_CHARGING`.
    * @param isPluggedIn Indicates whether charging cable is plugged in.
    */
   public VehicleCharge(final String state, final boolean isPluggedIn) {
@@ -55,9 +53,7 @@ public class VehicleCharge extends ApiData {
     this.isPluggedIn = isPluggedIn;
   }
 
-  /**
-   * @return a stringified representation of VehicleCharge
-   */
+  /** @return a stringified representation of VehicleCharge */
   @Override
   public String toString() {
     return this.getClass().getName() + "{" + "state=" + state + "isPluggedIn=" + isPluggedIn + '}';

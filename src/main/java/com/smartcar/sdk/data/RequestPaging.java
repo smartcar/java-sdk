@@ -1,8 +1,6 @@
 package com.smartcar.sdk.data;
 
-/**
- * POJO for the paging object
- */
+/** POJO for the paging object */
 public class RequestPaging extends ApiData {
   private int limit;
   private int offset;
@@ -54,9 +52,7 @@ public class RequestPaging extends ApiData {
     this.offset = offset;
   }
 
-  /**
-   * @return a stringified representation of RequestPaging
-   */
+  /** @return a stringified representation of RequestPaging */
   @Override
   public String toString() {
     return this.getClass().getName() + "{" + "limit=" + limit + ", offset=" + offset + '}';

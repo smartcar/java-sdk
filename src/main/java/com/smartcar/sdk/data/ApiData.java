@@ -5,9 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.Serializable;
 
-/**
- * The base object representing parsed API response data.
- */
+/** The base object representing parsed API response data. */
 public class ApiData<T> implements Serializable {
   private static Gson gson =
       new GsonBuilder()
@@ -16,9 +14,7 @@ public class ApiData<T> implements Serializable {
 
   private T data;
 
-  /**
-   * Default constructor.
-   */
+  /** Default constructor. */
   public ApiData() {}
 
   /**

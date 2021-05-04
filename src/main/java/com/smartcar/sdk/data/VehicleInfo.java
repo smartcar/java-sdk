@@ -1,8 +1,6 @@
 package com.smartcar.sdk.data;
 
-/**
- * POJO for Smartcar /info endpoint
- */
+/** POJO for Smartcar /info endpoint */
 public class VehicleInfo extends ApiData {
   private String id;
   private String make;
@@ -96,9 +94,7 @@ public class VehicleInfo extends ApiData {
     this.year = year;
   }
 
-  /**
-   * @return a stringified representation of VehicleInfo
-   */
+  /** @return a stringified representation of VehicleInfo */
   @Override
   public String toString() {
     return this.getClass().getName()

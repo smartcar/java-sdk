@@ -15,9 +15,7 @@ import org.powermock.modules.testng.PowerMockTestCase;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-/**
- * Test Suite: SmartcarException
- */
+/** Test Suite: SmartcarException */
 @PrepareForTest({
   SmartcarException.class,
   Gson.class,
@@ -27,9 +25,7 @@ import org.testng.annotations.Test;
 })
 @PowerMockIgnore("javax.net.ssl.*")
 public class SmartcarExceptionTest extends PowerMockTestCase {
-  /**
-   * Test throwing an SmartcarException with a message.
-   */
+  /** Test throwing an SmartcarException with a message. */
   @Test
   public void testNewExceptionWithMessage() throws Exception {
     String testMessage = "test message";
@@ -41,9 +37,7 @@ public class SmartcarExceptionTest extends PowerMockTestCase {
     }
   }
 
-  /**
-   * Test throwing an SmartcarException with a message.
-   */
+  /** Test throwing an SmartcarException with a message. */
   @Test
   public void testNewExceptionWithRequestAndResponse() throws Exception {
     String expectedError = "expected_error";
@@ -77,9 +71,7 @@ public class SmartcarExceptionTest extends PowerMockTestCase {
     Assert.assertEquals(ex.getStatusCode(), expectedStatusCode);
   }
 
-  /**
-   * Test SmartcarException.Factory with error_description
-   */
+  /** Test SmartcarException.Factory with error_description */
   @Test
   public void testSmartcarExceptionFactoryWithErrorDescription() throws Exception {
     String expectedMessage = "expected message";
@@ -96,9 +88,7 @@ public class SmartcarExceptionTest extends PowerMockTestCase {
     Assert.assertEquals(ex.getMessage(), expectedMessage);
   }
 
-  /**
-   * Test SmartcarException.Factory with message
-   */
+  /** Test SmartcarException.Factory with message */
   @Test
   public void testSmartcarExceptionFactoryWithMessage() throws Exception {
     String expectedMessage = "expected message";
@@ -114,9 +104,7 @@ public class SmartcarExceptionTest extends PowerMockTestCase {
     Assert.assertEquals(ex.getMessage(), expectedMessage);
   }
 
-  /**
-   * Test SmartcarException.Factory with invalid json body
-   */
+  /** Test SmartcarException.Factory with invalid json body */
   @Test
   public void testSmartcarExceptionFactoryWithInvalidJsonBody() throws Exception {
     String response = "invalid json - string body";

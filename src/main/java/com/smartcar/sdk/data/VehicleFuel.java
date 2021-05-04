@@ -1,8 +1,6 @@
 package com.smartcar.sdk.data;
 
-/**
- * POJO for Smartcar /fuel endpoint
- */
+/** POJO for Smartcar /fuel endpoint */
 public class VehicleFuel extends ApiData {
   private double range;
   private double percentRemaining;
@@ -11,12 +9,11 @@ public class VehicleFuel extends ApiData {
   /**
    * Initializes a new instance of the VehicleFuel
    *
-   * @param range The estimated remaining distance the car can travel
-   *   (in kms or miles). To set unit, {@link com.smartcar.sdk.Vehicle#setUnitSystem(Vehicle.UnitSystem)}.
-   * @param percentRemaining The remaining level of fuel in the tank
-   *   (in percent).
-   * @param amountRemaining - The amount of fuel in the tank (in liters of
-   *   gallons (US)). To set unit, {@link com.smartcar.sdk.Vehicle#setUnitSystem(Vehicle.UnitSystem)}.
+   * @param range The estimated remaining distance the car can travel (in kms or miles). To set
+   *     unit, {@link com.smartcar.sdk.Vehicle#setUnitSystem(Vehicle.UnitSystem)}.
+   * @param percentRemaining The remaining level of fuel in the tank (in percent).
+   * @param amountRemaining - The amount of fuel in the tank (in liters of gallons (US)). To set
+   *     unit, {@link com.smartcar.sdk.Vehicle#setUnitSystem(Vehicle.UnitSystem)}.
    */
   public VehicleFuel(
       final double range, final double percentRemaining, final double amountRemaining) {
@@ -79,9 +76,7 @@ public class VehicleFuel extends ApiData {
     this.amountRemaining = amountRemaining;
   }
 
-  /**
-   * @return a stringified representation of VehicleFuel
-   */
+  /** @return a stringified representation of VehicleFuel */
   @Override
   public String toString() {
     return this.getClass().getName()

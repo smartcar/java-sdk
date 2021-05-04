@@ -12,9 +12,7 @@ import java.net.MalformedURLException;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
-/**
- * Integration Test Suite: Authentication
- */
+/** Integration Test Suite: Authentication */
 public class AuthTest extends IntegrationTest {
   private static final String PATTERN_UUID =
       "[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}";

@@ -15,9 +15,7 @@ import org.powermock.modules.testng.PowerMockTestCase;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-/**
- * Test Suite: SmartcarExceptionV2
- */
+/** Test Suite: SmartcarExceptionV2 */
 @PrepareForTest({
   SmartcarExceptionV2.class,
   Gson.class,
@@ -27,9 +25,7 @@ import org.testng.annotations.Test;
 })
 @PowerMockIgnore("javax.net.ssl.*")
 public class SmartcarExceptionV2Test extends PowerMockTestCase {
-  /**
-   * Test throwing an SmartcarExceptionV2 with a message.
-   */
+  /** Test throwing an SmartcarExceptionV2 with a message. */
   @Test
   public void testNewExceptionWithDescription() throws Exception {
     String testMessage = "test message";
@@ -42,9 +38,7 @@ public class SmartcarExceptionV2Test extends PowerMockTestCase {
     }
   }
 
-  /**
-   * Test throwing an SmartcarExceptionV2 with a message.
-   */
+  /** Test throwing an SmartcarExceptionV2 with a message. */
   @Test
   public void testNewExceptionWithRequestAndResponse() throws Exception {
     String expectedResolution = "expected resolution";
@@ -90,9 +84,7 @@ public class SmartcarExceptionV2Test extends PowerMockTestCase {
         ex.getMessage(), "ACCOUNT_STATE:INVALID_CREDENTIALS - expected description");
   }
 
-  /**
-   * Test SmartcarExceptionV2.Factory with description
-   */
+  /** Test SmartcarExceptionV2.Factory with description */
   @Test
   public void testSmartcarExceptionV2FactoryWithMessage() throws Exception {
     String expectedMessage = "expected message";
@@ -110,9 +102,7 @@ public class SmartcarExceptionV2Test extends PowerMockTestCase {
     Assert.assertEquals(ex.getDescription(), expectedMessage);
   }
 
-  /**
-   * Test SmartcarExceptionV2.Factory with invalid json body
-   */
+  /** Test SmartcarExceptionV2.Factory with invalid json body */
   @Test
   public void testSmartcarExceptionV2FactoryWithInvalidJsonBody() throws Exception {
     String response = "invalid json - string body";

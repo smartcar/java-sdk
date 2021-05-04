@@ -23,13 +23,9 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-/**
- * Smartcar OAuth 2.0 Authentication Client
- */
+/** Smartcar OAuth 2.0 Authentication Client */
 public class AuthClient extends ApiClient {
-  /**
-   * Custom deserializer for Auth data from the OAuth endpoint.
-   */
+  /** Custom deserializer for Auth data from the OAuth endpoint. */
   private class AuthDeserializer implements JsonDeserializer<Auth> {
     /**
      * Deserializes the OAuth auth endpoint JSON into a new Auth object.
@@ -37,7 +33,6 @@ public class AuthClient extends ApiClient {
      * @param json the Json data being deserialized
      * @param typeOfT the type of the Object to deserialize to
      * @param context the deserialization context
-     *
      * @return the newly created Auth object
      */
     public Auth deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
@@ -70,13 +65,10 @@ public class AuthClient extends ApiClient {
   public String urlAccessToken = AuthClient.URL_ACCESS_TOKEN;
 
   /**
-   * Retrieves the user ID of the user authenticated with the specified access
-   * token.
+   * Retrieves the user ID of the user authenticated with the specified access token.
    *
    * @param accessToken a valid access token
-   *
    * @return the corresponding user ID
-   *
    * @throws SmartcarException if the request is unsuccessful
    */
   public static String getUserId(String accessToken) throws SmartcarException {
@@ -107,9 +99,7 @@ public class AuthClient extends ApiClient {
    *
    * @param accessToken a valid access token
    * @param paging paging parameters
-   *
    * @return the requested vehicle IDs
-   *
    * @throws SmartcarException if the request is unsuccessful
    */
   public static SmartcarResponse<VehicleIds> getVehicleIds(String accessToken, RequestPaging paging)
@@ -161,9 +151,7 @@ public class AuthClient extends ApiClient {
    * Retrieves all vehicle IDs associated with the authenticated user.
    *
    * @param accessToken a valid access token
-   *
    * @return the requested vehicle IDs
-   *
    * @throws SmartcarException if the request is unsuccessful
    */
   public static SmartcarResponse<VehicleIds> getVehicleIds(String accessToken)
@@ -175,7 +163,6 @@ public class AuthClient extends ApiClient {
    * Convenience method for determining if an auth token expiration has passed.
    *
    * @param expiration the expiration date of the token
-   *
    * @return whether or not the token has expired
    */
   public static boolean isExpired(Date expiration) {
@@ -250,9 +237,7 @@ public class AuthClient extends ApiClient {
    * Executes an Auth API request.
    *
    * @param requestBody the request body to be included
-   *
    * @return the parsed response
-   *
    * @throws SmartcarException if the API request fails
    */
   private Auth call(RequestBody requestBody) throws SmartcarException {
@@ -270,9 +255,8 @@ public class AuthClient extends ApiClient {
 
   /**
    * @deprecated as of 2.1.0. Please use {@link AuthUrlBuilder} instead.
-   *
-   * A class that creates a custom AuthVehicleInfo object, which can be used
-   * when generating an authentication URL.
+   *     <p>A class that creates a custom AuthVehicleInfo object, which can be used when generating
+   *     an authentication URL.
    */
   @Deprecated
   public static class AuthVehicleInfo {
@@ -296,9 +280,7 @@ public class AuthClient extends ApiClient {
       return this.make;
     }
 
-    /**
-     * Builder class that allows for optional properties on AuthVehicleInfo
-     */
+    /** Builder class that allows for optional properties on AuthVehicleInfo */
     public static class Builder {
       private String make;
 
@@ -306,9 +288,8 @@ public class AuthClient extends ApiClient {
        * Sets the make on the Builder. Including a make allows the user to bypass the car brand
        * selection screen.
        *
-       * @param make name of the make of a vehicle. For a list of supported makes, please see
-       * <a href="https://smartcar.com/docs/api#request-authorization">our API Reference</a>
-       *
+       * @param make name of the make of a vehicle. For a list of supported makes, please see <a
+       *     href="https://smartcar.com/docs/api#request-authorization">our API Reference</a>
        * @return the builder with a make property added
        */
       public Builder setMake(String make) {
@@ -386,14 +367,11 @@ public class AuthClient extends ApiClient {
 
   /**
    * @deprecated as of 2.1.0. Please use {@link AuthUrlBuilder}.
-   *
-   * Returns the assembled authentication URL.
-   *
+   *     <p>Returns the assembled authentication URL.
    * @param state an arbitrary string to be returned to the redirect URI
    * @param forcePrompt whether to force the approval prompt to show every auth
-   * @param authVehicleInfo an optional AuthVehicleInfo object. Including the
-   * make property causes the car brand selection screen to be bypassed.
-   *
+   * @param authVehicleInfo an optional AuthVehicleInfo object. Including the make property causes
+   *     the car brand selection screen to be bypassed.
    * @return the authentication URL
    */
   @Deprecated
@@ -431,11 +409,8 @@ public class AuthClient extends ApiClient {
 
   /**
    * @deprecated as of 2.1.0. Please use {@link AuthUrlBuilder}.
-   *
-   * Returns the assembled authentication URL.
-   *
+   *     <p>Returns the assembled authentication URL.
    * @param state an arbitrary string to be returned to the redirect URI
-   *
    * @return the authentication URL
    */
   @Deprecated
@@ -445,11 +420,8 @@ public class AuthClient extends ApiClient {
 
   /**
    * @deprecated as of 2.1.0. Please use {@link AuthUrlBuilder}.
-   *
-   * Returns the assembled authentication URL.
-   *
+   *     <p>Returns the assembled authentication URL.
    * @param forcePrompt whether to force the approval prompt to show every auth
-   *
    * @return the authentication URL
    */
   @Deprecated
@@ -459,12 +431,9 @@ public class AuthClient extends ApiClient {
 
   /**
    * @deprecated as of 2.1.0. Please use {@link AuthUrlBuilder}.
-   *
-   * Returns the assembled authentication URL.
-   *
-   * @param authVehicleInfo an optional AuthVehicleInfo object. Including the
-   * make property causes the car brand selection screen to be bypassed.
-   *
+   *     <p>Returns the assembled authentication URL.
+   * @param authVehicleInfo an optional AuthVehicleInfo object. Including the make property causes
+   *     the car brand selection screen to be bypassed.
    * @return the authentication URL
    */
   @Deprecated
@@ -474,13 +443,10 @@ public class AuthClient extends ApiClient {
 
   /**
    * @deprecated as of 2.1.0. Please use {@link AuthUrlBuilder}.
-   *
-   * Returns the assembled authentication URL.
-   *
+   *     <p>Returns the assembled authentication URL.
    * @param state an arbitrary string to be returned to the redirect URI
-   * @param authVehicleInfo an optional AuthVehicleInfo object. Including the
-   * make property causes the car brand selection screen to be bypassed.
-   *
+   * @param authVehicleInfo an optional AuthVehicleInfo object. Including the make property causes
+   *     the car brand selection screen to be bypassed.
    * @return the authentication URL
    */
   @Deprecated
@@ -490,13 +456,10 @@ public class AuthClient extends ApiClient {
 
   /**
    * @deprecated as of 2.1.0. Please use {@link AuthUrlBuilder}.
-   *
-   * Returns the assembled authentication URL.
-   *
+   *     <p>Returns the assembled authentication URL.
    * @param forcePrompt whether to force the approval prompt to show every auth
-   * @param authVehicleInfo an optional AuthVehicleInfo object. Including the
-   * make property causes the car brand selection screen to be bypassed.
-   *
+   * @param authVehicleInfo an optional AuthVehicleInfo object. Including the make property causes
+   *     the car brand selection screen to be bypassed.
    * @return the authentication URL
    */
   @Deprecated
@@ -506,12 +469,9 @@ public class AuthClient extends ApiClient {
 
   /**
    * @deprecated as of 2.1.0. Please use {@link AuthUrlBuilder}.
-   *
-   * Returns the assembled authentication URL.
-   *
+   *     <p>Returns the assembled authentication URL.
    * @param state an arbitrary string to be returned to the redirect URI
    * @param forcePrompt whether to force the approval prompt to show every auth
-   *
    * @return the authentication URL
    */
   @Deprecated
@@ -521,9 +481,7 @@ public class AuthClient extends ApiClient {
 
   /**
    * @deprecated as of 2.1.0. Please use {@link AuthUrlBuilder}.
-   *
-   * Returns the assembled authentication URL.
-   *
+   *     <p>Returns the assembled authentication URL.
    * @return the authentication URL
    */
   @Deprecated
@@ -535,9 +493,7 @@ public class AuthClient extends ApiClient {
    * Exchanges an authorization code for an access token.
    *
    * @param code the authorization code
-   *
    * @return the requested access token
-   *
    * @throws SmartcarException when the request is unsuccessful
    */
   public Auth exchangeCode(String code) throws SmartcarException {
@@ -555,9 +511,7 @@ public class AuthClient extends ApiClient {
    * Exchanges a refresh token for a new access token.
    *
    * @param refreshToken the refresh token
-   *
    * @return the requested access token
-   *
    * @throws SmartcarException when the request is unsuccessful
    */
   public Auth exchangeRefreshToken(String refreshToken) throws SmartcarException {
@@ -571,24 +525,18 @@ public class AuthClient extends ApiClient {
   }
 
   /**
-   * Determine if a vehicle is compatible with the Smartcar API and the provided permissions.
-   * A compatible vehicle is a vehicle that:
+   * Determine if a vehicle is compatible with the Smartcar API and the provided permissions. A
+   * compatible vehicle is a vehicle that:
+   *
    * <ol>
-   * <li>
-   * has the hardware required for internet connectivity,
-   * </li>
-   * <li>
-   * belongs to the makes and models Smartcar supports, and
-   * </li>
-   * <li>
-   * supports the permissions.
-   * </li>
+   *   <li>has the hardware required for internet connectivity,
+   *   <li>belongs to the makes and models Smartcar supports, and
+   *   <li>supports the permissions.
    * </ol>
+   *
    * @param vin the VIN (Vehicle Identification Number) of the vehicle.
    * @param scope An array of permissions. The valid permissions are found in the API Reference.
-   *
    * @return false if the vehicle is not compatible. true if the vehicle is likely compatible.
-   *
    * @throws SmartcarException when the request is unsuccessful
    */
   public boolean isCompatible(String vin, String[] scope) throws SmartcarException {
@@ -596,26 +544,21 @@ public class AuthClient extends ApiClient {
   }
 
   /**
-   * Determine if a vehicle is compatible with the Smartcar API and the provided permissions for
-   * the specified country.
-   * A compatible vehicle is a vehicle that:
+   * Determine if a vehicle is compatible with the Smartcar API and the provided permissions for the
+   * specified country. A compatible vehicle is a vehicle that:
+   *
    * <ol>
-   * <li>
-   * has the hardware required for internet connectivity,
-   * </li>
-   * <li>
-   * belongs to the makes and models Smartcar supports, and
-   * </li>
-   * <li>
-   * supports the permissions.
-   * </li>
+   *   <li>has the hardware required for internet connectivity,
+   *   <li>belongs to the makes and models Smartcar supports, and
+   *   <li>supports the permissions.
    * </ol>
+   *
    * @param vin the VIN (Vehicle Identification Number) of the vehicle.
    * @param scope An array of permissions. The valid permissions are found in the API Reference.
-   * @param country An optional country code according to [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
-   *
-   * @return false if the vehicle is not compatible in the specified country. true if the vehicle is likely compatible.
-   *
+   * @param country An optional country code according to [ISO 3166-1
+   *     alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
+   * @return false if the vehicle is not compatible in the specified country. true if the vehicle is
+   *     likely compatible.
    * @throws SmartcarException when the request is unsuccessful
    */
   public boolean isCompatible(String vin, String[] scope, String country) throws SmartcarException {

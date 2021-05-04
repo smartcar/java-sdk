@@ -1,8 +1,6 @@
 package com.smartcar.sdk.data;
 
-/**
- * POJO for Smartcar /tires/pressure endpoint
- */
+/** POJO for Smartcar /tires/pressure endpoint */
 public class VehicleTirePressure extends ApiData {
   private double frontLeft;
   private double frontRight;
@@ -12,14 +10,14 @@ public class VehicleTirePressure extends ApiData {
   /**
    * Initializes a new instance of the VehicleTirePressure
    *
-   * @param frontLeft The current air pressure of the front left tire
-   *   (in psi or kpa). To set unit, {@link com.smartcar.sdk.Vehicle#setUnitSystem(Vehicle.UnitSystem)}.
-   * @param frontRight The current air pressure of the front right tire
-   *   (in psi or kpa). To set unit, {@link com.smartcar.sdk.Vehicle#setUnitSystem(Vehicle.UnitSystem)}.
-   * @param backLeft The current air pressure of the back left tire
-   *   (in psi or kpa). To set unit, {@link com.smartcar.sdk.Vehicle#setUnitSystem(Vehicle.UnitSystem)}.
-   * @param backRight The current air pressure of the back right tire
-   *   (in psi or kpa). To set unit, {@link com.smartcar.sdk.Vehicle#setUnitSystem(Vehicle.UnitSystem)}.
+   * @param frontLeft The current air pressure of the front left tire (in psi or kpa). To set unit,
+   *     {@link com.smartcar.sdk.Vehicle#setUnitSystem(Vehicle.UnitSystem)}.
+   * @param frontRight The current air pressure of the front right tire (in psi or kpa). To set
+   *     unit, {@link com.smartcar.sdk.Vehicle#setUnitSystem(Vehicle.UnitSystem)}.
+   * @param backLeft The current air pressure of the back left tire (in psi or kpa). To set unit,
+   *     {@link com.smartcar.sdk.Vehicle#setUnitSystem(Vehicle.UnitSystem)}.
+   * @param backRight The current air pressure of the back right tire (in psi or kpa). To set unit,
+   *     {@link com.smartcar.sdk.Vehicle#setUnitSystem(Vehicle.UnitSystem)}.
    */
   public VehicleTirePressure(
       final double frontLeft,
@@ -104,9 +102,7 @@ public class VehicleTirePressure extends ApiData {
     this.backRight = backRight;
   }
 
-  /**
-   * @return a stringified representation of VehicleTirePressure
-   */
+  /** @return a stringified representation of VehicleTirePressure */
   @Override
   public String toString() {
     return this.getClass().getName()

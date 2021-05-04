@@ -1,8 +1,6 @@
 package com.smartcar.sdk.data;
 
-/**
- * POJO for Smartcar /battery endpoint
- */
+/** POJO for Smartcar /battery endpoint */
 public class VehicleBattery extends ApiData {
   private double range;
   private double percentRemaining;
@@ -10,10 +8,9 @@ public class VehicleBattery extends ApiData {
   /**
    * Initializes a new instance of the VehicleBattery
    *
-   * @param range The estimated remaining distance the car can travel
-   *   (in kms or miles). To set unit, {@link com.smartcar.sdk.Vehicle#setUnitSystem(Vehicle.UnitSystem)}.
-   * @param percentRemaining The remaining level of charge in the battery
-   *   (in percent).
+   * @param range The estimated remaining distance the car can travel (in kms or miles). To set
+   *     unit, {@link com.smartcar.sdk.Vehicle#setUnitSystem(Vehicle.UnitSystem)}.
+   * @param percentRemaining The remaining level of charge in the battery (in percent).
    */
   public VehicleBattery(final double range, final double percentRemaining) {
     this.range = range;
@@ -56,9 +53,7 @@ public class VehicleBattery extends ApiData {
     this.percentRemaining = percentRemaining;
   }
 
-  /**
-   * @return a stringified representation of VehicleBattery
-   */
+  /** @return a stringified representation of VehicleBattery */
   @Override
   public String toString() {
     return this.getClass().getName()

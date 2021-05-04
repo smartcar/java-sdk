@@ -13,9 +13,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 import org.apache.commons.text.CaseUtils;
 
-/**
- * Provides the core functionality for API client objects.
- */
+/** Provides the core functionality for API client objects. */
 abstract class ApiClient {
   public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
   private static final String SDK_VERSION = ApiClient.getSdkVersion();
@@ -44,8 +42,7 @@ abstract class ApiClient {
       new GsonBuilder().setFieldNamingStrategy((field) -> toCamelCase(field.getName()));
 
   /**
-   * Retrieves the SDK version, falling back to DEVELOPMENT if we're not running
-   * from a jar.
+   * Retrieves the SDK version, falling back to DEVELOPMENT if we're not running from a jar.
    *
    * @return the SDK version
    */
@@ -81,9 +78,7 @@ abstract class ApiClient {
    * Sends the specified request, returning the raw response body.
    *
    * @param request the desired request to transmit
-   *
    * @return the response body
-   *
    * @throws SmartcarException if the request is unsuccessful
    */
   protected static Response execute(Request request) throws SmartcarException {
@@ -105,15 +100,13 @@ abstract class ApiClient {
   }
 
   /**
-   * Sends the specified request, parsing the response into the specified type.
-   * Wraps the request with the unitSystem and age meta data.
+   * Sends the specified request, parsing the response into the specified type. Wraps the request
+   * with the unitSystem and age meta data.
    *
    * @param <T> the data container for the parsed response JSON
    * @param request the desired request to transmit
    * @param dataType the type into which the response will be parsed
-   *
    * @return the wrapped response
-   *
    * @throws SmartcarException if the request is unsuccessful
    */
   protected static <T extends ApiData> SmartcarResponse<T> execute(

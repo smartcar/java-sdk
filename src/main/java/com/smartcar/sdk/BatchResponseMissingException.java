@@ -1,8 +1,6 @@
 package com.smartcar.sdk;
 
-/**
- * Thrown when a BatchResponse does not have data for an endpoint.
- */
+/** Thrown when a BatchResponse does not have data for an endpoint. */
 public class BatchResponseMissingException extends SmartcarException {
 
   /**

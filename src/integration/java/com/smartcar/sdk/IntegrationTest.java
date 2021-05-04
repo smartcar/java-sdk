@@ -16,9 +16,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-/**
- * Provides all shared functionality among integration tests.
- */
+/** Provides all shared functionality among integration tests. */
 abstract class IntegrationTest {
   private static final int WEBDRIVER_DEFAULT_TIMEOUT_SECONDS = 10;
   private static Auth auth;
@@ -64,9 +62,8 @@ abstract class IntegrationTest {
   }
 
   /**
-   * Retrieves auth credentials for a specified make. This method does not
-   * maintain the auth singleton and returns a new auth credential every time
-   * it is invoked.
+   * Retrieves auth credentials for a specified make. This method does not maintain the auth
+   * singleton and returns a new auth credential every time it is invoked.
    *
    * @param make the make to be selected within the auth flow
    * @return a new set of auth credentials
@@ -88,8 +85,8 @@ abstract class IntegrationTest {
   }
 
   /**
-   * Obtain a single vehicle of the specified make with an authorization independent
-   * of the auth singleton created using `getAuth`
+   * Obtain a single vehicle of the specified make with an authorization independent of the auth
+   * singleton created using `getAuth`
    *
    * @param make the make to be selected within the auth flow
    * @return an authorized vehicle
@@ -113,7 +110,6 @@ abstract class IntegrationTest {
    * @param connectAuthUrl the Smartcar auth URL
    * @param oemUsername the OEM username
    * @param oemPassword the OEM password
-   *
    * @return the resulting auth code
    * @throws Exception if the auth code could not be obtained
    */
@@ -221,16 +217,14 @@ abstract class IntegrationTest {
   }
 
   /**
-   * Starts a local ChromeDriver for easier debugging of Selenium tests.
-   * Use -Dselenium.debug=true for debugging
+   * Starts a local ChromeDriver for easier debugging of Selenium tests. Use -Dselenium.debug=true
+   * for debugging
    */
   private void startLocalDriver() {
     this.driver = new ChromeDriver();
   }
 
-  /**
-   * Stops the Selenium WebDriver.
-   */
+  /** Stops the Selenium WebDriver. */
   void stopDriver() {
     this.driver.quit();
   }
