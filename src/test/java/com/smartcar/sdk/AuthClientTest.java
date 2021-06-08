@@ -89,7 +89,6 @@ public class AuthClientTest extends PowerMockTestCase {
             this.sampleClientId,
             this.sampleClientSecret,
             this.sampleRedirectUri,
-            this.sampleScope,
             this.sampleTestMode);
   }
 
@@ -420,13 +419,12 @@ public class AuthClientTest extends PowerMockTestCase {
             this.sampleClientId,
             this.sampleClientSecret,
             this.sampleRedirectUri,
-            this.sampleScope,
             true);
     String vin = "1234567890ABCDEFG";
     String[] flags = {"country:DE", "flag:suboption"};
     String authUrl =
         client
-            .authUrlBuilder()
+            .authUrlBuilder(this.sampleScope)
             .setApprovalPrompt(true)
             .setState("state")
             .setSingleSelect(true)
@@ -466,9 +464,8 @@ public class AuthClientTest extends PowerMockTestCase {
             this.sampleClientId,
             this.sampleClientSecret,
             this.sampleRedirectUri,
-            this.sampleScope,
             false);
-    String authUrl = client.authUrlBuilder().build();
+    String authUrl = client.authUrlBuilder(this.sampleScope).build();
 
     String expectedAuthUrl =
         "https://connect.smartcar.com/oauth/authorize"
@@ -497,7 +494,6 @@ public class AuthClientTest extends PowerMockTestCase {
                 this.sampleClientId,
                 this.sampleClientSecret,
                 this.sampleRedirectUri,
-                this.sampleScope,
                 this.sampleTestMode));
 
     Auth expected =
@@ -533,7 +529,6 @@ public class AuthClientTest extends PowerMockTestCase {
                 this.sampleClientId,
                 this.sampleClientSecret,
                 this.sampleRedirectUri,
-                this.sampleScope,
                 this.sampleTestMode));
 
     Auth expected =
@@ -570,7 +565,6 @@ public class AuthClientTest extends PowerMockTestCase {
                 this.sampleClientId,
                 this.sampleClientSecret,
                 this.sampleRedirectUri,
-                this.sampleScope,
                 this.sampleTestMode));
 
     Compatibility expected = new Compatibility(true);

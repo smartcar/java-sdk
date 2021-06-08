@@ -74,9 +74,8 @@ abstract class IntegrationTest {
             this.authClientId,
             this.authClientSecret,
             this.authRedirectUri,
-            this.authScope,
             this.authDevelopment);
-    String authUrl = this.authClient.new AuthUrlBuilder().build();
+    String authUrl = this.authClient.new AuthUrlBuilder(this.authScope).build();
     String authCode = this.getAuthCode(authUrl, this.authOemUsername, this.authOemPassword, make);
 
     Auth auth = authClient.exchangeCode(authCode);

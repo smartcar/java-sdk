@@ -175,15 +175,13 @@ public class AuthClient extends ApiClient {
    * @param clientId the application client ID
    * @param clientSecret the application client secret
    * @param redirectUri the registered redirect URI for the application
-   * @param scope the permission scope requested
    * @param testMode launch the Smartcar auth flow in test mode
    */
   public AuthClient(
-      String clientId, String clientSecret, String redirectUri, String[] scope, boolean testMode) {
+      String clientId, String clientSecret, String redirectUri, boolean testMode) {
     this.clientId = clientId;
     this.basicAuthorization = Credentials.basic(clientId, clientSecret);
     this.redirectUri = redirectUri;
-    this.scope = scope;
     this.testMode = testMode;
 
     AuthClient.gson.registerTypeAdapter(Auth.class, new AuthDeserializer());
@@ -195,42 +193,19 @@ public class AuthClient extends ApiClient {
    * @param clientId the application client ID
    * @param clientSecret the application client secret
    * @param redirectUri the registered redirect URI for the application
-   * @param testMode launch the Smartcar auth flow in test mode
-   */
-  public AuthClient(String clientId, String clientSecret, String redirectUri, boolean testMode) {
-    this(clientId, clientSecret, redirectUri, null, testMode);
-  }
-
-  /**
-   * Initializes a new AuthClient.
-   *
-   * @param clientId the application client ID
-   * @param clientSecret the application client secret
-   * @param redirectUri the registered redirect URI for the application
-   * @param scope the permission scope requested
-   */
-  public AuthClient(String clientId, String clientSecret, String redirectUri, String[] scope) {
-    this(clientId, clientSecret, redirectUri, scope, false);
-  }
-
-  /**
-   * Initializes a new AuthClient.
-   *
-   * @param clientId the client ID to be used with all requests
-   * @param clientSecret the client secret to be used with all requests
-   * @param redirectUri the configured redirect URL associated with the account
    */
   public AuthClient(String clientId, String clientSecret, String redirectUri) {
-    this(clientId, clientSecret, redirectUri, null, false);
+    this(clientId, clientSecret, redirectUri, false);
   }
 
   /**
    * Creates an AuthUrlBuilder
    *
+   * @param scope the permission scope requested
    * @return returns an instance of AuthUrlBuilder
    */
-  public AuthUrlBuilder authUrlBuilder() {
-    return new AuthUrlBuilder();
+  public AuthUrlBuilder authUrlBuilder(String[] scope) {
+    return new AuthUrlBuilder(scope);
   }
 
   /**
@@ -259,17 +234,15 @@ public class AuthClient extends ApiClient {
   public class AuthUrlBuilder {
     private HttpUrl.Builder urlBuilder;
 
-    public AuthUrlBuilder() {
+    public AuthUrlBuilder(String[] scope) {
       urlBuilder =
           HttpUrl.parse(AuthClient.this.urlAuthorize)
               .newBuilder()
               .addQueryParameter("response_type", "code")
               .addQueryParameter("client_id", AuthClient.this.clientId)
               .addQueryParameter("redirect_uri", AuthClient.this.redirectUri)
-              .addQueryParameter("mode", AuthClient.this.testMode ? "test" : "live");
-      if (AuthClient.this.scope.length != 0) {
-        urlBuilder.addQueryParameter("scope", Utils.join(AuthClient.this.scope, " "));
-      }
+              .addQueryParameter("mode", AuthClient.this.testMode ? "test" : "live")
+              .addQueryParameter("scope", Utils.join(scope, " "));
     }
 
     public AuthUrlBuilder setState(String state) {
