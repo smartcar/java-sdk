@@ -1,27 +1,18 @@
 package com.smartcar.sdk;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.smartcar.sdk.data.Auth;
-import com.smartcar.sdk.data.Compatibility;
-import com.smartcar.sdk.data.RequestPaging;
-import com.smartcar.sdk.data.ResponsePaging;
-import com.smartcar.sdk.data.SmartcarResponse;
-import com.smartcar.sdk.data.VehicleIds;
-import java.io.IOException;
+
 import java.lang.reflect.Type;
 import java.util.Calendar;
-import java.util.Date;
-import okhttp3.Credentials;
+
 import okhttp3.FormBody;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
 import okhttp3.RequestBody;
-import okhttp3.Response;
 
 /** Smartcar OAuth 2.0 Authentication Client */
 public class AuthClient extends ApiClient {
@@ -62,140 +53,70 @@ public class AuthClient extends ApiClient {
   private String[] scope;
   private boolean testMode;
   public String urlAuthorize = AuthClient.URL_AUTHORIZE;
-  public String urlAccessToken = AuthClient.URL_ACCESS_TOKEN;
+  public String origin;
+  public static String urlAccessToken = AuthClient.URL_ACCESS_TOKEN;
+
+
 
   /**
-   * Retrieves the user ID of the user authenticated with the specified access token.
-   *
-   * @param accessToken a valid access token
-   * @return the corresponding user ID
-   * @throws SmartcarException if the request is unsuccessful
+   * Builds a new AuthClient.
    */
-  public static String getUserId(String accessToken) throws SmartcarException {
-    // Build Request
-    Request request =
-        new Request.Builder()
-            .url(HttpUrl.parse(AuthClient.getApiUrl() + "/user"))
-            .header("Authorization", "Bearer " + accessToken)
-            .addHeader("User-Agent", AuthClient.USER_AGENT)
-            .build();
+  public static class Builder {
+    private String clientId;
+    private String basicAuthorization;
+    private String redirectUri;
+    private String[] scope;
+    private boolean testMode;
+    public String origin = AuthClient.URL_AUTHORIZE;
 
-    // Execute Request
-    Response response = AuthClient.execute(request);
+    public Builder() {
+      // defaults
+    }
 
-    // Parse Response
-    JsonObject json;
+    public Builder clientId(String clientId) {
+      this.clientId = clientId;
+      return this;
+    }
 
-    try {
-      json = new Gson().fromJson(response.body().string(), JsonObject.class);
-      return json.get("id").getAsString();
-    } catch (IOException ex) {
-      throw new SmartcarException(ex.getMessage());
+    public Builder basicAuthorization(String basicAuthorization) {
+      this.basicAuthorization = basicAuthorization;
+      return this;
+    }
+
+    public Builder redirectUri(String redirectUri) {
+      this.redirectUri = redirectUri;
+      return this;
+    }
+
+    public Builder scope(String[] scope) {
+      this.scope = scope;
+      return this;
+    }
+
+    public Builder testMode(boolean testMode) {
+      this.testMode = testMode;
+      return this;
+    }
+
+    public Builder origin(String origin) {
+      this.origin = origin;
+      return this;
+    }
+
+    public AuthClient build() {
+      return new AuthClient(this);
     }
   }
 
-  /**
-   * Retrieves all vehicle IDs associated with the authenticated user.
-   *
-   * @param accessToken a valid access token
-   * @param paging paging parameters
-   * @return the requested vehicle IDs
-   * @throws SmartcarException if the request is unsuccessful
-   */
-  public static SmartcarResponse<VehicleIds> getVehicleIds(String accessToken, RequestPaging paging)
-      throws SmartcarException {
-    // Build Request
-    HttpUrl.Builder urlBuilder = HttpUrl.parse(AuthClient.getApiUrl() + "/vehicles").newBuilder();
-
-    if (paging != null) {
-      urlBuilder
-          .addQueryParameter("limit", String.valueOf(paging.getLimit()))
-          .addQueryParameter("offset", String.valueOf(paging.getOffset()));
-    }
-
-    HttpUrl url = urlBuilder.build();
-    Request request =
-        new Request.Builder()
-            .url(url)
-            .header("Authorization", "Bearer " + accessToken)
-            .addHeader("User-Agent", AuthClient.USER_AGENT)
-            .build();
-
-    // Execute Request
-    Response response = AuthClient.execute(request);
-
-    // Parse Response
-    JsonObject json = null;
-
-    try {
-      json = new Gson().fromJson(response.body().string(), JsonObject.class);
-    } catch (IOException ex) {
-      throw new SmartcarException(ex.getMessage());
-    }
-
-    JsonObject jsonPaging = json.get("paging").getAsJsonObject();
-    ResponsePaging responsePaging =
-        new ResponsePaging(jsonPaging.get("count").getAsInt(), jsonPaging.get("offset").getAsInt());
-    JsonArray vehicles = json.get("vehicles").getAsJsonArray();
-    int count = vehicles.size();
-    String[] data = new String[count];
-
-    for (int i = 0; i < count; i++) {
-      data[i] = vehicles.get(i).getAsString();
-    }
-
-    return new SmartcarResponse<VehicleIds>(new VehicleIds(data), responsePaging);
-  }
-
-  /**
-   * Retrieves all vehicle IDs associated with the authenticated user.
-   *
-   * @param accessToken a valid access token
-   * @return the requested vehicle IDs
-   * @throws SmartcarException if the request is unsuccessful
-   */
-  public static SmartcarResponse<VehicleIds> getVehicleIds(String accessToken)
-      throws SmartcarException {
-    return AuthClient.getVehicleIds(accessToken, null);
-  }
-
-  /**
-   * Convenience method for determining if an auth token expiration has passed.
-   *
-   * @param expiration the expiration date of the token
-   * @return whether or not the token has expired
-   */
-  public static boolean isExpired(Date expiration) {
-    return !expiration.after(new Date());
-  }
-
-  /**
-   * Initializes a new AuthClient.
-   *
-   * @param clientId the application client ID
-   * @param clientSecret the application client secret
-   * @param redirectUri the registered redirect URI for the application
-   * @param testMode launch the Smartcar auth flow in test mode
-   */
-  public AuthClient(
-      String clientId, String clientSecret, String redirectUri, boolean testMode) {
-    this.clientId = clientId;
-    this.basicAuthorization = Credentials.basic(clientId, clientSecret);
-    this.redirectUri = redirectUri;
-    this.testMode = testMode;
+  private AuthClient(Builder builder) {
+    this.clientId = builder.clientId;
+    this.basicAuthorization = builder.basicAuthorization;
+    this.redirectUri = builder.redirectUri;
+    this.scope = builder.scope;
+    this.testMode = builder.testMode;
+    this.origin = builder.origin;
 
     AuthClient.gson.registerTypeAdapter(Auth.class, new AuthDeserializer());
-  }
-
-  /**
-   * Initializes a new AuthClient.
-   *
-   * @param clientId the application client ID
-   * @param clientSecret the application client secret
-   * @param redirectUri the registered redirect URI for the application
-   */
-  public AuthClient(String clientId, String clientSecret, String redirectUri) {
-    this(clientId, clientSecret, redirectUri, false);
   }
 
   /**
@@ -212,20 +133,33 @@ public class AuthClient extends ApiClient {
    * Executes an Auth API request.
    *
    * @param requestBody the request body to be included
+   * @param options SmartcarAuthOptions
    * @return the parsed response
    * @throws SmartcarException if the API request fails
    */
-  private Auth call(RequestBody requestBody) throws SmartcarException {
+  private Auth call(RequestBody requestBody, SmartcarAuthOptions options) throws SmartcarException {
     Request request =
         new Request.Builder()
-            .url(this.urlAccessToken)
+            .url(options.getOrigin())
             .header("Authorization", this.basicAuthorization)
             .header("Content-Type", "application/x-www-form-urlencoded")
             .addHeader("User-Agent", AuthClient.USER_AGENT)
             .post(requestBody)
             .build();
 
-    return AuthClient.execute(request, Auth.class).getData();
+    return AuthClient.execute(request, Auth.class);
+  }
+
+  /**
+   * Executes an Auth API request.
+   *
+   * @param requestBody the request body to be included
+   * @return the parsed response
+   * @throws SmartcarException if the API request fails
+   */
+  private Auth call(RequestBody requestBody) throws SmartcarException {
+    SmartcarAuthOptions options = new SmartcarAuthOptions.Builder().build();
+    return this.call(requestBody, options);
   }
 
   /**
@@ -290,12 +224,25 @@ public class AuthClient extends ApiClient {
    * @throws SmartcarException when the request is unsuccessful
    */
   public Auth exchangeCode(String code) throws SmartcarException {
+    Builder options = new Builder();
+    return this.exchangeCode(code, options);
+  }
+
+  /**
+   * Exchanges an authorization code for an access token.
+   *
+   * @param code the authorization code
+   * @param options the SmartcarAuthOptions
+   * @return the requested access token
+   * @throws SmartcarException when the request is unsuccessful
+   */
+  public Auth exchangeCode(String code, Builder options) throws SmartcarException {
     RequestBody requestBody =
-        new FormBody.Builder()
-            .add("grant_type", "authorization_code")
-            .add("code", code)
-            .add("redirect_uri", this.redirectUri)
-            .build();
+            new FormBody.Builder()
+                    .add("grant_type", "authorization_code")
+                    .add("code", code)
+                    .add("redirect_uri", this.redirectUri)
+                    .build();
 
     return this.call(requestBody);
   }
@@ -308,71 +255,25 @@ public class AuthClient extends ApiClient {
    * @throws SmartcarException when the request is unsuccessful
    */
   public Auth exchangeRefreshToken(String refreshToken) throws SmartcarException {
+    SmartcarAuthOptions options = new SmartcarAuthOptions.Builder().build();
+    return this.exchangeRefreshToken(refreshToken, options);
+  }
+
+  /**
+   * Exchanges a refresh token for a new access token.
+   *
+   * @param refreshToken the refresh token
+   * @param options the SmartcarAuthOptions
+   * @return the requested access token
+   * @throws SmartcarException when the request is unsuccessful
+   */
+  public Auth exchangeRefreshToken(String refreshToken, SmartcarAuthOptions options) throws SmartcarException {
     RequestBody requestBody =
-        new FormBody.Builder()
-            .add("grant_type", "refresh_token")
-            .add("refresh_token", refreshToken)
-            .build();
+            new FormBody.Builder()
+                    .add("grant_type", "refresh_token")
+                    .add("refresh_token", refreshToken)
+                    .build();
 
-    return this.call(requestBody);
-  }
-
-  /**
-   * Determine if a vehicle is compatible with the Smartcar API and the provided permissions. A
-   * compatible vehicle is a vehicle that:
-   *
-   * <ol>
-   *   <li>has the hardware required for internet connectivity,
-   *   <li>belongs to the makes and models Smartcar supports, and
-   *   <li>supports the permissions.
-   * </ol>
-   *
-   * @param vin the VIN (Vehicle Identification Number) of the vehicle.
-   * @param scope An array of permissions. The valid permissions are found in the API Reference.
-   * @return false if the vehicle is not compatible. true if the vehicle is likely compatible.
-   * @throws SmartcarException when the request is unsuccessful
-   */
-  public boolean isCompatible(String vin, String[] scope) throws SmartcarException {
-    return isCompatible(vin, scope, "US");
-  }
-
-  /**
-   * Determine if a vehicle is compatible with the Smartcar API and the provided permissions for the
-   * specified country. A compatible vehicle is a vehicle that:
-   *
-   * <ol>
-   *   <li>has the hardware required for internet connectivity,
-   *   <li>belongs to the makes and models Smartcar supports, and
-   *   <li>supports the permissions.
-   * </ol>
-   *
-   * @param vin the VIN (Vehicle Identification Number) of the vehicle.
-   * @param scope An array of permissions. The valid permissions are found in the API Reference.
-   * @param country An optional country code according to [ISO 3166-1
-   *     alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
-   * @return false if the vehicle is not compatible in the specified country. true if the vehicle is
-   *     likely compatible.
-   * @throws SmartcarException when the request is unsuccessful
-   */
-  public boolean isCompatible(String vin, String[] scope, String country) throws SmartcarException {
-    String apiUrl = this.getApiUrl();
-    HttpUrl url =
-        HttpUrl.parse(apiUrl)
-            .newBuilder()
-            .addPathSegment("compatibility")
-            .addQueryParameter("vin", vin)
-            .addQueryParameter("scope", String.join(" ", scope))
-            .addQueryParameter("country", country)
-            .build();
-
-    Request request =
-        new Request.Builder()
-            .url(url)
-            .header("Authorization", this.basicAuthorization)
-            .addHeader("User-Agent", AuthClient.USER_AGENT)
-            .get()
-            .build();
-
-    return AuthClient.execute(request, Compatibility.class).getData().getCompatible();
+    return this.call(requestBody, options);
   }
 }

@@ -40,7 +40,7 @@ public class BatchResponse extends ApiData {
     return fieldName;
   }
 
-  private <T extends ApiData> SmartcarResponse<T> get(String path, Class<T> dataType)
+  private <T extends ApiData> T get(String path, Class<T> dataType)
       throws BatchResponseMissingException, SmartcarException {
     JsonObject res = this.responseData.get(path);
     if (res == null) {
@@ -97,33 +97,12 @@ public class BatchResponse extends ApiData {
     }
 
     JsonElement header = res.get("headers");
+    String bodyString = body.toString();
+    T data = gson.create().fromJson(bodyString, dataType);
+    Meta meta = gson.create().fromJson(res.get("headers").getAsJsonObject().toString(), Meta.class);
+    data.setMeta(meta);
 
-    return createSmartcarResponse(body, header, dataType);
-  }
-
-  private <T extends ApiData> SmartcarResponse<T> createSmartcarResponse(
-      JsonElement body, JsonElement header, Class<T> dataType) throws SmartcarException {
-    T data = gson.create().fromJson(body, dataType);
-
-    SmartcarResponse<T> smartcarResponse = new SmartcarResponse<T>(data);
-    smartcarResponse.setRequestId(this.requestId);
-
-    try {
-      String unitSystem = header.getAsJsonObject().get("sc-unit-system").getAsString();
-      smartcarResponse.setUnitSystem(unitSystem);
-    } catch (Exception e) {
-    }
-
-    try {
-      String ageHeader = header.getAsJsonObject().get("sc-data-age").getAsString();
-      if (ageHeader != null) {
-        Instant age = Instant.parse(ageHeader);
-        smartcarResponse.setAge(Date.from(age));
-      }
-    } catch (Exception e) {
-    }
-
-    return smartcarResponse;
+    return data;
   }
 
   /**
@@ -151,7 +130,7 @@ public class BatchResponse extends ApiData {
    * @throws BatchResponseMissingException if this endpoint was not part of the batch response
    * @throws SmartcarException if the request for this endpoint returned an HTTP error code
    */
-  public SmartcarResponse<VehicleBattery> battery()
+  public VehicleBattery battery()
       throws BatchResponseMissingException, SmartcarException {
     return get("/battery", VehicleBattery.class);
   }
@@ -163,7 +142,7 @@ public class BatchResponse extends ApiData {
    * @throws BatchResponseMissingException if this endpoint was not part of the batch response
    * @throws SmartcarException if the request for this endpoint returned an HTTP error code
    */
-  public SmartcarResponse<VehicleBatteryCapacity> batteryCapacity()
+  public VehicleBatteryCapacity batteryCapacity()
       throws BatchResponseMissingException, SmartcarException {
     return get("/battery/capacity", VehicleBatteryCapacity.class);
   }
@@ -175,7 +154,7 @@ public class BatchResponse extends ApiData {
    * @throws BatchResponseMissingException if this endpoint was not part of the batch response
    * @throws SmartcarException if the request for this endpoint returned an HTTP error code
    */
-  public SmartcarResponse<VehicleCharge> charge()
+  public VehicleCharge charge()
       throws BatchResponseMissingException, SmartcarException {
     return get("/charge", VehicleCharge.class);
   }
@@ -187,7 +166,7 @@ public class BatchResponse extends ApiData {
    * @throws BatchResponseMissingException if this endpoint was not part of the batch response
    * @throws SmartcarException if the request for this endpoint returned an HTTP error code
    */
-  public SmartcarResponse<VehicleFuel> fuel()
+  public VehicleFuel fuel()
       throws BatchResponseMissingException, SmartcarException {
     return get("/fuel", VehicleFuel.class);
   }
@@ -200,7 +179,7 @@ public class BatchResponse extends ApiData {
    * @throws SmartcarException if the request for this endpoint +returned an HTTP error code
    */
   public VehicleInfo info() throws BatchResponseMissingException, SmartcarException {
-    return get("/", VehicleInfo.class).getData();
+    return get("/", VehicleInfo.class);
   }
 
   /**
@@ -210,7 +189,7 @@ public class BatchResponse extends ApiData {
    * @throws BatchResponseMissingException if this endpoint was not part of the batch response
    * @throws SmartcarException if the request for this endpoint returned an HTTP error code
    */
-  public SmartcarResponse<VehicleLocation> location()
+  public VehicleLocation location()
       throws BatchResponseMissingException, SmartcarException {
     return get("/location", VehicleLocation.class);
   }
@@ -222,7 +201,7 @@ public class BatchResponse extends ApiData {
    * @throws BatchResponseMissingException if this endpoint was not part of the batch response
    * @throws SmartcarException if the request for this endpoint returned an HTTP error code
    */
-  public SmartcarResponse<VehicleOdometer> odometer()
+  public VehicleOdometer odometer()
       throws BatchResponseMissingException, SmartcarException {
     return get("/odometer", VehicleOdometer.class);
   }
@@ -234,7 +213,7 @@ public class BatchResponse extends ApiData {
    * @throws BatchResponseMissingException if this endpoint was not part of the batch response
    * @throws SmartcarException if the request for this endpoint returned an HTTP error code
    */
-  public SmartcarResponse<VehicleOil> oil()
+  public VehicleOil oil()
       throws BatchResponseMissingException, SmartcarException {
     return get("/engine/oil", VehicleOil.class);
   }
@@ -246,8 +225,8 @@ public class BatchResponse extends ApiData {
    * @throws BatchResponseMissingException if this endpoint was not part of the batch response
    * @throws SmartcarException if the request for this endpoint returned an HTTP error code
    */
-  public String vin() throws BatchResponseMissingException, SmartcarException {
-    return get("/vin", VehicleVin.class).getData().getVin();
+  public VehicleVin vin() throws BatchResponseMissingException, SmartcarException {
+    return get("/vin", VehicleVin.class);
   }
 
   /**
@@ -257,7 +236,7 @@ public class BatchResponse extends ApiData {
    * @throws BatchResponseMissingException if this endpoint was not part of the batch response
    * @throws SmartcarException if the request for this endpoint returned an HTTP error code
    */
-  public SmartcarResponse<VehicleTirePressure> tirePressure()
+  public VehicleTirePressure tirePressure()
       throws BatchResponseMissingException, SmartcarException {
     return get("/tires/pressure", VehicleTirePressure.class);
   }

@@ -1,10 +1,12 @@
 package com.smartcar.sdk.data;
 
 import java.util.Date;
+import okhttp3.Response;
 
 /** POJO for Wrapping ApiData with meta data */
 public class SmartcarResponse<T extends ApiData> extends ApiData {
   private T data;
+  private Meta meta;
   private String unitSystem;
   private Date age;
   private String requestId;
@@ -21,9 +23,15 @@ public class SmartcarResponse<T extends ApiData> extends ApiData {
   public SmartcarResponse(
       final T data, final String unitSystem, final Date age, final ResponsePaging paging) {
     this.data = data;
+    this.meta = null;
     this.unitSystem = unitSystem;
     this.age = age;
     this.paging = paging;
+  }
+
+  public SmartcarResponse(final T data, final Meta meta) {
+    this.data = data;
+    this.meta = meta;
   }
 
   /**

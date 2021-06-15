@@ -4,6 +4,9 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.Serializable;
+import java.lang.reflect.Type;
+
+import okhttp3.Response;
 
 /** The base object representing parsed API response data. */
 public class ApiData<T> implements Serializable {
@@ -13,6 +16,7 @@ public class ApiData<T> implements Serializable {
           .create();
 
   private T data;
+  private Meta meta;
 
   /** Default constructor. */
   public ApiData() {}
@@ -25,6 +29,10 @@ public class ApiData<T> implements Serializable {
   public ApiData(T data) {
     this.data = data;
   }
+
+  public Meta getMeta() { return this.meta; }
+
+  public void setMeta(Meta meta) { this.meta = meta; }
 
   /**
    * Returns the stored data string.

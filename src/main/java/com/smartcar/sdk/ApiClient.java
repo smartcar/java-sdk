@@ -1,28 +1,32 @@
 package com.smartcar.sdk;
 
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.smartcar.sdk.data.ApiData;
-import com.smartcar.sdk.data.SmartcarResponse;
+
 import java.io.IOException;
-import java.time.Instant;
-import java.util.Date;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
+import com.smartcar.sdk.data.Meta;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
+import okhttp3.Headers;
 import org.apache.commons.text.CaseUtils;
 
 /** Provides the core functionality for API client objects. */
 abstract class ApiClient {
   public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-  private static final String SDK_VERSION = ApiClient.getSdkVersion();
-  private static String API_VERSION = "1.0";
-  protected static final String URL_API = "https://api.smartcar.com";
+
   protected static final String USER_AGENT =
       String.format(
           "Smartcar/%s (%s; %s) Java v%s %s",
-          ApiClient.SDK_VERSION,
+          Smartcar.getSdkVersion(),
           System.getProperty("os.name"),
           System.getProperty("os.arch"),
           System.getProperty("java.version"),
@@ -41,38 +45,6 @@ abstract class ApiClient {
   static GsonBuilder gson =
       new GsonBuilder().setFieldNamingStrategy((field) -> toCamelCase(field.getName()));
 
-  /**
-   * Retrieves the SDK version, falling back to DEVELOPMENT if we're not running from a jar.
-   *
-   * @return the SDK version
-   */
-  private static String getSdkVersion() {
-    String version = ApiClient.class.getPackage().getImplementationVersion();
-
-    if (version == null) {
-      version = "DEVELOPMENT";
-    }
-
-    return version;
-  }
-
-  /**
-   * Sets the API version
-   *
-   * @param version API version to set
-   */
-  public static void setApiVersion(String version) {
-    ApiClient.API_VERSION = version;
-  }
-
-  /**
-   * Gets the URL used for API requests
-   *
-   * @return
-   */
-  static String getApiUrl() {
-    return ApiClient.URL_API + "/v" + ApiClient.API_VERSION;
-  }
 
   /**
    * Sends the specified request, returning the raw response body.
@@ -109,32 +81,27 @@ abstract class ApiClient {
    * @return the wrapped response
    * @throws SmartcarException if the request is unsuccessful
    */
-  protected static <T extends ApiData> SmartcarResponse<T> execute(
+  protected static <T extends ApiData> T execute(
       Request request, Class<T> dataType) throws SmartcarException {
     Response response = ApiClient.execute(request);
-    String body = null;
+    T data;
+    Meta meta;
 
     try {
-      body = response.body().string();
-    } catch (IOException ex) {
+      String bodyString = response.body().string();
+      data = ApiClient.gson.create().fromJson(bodyString, dataType);
+      Headers headers = response.headers();
+      JsonObject headerJson = new JsonObject();
+      for (String header: response.headers().names()) {
+        headerJson.addProperty(header, headers.get(header));
+      };
+      String headerJsonString = headerJson.toString();
+      meta = ApiClient.gson.create().fromJson(headerJsonString, Meta.class);
+      data.setMeta(meta);
+    } catch (Exception ex) {
       throw new SmartcarException(ex.getMessage());
     }
 
-    T data = ApiClient.gson.create().fromJson(body, dataType);
-
-    String unitSystem = response.header("sc-unit-system");
-    String ageHeader = response.header("sc-data-age");
-    String requestId = response.header("sc-request-id");
-
-    SmartcarResponse<T> smartcarResponse = new SmartcarResponse<T>(data);
-    smartcarResponse.setUnitSystem(unitSystem);
-    smartcarResponse.setRequestId(requestId);
-
-    if (ageHeader != null) {
-      Instant age = Instant.parse(ageHeader);
-      smartcarResponse.setAge(Date.from(age));
-    }
-
-    return smartcarResponse;
+    return data;
   }
 }

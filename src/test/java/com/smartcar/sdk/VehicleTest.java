@@ -22,6 +22,7 @@ import com.smartcar.sdk.data.VehicleTirePressure;
 import com.smartcar.sdk.data.VehicleVin;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.Date;
 import java.util.UUID;
 import javax.json.Json;
@@ -32,6 +33,8 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import okhttp3.mockwebserver.MockWebServer;
+import okhttp3.mockwebserver.MockResponse;
 
 /** Test Suite: Vehicle */
 @PrepareForTest({Vehicle.class, SmartcarException.class})
@@ -41,6 +44,7 @@ public class VehicleTest {
   private final String accessToken = UUID.randomUUID().toString();
 
   private Vehicle subject;
+  private MockWebServer mockWebServer = new MockWebServer();
 
   private JsonElement loadJsonResource(String resourceName) throws FileNotFoundException {
     String fileName = String.format("src/test/resources/%s.json", resourceName);
@@ -49,8 +53,10 @@ public class VehicleTest {
   }
 
   @BeforeMethod
-  private void beforeMethod() {
-    this.subject = PowerMockito.spy(new Vehicle(this.vehicleId, this.accessToken));
+  private void beforeMethod() throws IOException {
+    mockWebServer.start(8888);
+    SmartcarVehicleOptions options = new SmartcarVehicleOptions.Builder().origin("http://localhost:8888").build();
+    this.subject = PowerMockito.spy(new Vehicle(this.vehicleId, this.accessToken, options));
   }
 
   @Test
@@ -153,7 +159,7 @@ public class VehicleTest {
         .when(this.subject)
         .call("odometer", "GET", null, VehicleOdometer.class);
 
-    SmartcarResponse odometer = this.subject.odometer();
+    VehicleOdometer odometer = this.subject.odometer();
 
     Assert.assertEquals(res, odometer);
   }
@@ -170,7 +176,7 @@ public class VehicleTest {
 
     PowerMockito.doReturn(res).when(this.subject).call("fuel", "GET", null, VehicleFuel.class);
 
-    SmartcarResponse fuel = this.subject.fuel();
+    VehicleFuel fuel = this.subject.fuel();
 
     Assert.assertEquals(res, fuel);
   }
@@ -184,7 +190,7 @@ public class VehicleTest {
 
     PowerMockito.doReturn(res).when(this.subject).call("engine/oil", "GET", null, VehicleOil.class);
 
-    SmartcarResponse fuel = this.subject.oil();
+    VehicleOil fuel = this.subject.oil();
 
     Assert.assertEquals(res, fuel);
   }
@@ -206,7 +212,7 @@ public class VehicleTest {
         .when(this.subject)
         .call("tires/pressure", "GET", null, VehicleTirePressure.class);
 
-    SmartcarResponse tirePressure = this.subject.tirePressure();
+    VehicleTirePressure tirePressure = this.subject.tirePressure();
 
     Assert.assertEquals(res, tirePressure);
   }
@@ -224,7 +230,7 @@ public class VehicleTest {
         .when(this.subject)
         .call("battery", "GET", null, VehicleBattery.class);
 
-    SmartcarResponse battery = this.subject.battery();
+    VehicleBattery battery = this.subject.battery();
 
     Assert.assertEquals(res, battery);
   }
@@ -241,7 +247,7 @@ public class VehicleTest {
         .when(this.subject)
         .call("battery/capacity", "GET", null, VehicleBatteryCapacity.class);
 
-    SmartcarResponse batteryCapacity = this.subject.batteryCapacity();
+    VehicleBatteryCapacity batteryCapacity = this.subject.batteryCapacity();
 
     Assert.assertEquals(res, batteryCapacity);
   }
@@ -256,7 +262,7 @@ public class VehicleTest {
 
     PowerMockito.doReturn(res).when(this.subject).call("charge", "GET", null, VehicleCharge.class);
 
-    SmartcarResponse charge = this.subject.charge();
+    VehicleCharge charge = this.subject.charge();
 
     Assert.assertEquals(res, charge);
   }
@@ -274,7 +280,7 @@ public class VehicleTest {
         .when(this.subject)
         .call("location", "GET", null, VehicleLocation.class);
 
-    SmartcarResponse location = this.subject.location();
+    VehicleLocation location = this.subject.location();
 
     Assert.assertEquals(res, location);
   }
@@ -337,35 +343,20 @@ public class VehicleTest {
 
   @Test
   public void testBatch() throws Exception {
-    JsonObject json =
-        Json.createObjectBuilder()
-            .add("headers", Json.createObjectBuilder().add("sc-unit-system", "metric"))
-            .add(
-                "requests",
-                Json.createArrayBuilder()
-                    .add(Json.createObjectBuilder().add("path", "/odometer").build())
-                    .add(Json.createObjectBuilder().add("path", "/fuel").build())
-                    .build())
-            .build();
     String expectedRequestId = "67127d3a-a08a-41f0-8211-f96da36b2d6e";
-    RequestBody body = RequestBody.create(Vehicle.JSON, json.toString());
     JsonElement success = loadJsonResource("BatchResponseSuccess");
-    BatchResponse expectedBatch = new BatchResponse(success.getAsJsonArray());
-    SmartcarResponse<BatchResponse> res = new SmartcarResponse(expectedBatch);
-    res.setRequestId(expectedRequestId);
 
-    PowerMockito.doReturn(res)
-        .when(
-            this.subject, "call", eq("batch"), eq("POST"), refEq(body), refEq(BatchResponse.class));
+    MockResponse mockResponse = new MockResponse()
+            .setBody(success.toString())
+            .addHeader("sc-request-id", expectedRequestId);
+    this.mockWebServer.enqueue(mockResponse);
 
     BatchResponse batch = this.subject.batch(new String[] {"/odometer"});
     Assert.assertEquals(batch.getRequestId(), expectedRequestId);
 
-    SmartcarResponse<VehicleOdometer> odo = batch.odometer();
-    VehicleOdometer expectedOdo = new VehicleOdometer(32768);
-    Assert.assertEquals(odo.getData().toString(), expectedOdo.toString());
-    Assert.assertEquals(odo.getUnitSystem(), "metric");
-    Assert.assertEquals(odo.getRequestId(), expectedRequestId);
+    VehicleOdometer odo = batch.odometer();
+    Assert.assertEquals(odo.getDistance(), 32768.0);
+    Assert.assertEquals(odo.getMeta().getUnitSystem(), "metric");
   }
 
   @Test
