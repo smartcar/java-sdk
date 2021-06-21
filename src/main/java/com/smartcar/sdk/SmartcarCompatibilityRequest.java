@@ -26,8 +26,8 @@ public final class SmartcarCompatibilityRequest {
             this.country = "US";
             this.version = "1.0";
             this.flags = new JsonObject();
-            this.clientId = "";
-            this.clientSecret = "";
+            this.clientId = System.getenv("SMARTCAR_CLIENT_ID");
+            this.clientSecret = System.getenv("SMARTCAR_CLIENT_SECRET");
         }
 
         public Builder vin(String vin) {
@@ -70,7 +70,17 @@ public final class SmartcarCompatibilityRequest {
             return this;
         }
 
-        public SmartcarCompatibilityRequest build() { return new SmartcarCompatibilityRequest(this); }
+        public SmartcarCompatibilityRequest build() throws SmartcarException {
+            if (this.clientId == null) {
+                throw new SmartcarException.Builder()
+                        .description("clientId must be defined").build();
+            }
+            if (this.clientSecret == null) {
+                throw new SmartcarException.Builder()
+                        .description("clientSecret must be defined").build();
+            }
+            return new SmartcarCompatibilityRequest(this);
+        }
     }
 
     private SmartcarCompatibilityRequest(Builder builder) {

@@ -1,0 +1,9 @@
+{
+  "type": "VEHICLE_STATE",
+  "code": "ASLEEP",
+  "description": "The vehicle is in a sleep state and temporarily unable to perform your request.",
+  "docURL": "https://smartcar.com/docs/errors/v2.0/vehicle-state/#asleep",
+  "statusCode": 409,
+  "requestId": "5dea93a1-3f79-4246-90c5-89610a20471b",
+  "resolution": null
+}

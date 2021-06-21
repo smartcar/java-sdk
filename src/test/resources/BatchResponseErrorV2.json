@@ -1,19 +1,20 @@
-[
-  {
-    "headers": {
-      "sc-unit-system": "metric"
-    },
-    "path": "/odometer",
-    "code": 409,
-    "body": {
-      "type": "VEHICLE_STATE",
-      "code": "DOOR_OPEN",
-      "statusCode": 409,
-      "requestId": "27767d51-3c32-47c0-8521-6f2be21bfb5b",
-      "description": "Door is open.",
-      "detail": [],
-      "docURL": null,
-      "resolution": null
+{
+  "responses": [
+    {
+      "headers": {
+        "SC-Unit-System": "metric"
+      },
+      "path": "/odometer",
+      "code": 409,
+      "body": {
+        "type": "VEHICLE_STATE",
+        "code": "DOOR_OPEN",
+        "statusCode": 409,
+        "requestId": "27767d51-3c32-47c0-8521-6f2be21bfb5b",
+        "description": "Door is open.",
+        "docURL": "https://smartcar.com/docs/errors/v2.0/vehicle-state/#door_open",
+        "resolution": null
+      }
     }
-  }
-]
+  ]
+}

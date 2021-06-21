@@ -1,44 +1,26 @@
 package com.smartcar.sdk;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.argThat;
-import static org.powermock.api.mockito.PowerMockito.doReturn;
-import static org.powermock.api.mockito.PowerMockito.mock;
-import static org.powermock.api.mockito.PowerMockito.mockStatic;
-import static org.powermock.api.mockito.PowerMockito.spy;
-import static org.powermock.api.mockito.PowerMockito.when;
-import static org.powermock.api.mockito.PowerMockito.whenNew;
-import static org.testng.Assert.*;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import com.smartcar.sdk.data.Auth;
-import com.smartcar.sdk.data.Compatibility;
-import com.smartcar.sdk.data.RequestPaging;
-import com.smartcar.sdk.data.SmartcarResponse;
-import com.smartcar.sdk.data.VehicleIds;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Type;
-import java.util.Calendar;
 import java.util.Date;
-import javax.json.Json;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+import okhttp3.mockwebserver.MockResponse;
+import okhttp3.mockwebserver.MockWebServer;
+import okhttp3.mockwebserver.RecordedRequest;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.testng.PowerMockTestCase;
-import org.powermock.reflect.Whitebox;
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
 /** Test Suite: AuthClient */
@@ -50,7 +32,8 @@ import org.testng.annotations.Test;
   JsonObject.class,
   Request.class,
   Response.class,
-  ResponseBody.class
+  ResponseBody.class,
+  System.class
 })
 @PowerMockIgnore("javax.net.ssl.*")
 public class AuthClientTest extends PowerMockTestCase {
@@ -58,6 +41,7 @@ public class AuthClientTest extends PowerMockTestCase {
   private final String sampleClientId = "cl13nt1d-t35t-46dc-aa25-bdd042f54e7d";
   private final String sampleClientSecret = "24d55382-843f-4ce9-a7a7-cl13nts3cr3t";
   private final String sampleRedirectUri = "https://example.com/";
+  private final String expectedRequestId = "67127d3a-a08a-41f0-8211-f96da36b2d6e";
   private final String sampleRedirectUriEncoded = "https%3A%2F%2Fexample.com%2F";
   private final String[] sampleScope = {"read_vehicle_info", "read_location", "read_odometer"};
   private final boolean sampleTestMode = true;
@@ -80,4 +64,96 @@ public class AuthClientTest extends PowerMockTestCase {
 
   // Subject Under Test
   private AuthClient subject;
+
+  private MockWebServer mockWebServer = new MockWebServer();
+
+  @BeforeSuite
+  private void beforeSuite() throws IOException {
+    this.mockWebServer.start(8888);
+  }
+
+  @AfterSuite
+  private void afterSuite() throws IOException {
+    this.mockWebServer.shutdown();
+  }
+
+  private JsonElement loadJsonResource(String resourceName) throws FileNotFoundException {
+    String fileName = String.format("src/test/resources/%s.json", resourceName);
+    return JsonParser.parseReader(new FileReader(fileName));
+  }
+
+  private void loadAndEnqueueResponse(String resourceName) throws FileNotFoundException {
+    JsonElement success = loadJsonResource(resourceName);
+    MockResponse mockResponse = new MockResponse()
+            .setBody(success.toString())
+            .addHeader("SC-Request-Id", this.expectedRequestId);
+    this.mockWebServer.enqueue(mockResponse);
+  }
+
+  @Test
+  public void testAuthClientBuilder() {
+    PowerMockito.mockStatic(System.class);
+    PowerMockito.when(System.getenv("SMARTCAR_CLIENT_ID")).thenReturn(this.sampleClientId);
+    PowerMockito.when(System.getenv("SMARTCAR_CLIENT_SECRET")).thenReturn(this.sampleClientSecret);
+    PowerMockito.when(System.getenv("SMARTCAR_REDIRECT_URI")).thenReturn(this.sampleRedirectUri);
+
+    AuthClient client = new AuthClient.Builder().build();
+
+    Assert.assertEquals(client.getClientId(), this.sampleClientId);
+    Assert.assertEquals(client.getClientSecret(), this.sampleClientSecret);
+    Assert.assertEquals(client.getRedirectUri(), this.sampleRedirectUri);
+  }
+
+  @Test
+  public void testExchangeCode() throws FileNotFoundException, SmartcarException, InterruptedException {
+    loadAndEnqueueResponse("AuthGetTokens");
+
+    PowerMockito.mockStatic(System.class);
+    PowerMockito.when(System.getenv("SMARTCAR_AUTH_ORIGIN")).thenReturn("http://localhost:8888");
+
+    AuthClient client = new AuthClient.Builder()
+            .clientId(this.sampleClientId)
+            .clientSecret(this.sampleClientSecret)
+            .redirectUri(this.sampleRedirectUri)
+            .build();
+
+    Auth auth = client.exchangeCode(this.sampleCode);
+
+    Assert.assertEquals(auth.getAccessToken(), "cf7ba7e9-8c5d-417d-a99f-c386cfc235cc");
+    Assert.assertNotNull(auth.getExpiration().toString());
+    Assert.assertEquals(auth.getRefreshToken(), "3e565aed-d4b2-4296-9b4c-aec35825a6aa");
+    Assert.assertNotNull(auth.getRefreshExpiration().toString());
+
+    RecordedRequest request = this.mockWebServer.takeRequest();
+
+    Assert.assertEquals(request.getRequestUrl().toString(), "http://localhost:8888/oauth/token");
+    // can only verify the truncated body :(
+    Assert.assertEquals(request.getBody().toString(), "[size=77 text=grant_type=authorization_code&code=&redirect_uri=https%3A%2F%2Fe…]");
+  }
+
+  @Test
+  public void testExchangeRefreshToken() throws FileNotFoundException, SmartcarException, InterruptedException {
+    loadAndEnqueueResponse("AuthRefreshTokens");
+
+    PowerMockito.mockStatic(System.class);
+    PowerMockito.when(System.getenv("SMARTCAR_AUTH_ORIGIN")).thenReturn("http://localhost:8888");
+
+    AuthClient client = new AuthClient.Builder()
+            .clientId(this.sampleClientId)
+            .clientSecret(this.sampleClientSecret)
+            .redirectUri(this.sampleRedirectUri)
+            .build();
+
+    Auth auth = client.exchangeRefreshToken(this.sampleRefreshToken);
+
+    Assert.assertEquals(auth.getAccessToken(), "11016e76-610c-41c6-9688-1f5613889932");
+    Assert.assertNotNull(auth.getExpiration().toString());
+    Assert.assertEquals(auth.getRefreshToken(), "09337f8a-da3a-46c0-95e7-9c19180b06c0");
+    Assert.assertNotNull(auth.getRefreshExpiration().toString());
+
+    RecordedRequest request = this.mockWebServer.takeRequest();
+
+    Assert.assertEquals(request.getRequestUrl().toString(), "http://localhost:8888/oauth/token");
+    Assert.assertEquals(request.getBody().toString(), "[text=grant_type=refresh_token&refresh_token=]");
+  }
 }

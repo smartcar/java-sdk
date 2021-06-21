@@ -1,9 +1,9 @@
 package com.smartcar.sdk;
 
 public final class SmartcarVehicleOptions {
-    private String version;
-    private Vehicle.UnitSystem unitSystem;
-    private String origin;
+    private final String version;
+    private final Vehicle.UnitSystem unitSystem;
+    private final String origin;
 
     public static class Builder {
         private String version;
@@ -11,9 +11,13 @@ public final class SmartcarVehicleOptions {
         private String origin;
 
         public Builder() {
-            this.version = "1.0";
+            this.version = "2.0";
             this.unitSystem = Vehicle.UnitSystem.METRIC;
-            this.origin = "https://api.smartcar.com";
+            String apiOrigin = System.getenv("SMARTCAR_API_ORIGIN");
+            if (apiOrigin == null) {
+                apiOrigin = Smartcar.API_ORIGIN;
+            }
+            this.origin = apiOrigin;
         }
 
         public Builder version(String version) {

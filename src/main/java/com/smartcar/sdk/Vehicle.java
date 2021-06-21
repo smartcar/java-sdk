@@ -1,19 +1,15 @@
 package com.smartcar.sdk;
 
 import com.smartcar.sdk.data.*;
-import com.smartcar.sdk.SmartcarVehicleOptions;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
-import javax.swing.*;
-
 import okhttp3.HttpUrl;
 import okhttp3.Request;
 import okhttp3.RequestBody;
+
+import java.util.Map;
 
 /** Smartcar Vehicle API Object */
 public class Vehicle extends ApiClient {
@@ -27,7 +23,7 @@ public class Vehicle extends ApiClient {
   private Vehicle.UnitSystem unitSystem = UnitSystem.METRIC;
   private String version;
   private String origin;
-  private String[] permissions;
+  private ApplicationPermissions permissions;
 
   /**
    * Initializes a new Vehicle.
@@ -79,6 +75,33 @@ public class Vehicle extends ApiClient {
     return Vehicle.execute(request, type);
   }
 
+  protected <T extends ApiData> T call(String path, String method, RequestBody body, Map<String, String> query, Class<T> type)
+  throws SmartcarException {
+    HttpUrl.Builder urlBuilder =
+            HttpUrl.parse(this.origin)
+                    .newBuilder()
+                    .addPathSegments("vehicles")
+                    .addPathSegments(this.vehicleId)
+                    .addPathSegments(path);
+
+    for (Map.Entry<String, String> entry: query.entrySet()) {
+      urlBuilder.addQueryParameter(entry.getKey(), entry.getValue());
+    }
+
+    HttpUrl url = urlBuilder.build();
+
+    Request request =
+            new Request.Builder()
+                    .url(url)
+                    .header("Authorization", "Bearer " + this.accessToken)
+                    .addHeader("User-Agent", Vehicle.USER_AGENT)
+                    .method(method, body)
+                    .header("SC-Unit-System", this.unitSystem.name().toLowerCase())
+                    .build();
+
+    return Vehicle.execute(request, type);
+  }
+
   /**
    * Executes an API request under the VehicleIds endpoint.
    *
@@ -108,8 +131,8 @@ public class Vehicle extends ApiClient {
    * @return the vin of the vehicle
    * @throws SmartcarException if the request is unsuccessful
    */
-  public String vin() throws SmartcarException {
-    return this.call("vin", "GET", null, VehicleVin.class).getVin();
+  public VehicleVin vin() throws SmartcarException {
+    return this.call("vin", "GET", null, VehicleVin.class);
   }
 
   /**
@@ -118,53 +141,23 @@ public class Vehicle extends ApiClient {
    * @return the permission of the application
    * @throws SmartcarException if the request is unsuccessful
    */
-  public String[] permissions() throws SmartcarException {
+  public ApplicationPermissions permissions() throws SmartcarException {
     if (this.permissions == null) {
       this.permissions =
-          this.call("permissions", "GET", null, ApplicationPermissions.class)
-              .getPermissions();
+          this.call("permissions", "GET", null, ApplicationPermissions.class);
     }
     return this.permissions;
   }
 
-  /**
-   * Checks if permissions granted to a vehicle contain the specified permission.
-   *
-   * @param permission Permission to check
-   * @return Whether the vehicle has the specified permission
-   * @throws SmartcarException if the request is unsuccessful
-   */
-  public boolean hasPermissions(String permission) throws SmartcarException {
-    try {
-      List<String> vehiclePermissions = Arrays.asList(this.permissions());
-      permission = permission.replaceFirst("^required:", "");
+  public ApplicationPermissions permissions(RequestPaging paging) throws SmartcarException {
+    if (this.permissions == null) {
+      Map<String, String> pagingQuery = null;
+      pagingQuery.put("limit", String.valueOf(paging.getLimit()));
+      pagingQuery.put("offset", String.valueOf(paging.getOffset()));
 
-      return vehiclePermissions.contains(permission);
-    } catch (SmartcarException exception) {
-      throw exception;
+      this.call("permissions", "GET", null, pagingQuery, ApplicationPermissions.class);
     }
-  }
-
-  /**
-   * Checks if permissions granted to a vehicle contain the specified permissions.
-   *
-   * @param permissions Permissions to check
-   * @return Whether the vehicle has the specified permissions
-   * @throws SmartcarException if the request is unsuccessful
-   */
-  public boolean hasPermissions(String[] permissions) throws SmartcarException {
-    try {
-      List<String> vehiclePermissions = Arrays.asList(this.permissions());
-      List<String> requestedPermissions = new ArrayList<>();
-
-      for (String permission : permissions) {
-        requestedPermissions.add(permission.replaceFirst("^required:", ""));
-      }
-
-      return vehiclePermissions.containsAll(requestedPermissions);
-    } catch (SmartcarException exception) {
-      throw exception;
-    }
+    return this.permissions;
   }
 
   /**

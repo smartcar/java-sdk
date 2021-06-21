@@ -58,16 +58,12 @@ abstract class ApiClient {
       Response response = ApiClient.client.newCall(request).execute();
 
       if (!response.isSuccessful()) {
-        String url = String.valueOf(request.url());
-        if (url.contains("v2.0")) {
-          throw SmartcarExceptionV2.Factory(response);
-        }
-        throw SmartcarException.Factory(response);
+        throw SmartcarException.Factory(response.code(), response.headers(), response.body());
       } else {
         return response;
       }
     } catch (IOException ex) {
-      throw new SmartcarException(ex.getMessage());
+      throw new SmartcarException.Builder().type("SDK_ERROR").description(ex.getMessage()).build();
     }
   }
 
@@ -86,9 +82,10 @@ abstract class ApiClient {
     Response response = ApiClient.execute(request);
     T data;
     Meta meta;
+    String bodyString = null;
 
     try {
-      String bodyString = response.body().string();
+      bodyString = response.body().string();
       data = ApiClient.gson.create().fromJson(bodyString, dataType);
       Headers headers = response.headers();
       JsonObject headerJson = new JsonObject();
@@ -99,7 +96,12 @@ abstract class ApiClient {
       meta = ApiClient.gson.create().fromJson(headerJsonString, Meta.class);
       data.setMeta(meta);
     } catch (Exception ex) {
-      throw new SmartcarException(ex.getMessage());
+      throw new SmartcarException.Builder()
+              .statusCode(response.code())
+              .description(bodyString)
+              .requestId(response.headers().get("SC-Request-Id"))
+              .type("SDK_ERROR")
+              .build();
     }
 
     return data;

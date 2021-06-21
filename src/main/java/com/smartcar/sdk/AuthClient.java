@@ -8,11 +8,9 @@ import com.smartcar.sdk.data.Auth;
 
 import java.lang.reflect.Type;
 import java.util.Calendar;
+import java.util.List;
 
-import okhttp3.FormBody;
-import okhttp3.HttpUrl;
-import okhttp3.Request;
-import okhttp3.RequestBody;
+import okhttp3.*;
 
 /** Smartcar OAuth 2.0 Authentication Client */
 public class AuthClient extends ApiClient {
@@ -44,33 +42,27 @@ public class AuthClient extends ApiClient {
     }
   }
 
-  private static final String URL_AUTHORIZE = "https://connect.smartcar.com/oauth/authorize";
-  private static final String URL_ACCESS_TOKEN = "https://auth.smartcar.com/oauth/token";
-
-  private String clientId;
-  private String basicAuthorization;
-  private String redirectUri;
-  private String[] scope;
-  private boolean testMode;
-  public String urlAuthorize = AuthClient.URL_AUTHORIZE;
+  private final String clientId;
+  private final String clientSecret;
+  private final String redirectUri;
+  private final boolean testMode;
   public String origin;
-  public static String urlAccessToken = AuthClient.URL_ACCESS_TOKEN;
-
-
 
   /**
    * Builds a new AuthClient.
+   *
    */
   public static class Builder {
     private String clientId;
-    private String basicAuthorization;
+    private String clientSecret;
     private String redirectUri;
-    private String[] scope;
     private boolean testMode;
-    public String origin = AuthClient.URL_AUTHORIZE;
 
     public Builder() {
-      // defaults
+      this.clientId = System.getenv("SMARTCAR_CLIENT_ID");
+      this.clientSecret = System.getenv("SMARTCAR_CLIENT_SECRET");
+      this.redirectUri = System.getenv("SMARTCAR_REDIRECT_URI");
+      this.testMode = false;
     }
 
     public Builder clientId(String clientId) {
@@ -78,8 +70,8 @@ public class AuthClient extends ApiClient {
       return this;
     }
 
-    public Builder basicAuthorization(String basicAuthorization) {
-      this.basicAuthorization = basicAuthorization;
+    public Builder clientSecret(String clientSecret) {
+      this.clientSecret = clientSecret;
       return this;
     }
 
@@ -88,18 +80,8 @@ public class AuthClient extends ApiClient {
       return this;
     }
 
-    public Builder scope(String[] scope) {
-      this.scope = scope;
-      return this;
-    }
-
     public Builder testMode(boolean testMode) {
       this.testMode = testMode;
-      return this;
-    }
-
-    public Builder origin(String origin) {
-      this.origin = origin;
       return this;
     }
 
@@ -110,11 +92,9 @@ public class AuthClient extends ApiClient {
 
   private AuthClient(Builder builder) {
     this.clientId = builder.clientId;
-    this.basicAuthorization = builder.basicAuthorization;
+    this.clientSecret = builder.clientSecret;
     this.redirectUri = builder.redirectUri;
-    this.scope = builder.scope;
     this.testMode = builder.testMode;
-    this.origin = builder.origin;
 
     AuthClient.gson.registerTypeAdapter(Auth.class, new AuthDeserializer());
   }
@@ -130,47 +110,19 @@ public class AuthClient extends ApiClient {
   }
 
   /**
-   * Executes an Auth API request.
-   *
-   * @param requestBody the request body to be included
-   * @param options SmartcarAuthOptions
-   * @return the parsed response
-   * @throws SmartcarException if the API request fails
-   */
-  private Auth call(RequestBody requestBody, SmartcarAuthOptions options) throws SmartcarException {
-    Request request =
-        new Request.Builder()
-            .url(options.getOrigin())
-            .header("Authorization", this.basicAuthorization)
-            .header("Content-Type", "application/x-www-form-urlencoded")
-            .addHeader("User-Agent", AuthClient.USER_AGENT)
-            .post(requestBody)
-            .build();
-
-    return AuthClient.execute(request, Auth.class);
-  }
-
-  /**
-   * Executes an Auth API request.
-   *
-   * @param requestBody the request body to be included
-   * @return the parsed response
-   * @throws SmartcarException if the API request fails
-   */
-  private Auth call(RequestBody requestBody) throws SmartcarException {
-    SmartcarAuthOptions options = new SmartcarAuthOptions.Builder().build();
-    return this.call(requestBody, options);
-  }
-
-  /**
-   * A builder for creating Authorization URLs. Access through {@link AuthClient#authUrlBuilder()}.
+   * A builder for creating Authorization URLs. Access through {@link AuthClient#authUrlBuilder(String[])}.
    */
   public class AuthUrlBuilder {
     private HttpUrl.Builder urlBuilder;
+    private List<String> flags = null;
 
     public AuthUrlBuilder(String[] scope) {
+      String origin = System.getenv("SMARTCAR_CONNECT_ORIGIN");
+      if (origin == null) {
+        origin = "https://connect.smartcar.com";
+      }
       urlBuilder =
-          HttpUrl.parse(AuthClient.this.urlAuthorize)
+          HttpUrl.parse(origin + "/oauth/authorize")
               .newBuilder()
               .addQueryParameter("response_type", "code")
               .addQueryParameter("client_id", AuthClient.this.clientId)
@@ -179,41 +131,88 @@ public class AuthClient extends ApiClient {
               .addQueryParameter("scope", Utils.join(scope, " "));
     }
 
-    public AuthUrlBuilder setState(String state) {
+    public AuthUrlBuilder state(String state) {
       if (state != "") {
         urlBuilder.addQueryParameter("state", state);
       }
       return this;
     }
 
-    public AuthUrlBuilder setApprovalPrompt(boolean approvalPrompt) {
+    public AuthUrlBuilder approvalPrompt(boolean approvalPrompt) {
       urlBuilder.addQueryParameter("approval_prompt", approvalPrompt ? "force" : "auto");
       return this;
     }
 
-    public AuthUrlBuilder setMakeBypass(String make) {
+    public AuthUrlBuilder makeBypass(String make) {
       urlBuilder.addQueryParameter("make", make);
       return this;
     }
 
-    public AuthUrlBuilder setSingleSelect(boolean singleSelect) {
+    public AuthUrlBuilder singleSelect(boolean singleSelect) {
       urlBuilder.addQueryParameter("single_select", Boolean.toString(singleSelect));
       return this;
     }
 
-    public AuthUrlBuilder setSingleSelectVin(String vin) {
+    public AuthUrlBuilder singleSelectVin(String vin) {
+      this.singleSelect(true);
       urlBuilder.addQueryParameter("single_select_vin", vin);
       return this;
     }
 
-    public AuthUrlBuilder setFlags(String[] flags) {
-      urlBuilder.addQueryParameter("flags", Utils.join(flags, " "));
+    public AuthUrlBuilder addFlag(String name, String value) {
+      String flag = name + ":" + value;
+      this.flags.add(flag);
+      return this;
+    }
+
+    public AuthUrlBuilder addFlag(String name, boolean value) {
+      String flag = name + ":" + value;
+      this.flags.add(flag);
       return this;
     }
 
     public String build() {
+      if (this.flags != null && !this.flags.isEmpty()) {
+        String[] flagStrings = this.flags.toArray(new String[0]);
+        urlBuilder.addQueryParameter("flags", Utils.join(flagStrings, " "));
+      }
       return urlBuilder.build().toString();
     }
+  }
+
+  /**
+   * Executes an Auth API request.
+   *
+   * @param requestBody the request body to be included
+   * @param options SmartcarAuthOptions
+   * @return the parsed response
+   * @throws SmartcarException if the API request fails
+   */
+  private Auth getTokens(RequestBody requestBody, SmartcarAuthOptions options) throws SmartcarException {
+    String basicAuthorization = Credentials.basic(
+            this.clientId,
+            this.clientSecret
+    );
+    String origin = System.getenv("SMARTCAR_AUTH_ORIGIN");
+    if (origin == null) {
+      origin = "https://auth.smartcar.com";
+    }
+
+    HttpUrl.Builder urlBuilder = HttpUrl.parse(origin + "/oauth/token").newBuilder();
+    if (options.getFlags() != null) {
+      urlBuilder.addQueryParameter("flags", options.getFlags());
+    }
+
+    Request request =
+            new Request.Builder()
+                    .url(urlBuilder.build().toString())
+                    .header("Authorization", basicAuthorization)
+                    .header("Content-Type", "application/x-www-form-urlencoded")
+                    .addHeader("User-Agent", AuthClient.USER_AGENT)
+                    .post(requestBody)
+                    .build();
+
+    return AuthClient.execute(request, Auth.class);
   }
 
   /**
@@ -224,7 +223,7 @@ public class AuthClient extends ApiClient {
    * @throws SmartcarException when the request is unsuccessful
    */
   public Auth exchangeCode(String code) throws SmartcarException {
-    Builder options = new Builder();
+    SmartcarAuthOptions options = new SmartcarAuthOptions.Builder().build();
     return this.exchangeCode(code, options);
   }
 
@@ -236,7 +235,7 @@ public class AuthClient extends ApiClient {
    * @return the requested access token
    * @throws SmartcarException when the request is unsuccessful
    */
-  public Auth exchangeCode(String code, Builder options) throws SmartcarException {
+  public Auth exchangeCode(String code, SmartcarAuthOptions options) throws SmartcarException {
     RequestBody requestBody =
             new FormBody.Builder()
                     .add("grant_type", "authorization_code")
@@ -244,7 +243,7 @@ public class AuthClient extends ApiClient {
                     .add("redirect_uri", this.redirectUri)
                     .build();
 
-    return this.call(requestBody);
+    return this.getTokens(requestBody, options);
   }
 
   /**
@@ -274,6 +273,18 @@ public class AuthClient extends ApiClient {
                     .add("refresh_token", refreshToken)
                     .build();
 
-    return this.call(requestBody, options);
+    return this.getTokens(requestBody, options);
+  }
+
+  public String getClientId() {
+    return this.clientId;
+  }
+
+  public String getClientSecret() {
+    return this.clientSecret;
+  }
+
+  public String getRedirectUri() {
+    return this.redirectUri;
   }
 }

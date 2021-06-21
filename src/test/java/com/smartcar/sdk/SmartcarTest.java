@@ -7,9 +7,9 @@ import com.smartcar.sdk.data.VehicleIds;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.MockResponse;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
+
+import java.io.IOException;
 
 
 public class SmartcarTest {
@@ -22,14 +22,15 @@ public class SmartcarTest {
     private final boolean sampleTestMode = true;
     private String fakeAccessToken = "F4K3_4CC355_T0K3N";
     private MockWebServer mockWebServer = new MockWebServer();
-    
-    @BeforeMethod
-    private void beforeMethod() throws Exception {
-        //this.mockWebServer.start(8888);
+
+    @BeforeSuite
+    private void beforeSuite() throws IOException {
+        Smartcar.API_ORIGIN = "http://" + this.mockWebServer.getHostName() + ":" + this.mockWebServer.getPort();
+        this.mockWebServer.start(8888);
     }
 
-    @AfterMethod
-    private void afterMethod() throws Exception {
+    @AfterSuite
+    private void afterSuite() throws IOException {
         this.mockWebServer.shutdown();
     }
     
@@ -41,7 +42,6 @@ public class SmartcarTest {
                 .addHeader("sc-request-id", this.sampleRequestId);
         this.mockWebServer.enqueue(response);
 
-        Smartcar.URL_API = "http://" + this.mockWebServer.getHostName() + ":" + this.mockWebServer.getPort();
         User user = Smartcar.getUser(this.fakeAccessToken);
         Assert.assertEquals(user.getId(), expectedUserId);
         Assert.assertEquals(user.getMeta().getRequestId(), this.sampleRequestId);
@@ -56,7 +56,6 @@ public class SmartcarTest {
                 .addHeader("sc-request-id", this.sampleRequestId);
         this.mockWebServer.enqueue(response);
 
-        Smartcar.URL_API = "http://" + this.mockWebServer.getHostName() + ":" + this.mockWebServer.getPort();
         VehicleIds vehicleIds = Smartcar.getVehicles(this.fakeAccessToken);
 
         String[] vIds = vehicleIds.getVehicleIds();
@@ -74,7 +73,6 @@ public class SmartcarTest {
                 .addHeader("sc-request-id", this.sampleRequestId);
         this.mockWebServer.enqueue(response);
 
-        Smartcar.URL_API = "http://" + this.mockWebServer.getHostName() + ":" + this.mockWebServer.getPort();
         SmartcarCompatibilityRequest request =  new SmartcarCompatibilityRequest.Builder().vin(vin).scope(scope).build();
         Compatibility comp = Smartcar.getCompatibility(request);
         Assert.assertEquals(comp.getCompatible(), true);

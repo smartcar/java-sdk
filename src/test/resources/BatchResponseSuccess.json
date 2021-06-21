@@ -3,7 +3,7 @@
     [
         {
             "headers": {
-                "sc-unit-system": "metric"
+                "SC-Unit-System": "metric"
             },
             "path": "/odometer",
             "code": 200,

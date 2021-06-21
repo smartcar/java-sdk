@@ -1,19 +1,12 @@
 package com.smartcar.sdk;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.smartcar.sdk.data.*;
 import okhttp3.*;
-
-import javax.json.Json;
-import java.io.IOException;
 import java.util.Date;
 
 public class Smartcar {
-    public static String API_VERSION = "1.0";
-    public static String URL_API = "https://api.smartcar.com";
+    public static String API_VERSION = "2.0";
+    public static String API_ORIGIN = "https://api.smartcar.com";
     private static final String SDK_VERSION = Smartcar.getSdkVersion();
 
     /**
@@ -46,7 +39,11 @@ public class Smartcar {
      * @return
      */
     static String getApiUrl() {
-        return Smartcar.URL_API + "/v" + Smartcar.API_VERSION;
+        String apiOrigin = System.getenv("SMARTCAR_API_ORIGIN");
+        if (apiOrigin == null) {
+            apiOrigin = "https://api.smartcar.com";
+        }
+        return apiOrigin + "/v" + Smartcar.API_VERSION;
     }
 
     /**
@@ -61,18 +58,12 @@ public class Smartcar {
         String url = Smartcar.getApiUrl();
         Request request =
                 new Request.Builder()
-                        .url(HttpUrl.parse(url + "/user"))
+                        .url(url + "/user")
                         .header("Authorization", "Bearer " + accessToken)
                         .addHeader("User-Agent", AuthClient.USER_AGENT)
                         .build();
 
-        try {
-            // Execute Request
-            // Parse Response
-            return ApiClient.execute(request, User.class);
-        } catch (Exception ex) {
-            throw new SmartcarException(ex.getMessage());
-        }
+        return ApiClient.execute(request, User.class);
     }
 
     /**
@@ -102,15 +93,7 @@ public class Smartcar {
                         .addHeader("User-Agent", ApiClient.USER_AGENT)
                         .build();
 
-        // Execute Request
-        VehicleIds vehicleIds;
-        try {
-            vehicleIds = ApiClient.execute(request, VehicleIds.class);
-        } catch (Exception ex) {
-            throw new SmartcarException(ex.getMessage());
-        }
-
-        return vehicleIds;
+        return ApiClient.execute(request, VehicleIds.class);
     }
 
     /**
@@ -152,8 +135,6 @@ public class Smartcar {
      * @throws SmartcarException when the request is unsuccessful
      */
     public static Compatibility getCompatibility(SmartcarCompatibilityRequest compatibilityRequest) throws SmartcarException {
-        // Assert that either clientId/clientSecret was passed in via options or exists as env variables
-
         String apiUrl = Smartcar.getApiUrl();
         HttpUrl url =
                 HttpUrl.parse(apiUrl)

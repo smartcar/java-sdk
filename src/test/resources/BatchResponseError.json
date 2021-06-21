@@ -1,14 +1,16 @@
-[
-    {
-        "headers": {
-            "sc-unit-system": "metric"
-        },
-        "path": "/odometer",
-        "code": 409,
-        "body": {
-            "error": "vehicle_state_error",
-            "message": "Vehicle state cannot be determined.",
-            "code": "VS_000"
+{
+    "responses": [
+        {
+            "headers": {
+                "SC-Unit-System": "metric"
+            },
+            "path": "/odometer",
+            "code": 409,
+            "body": {
+                "error": "vehicle_state_error",
+                "message": "Vehicle state cannot be determined.",
+                "code": "VS_000"
+            }
         }
-    }
-]
+    ]
+}

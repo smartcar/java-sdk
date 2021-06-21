@@ -33,13 +33,13 @@ public class VehicleTest extends IntegrationTest {
   /** Tests that the vehicle VIN can be obtained. */
   @Test(groups = "vehicle")
   public void testVin() throws SmartcarException {
-    String vin = this.vehicle.vin();
+    this.vehicle.vin();
   }
 
   /** Tests that the vehicle permissions can be obtained. */
   @Test(groups = "vehicle")
   public void testPermissions() throws SmartcarException {
-    String[] permissions = this.vehicle.permissions();
+    this.vehicle.permissions();
   }
 
   /** Tests that the vehicle correctly handles imperial headers. */
@@ -47,14 +47,14 @@ public class VehicleTest extends IntegrationTest {
   public void testImperialHeaders() throws SmartcarException {
     this.vehicle.setUnitSystem(Vehicle.UnitSystem.IMPERIAL);
     VehicleOdometer response = this.vehicle.odometer();
-    //Assert.assertEquals(response.getUnitSystem(), "imperial");
+    Assert.assertEquals(response.getMeta().getUnitSystem(), "imperial");
   }
 
   /** Tests that the vehicle correctly handles age headers. */
   @Test(groups = "vehicle")
   public void testAgeHeaders() throws SmartcarException {
     VehicleOdometer response = this.vehicle.odometer();
-    //Assert.assertTrue(response.getAge() instanceof Date);
+    Assert.assertTrue(response.getMeta().getDataAge() instanceof Date);
   }
 
   /** Tests that the vehicle correctly handles imperial headers. */
@@ -62,19 +62,7 @@ public class VehicleTest extends IntegrationTest {
   public void testRequestIdHeader() throws SmartcarException {
     VehicleOdometer response = this.vehicle.odometer();
     // Request ID is a UUID (36 characters)
-    //Assert.assertEquals(response.getRequestId().length(), 36);
-  }
-
-  /** Tests that the vehicle has certain permissions. */
-  @Test(groups = "vehicle")
-  public void testHasPermissions() throws SmartcarException {
-    Assert.assertTrue(this.vehicle.hasPermissions("required:read_odometer"));
-    Assert.assertTrue(
-        this.vehicle.hasPermissions(new String[] {"read_odometer", "required:read_location"}));
-
-    Assert.assertFalse(this.vehicle.hasPermissions("read_ignition"));
-    Assert.assertFalse(
-        this.vehicle.hasPermissions(new String[] {"read_odometer", "read_ignition"}));
+    Assert.assertEquals(response.getMeta().getRequestId().length(), 36);
   }
 
   /** Tests that the odometer value can be obtained. */
@@ -151,26 +139,26 @@ public class VehicleTest extends IntegrationTest {
 
   /** Tests that the batch request method works. */
   @Test(groups = "vehicle")
-  public void testBatch() throws SmartcarException, BatchResponseMissingException {
+  public void testBatch() throws SmartcarException {
     String[] paths = {"/fuel", "/odometer"};
     BatchResponse response = this.vehicle.batch(paths);
 
-    SmartcarResponse<VehicleOdometer> odo = response.odometer();
-    SmartcarResponse<VehicleFuel> fuel = response.fuel();
+    VehicleOdometer odo = response.odometer();
+    VehicleFuel fuel = response.fuel();
   }
 
   /** Tests that the batch response headers are set properly. */
   @Test(groups = "vehicle")
-  public void testBatchResponseHeaders() throws SmartcarException, BatchResponseMissingException {
+  public void testBatchResponseHeaders() throws SmartcarException {
     this.vehicle.setUnitSystem(Vehicle.UnitSystem.IMPERIAL);
     String[] paths = {"/odometer"};
     BatchResponse response = this.vehicle.batch(paths);
     Assert.assertEquals(response.getRequestId().length(), 36);
 
-    SmartcarResponse<VehicleOdometer> odo = response.odometer();
-    Assert.assertEquals(odo.getUnitSystem(), "imperial");
-    Assert.assertEquals(odo.getRequestId().length(), 36);
-    Assert.assertTrue(odo.getAge() instanceof Date);
+    VehicleOdometer odo = response.odometer();
+    Assert.assertEquals(odo.getMeta().getUnitSystem(), "imperial");
+    Assert.assertEquals(odo.getMeta().getRequestId().length(), 36);
+    Assert.assertTrue(odo.getMeta().getDataAge() instanceof Date);
   }
 
   /** Tests that access for the current application can be revoked. */

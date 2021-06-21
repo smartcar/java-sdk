@@ -25,8 +25,8 @@ abstract class IntegrationTest {
   final String authOemPassword = IntegrationUtils.nonce(16);
 
   AuthClient authClient;
-  final String authClientId = System.getenv("INTEGRATION_CLIENT_ID");
-  final String authClientSecret = System.getenv("INTEGRATION_CLIENT_SECRET");
+  final String authClientId = System.getenv("SMARTCAR_CLIENT_ID");
+  final String authClientSecret = System.getenv("SMARTCAR_CLIENT_SECRET");
   final String authRedirectUri = "https://example.com/auth";
   final boolean authDevelopment = true;
   final String[] authScope = {
@@ -69,12 +69,12 @@ abstract class IntegrationTest {
    * @return a new set of auth credentials
    */
   Auth getAuth(String make) throws Exception {
-    this.authClient =
-        new AuthClient(
-            this.authClientId,
-            this.authClientSecret,
-            this.authRedirectUri,
-            this.authDevelopment);
+    this.authClient = new AuthClient.Builder()
+            .clientId(this.authClientId)
+            .clientSecret(this.authClientSecret)
+            .redirectUri(this.authRedirectUri)
+            .build();
+
     String authUrl = this.authClient.new AuthUrlBuilder(this.authScope).build();
     String authCode = this.getAuthCode(authUrl, this.authOemUsername, this.authOemPassword, make);
 
@@ -94,9 +94,8 @@ abstract class IntegrationTest {
     Auth auth = this.getAuth(make);
     String accessToken = auth.getAccessToken();
 
-    SmartcarResponse vehicleIdResponse = AuthClient.getVehicleIds(accessToken);
-    VehicleIds vehicleIdData = (VehicleIds) vehicleIdResponse.getData();
-    String[] vehicleIds = vehicleIdData.getVehicleIds();
+    VehicleIds vehicles = Smartcar.getVehicles(accessToken);
+    String[] vehicleIds = vehicles.getVehicleIds();
 
     Vehicle vehicle = new Vehicle(vehicleIds[0], accessToken);
 
