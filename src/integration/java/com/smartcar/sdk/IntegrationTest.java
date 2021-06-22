@@ -73,6 +73,7 @@ abstract class IntegrationTest {
             .clientId(this.authClientId)
             .clientSecret(this.authClientSecret)
             .redirectUri(this.authRedirectUri)
+            .testMode(true)
             .build();
 
     String authUrl = this.authClient.new AuthUrlBuilder(this.authScope).build();
