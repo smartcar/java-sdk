@@ -57,7 +57,7 @@ public class Vehicle extends ApiClient {
       String path, String method, RequestBody body, Class<T> type) throws SmartcarException {
     HttpUrl url =
         HttpUrl.parse(this.origin)
-            .newBuilder()
+            .newBuilder().addPathSegments("v" + this.version)
             .addPathSegments("vehicles")
             .addPathSegments(this.vehicleId)
             .addPathSegments(path)

@@ -30,7 +30,6 @@ jobs:
   include:
     - stage: test
       script:
-        - ./gradlew integration --tests "com.smartcar.sdk.AuthTest"
         # Check if readme has been generated
         - ./gradlew markdown
         - test -z "$(git diff --name-only | grep '^README.md$')"
