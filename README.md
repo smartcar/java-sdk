@@ -53,10 +53,10 @@ a valid access token for the target vehicle.
     String clientSecret = "";
     String redirectUri = "";
     String[] scope = {};
-    boolean development = true;
+    boolean testMode = true;
 
     // Initialize a new AuthClient with your credentials.
-    AuthClient authClient = new AuthClient(clientId, clientSecret, redirectUri, scope, development);
+    AuthClient authClient = new AuthClient(clientId, clientSecret, redirectUri, scope, testMode);
 
     // Retrieve the auth URL to start the OAuth flow.
     String authUrl = authClient.authUrlBuilder()

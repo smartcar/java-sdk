@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -142,7 +142,8 @@ extends <a href="../../../../com/smartcar/sdk/data/ApiData.html" title="class in
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/smartcar/sdk/data/VehicleIds.html#VehicleIds-java.lang.String:A-">VehicleIds</a></span>(java.lang.String[]&nbsp;vehicleIds)</code>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/smartcar/sdk/data/VehicleIds.html#VehicleIds-java.lang.String:A-com.smartcar.sdk.data.ResponsePaging-">VehicleIds</a></span>(java.lang.String[]&nbsp;vehicleIds,
+          <a href="../../../../com/smartcar/sdk/data/ResponsePaging.html" title="class in com.smartcar.sdk.data">ResponsePaging</a>&nbsp;paging)</code>
 <div class="block">Initializes a new instance of VehicleIds</div>
 </td>
 </tr>
@@ -162,24 +163,35 @@ extends <a href="../../../../com/smartcar/sdk/data/ApiData.html" title="class in
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
+<td class="colFirst"><code><a href="../../../../com/smartcar/sdk/data/ResponsePaging.html" title="class in com.smartcar.sdk.data">ResponsePaging</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/smartcar/sdk/data/VehicleIds.html#getPaging--">getPaging</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code>java.lang.String[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/smartcar/sdk/data/VehicleIds.html#getVehicleIds--">getVehicleIds</a></span>()</code>
 <div class="block">Returns the vehicle IDs.</div>
 </td>
 </tr>
-<tr id="i1" class="rowColor">
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/smartcar/sdk/data/VehicleIds.html#setVehicleIds-java.lang.String:A-">setVehicleIds</a></span>(java.lang.String[]&nbsp;vehicleIds)</code>
 <div class="block">Sets the vehicle IDs.</div>
 </td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/smartcar/sdk/data/VehicleIds.html#toString--">toString</a></span>()</code>
 <div class="block">Returns the stored data string.</div>
 </td>
 </tr>
 </table>
+<ul class="blockList">
+<li class="blockList"><a name="methods.inherited.from.class.com.smartcar.sdk.data.ApiData">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;com.smartcar.sdk.data.<a href="../../../../com/smartcar/sdk/data/ApiData.html" title="class in com.smartcar.sdk.data">ApiData</a></h3>
+<code><a href="../../../../com/smartcar/sdk/data/ApiData.html#getMeta--">getMeta</a>, <a href="../../../../com/smartcar/sdk/data/ApiData.html#setMeta-com.smartcar.sdk.data.Meta-">setMeta</a></code></li>
+</ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
@@ -201,13 +213,14 @@ extends <a href="../../../../com/smartcar/sdk/data/ApiData.html" title="class in
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="VehicleIds-java.lang.String:A-">
+<a name="VehicleIds-java.lang.String:A-com.smartcar.sdk.data.ResponsePaging-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>VehicleIds</h4>
-<pre>public&nbsp;VehicleIds(java.lang.String[]&nbsp;vehicleIds)</pre>
+<pre>public&nbsp;VehicleIds(java.lang.String[]&nbsp;vehicleIds,
+                  <a href="../../../../com/smartcar/sdk/data/ResponsePaging.html" title="class in com.smartcar.sdk.data">ResponsePaging</a>&nbsp;paging)</pre>
 <div class="block">Initializes a new instance of VehicleIds</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -235,6 +248,15 @@ extends <a href="../../../../com/smartcar/sdk/data/ApiData.html" title="class in
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the vehicle IDs</dd>
 </dl>
+</li>
+</ul>
+<a name="getPaging--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getPaging</h4>
+<pre>public&nbsp;<a href="../../../../com/smartcar/sdk/data/ResponsePaging.html" title="class in com.smartcar.sdk.data">ResponsePaging</a>&nbsp;getPaging()</pre>
 </li>
 </ul>
 <a name="setVehicleIds-java.lang.String:A-">
