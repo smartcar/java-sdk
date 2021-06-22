@@ -4,6 +4,6 @@ selenium-hub:
   - 4444
 
 chrome:
-  image: "public.ecr.aws/j7r5l0t4/selenium-hub:latest"
+  image: "public.ecr.aws/j7r5l0t4/selenium-node-chrome:latest"
   volumes:
   - /dev/shm:/dev/shm
