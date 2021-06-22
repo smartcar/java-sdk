@@ -46,7 +46,7 @@ public class BatchResponse extends ApiData {
     int statusCode = res.get("code").getAsInt();
     JsonObject body = res.get("body").getAsJsonObject();
     JsonObject headers = res.get("headers").getAsJsonObject();
-    headers.addProperty("SC-Request-Id", this.requestId);
+    headers.addProperty("sc-request-id", this.requestId);
 
     if (statusCode != 200) {
       throw SmartcarException.Factory(statusCode, headers, body);

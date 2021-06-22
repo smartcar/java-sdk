@@ -2,21 +2,22 @@ package com.smartcar.sdk.data;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.time.Instant;
 import java.util.Date;
 
 public class Meta {
-    @SerializedName("SC-Request-Id")
+    @SerializedName("sc-request-id")
     private String requestId;
-    @SerializedName("SC-Data-Age")
+    @SerializedName("sc-data-age")
     private String dataAge;
-    @SerializedName("SC-Unit-System")
+    @SerializedName("sc-unit-system")
     private String unitSystem;
 
     public String getRequestId() { return this.requestId; }
 
     public Date getDataAge() {
-        final Date date = new Date(this.dataAge);
-        return date;
+        Instant date = Instant.parse(this.dataAge);
+        return Date.from(date);
     }
 
     public String getUnitSystem() { return this.unitSystem; }

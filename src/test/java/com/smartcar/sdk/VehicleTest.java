@@ -48,7 +48,7 @@ public class VehicleTest {
     MockResponse mockResponse = new MockResponse()
             .setResponseCode(statusCode)
             .setBody(error.toString())
-            .addHeader("SC-Request-Id", this.expectedRequestId)
+            .addHeader("sc-request-id", this.expectedRequestId)
             .addHeader("Content-Type", "application/json");
     TestExecutionListener.mockWebServer.enqueue(mockResponse);
   }
@@ -57,9 +57,9 @@ public class VehicleTest {
     JsonElement success = loadJsonResource(resourceName);
     MockResponse mockResponse = new MockResponse()
             .setBody(success.toString())
-            .addHeader("SC-Request-Id", this.expectedRequestId)
-            .addHeader("SC-Data-Age", this.dataAge)
-            .addHeader("SC-Unit-System", this.unitSystem);
+            .addHeader("sc-request-id", this.expectedRequestId)
+            .addHeader("sc-data-age", this.dataAge)
+            .addHeader("sc-unit-system", this.unitSystem);
     TestExecutionListener.mockWebServer.enqueue(mockResponse);
   }
 
@@ -306,9 +306,9 @@ public class VehicleTest {
     MockResponse mockResponse = new MockResponse()
             .setResponseCode(500)
             .setBody("{ \"InvalidJSON\": {")
-            .addHeader("SC-Request-Id", this.expectedRequestId)
-            .addHeader("SC-Data-Age", this.dataAge)
-            .addHeader("SC-Unit-System", this.unitSystem);
+            .addHeader("sc-request-id", this.expectedRequestId)
+            .addHeader("sc-data-age", this.dataAge)
+            .addHeader("sc-unit-system", this.unitSystem);
     TestExecutionListener.mockWebServer.enqueue(mockResponse);
 
     try {

@@ -52,7 +52,7 @@ public class SmartcarTest extends PowerMockTestCase {
         String expectedUserId = "9c58a58f-579e-4fce-b2fc-53a518271b8c";
         MockResponse response = new MockResponse()
                 .setBody("{ \"id\": \"" + expectedUserId + "\" }")
-                .addHeader("SC-Request-Id", this.sampleRequestId);
+                .addHeader("sc-request-id", this.sampleRequestId);
         TestExecutionListener.mockWebServer.enqueue(response);
 
         User user = Smartcar.getUser(this.fakeAccessToken);
@@ -71,7 +71,7 @@ public class SmartcarTest extends PowerMockTestCase {
 
         MockResponse response = new MockResponse()
                 .setBody("{ \"paging\": {\"count\": 1, \"offset\": 0 }, \"vehicles\": [\"" + vehicleId + "\"] }")
-                .addHeader("SC-Request-Id", this.sampleRequestId);
+                .addHeader("sc-request-id", this.sampleRequestId);
         TestExecutionListener.mockWebServer.enqueue(response);
 
         VehicleIds vehicleIds = Smartcar.getVehicles(this.fakeAccessToken);
@@ -90,7 +90,7 @@ public class SmartcarTest extends PowerMockTestCase {
 
         MockResponse response = new MockResponse()
                 .setBody("{ \"compatible\": true }")
-                .addHeader("SC-Request-Id", this.sampleRequestId);
+                .addHeader("sc-request-id", this.sampleRequestId);
         TestExecutionListener.mockWebServer.enqueue(response);
 
         PowerMockito.mockStatic(System.class);

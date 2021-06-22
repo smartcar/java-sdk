@@ -78,7 +78,7 @@ public class AuthClientTest extends PowerMockTestCase {
     JsonElement success = loadJsonResource(resourceName);
     MockResponse mockResponse = new MockResponse()
             .setBody(success.toString())
-            .addHeader("SC-Request-Id", this.expectedRequestId);
+            .addHeader("sc-request-id", this.expectedRequestId);
     TestExecutionListener.mockWebServer.enqueue(mockResponse);
   }
 

@@ -99,7 +99,7 @@ abstract class ApiClient {
       throw new SmartcarException.Builder()
               .statusCode(response.code())
               .description(bodyString)
-              .requestId(response.headers().get("SC-Request-Id"))
+              .requestId(response.headers().get("sc-request-id"))
               .type("SDK_ERROR")
               .build();
     }

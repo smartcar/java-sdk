@@ -2,7 +2,7 @@
   "responses": [
     {
       "headers": {
-        "SC-Unit-System": "metric"
+        "sc-unit-system": "metric"
       },
       "path": "/odometer",
       "code": 409,

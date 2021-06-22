@@ -103,11 +103,11 @@ public class SmartcarException extends java.lang.Exception {
   public static SmartcarException Factory(final int statusCode, JsonObject headers, JsonObject body) {
     Builder builder = new SmartcarException.Builder().statusCode(statusCode);
 
-    JsonElement requestId = headers.get("SC-Request-Id");
+    JsonElement requestId = headers.get("sc-request-id");
     if (requestId != null) {
       builder.requestId(requestId.getAsString());
     }
-    JsonElement contentType = headers.get("Content-Type");
+    JsonElement contentType = headers.get("content-type");
     if (contentType != null && !contentType.getAsString().contains("application/json")) {
       return builder.description(body.toString()).build();
     }
@@ -171,7 +171,7 @@ public class SmartcarException extends java.lang.Exception {
       return new SmartcarException.Builder()
               .statusCode(statusCode)
               .description("Unable to get request body")
-              .requestId(headers.get("SC-Request-Id"))
+              .requestId(headers.get("sc-request-id"))
               .type("SDK_ERROR")
               .build();
     }
@@ -182,7 +182,7 @@ public class SmartcarException extends java.lang.Exception {
       return new SmartcarException.Builder()
               .statusCode(statusCode)
               .description(bodyString)
-              .requestId(headers.get("SC-Request-Id"))
+              .requestId(headers.get("sc-request-id"))
               .type("SDK_ERROR")
               .build();
     }

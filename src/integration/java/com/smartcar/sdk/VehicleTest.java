@@ -57,7 +57,7 @@ public class VehicleTest extends IntegrationTest {
   @Test(groups = "vehicle")
   public void testAgeHeaders() throws SmartcarException {
     VehicleOdometer response = this.vehicle.odometer();
-    Assert.assertTrue(response.getMeta().getDataAge() instanceof Date);
+    Assert.assertTrue(response.getMeta().getDataAge() != null);
   }
 
   /** Tests that the vehicle correctly handles imperial headers. */

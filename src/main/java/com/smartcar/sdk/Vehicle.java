@@ -69,7 +69,7 @@ public class Vehicle extends ApiClient {
             .header("Authorization", "Bearer " + this.accessToken)
             .addHeader("User-Agent", Vehicle.USER_AGENT)
             .method(method, body)
-            .header("SC-Unit-System", this.unitSystem.name().toLowerCase())
+            .header("sc-unit-system", this.unitSystem.name().toLowerCase())
             .build();
 
     return Vehicle.execute(request, type);
@@ -97,7 +97,7 @@ public class Vehicle extends ApiClient {
                     .header("Authorization", "Bearer " + this.accessToken)
                     .addHeader("User-Agent", Vehicle.USER_AGENT)
                     .method(method, body)
-                    .header("SC-Unit-System", this.unitSystem.name().toLowerCase())
+                    .header("sc-unit-system", this.unitSystem.name().toLowerCase())
                     .build();
 
     return Vehicle.execute(request, type);
