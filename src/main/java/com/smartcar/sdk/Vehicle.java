@@ -80,6 +80,7 @@ public class Vehicle extends ApiClient {
     HttpUrl.Builder urlBuilder =
             HttpUrl.parse(this.origin)
                     .newBuilder()
+                    .addPathSegments("v" + this.version)
                     .addPathSegments("vehicles")
                     .addPathSegments(this.vehicleId)
                     .addPathSegments(path);
