@@ -10,6 +10,10 @@ import java.io.IOException;
 
 import java.util.UUID;
 
+import okhttp3.mockwebserver.Dispatcher;
+import okhttp3.mockwebserver.RecordedRequest;
+import org.junit.After;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.testng.Assert;
 import org.testng.annotations.*;
@@ -18,17 +22,21 @@ import okhttp3.mockwebserver.MockResponse;
 
 /** Test Suite: Vehicle */
 @PrepareForTest({Vehicle.class, SmartcarException.class})
+@PowerMockIgnore("javax.net.ssl.*")
 public class VehicleTest {
 
   private final String vehicleId = "902da0a6-796b-4b7e-b092-639677ed1033";
   private final String accessToken = UUID.randomUUID().toString();
   private final String expectedRequestId = "67127d3a-a08a-41f0-8211-f96da36b2d6e";
-  private final String dataAge = "2018-06-20T01:33:37.078Z";
+  private final String dataAge = "Tue Jun 19 18:33:37 PDT 2018";
   private final String unitSystem = "imperial";
 
   private Vehicle subject;
-  private MockWebServer mockWebServer = new MockWebServer();
 
+  @AfterMethod
+  public void afterMethod() throws InterruptedException {
+    TestExecutionListener.mockWebServer.takeRequest();
+  }
 
   private JsonElement loadJsonResource(String resourceName) throws FileNotFoundException {
     String fileName = String.format("src/test/resources/%s.json", resourceName);
@@ -42,7 +50,7 @@ public class VehicleTest {
             .setBody(error.toString())
             .addHeader("SC-Request-Id", this.expectedRequestId)
             .addHeader("Content-Type", "application/json");
-    this.mockWebServer.enqueue(mockResponse);
+    TestExecutionListener.mockWebServer.enqueue(mockResponse);
   }
 
   private void loadAndEnqueueResponse(String resourceName) throws FileNotFoundException {
@@ -52,23 +60,15 @@ public class VehicleTest {
             .addHeader("SC-Request-Id", this.expectedRequestId)
             .addHeader("SC-Data-Age", this.dataAge)
             .addHeader("SC-Unit-System", this.unitSystem);
-    this.mockWebServer.enqueue(mockResponse);
-  }
-
-  @BeforeSuite
-  private void beforeSuite() throws IOException {
-    this.mockWebServer.start(8888);
-  }
-
-  @AfterSuite
-  private void afterSuite() throws IOException {
-    this.mockWebServer.shutdown();
+    TestExecutionListener.mockWebServer.enqueue(mockResponse);
   }
 
   @BeforeMethod
   private void beforeMethod() throws IOException {
 
-    SmartcarVehicleOptions options = new SmartcarVehicleOptions.Builder().origin("http://localhost:8888").build();
+    SmartcarVehicleOptions options = new SmartcarVehicleOptions.Builder()
+            .origin("http://localhost:" + TestExecutionListener.mockWebServer.getPort())
+            .build();
     this.subject = new Vehicle(this.vehicleId, this.accessToken, options);
   }
 
@@ -79,7 +79,7 @@ public class VehicleTest {
     VehicleOdometer odometer = this.subject.odometer();
 
     Assert.assertEquals(odometer.getMeta().getRequestId(), this.expectedRequestId);
-    Assert.assertEquals(odometer.getMeta().getDataAge(), this.dataAge);
+    Assert.assertEquals(odometer.getMeta().getDataAge().toString(), this.dataAge);
     Assert.assertEquals(odometer.getMeta().getUnitSystem(), this.unitSystem);
   }
 
@@ -309,7 +309,7 @@ public class VehicleTest {
             .addHeader("SC-Request-Id", this.expectedRequestId)
             .addHeader("SC-Data-Age", this.dataAge)
             .addHeader("SC-Unit-System", this.unitSystem);
-    this.mockWebServer.enqueue(mockResponse);
+    TestExecutionListener.mockWebServer.enqueue(mockResponse);
 
     try {
       this.subject.odometer();

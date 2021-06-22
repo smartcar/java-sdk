@@ -8,13 +8,16 @@ public class Meta {
     @SerializedName("SC-Request-Id")
     private String requestId;
     @SerializedName("SC-Data-Age")
-    private Date dataAge;
+    private String dataAge;
     @SerializedName("SC-Unit-System")
     private String unitSystem;
 
     public String getRequestId() { return this.requestId; }
 
-    public Date getDataAge() { return this.dataAge; }
+    public Date getDataAge() {
+        final Date date = new Date(this.dataAge);
+        return date;
+    }
 
     public String getUnitSystem() { return this.unitSystem; }
 }

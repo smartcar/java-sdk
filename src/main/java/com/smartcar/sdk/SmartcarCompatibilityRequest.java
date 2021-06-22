@@ -73,10 +73,12 @@ public final class SmartcarCompatibilityRequest {
         public SmartcarCompatibilityRequest build() throws SmartcarException {
             if (this.clientId == null) {
                 throw new SmartcarException.Builder()
+                        .type("INVALID_REQUEST")
                         .description("clientId must be defined").build();
             }
             if (this.clientSecret == null) {
                 throw new SmartcarException.Builder()
+                        .type("INVALID_REQUEST")
                         .description("clientSecret must be defined").build();
             }
             return new SmartcarCompatibilityRequest(this);

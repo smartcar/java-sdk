@@ -3,11 +3,14 @@ package com.smartcar.sdk;
 import com.smartcar.sdk.data.*;
 
 import java.util.Date;
+
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.testng.Assert;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
 /** Integration Test Suite: /vehicles/:id */
+@PowerMockIgnore("javax.net.ssl.*")
 public class VehicleTest extends IntegrationTest {
   private Vehicle vehicle;
   private Vehicle eVehicle;
@@ -158,7 +161,7 @@ public class VehicleTest extends IntegrationTest {
     VehicleOdometer odo = response.odometer();
     Assert.assertEquals(odo.getMeta().getUnitSystem(), "imperial");
     Assert.assertEquals(odo.getMeta().getRequestId().length(), 36);
-    Assert.assertTrue(odo.getMeta().getDataAge() instanceof Date);
+    Assert.assertTrue(odo.getMeta().getDataAge() != null);
   }
 
   /** Tests that access for the current application can be revoked. */

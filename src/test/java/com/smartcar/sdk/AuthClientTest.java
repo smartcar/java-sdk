@@ -2,6 +2,7 @@ package com.smartcar.sdk;
 
 import com.google.gson.*;
 import com.smartcar.sdk.data.Auth;
+import com.smartcar.sdk.ApiClient;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -11,6 +12,7 @@ import okhttp3.HttpUrl;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+import okhttp3.mockwebserver.Dispatcher;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
@@ -26,6 +28,7 @@ import org.testng.annotations.Test;
 /** Test Suite: AuthClient */
 @PrepareForTest({
   AuthClient.class,
+  ApiClient.class,
   Gson.class,
   HttpUrl.class,
   JsonArray.class,
@@ -65,17 +68,6 @@ public class AuthClientTest extends PowerMockTestCase {
   // Subject Under Test
   private AuthClient subject;
 
-  private MockWebServer mockWebServer = new MockWebServer();
-
-  @BeforeSuite
-  private void beforeSuite() throws IOException {
-    this.mockWebServer.start(8888);
-  }
-
-  @AfterSuite
-  private void afterSuite() throws IOException {
-    this.mockWebServer.shutdown();
-  }
 
   private JsonElement loadJsonResource(String resourceName) throws FileNotFoundException {
     String fileName = String.format("src/test/resources/%s.json", resourceName);
@@ -87,7 +79,7 @@ public class AuthClientTest extends PowerMockTestCase {
     MockResponse mockResponse = new MockResponse()
             .setBody(success.toString())
             .addHeader("SC-Request-Id", this.expectedRequestId);
-    this.mockWebServer.enqueue(mockResponse);
+    TestExecutionListener.mockWebServer.enqueue(mockResponse);
   }
 
   @Test
@@ -109,7 +101,8 @@ public class AuthClientTest extends PowerMockTestCase {
     loadAndEnqueueResponse("AuthGetTokens");
 
     PowerMockito.mockStatic(System.class);
-    PowerMockito.when(System.getenv("SMARTCAR_AUTH_ORIGIN")).thenReturn("http://localhost:8888");
+    PowerMockito.when(System.getenv("SMARTCAR_AUTH_ORIGIN"))
+            .thenReturn("http://localhost:" + TestExecutionListener.mockWebServer.getPort());
 
     AuthClient client = new AuthClient.Builder()
             .clientId(this.sampleClientId)
@@ -124,9 +117,10 @@ public class AuthClientTest extends PowerMockTestCase {
     Assert.assertEquals(auth.getRefreshToken(), "3e565aed-d4b2-4296-9b4c-aec35825a6aa");
     Assert.assertNotNull(auth.getRefreshExpiration().toString());
 
-    RecordedRequest request = this.mockWebServer.takeRequest();
+    RecordedRequest request = TestExecutionListener.mockWebServer.takeRequest();
 
-    Assert.assertEquals(request.getRequestUrl().toString(), "http://localhost:8888/oauth/token");
+    Assert.assertEquals(request.getRequestUrl().toString(),
+            "http://localhost:" + TestExecutionListener.mockWebServer.getPort() + "/oauth/token");
     // can only verify the truncated body :(
     Assert.assertEquals(request.getBody().toString(), "[size=77 text=grant_type=authorization_code&code=&redirect_uri=https%3A%2F%2Fe…]");
   }
@@ -136,7 +130,7 @@ public class AuthClientTest extends PowerMockTestCase {
     loadAndEnqueueResponse("AuthRefreshTokens");
 
     PowerMockito.mockStatic(System.class);
-    PowerMockito.when(System.getenv("SMARTCAR_AUTH_ORIGIN")).thenReturn("http://localhost:8888");
+    PowerMockito.when(System.getenv("SMARTCAR_AUTH_ORIGIN")).thenReturn("http://localhost:" + TestExecutionListener.mockWebServer.getPort());
 
     AuthClient client = new AuthClient.Builder()
             .clientId(this.sampleClientId)
@@ -151,9 +145,10 @@ public class AuthClientTest extends PowerMockTestCase {
     Assert.assertEquals(auth.getRefreshToken(), "09337f8a-da3a-46c0-95e7-9c19180b06c0");
     Assert.assertNotNull(auth.getRefreshExpiration().toString());
 
-    RecordedRequest request = this.mockWebServer.takeRequest();
+    RecordedRequest request = TestExecutionListener.mockWebServer.takeRequest();
 
-    Assert.assertEquals(request.getRequestUrl().toString(), "http://localhost:8888/oauth/token");
+    Assert.assertEquals(request.getRequestUrl().toString(),
+            "http://localhost:" + TestExecutionListener.mockWebServer.getPort() + "/oauth/token");
     Assert.assertEquals(request.getBody().toString(), "[text=grant_type=refresh_token&refresh_token=]");
   }
 }

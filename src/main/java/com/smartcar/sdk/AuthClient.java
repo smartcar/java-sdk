@@ -10,6 +10,8 @@ import java.lang.reflect.Type;
 import java.util.Calendar;
 import java.util.List;
 
+import com.smartcar.sdk.ApiClient;
+
 import okhttp3.*;
 
 /** Smartcar OAuth 2.0 Authentication Client */

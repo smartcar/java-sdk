@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="Suite">
+    <listeners>
+        <listener class-name="com.smartcar.sdk.TestExecutionListener" />
+    </listeners>
+
+    <test name="Test">
+        <classes>
+            <class name="com.smartcar.sdk.SmartcarTest" />
+            <class name="com.smartcar.sdk.VehicleTest" />
+            <class name="com.smartcar.sdk.AuthClientTest" />
+            <class name="com.smartcar.sdk.ApiClientTest" />
+            <class name="com.smartcar.sdk.CompatibilityRequest" />
+            <class name="com.smartcar.sdk.SmartcarExceptionTest" />
+            <class name="com.smartcar.sdk.UtilsTest" />
+        </classes>
+    </test>
+</suite>
