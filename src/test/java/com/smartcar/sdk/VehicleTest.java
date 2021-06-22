@@ -28,7 +28,7 @@ public class VehicleTest {
   private final String vehicleId = "902da0a6-796b-4b7e-b092-639677ed1033";
   private final String accessToken = UUID.randomUUID().toString();
   private final String expectedRequestId = "67127d3a-a08a-41f0-8211-f96da36b2d6e";
-  private final String dataAge = "Tue Jun 19 18:33:37 PDT 2018";
+  private final String dataAge = "Tue, 22 Jun 2021 22:02:27 GMT";
   private final String unitSystem = "imperial";
 
   private Vehicle subject;
