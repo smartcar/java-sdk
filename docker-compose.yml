@@ -5,5 +5,7 @@ selenium-hub:
 
 chrome:
   image: "public.ecr.aws/j7r5l0t4/selenium-node-chrome:latest"
+  links:
+  - selenium-hub:hub
   volumes:
   - /dev/shm:/dev/shm
