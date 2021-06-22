@@ -48,7 +48,6 @@ public class AuthClient extends ApiClient {
   private final String clientSecret;
   private final String redirectUri;
   private final boolean testMode;
-  public String origin;
 
   /**
    * Builds a new AuthClient.

@@ -101,9 +101,12 @@ public class SmartcarException extends java.lang.Exception {
   }
 
   public static SmartcarException Factory(final int statusCode, JsonObject headers, JsonObject body) {
-    String requestId = headers.get("SC-Request-Id").getAsString();
-    Builder builder = new SmartcarException.Builder().statusCode(statusCode).requestId(requestId);
+    Builder builder = new SmartcarException.Builder().statusCode(statusCode);
 
+    JsonElement requestId = headers.get("SC-Request-Id");
+    if (requestId != null) {
+      builder.requestId(requestId.getAsString());
+    }
     JsonElement contentType = headers.get("Content-Type");
     if (contentType != null && !contentType.getAsString().contains("application/json")) {
       return builder.description(body.toString()).build();
@@ -111,9 +114,13 @@ public class SmartcarException extends java.lang.Exception {
 
     JsonObject bodyJson = new Gson().fromJson(body.toString(), JsonObject.class);
     if (bodyJson.has("error")) {
-      builder
-              .type(bodyJson.get("error").getAsString())
-              .description(bodyJson.get("message").getAsString());
+      builder.type(bodyJson.get("error").getAsString());
+      if (bodyJson.has("message")) {
+        builder.description(bodyJson.get("message").getAsString());
+      }
+      if (bodyJson.has("error_description")) {
+        builder.description(bodyJson.get("error_description").getAsString());
+      }
       if (bodyJson.has("code")) {
         builder.code(bodyJson.get("code").getAsString());
       }
@@ -145,7 +152,6 @@ public class SmartcarException extends java.lang.Exception {
     }
 
     return builder
-            .requestId(requestId)
             .description(body.toString())
             .type("SDK_ERROR")
             .build();

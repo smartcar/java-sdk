@@ -27,7 +27,7 @@ abstract class IntegrationTest {
   AuthClient authClient;
   final String authClientId = System.getenv("SMARTCAR_CLIENT_ID");
   final String authClientSecret = System.getenv("SMARTCAR_CLIENT_SECRET");
-  final String authRedirectUri = "https://example.com/auth";
+  final String authRedirectUri = System.getenv("SMARTCAR_REDIRECT_URI");
   final boolean authDevelopment = true;
   final String[] authScope = {
     "control_security:lock",
