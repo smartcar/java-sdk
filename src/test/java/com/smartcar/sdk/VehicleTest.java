@@ -11,9 +11,6 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.UUID;
 
-import okhttp3.mockwebserver.Dispatcher;
-import okhttp3.mockwebserver.RecordedRequest;
-import org.junit.After;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.testng.Assert;
