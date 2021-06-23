@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+import java.util.Date;
 import java.util.UUID;
 
 import okhttp3.mockwebserver.Dispatcher;
@@ -78,7 +79,7 @@ public class VehicleTest {
     VehicleOdometer odometer = this.subject.odometer();
 
     Assert.assertEquals(odometer.getMeta().getRequestId(), this.expectedRequestId);
-    Assert.assertEquals(odometer.getMeta().getDataAge().toString(), "Wed Jun 20 01:33:37 PDT 2018");
+    Assert.assertTrue(odometer.getMeta().getDataAge() instanceof Date);
     Assert.assertEquals(odometer.getMeta().getUnitSystem(), this.unitSystem);
   }
 
