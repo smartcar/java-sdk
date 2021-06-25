@@ -84,7 +84,7 @@ public class VehicleTest {
   public void testInfo() throws Exception {
     loadAndEnqueueResponse("GetVehicleInfo");
 
-    VehicleInfo info = this.subject.info();
+    VehicleAttributes info = this.subject.attributes();
 
     Assert.assertEquals(info.getMake(), "TESLA");
     Assert.assertEquals(info.getModel(), "Model S");
@@ -138,10 +138,10 @@ public class VehicleTest {
   }
 
   @Test
-  public void testOil() throws Exception {
+  public void testEngineOil() throws Exception {
     loadAndEnqueueResponse("GetEngineOil");
 
-    VehicleOil fuel = this.subject.oil();
+    VehicleOil fuel = this.subject.engineOil();
 
     Assert.assertEquals(fuel.getLifeRemaining(), 0.35);
   }
@@ -234,6 +234,23 @@ public class VehicleTest {
   }
 
   @Test
+  public void testSubscribe() throws Exception {
+    loadAndEnqueueResponse("SubscribeVehicle");
+
+    WebhookSubscription res = this.subject.subscribe("sampleId");
+
+    Assert.assertEquals(res.getVehicleId(), "902da0a6-796b-4b7e-b092-639677ed1033");
+    Assert.assertEquals(res.getWebhookId(), "d0846f13-ef13-4014-9d90-6439e1dd0884");
+  }
+
+  @Test
+  public void testUnsubscribe() throws Exception {
+    loadAndEnqueueResponse("UnsubscribeVehicle");
+
+    this.subject.unsubscribe("token", "sampleId");
+  }
+
+  @Test
   public void testV1PermissionError() throws FileNotFoundException {
     loadAndEnqueueErrorResponse("ErrorPermissionV1", 403);
 
@@ -275,7 +292,8 @@ public class VehicleTest {
       Assert.assertEquals(ex.getDescription(), "Your application has insufficient permissions to access the requested resource. Please prompt the user to re-authenticate using Smartcar Connect.");
       Assert.assertEquals(ex.getType(), "PERMISSION");
       Assert.assertEquals(ex.getDocURL(), "https://smartcar.com/docs/errors/v2.0/other-errors/#permission");
-      Assert.assertEquals(ex.getResolution(), "REAUTHENTICATE");
+      Assert.assertEquals(ex.getResolutionType(), "REAUTHENTICATE");
+      Assert.assertNull(ex.getResolutionUrl());
       Assert.assertNull(ex.getCode());
       Assert.assertEquals(ex.getRequestId(), this.expectedRequestId);
     }
@@ -292,7 +310,7 @@ public class VehicleTest {
       Assert.assertEquals(ex.getDescription(), "The vehicle is in a sleep state and temporarily unable to perform your request.");
       Assert.assertEquals(ex.getType(), "VEHICLE_STATE");
       Assert.assertEquals(ex.getDocURL(), "https://smartcar.com/docs/errors/v2.0/vehicle-state/#asleep");
-      Assert.assertNull(ex.getResolution());
+      Assert.assertNull(ex.getResolutionType());
       Assert.assertEquals(ex.getCode(), "ASLEEP");
       Assert.assertEquals(ex.getRequestId(), this.expectedRequestId);
     }
@@ -315,6 +333,18 @@ public class VehicleTest {
       Assert.assertEquals(ex.getStatusCode(), 500);
       Assert.assertEquals(ex.getRequestId(), this.expectedRequestId);
       Assert.assertEquals(ex.getType(), "SDK_ERROR");
+    }
+  }
+
+  @Test
+  public void testErrorResolutionObject() throws Exception {
+    loadAndEnqueueErrorResponse("ErrorResolutionObject", 401);
+
+    try {
+      this.subject.odometer();
+    } catch (SmartcarException ex) {
+      Assert.assertEquals(ex.getResolutionType(), "REAUTHENTICATE");
+      Assert.assertEquals(ex.getResolutionUrl(), "https://example.com");
     }
   }
 
@@ -365,7 +395,7 @@ public class VehicleTest {
       Assert.assertEquals(e.getCode(), "DOOR_OPEN");
       Assert.assertEquals(e.getRequestId(), expectedRequestId);
       Assert.assertEquals(e.getDocURL(), "https://smartcar.com/docs/errors/v2.0/vehicle-state/#door_open");
-      Assert.assertNull(e.getResolution());
+      Assert.assertNull(e.getResolutionType());
       Assert.assertNull(e.getDetail());
       Assert.assertEquals(e.getMessage(), "VEHICLE_STATE:DOOR_OPEN - Door is open.");
     }
@@ -390,7 +420,7 @@ public class VehicleTest {
       Assert.assertEquals(e.getRequestId(), expectedRequestId);
       Assert.assertEquals(
           e.getDocURL(), "https://smartcar.com/docs/errors/v2.0/other-errors/#validation");
-      Assert.assertNull(e.getResolution());
+      Assert.assertNull(e.getResolutionType());
       Assert.assertEquals(
           e.getDetail().get(0).toString(),
           "{\"field\":[\"requests\"],\"message\":\"\\\"requests\\\" is required\"}");

@@ -2,8 +2,6 @@ package com.smartcar.sdk;
 
 import com.smartcar.sdk.data.*;
 
-import java.util.Date;
-
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.testng.Assert;
 import org.testng.annotations.BeforeSuite;
@@ -30,7 +28,7 @@ public class VehicleTest extends IntegrationTest {
   /** Tests that vehicle info can be obtained. */
   @Test(groups = "vehicle")
   public void testInfo() throws SmartcarException {
-    VehicleInfo info = this.vehicle.info();
+    VehicleAttributes info = this.vehicle.attributes();
   }
 
   /** Tests that the vehicle VIN can be obtained. */
@@ -43,6 +41,15 @@ public class VehicleTest extends IntegrationTest {
   @Test(groups = "vehicle")
   public void testPermissions() throws SmartcarException {
     this.vehicle.permissions();
+  }
+
+  /** Tests permissions with paging */
+  @Test(groups = "vehicle")
+  public void testPermissionPaging() throws SmartcarException {
+    RequestPaging paging = new RequestPaging(2, 2);
+    ApplicationPermissions perms = this.vehicle.permissions(paging);
+    String[] permissions = perms.getPermissions();
+    Assert.assertTrue(permissions.length > 0);
   }
 
   /** Tests that the vehicle correctly handles imperial headers. */
@@ -107,7 +114,7 @@ public class VehicleTest extends IntegrationTest {
   /** Tests that the vehicle's oil status can be obtained. */
   @Test(groups = "vehicle")
   public void testOil() throws SmartcarException {
-    VehicleOil response = this.vehicle.oil();
+    VehicleOil response = this.vehicle.engineOil();
   }
 
   /** Tests that the vehicle's tire pressure can be obtained. */

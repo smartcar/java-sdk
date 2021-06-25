@@ -133,7 +133,7 @@ public class AuthClient extends ApiClient {
     }
 
     public AuthUrlBuilder state(String state) {
-      if (state != "") {
+      if (!state.equals("")) {
         urlBuilder.addQueryParameter("state", state);
       }
       return this;

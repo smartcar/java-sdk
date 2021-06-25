@@ -128,8 +128,8 @@ public class BatchResponse extends ApiData {
    * @return VehicleInfo object
    * @throws SmartcarException if the request for this endpoint +returned an HTTP error code
    */
-  public VehicleInfo info() throws SmartcarException {
-    return get("/", VehicleInfo.class);
+  public VehicleAttributes info() throws SmartcarException {
+    return get("/", VehicleAttributes.class);
   }
 
   /**

@@ -9,6 +9,7 @@ import okhttp3.HttpUrl;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /** Smartcar Vehicle API Object */
@@ -54,7 +55,7 @@ public class Vehicle extends ApiClient {
    * @throws SmartcarException if the request is unsuccessful
    */
   protected <T extends ApiData> T call(
-      String path, String method, RequestBody body, Class<T> type) throws SmartcarException {
+      String path, String method, RequestBody body, String accessToken, Class<T> type) throws SmartcarException {
     HttpUrl url =
         HttpUrl.parse(this.origin)
             .newBuilder().addPathSegments("v" + this.version)
@@ -66,13 +67,17 @@ public class Vehicle extends ApiClient {
     Request request =
         new Request.Builder()
             .url(url)
-            .header("Authorization", "Bearer " + this.accessToken)
+            .header("Authorization", "Bearer " + accessToken)
             .addHeader("User-Agent", Vehicle.USER_AGENT)
             .method(method, body)
             .header("sc-unit-system", this.unitSystem.name().toLowerCase())
             .build();
 
     return Vehicle.execute(request, type);
+  }
+
+  protected <T extends ApiData> T call(String path, String method, RequestBody body, Class<T> type) throws SmartcarException{
+    return this.call(path, method, body, this.accessToken, type);
   }
 
   protected <T extends ApiData> T call(String path, String method, RequestBody body, Map<String, String> query, Class<T> type)
@@ -94,7 +99,7 @@ public class Vehicle extends ApiClient {
     Request request =
             new Request.Builder()
                     .url(url)
-                    .header("Authorization", "Bearer " + this.accessToken)
+                    .header("Authorization", "Bearer " + accessToken)
                     .addHeader("User-Agent", Vehicle.USER_AGENT)
                     .method(method, body)
                     .header("sc-unit-system", this.unitSystem.name().toLowerCase())
@@ -122,8 +127,8 @@ public class Vehicle extends ApiClient {
    * @return VehicleInfo object
    * @throws SmartcarException if the request is unsuccessful
    */
-  public VehicleInfo info() throws SmartcarException {
-    return this.call("", "GET", null, VehicleInfo.class);
+  public VehicleAttributes attributes() throws SmartcarException {
+    return this.call("", "GET", null, VehicleAttributes.class);
   }
 
   /**
@@ -143,21 +148,25 @@ public class Vehicle extends ApiClient {
    * @throws SmartcarException if the request is unsuccessful
    */
   public ApplicationPermissions permissions() throws SmartcarException {
-    if (this.permissions == null) {
-      this.permissions =
-          this.call("permissions", "GET", null, ApplicationPermissions.class);
+    if (this.permissions != null) {
+      return this.permissions;
     }
+
+    this.permissions =
+          this.call("permissions", "GET", null, ApplicationPermissions.class);
     return this.permissions;
   }
 
   public ApplicationPermissions permissions(RequestPaging paging) throws SmartcarException {
-    if (this.permissions == null) {
-      Map<String, String> pagingQuery = null;
-      pagingQuery.put("limit", String.valueOf(paging.getLimit()));
-      pagingQuery.put("offset", String.valueOf(paging.getOffset()));
-
-      this.call("permissions", "GET", null, pagingQuery, ApplicationPermissions.class);
+    if (this.permissions != null) {
+      return this.permissions;
     }
+
+    Map<String, String> pagingQuery = new HashMap<String, String>();
+    pagingQuery.put("limit", String.valueOf(paging.getLimit()));
+    pagingQuery.put("offset", String.valueOf(paging.getOffset()));
+
+    this.permissions = this.call("permissions", "GET", null, pagingQuery, ApplicationPermissions.class);
     return this.permissions;
   }
 
@@ -196,7 +205,7 @@ public class Vehicle extends ApiClient {
    * @return the engine oil status of the vehicle
    * @throws SmartcarException if the request is unsuccessful
    */
-  public VehicleOil oil() throws SmartcarException {
+  public VehicleOil engineOil() throws SmartcarException {
     return this.call("engine/oil", "GET", null, VehicleOil.class);
   }
 
@@ -320,12 +329,12 @@ public class Vehicle extends ApiClient {
    *
    * @throws SmartcarException if the request is unsuccessful
    */
-  public WebhookSubscription unsubscribe(String applicationManagementToken, String webhookId) throws SmartcarException {
+  public void unsubscribe(String applicationManagementToken, String webhookId) throws SmartcarException {
     JsonObject json = Json.createObjectBuilder().add("subscribe", "").build();
 
     RequestBody body = RequestBody.create(JSON, json.toString());
 
-    return this.call(this.vehicleId + "/webhooks/" + webhookId, "DELETE", body, WebhookSubscription.class);
+    this.call(this.vehicleId + "/webhooks/" + webhookId, "DELETE", body, applicationManagementToken, ApiData.class);
   }
 
   /**

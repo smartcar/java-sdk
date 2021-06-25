@@ -19,8 +19,8 @@ public class SmartcarException extends java.lang.Exception {
   private final String type;
   private final String code;
   private final String description;
-  // TODO change to JsonObject{ type, url }
-  private final String resolution;
+  private final String resolutionType;
+  private final String resolutionUrl;
   private final JsonArray detail;
   private final String docURL;
   private final String requestId;
@@ -30,7 +30,8 @@ public class SmartcarException extends java.lang.Exception {
     private String type;
     private String code;
     private String description;
-    private String resolution;
+    private String resolutionType;
+    private String resolutionUrl;
     private JsonArray detail;
     private String docURL;
     private String requestId;
@@ -40,7 +41,8 @@ public class SmartcarException extends java.lang.Exception {
       this.type = "";
       this.code = null;
       this.description = "";
-      this.resolution = null;
+      this.resolutionType = null;
+      this.resolutionUrl = null;
       this.detail = null;
       this.docURL = "";
       this.requestId = "";
@@ -66,8 +68,13 @@ public class SmartcarException extends java.lang.Exception {
       return this;
     }
 
-    public Builder resolution(String resolution) {
-      this.resolution = resolution;
+    public Builder resolutionType(String resolutionType) {
+      this.resolutionType = resolutionType;
+      return this;
+    }
+
+    public Builder resolutionUrl(String resolutionUrl) {
+      this.resolutionUrl = resolutionUrl;
       return this;
     }
 
@@ -94,7 +101,8 @@ public class SmartcarException extends java.lang.Exception {
     this.type = builder.type;
     this.code = builder.code;
     this.description = builder.description;
-    this.resolution = builder.resolution;
+    this.resolutionUrl = builder.resolutionUrl;
+    this.resolutionType = builder.resolutionType;
     this.detail = builder.detail;
     this.docURL = builder.docURL;
     this.requestId = builder.requestId;
@@ -137,10 +145,15 @@ public class SmartcarException extends java.lang.Exception {
         builder.code(null);
       }
 
-      if (!bodyJson.get("resolution").isJsonNull()) {
-        builder.resolution(bodyJson.get("resolution").getAsString());
-      } else {
-        builder.resolution(null);
+      JsonElement resolutionElement = bodyJson.get("resolution");
+      if (!resolutionElement.isJsonNull()) {
+        if (resolutionElement.isJsonPrimitive() && resolutionElement.getAsJsonPrimitive().isString()) {
+          builder.resolutionType(resolutionElement.getAsString());
+        } else {
+          JsonObject resolution = resolutionElement.getAsJsonObject();
+          builder.resolutionType(resolution.get("type").getAsString());
+          builder.resolutionUrl(resolution.get("url").getAsString());
+        }
       }
 
       if (bodyJson.has("detail")) {
@@ -231,9 +244,16 @@ public class SmartcarException extends java.lang.Exception {
    *
    * @return the resolution message
    */
-  public String getResolution() {
-    return this.resolution;
+  public String getResolutionType() {
+    return this.resolutionType;
   }
+
+  /**
+   * Returns a url associated with the resolution to the exception
+   *
+   * @return the resolution url
+   */
+  public String getResolutionUrl() { return this.resolutionUrl; }
 
   /**
    * Returns the documentation URL associated with the exception.

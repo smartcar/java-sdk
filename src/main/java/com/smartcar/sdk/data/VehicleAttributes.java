@@ -1,7 +1,7 @@
 package com.smartcar.sdk.data;
 
 /** POJO for Smartcar /info endpoint */
-public class VehicleInfo extends ApiData {
+public class VehicleAttributes extends ApiData {
   private String id;
   private String make;
   private String model;
@@ -15,7 +15,7 @@ public class VehicleInfo extends ApiData {
    * @param model model of the vehicle
    * @param year year of the vehicle
    */
-  public VehicleInfo(final String id, final String make, final String model, final int year) {
+  public VehicleAttributes(final String id, final String make, final String model, final int year) {
     this.id = id;
     this.make = make;
     this.model = model;

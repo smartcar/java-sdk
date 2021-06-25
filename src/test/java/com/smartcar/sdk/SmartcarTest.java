@@ -1,18 +1,8 @@
 package com.smartcar.sdk;
 
-
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.smartcar.sdk.data.Compatibility;
 import com.smartcar.sdk.data.User;
 import com.smartcar.sdk.data.VehicleIds;
-import okhttp3.HttpUrl;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
-import okhttp3.mockwebserver.Dispatcher;
-import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.MockResponse;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
@@ -20,8 +10,6 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.testng.PowerMockTestCase;
 import org.testng.Assert;
 import org.testng.annotations.*;
-
-import java.io.IOException;
 
 @PowerMockIgnore("javax.net.ssl.*")
 @PrepareForTest({
