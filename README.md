@@ -10,7 +10,7 @@ The recommended method for obtaining the SDK is via Gradle or Maven through the 
 
 ### Gradle
 ```groovy
-compile "com.smartcar.sdk:java-sdk:3.0.0"
+compile "com.smartcar.sdk:java-sdk:2.8.2"
 ```
 
 ### Maven
@@ -18,16 +18,16 @@ compile "com.smartcar.sdk:java-sdk:3.0.0"
 <dependency>
   <groupId>com.smartcar.sdk</groupId>
   <artifactId>java-sdk</artifactId>
-  <version>3.0.0</version>
+  <version>2.8.2</version>
 </dependency>
 ```
 
 ### Jar Direct Download
-* [java-sdk-3.0.0.jar](https://search.maven.org/remotecontent?filepath=com/smartcar/sdk/java-sdk/3.0.0/java-sdk-3.0.0.jar)
-* [java-sdk-3.0.0-sources.jar](https://search.maven.org/remotecontent?filepath=com/smartcar/sdk/java-sdk/3.0.0/java-sdk-3.0.0-sources.jar)
-* [java-sdk-3.0.0-javadoc.jar](https://search.maven.org/remotecontent?filepath=com/smartcar/sdk/java-sdk/3.0.0/java-sdk-3.0.0-javadoc.jar)
+* [java-sdk-2.8.2.jar](https://search.maven.org/remotecontent?filepath=com/smartcar/sdk/java-sdk/2.8.2/java-sdk-2.8.2.jar)
+* [java-sdk-2.8.2-sources.jar](https://search.maven.org/remotecontent?filepath=com/smartcar/sdk/java-sdk/2.8.2/java-sdk-2.8.2-sources.jar)
+* [java-sdk-2.8.2-javadoc.jar](https://search.maven.org/remotecontent?filepath=com/smartcar/sdk/java-sdk/2.8.2/java-sdk-2.8.2-javadoc.jar)
 
-Signatures and other downloads available at [Maven Central](https://search.maven.org/artifact/com.smartcar.sdk/java-sdk/3.0.0/jar).
+Signatures and other downloads available at [Maven Central](https://search.maven.org/artifact/com.smartcar.sdk/java-sdk/2.8.2/jar).
 
 ## Usage
 
@@ -56,15 +56,11 @@ a valid access token for the target vehicle.
     boolean testMode = true;
 
     // Initialize a new AuthClient with your credentials.
-    AuthClient authClient = new AuthClient.Builder()
-                                    .clientId(clientId)
-                                    .clientSecret(clientSecret)
-                                    .redirectUri(redirectUri)
-                                    .testMode(testMode)
-                                    .build();
+    AuthClient authClient = new AuthClient(clientId, clientSecret, redirectUri, scope, testMode);
 
     // Retrieve the auth URL to start the OAuth flow.
-    String authUrl = authClient.authUrlBuilder(scope)
+    String authUrl = authClient.authUrlBuilder()
+            .setApprovalPrompt(true)
             .setState("some state")
             .build();
     ```
@@ -91,8 +87,8 @@ start making requests to vehicles.
 1.  Obtain a list of authorized vehicles:
 
     ```java
-    VehicleIds vehicleIdsResponse = Smartcar.getVehicleIds(auth.getAccessToken());
-    String[] vehicleIds = vehicleIdsResponse.getVehicleIds();
+    SmartcarResponse<VehicleIds> vehicleIdsResponse = AuthClient.getVehicleIds(auth.getAccessToken());
+    String[] vehicleIds = vehicleIdsResponse.getData().getVehicleIds();
     ```
 
 2.  Create an instance of `Vehicle`:
@@ -105,15 +101,17 @@ start making requests to vehicles.
 
     ```java
     // Retrieve the vehicle's VIN
-    String vin = vehicle.vin().getVin();
+    String vin = vehicle.vin();
 
     // Read the vehicle's odometer
-    VehicleOdometer odometerResponse = vehicle.odometer();
-    double odometer = odometerResponse.getDistance();
+    SmartcarResponse<VehicleOdometer> odometerResponse = vehicle.odometer();
+    VehicleOdometer odometerData = odometerResponse.getData();
+    double odometer = odometerData.getDistance();
 
     // Retrieve the vehicle's location
-    VehicleLocation location = vehicle.location();
-    String latLong = location.getLatitude() + ", " + location.getLongitude();
+    SmartcarResponse<VehicleLocation> locationResponse = vehicle.location();
+    VehicleLocation locationData = locationResponse.getData();
+    String latLong = locationData.getLatitude() + ", " + locationData.getLongitude();
 
     // Lock and unlock the vehicle
     vehicle.lock();

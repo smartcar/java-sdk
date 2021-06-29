@@ -176,4 +176,11 @@ public class VehicleTest extends IntegrationTest {
   public void testDisconnect() throws SmartcarException {
     this.vehicle.disconnect();
   }
+
+  @Test(dependsOnGroups = "vehicle")
+  public void testSubscribeUnsubscribe() throws SmartcarException {
+    this.vehicle.subscribe("fdc63623-cd65-4a7f-8ef4-44985f9d7355");
+
+    this.vehicle.unsubscribe("5ae53ef0-d9ca-469e-bdcd-2b81ed17ce25", "fdc63623-cd65-4a7f-8ef4-44985f9d7355");
+  }
 }

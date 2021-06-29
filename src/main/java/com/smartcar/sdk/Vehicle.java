@@ -175,8 +175,8 @@ public class Vehicle extends ApiClient {
    *
    * @throws SmartcarException if the request is unsuccessful
    */
-  public void disconnect() throws SmartcarException {
-    this.call("application", "DELETE", null);
+  public ActionResponse disconnect() throws SmartcarException {
+    return this.call("application", "DELETE", null, ActionResponse.class);
   }
 
   /**
@@ -317,11 +317,7 @@ public class Vehicle extends ApiClient {
    * @throws SmartcarException if the request is unsuccessful
    */
   public WebhookSubscription subscribe(String webhookId) throws SmartcarException {
-    JsonObject json = Json.createObjectBuilder().add("subscribe", "").build();
-
-    RequestBody body = RequestBody.create(JSON, json.toString());
-
-    return this.call(this.vehicleId + "/webhooks/" + webhookId, "POST", body, WebhookSubscription.class);
+    return this.call("webhooks/" + webhookId, "POST", null, WebhookSubscription.class);
   }
 
   /**
@@ -330,11 +326,7 @@ public class Vehicle extends ApiClient {
    * @throws SmartcarException if the request is unsuccessful
    */
   public void unsubscribe(String applicationManagementToken, String webhookId) throws SmartcarException {
-    JsonObject json = Json.createObjectBuilder().add("subscribe", "").build();
-
-    RequestBody body = RequestBody.create(JSON, json.toString());
-
-    this.call(this.vehicleId + "/webhooks/" + webhookId, "DELETE", body, applicationManagementToken, ApiData.class);
+    this.call("webhooks/" + webhookId, "DELETE", null, applicationManagementToken, ApiData.class);
   }
 
   /**

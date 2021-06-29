@@ -1,3 +1,4 @@
 {
-  "status": "success"
+  "status": "success",
+  "message": "Message sent successfully to vehicle"
 }

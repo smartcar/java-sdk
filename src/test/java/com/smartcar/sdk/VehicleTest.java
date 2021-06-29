@@ -204,6 +204,7 @@ public class VehicleTest {
     ActionResponse res = this.subject.unlock();
 
     Assert.assertEquals(res.getStatus(), "success");
+    Assert.assertEquals(res.getMessage(), "Message sent successfully to vehicle");
   }
 
   @Test
@@ -213,6 +214,7 @@ public class VehicleTest {
     ActionResponse res = this.subject.lock();
 
     Assert.assertEquals(res.getStatus(), "success");
+    Assert.assertEquals(res.getMessage(), "Message sent successfully to vehicle");
   }
 
   @Test
@@ -222,6 +224,7 @@ public class VehicleTest {
     ActionResponse res = this.subject.startCharge();
 
     Assert.assertEquals(res.getStatus(), "success");
+    Assert.assertEquals(res.getMessage(), "Message sent successfully to vehicle");
   }
 
   @Test
@@ -231,6 +234,7 @@ public class VehicleTest {
     ActionResponse res = this.subject.stopCharge();
 
     Assert.assertEquals(res.getStatus(), "success");
+    Assert.assertEquals(res.getMessage(), "Message sent successfully to vehicle");
   }
 
   @Test

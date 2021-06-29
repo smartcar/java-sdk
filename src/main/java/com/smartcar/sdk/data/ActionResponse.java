@@ -2,10 +2,13 @@ package com.smartcar.sdk.data;
 
 public class ActionResponse extends ApiData {
     private String status;
+    private String message;
 
     public String getStatus() {
         return this.status;
     }
+
+    public String getMessage() { return this.message; }
 
     @Override
     public String toString() {
@@ -13,6 +16,8 @@ public class ActionResponse extends ApiData {
                 + "{"
                 + "status="
                 + status
+                + ", message="
+                + message
                 + "}";
     }
 }
