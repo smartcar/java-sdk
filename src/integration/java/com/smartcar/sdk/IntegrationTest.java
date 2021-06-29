@@ -10,9 +10,8 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -25,6 +24,7 @@ abstract class IntegrationTest {
   final String authOemPassword = IntegrationUtils.nonce(16);
 
   AuthClient authClient;
+  final boolean HEADLESS = System.getenv("CI") != null || System.getenv("HEADLESS") != null;
   final String authClientId = System.getenv("SMARTCAR_CLIENT_ID");
   final String authClientSecret = System.getenv("SMARTCAR_CLIENT_SECRET");
   final String authRedirectUri = System.getenv("SMARTCAR_REDIRECT_URI");
@@ -183,44 +183,11 @@ abstract class IntegrationTest {
 
   /**
    * Starts the Selenium WebDriver.
-   *
-   * @throws MalformedURLException if the WebDriver cannot be initialized with the URL it is given
    */
-  void startDriver() throws MalformedURLException {
-    if (System.getProperty("selenium.debug") != null) {
-      this.startLocalDriver();
-    } else {
-      this.startRemoteDriver();
-    }
-
+  void startDriver()  {
+    FirefoxOptions options = new FirefoxOptions().setHeadless(HEADLESS);
+    this.driver = new FirefoxDriver(options);
     this.wait = new WebDriverWait(this.driver, IntegrationTest.WEBDRIVER_DEFAULT_TIMEOUT_SECONDS);
-  }
-
-  /**
-   * Starts the remote WebDriver in the configured docker container.
-   *
-   * @throws MalformedURLException if the WebDriver cannot be initialized with the URL it is given
-   */
-  private void startRemoteDriver() throws MalformedURLException {
-    String seleniumBrowser = System.getProperty("selenium.browser");
-    String seleniumHost = System.getProperty("selenium.host");
-    String seleniumPort = System.getProperty("selenium.port");
-
-    DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
-    desiredCapabilities.setBrowserName(seleniumBrowser);
-
-    this.driver =
-        new RemoteWebDriver(
-            new URL("http://" + seleniumHost + ":" + seleniumPort + "/wd/hub"),
-            desiredCapabilities);
-  }
-
-  /**
-   * Starts a local ChromeDriver for easier debugging of Selenium tests. Use -Dselenium.debug=true
-   * for debugging
-   */
-  private void startLocalDriver() {
-    this.driver = new ChromeDriver();
   }
 
   /** Stops the Selenium WebDriver. */
