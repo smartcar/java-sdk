@@ -317,7 +317,8 @@ public class Vehicle extends ApiClient {
    * @throws SmartcarException if the request is unsuccessful
    */
   public WebhookSubscription subscribe(String webhookId) throws SmartcarException {
-    return this.call("webhooks/" + webhookId, "POST", null, WebhookSubscription.class);
+    RequestBody body = RequestBody.create(null, new byte[]{});
+    return this.call("webhooks/" + webhookId, "POST", body, WebhookSubscription.class);
   }
 
   /**

@@ -4,6 +4,7 @@ import com.smartcar.sdk.data.*;
 
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.testng.Assert;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
@@ -172,7 +173,7 @@ public class VehicleTest extends IntegrationTest {
   }
 
   /** Tests that access for the current application can be revoked. */
-  @Test(dependsOnGroups = "vehicle")
+  @AfterTest
   public void testDisconnect() throws SmartcarException {
     this.vehicle.disconnect();
   }
