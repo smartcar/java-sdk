@@ -29,7 +29,7 @@ public class VehicleIntegrationTest {
         this.getVehicle(
             "TESLA",
             new String[] {
-              "required:control_charge", "required:control_security",
+              "required:control_charge", "required:control_security", "read_battery", "read_charge"
             });
   }
 
@@ -160,11 +160,48 @@ public class VehicleIntegrationTest {
   /** Tests that the batch request method works. */
   @Test(groups = "vehicle")
   public void testBatch() throws SmartcarException {
-    String[] paths = {"/fuel", "/odometer"};
+    String[] paths = {
+            "/", "/location", "/odometer", "/engine/oil", "/vin",
+            "/tires/pressure", "/fuel"
+    };
+    String[] evPaths = {
+            "/battery", "/battery/capacity", "/charge",
+    };
     BatchResponse response = this.vehicle.batch(paths);
-
+    VehicleAttributes attr = response.attributes();
+    Assert.assertNotNull(attr.getId());
+    Assert.assertNotNull(attr.getMake());
+    Assert.assertNotNull(attr.getModel());
+    Assert.assertTrue(attr.getYear() > 0);
+    VehicleLocation location = response.location();
+    Assert.assertTrue(location.getLatitude() > -90);
+    Assert.assertTrue(location.getLongitude() > -180);
+    VehicleEngineOil oil = response.engineOil();
+    Assert.assertTrue(oil.getLifeRemaining() > 0);
+    VehicleVin vin = response.vin();
+    Assert.assertNotNull(vin.getVin());
     VehicleOdometer odo = response.odometer();
+    Assert.assertTrue(odo.getDistance() > 0);
     VehicleFuel fuel = response.fuel();
+    Assert.assertTrue(fuel.getAmountRemaining() > 0);
+    Assert.assertTrue(fuel.getRange() > 0);
+    Assert.assertTrue(fuel.getPercentRemaining() > 0);
+    VehicleTirePressure pressure = response.tirePressure();
+    Assert.assertTrue(pressure.getBackLeft() > 0);
+    Assert.assertTrue(pressure.getBackRight() > 0);
+    Assert.assertTrue(pressure.getFrontLeft() > 0);
+    Assert.assertTrue(pressure.getFrontRight() > 0);
+
+    BatchResponse evResponse = this.eVehicle.batch(evPaths);
+    VehicleBattery bat = evResponse.battery();
+    Assert.assertTrue(bat.getPercentRemaining() > 0);
+    Assert.assertTrue(bat.getRange() > 0);
+
+    VehicleCharge charge = evResponse.charge();
+    boolean plugged = charge.getIsPluggedIn();
+    VehicleBatteryCapacity cap = evResponse.batteryCapacity();
+    Assert.assertTrue(cap.getCapacity() > 0);
+
   }
 
   /** Tests that the batch response headers are set properly. */
@@ -178,7 +215,7 @@ public class VehicleIntegrationTest {
     VehicleOdometer odo = response.odometer();
     Assert.assertEquals(odo.getMeta().getUnitSystem(), "imperial");
     Assert.assertEquals(odo.getMeta().getRequestId().length(), 36);
-    Assert.assertTrue(odo.getMeta().getDataAge() != null);
+    Assert.assertNotNull(odo.getMeta().getDataAge());
   }
 
   /** Tests that access for the current application can be revoked. */
