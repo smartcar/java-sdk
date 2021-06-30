@@ -141,7 +141,7 @@ public class VehicleTest {
   public void testEngineOil() throws Exception {
     loadAndEnqueueResponse("GetEngineOil");
 
-    VehicleOil fuel = this.subject.engineOil();
+    VehicleEngineOil fuel = this.subject.engineOil();
 
     Assert.assertEquals(fuel.getLifeRemaining(), 0.35);
   }

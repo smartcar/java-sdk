@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -48,7 +48,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../com/smartcar/sdk/data/VehicleOil.html" title="class in com.smartcar.sdk.data"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../../com/smartcar/sdk/data/VehicleOdometer.html" title="class in com.smartcar.sdk.data"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
 <li><a href="../../../../com/smartcar/sdk/data/VehicleVin.html" title="class in com.smartcar.sdk.data"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
@@ -142,12 +142,7 @@ extends <a href="../../../../com/smartcar/sdk/data/ApiData.html" title="class in
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/smartcar/sdk/data/VehicleTirePressure.html#VehicleTirePressure-double-double-double-double-">VehicleTirePressure</a></span>(double&nbsp;frontLeft,
-                   double&nbsp;frontRight,
-                   double&nbsp;backLeft,
-                   double&nbsp;backRight)</code>
-<div class="block">Initializes a new instance of the VehicleTirePressure</div>
-</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/smartcar/sdk/data/VehicleTirePressure.html#VehicleTirePressure--">VehicleTirePressure</a></span>()</code>&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -189,30 +184,6 @@ extends <a href="../../../../com/smartcar/sdk/data/ApiData.html" title="class in
 </td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/smartcar/sdk/data/VehicleTirePressure.html#setBackLeft-double-">setBackLeft</a></span>(double&nbsp;backLeft)</code>
-<div class="block">Stores the back left tire pressure</div>
-</td>
-</tr>
-<tr id="i5" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/smartcar/sdk/data/VehicleTirePressure.html#setBackRight-double-">setBackRight</a></span>(double&nbsp;backRight)</code>
-<div class="block">Stores the back right tire pressure</div>
-</td>
-</tr>
-<tr id="i6" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/smartcar/sdk/data/VehicleTirePressure.html#setFrontLeft-double-">setFrontLeft</a></span>(double&nbsp;frontLeft)</code>
-<div class="block">Stores the front left tire pressure</div>
-</td>
-</tr>
-<tr id="i7" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/smartcar/sdk/data/VehicleTirePressure.html#setFrontRight-double-">setFrontRight</a></span>(double&nbsp;frontRight)</code>
-<div class="block">Stores the front right tire pressure</div>
-</td>
-</tr>
-<tr id="i8" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/smartcar/sdk/data/VehicleTirePressure.html#toString--">toString</a></span>()</code>
 <div class="block">Returns the stored data string.</div>
@@ -247,28 +218,13 @@ extends <a href="../../../../com/smartcar/sdk/data/ApiData.html" title="class in
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="VehicleTirePressure-double-double-double-double-">
+<a name="VehicleTirePressure--">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>VehicleTirePressure</h4>
-<pre>public&nbsp;VehicleTirePressure(double&nbsp;frontLeft,
-                           double&nbsp;frontRight,
-                           double&nbsp;backLeft,
-                           double&nbsp;backRight)</pre>
-<div class="block">Initializes a new instance of the VehicleTirePressure</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>frontLeft</code> - The current air pressure of the front left tire (in psi or kpa). To set unit,
-     <a href="../../../../com/smartcar/sdk/Vehicle.html#setUnitSystem-com.smartcar.sdk.Vehicle.UnitSystem-"><code>Vehicle.setUnitSystem(Vehicle.UnitSystem)</code></a>.</dd>
-<dd><code>frontRight</code> - The current air pressure of the front right tire (in psi or kpa). To set
-     unit, <a href="../../../../com/smartcar/sdk/Vehicle.html#setUnitSystem-com.smartcar.sdk.Vehicle.UnitSystem-"><code>Vehicle.setUnitSystem(Vehicle.UnitSystem)</code></a>.</dd>
-<dd><code>backLeft</code> - The current air pressure of the back left tire (in psi or kpa). To set unit,
-     <a href="../../../../com/smartcar/sdk/Vehicle.html#setUnitSystem-com.smartcar.sdk.Vehicle.UnitSystem-"><code>Vehicle.setUnitSystem(Vehicle.UnitSystem)</code></a>.</dd>
-<dd><code>backRight</code> - The current air pressure of the back right tire (in psi or kpa). To set unit,
-     <a href="../../../../com/smartcar/sdk/Vehicle.html#setUnitSystem-com.smartcar.sdk.Vehicle.UnitSystem-"><code>Vehicle.setUnitSystem(Vehicle.UnitSystem)</code></a>.</dd>
-</dl>
+<pre>public&nbsp;VehicleTirePressure()</pre>
 </li>
 </ul>
 </li>
@@ -335,62 +291,6 @@ extends <a href="../../../../com/smartcar/sdk/data/ApiData.html" title="class in
 </dl>
 </li>
 </ul>
-<a name="setFrontLeft-double-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setFrontLeft</h4>
-<pre>public&nbsp;void&nbsp;setFrontLeft(double&nbsp;frontLeft)</pre>
-<div class="block">Stores the front left tire pressure</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>frontLeft</code> - stores the front left tire pressure</dd>
-</dl>
-</li>
-</ul>
-<a name="setFrontRight-double-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setFrontRight</h4>
-<pre>public&nbsp;void&nbsp;setFrontRight(double&nbsp;frontRight)</pre>
-<div class="block">Stores the front right tire pressure</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>frontRight</code> - stores the front right tire pressure</dd>
-</dl>
-</li>
-</ul>
-<a name="setBackLeft-double-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setBackLeft</h4>
-<pre>public&nbsp;void&nbsp;setBackLeft(double&nbsp;backLeft)</pre>
-<div class="block">Stores the back left tire pressure</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>backLeft</code> - stores the back left tire pressure</dd>
-</dl>
-</li>
-</ul>
-<a name="setBackRight-double-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setBackRight</h4>
-<pre>public&nbsp;void&nbsp;setBackRight(double&nbsp;backRight)</pre>
-<div class="block">Stores the back right tire pressure</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>backRight</code> - stores the back right tire pressure</dd>
-</dl>
-</li>
-</ul>
 <a name="toString--">
 <!--   -->
 </a>
@@ -436,7 +336,7 @@ extends <a href="../../../../com/smartcar/sdk/data/ApiData.html" title="class in
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../com/smartcar/sdk/data/VehicleOil.html" title="class in com.smartcar.sdk.data"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../../com/smartcar/sdk/data/VehicleOdometer.html" title="class in com.smartcar.sdk.data"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
 <li><a href="../../../../com/smartcar/sdk/data/VehicleVin.html" title="class in com.smartcar.sdk.data"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">

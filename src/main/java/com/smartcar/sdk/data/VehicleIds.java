@@ -31,15 +31,6 @@ public class VehicleIds extends ApiData {
 
   public ResponsePaging getPaging() { return this.paging; }
 
-  /**
-   * Sets the vehicle IDs.
-   *
-   * @param vehicleIds the vehicle IDs
-   */
-  public void setVehicleIds(String[] vehicleIds) {
-    this.vehicleIds = vehicleIds;
-  }
-
   /** @return a stringified representation of VehicleIds */
   @Override
   public String toString() {

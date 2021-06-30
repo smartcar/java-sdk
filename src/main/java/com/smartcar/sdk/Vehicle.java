@@ -109,19 +109,6 @@ public class Vehicle extends ApiClient {
   }
 
   /**
-   * Executes an API request under the VehicleIds endpoint.
-   *
-   * @param path the path to the sub-endpoint
-   * @param method the method of the request
-   * @param body the body of the request
-   * @return the response value
-   * @throws SmartcarException if the request is unsuccessful
-   */
-  protected String call(String path, String method, RequestBody body) throws SmartcarException {
-    return this.call(path, method, body, ApiData.class).toString();
-  }
-
-  /**
    * Send request to the /info endpoint
    *
    * @return VehicleInfo object
@@ -205,8 +192,8 @@ public class Vehicle extends ApiClient {
    * @return the engine oil status of the vehicle
    * @throws SmartcarException if the request is unsuccessful
    */
-  public VehicleOil engineOil() throws SmartcarException {
-    return this.call("engine/oil", "GET", null, VehicleOil.class);
+  public VehicleEngineOil engineOil() throws SmartcarException {
+    return this.call("engine/oil", "GET", null, VehicleEngineOil.class);
   }
 
   /**
@@ -326,8 +313,8 @@ public class Vehicle extends ApiClient {
    *
    * @throws SmartcarException if the request is unsuccessful
    */
-  public void unsubscribe(String applicationManagementToken, String webhookId) throws SmartcarException {
-    this.call("webhooks/" + webhookId, "DELETE", null, applicationManagementToken, ApiData.class);
+  public ActionResponse unsubscribe(String applicationManagementToken, String webhookId) throws SmartcarException {
+    return this.call("webhooks/" + webhookId, "DELETE", null, applicationManagementToken, ActionResponse.class);
   }
 
   /**
@@ -354,51 +341,6 @@ public class Vehicle extends ApiClient {
     BatchResponse batchResponse = response;
     batchResponse.setRequestId(response.getMeta().getRequestId());
     return batchResponse;
-  }
-
-  /**
-   * Returns the currently stored vehicle ID.
-   *
-   * @return the vehicle ID
-   */
-  public String getVehicleId() {
-    return this.vehicleId;
-  }
-
-  /**
-   * Stores the vehicleId
-   *
-   * @param vehicleId the vehicle ID
-   */
-  public void setVehicleId(String vehicleId) {
-    this.vehicleId = vehicleId;
-  }
-
-  /**
-   * Returns the currently stored access token.
-   *
-   * @return the access token
-   */
-  public String getAccessToken() {
-    return this.accessToken;
-  }
-
-  /**
-   * Stores the accessToken
-   *
-   * @param accessToken the accessToken
-   */
-  public void setAccessToken(String accessToken) {
-    this.accessToken = accessToken;
-  }
-
-  /**
-   * Returns the currently set unit system.
-   *
-   * @return the unit system
-   */
-  public Vehicle.UnitSystem getUnitSystem() {
-    return this.unitSystem;
   }
 
   /**

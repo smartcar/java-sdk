@@ -26,30 +26,12 @@ public class ResponsePaging extends ApiData {
   }
 
   /**
-   * Stores the response count
-   *
-   * @param count response count
-   */
-  public void setCount(int count) {
-    this.count = count;
-  }
-
-  /**
    * Returns the response offset
    *
    * @return response offset
    */
   public int getOffset() {
     return this.offset;
-  }
-
-  /**
-   * Stores the response offset
-   *
-   * @param offset response offset
-   */
-  public void setOffset(int offset) {
-    this.offset = offset;
   }
 
   /** @return a stringified representation of ResponsePaging */

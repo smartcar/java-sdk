@@ -124,7 +124,7 @@ public class VehicleIntegrationTest {
   /** Tests that the vehicle's oil status can be obtained. */
   @Test(groups = "vehicle")
   public void testOil() throws SmartcarException {
-    VehicleOil response = this.vehicle.engineOil();
+    VehicleEngineOil response = this.vehicle.engineOil();
   }
 
   /** Tests that the vehicle's tire pressure can be obtained. */

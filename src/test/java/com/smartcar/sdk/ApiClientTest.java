@@ -1,6 +1,6 @@
 package com.smartcar.sdk;
 
-import com.smartcar.sdk.data.VehicleOil;
+import com.smartcar.sdk.data.VehicleEngineOil;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -18,7 +18,7 @@ public class ApiClientTest {
   public void testKeyParsing() {
     String testData = "{\"lifeRemaining\":0.86}";
 
-    VehicleOil data = ApiClient.gson.create().fromJson(testData, VehicleOil.class);
+    VehicleEngineOil data = ApiClient.gson.create().fromJson(testData, VehicleEngineOil.class);
     Assert.assertTrue(data.getLifeRemaining() == 0.86);
   }
 }

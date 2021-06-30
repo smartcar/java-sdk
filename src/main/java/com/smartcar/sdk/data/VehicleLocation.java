@@ -6,17 +6,6 @@ public class VehicleLocation extends ApiData {
   private double longitude;
 
   /**
-   * Initializes a new instance of VehicleLocation
-   *
-   * @param latitude latitude of the vehicle
-   * @param longitude longitude of the vehicle
-   */
-  public VehicleLocation(final double latitude, final double longitude) {
-    this.latitude = latitude;
-    this.longitude = longitude;
-  }
-
-  /**
    * Returns the latitude of the vehicle
    *
    * @return latitude of the vehicle
@@ -41,15 +30,6 @@ public class VehicleLocation extends ApiData {
    */
   public double getLongitude() {
     return this.longitude;
-  }
-
-  /**
-   * Stores the longitude of the vehicle
-   *
-   * @param longitude longitude of the vehicle
-   */
-  public void setLongitude(double longitude) {
-    this.longitude = longitude;
   }
 
   /** @return a stringified representation of VehicleLocation */

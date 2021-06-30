@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":9,"i12":9,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":9,"i11":9,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -221,21 +221,13 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code>protected java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Vehicle.html#call-java.lang.String-java.lang.String-okhttp3.RequestBody-">call</a></span>(java.lang.String&nbsp;path,
-    java.lang.String&nbsp;method,
-    okhttp3.RequestBody&nbsp;body)</code>
-<div class="block">Executes an API request under the VehicleIds endpoint.</div>
-</td>
-</tr>
-<tr id="i5" class="rowColor">
 <td class="colFirst"><code>protected &lt;T extends <a href="../../../com/smartcar/sdk/data/ApiData.html" title="class in com.smartcar.sdk.data">ApiData</a>&gt;<br>T</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Vehicle.html#call-java.lang.String-java.lang.String-okhttp3.RequestBody-java.lang.Class-">call</a></span>(java.lang.String&nbsp;path,
     java.lang.String&nbsp;method,
     okhttp3.RequestBody&nbsp;body,
     java.lang.Class&lt;T&gt;&nbsp;type)</code>&nbsp;</td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>protected &lt;T extends <a href="../../../com/smartcar/sdk/data/ApiData.html" title="class in com.smartcar.sdk.data">ApiData</a>&gt;<br>T</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Vehicle.html#call-java.lang.String-java.lang.String-okhttp3.RequestBody-java.util.Map-java.lang.Class-">call</a></span>(java.lang.String&nbsp;path,
     java.lang.String&nbsp;method,
@@ -243,7 +235,7 @@ extends java.lang.Object</pre>
     java.util.Map&lt;java.lang.String,java.lang.String&gt;&nbsp;query,
     java.lang.Class&lt;T&gt;&nbsp;type)</code>&nbsp;</td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>protected &lt;T extends <a href="../../../com/smartcar/sdk/data/ApiData.html" title="class in com.smartcar.sdk.data">ApiData</a>&gt;<br>T</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Vehicle.html#call-java.lang.String-java.lang.String-okhttp3.RequestBody-java.lang.String-java.lang.Class-">call</a></span>(java.lang.String&nbsp;path,
     java.lang.String&nbsp;method,
@@ -253,145 +245,115 @@ extends java.lang.Object</pre>
 <div class="block">Executes an API request under the VehicleIds endpoint.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/smartcar/sdk/data/VehicleCharge.html" title="class in com.smartcar.sdk.data">VehicleCharge</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Vehicle.html#charge--">charge</a></span>()</code>
 <div class="block">Send request to the /charge endpoint</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="../../../com/smartcar/sdk/data/ActionResponse.html" title="class in com.smartcar.sdk.data">ActionResponse</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Vehicle.html#disconnect--">disconnect</a></span>()</code>
 <div class="block">Send request to the /disconnect endpoint</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
-<td class="colFirst"><code><a href="../../../com/smartcar/sdk/data/VehicleOil.html" title="class in com.smartcar.sdk.data">VehicleOil</a></code></td>
+<tr id="i9" class="rowColor">
+<td class="colFirst"><code><a href="../../../com/smartcar/sdk/data/VehicleEngineOil.html" title="class in com.smartcar.sdk.data">VehicleEngineOil</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Vehicle.html#engineOil--">engineOil</a></span>()</code>
 <div class="block">Send request to the /engine/oil endpoint</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>protected static okhttp3.Response</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Vehicle.html#execute-okhttp3.Request-">execute</a></span>(okhttp3.Request&nbsp;request)</code>
 <div class="block">Sends the specified request, returning the raw response body.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>protected static &lt;T extends <a href="../../../com/smartcar/sdk/data/ApiData.html" title="class in com.smartcar.sdk.data">ApiData</a>&gt;<br>T</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Vehicle.html#execute-okhttp3.Request-java.lang.Class-">execute</a></span>(okhttp3.Request&nbsp;request,
        java.lang.Class&lt;T&gt;&nbsp;dataType)</code>
 <div class="block">Sends the specified request, parsing the response into the specified type.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code><a href="../../../com/smartcar/sdk/data/VehicleFuel.html" title="class in com.smartcar.sdk.data">VehicleFuel</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Vehicle.html#fuel--">fuel</a></span>()</code>
 <div class="block">Send request to the /fuel endpoint</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Vehicle.html#getAccessToken--">getAccessToken</a></span>()</code>
-<div class="block">Returns the currently stored access token.</div>
-</td>
-</tr>
-<tr id="i15" class="rowColor">
-<td class="colFirst"><code><a href="../../../com/smartcar/sdk/Vehicle.UnitSystem.html" title="enum in com.smartcar.sdk">Vehicle.UnitSystem</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Vehicle.html#getUnitSystem--">getUnitSystem</a></span>()</code>
-<div class="block">Returns the currently set unit system.</div>
-</td>
-</tr>
-<tr id="i16" class="altColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Vehicle.html#getVehicleId--">getVehicleId</a></span>()</code>
-<div class="block">Returns the currently stored vehicle ID.</div>
-</td>
-</tr>
-<tr id="i17" class="rowColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/smartcar/sdk/data/VehicleLocation.html" title="class in com.smartcar.sdk.data">VehicleLocation</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Vehicle.html#location--">location</a></span>()</code>
 <div class="block">Send request to the /location endpoint</div>
 </td>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code><a href="../../../com/smartcar/sdk/data/ActionResponse.html" title="class in com.smartcar.sdk.data">ActionResponse</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Vehicle.html#lock--">lock</a></span>()</code>
 <div class="block">Send request to the /security endpoint to lock a vehicle</div>
 </td>
 </tr>
-<tr id="i19" class="rowColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/smartcar/sdk/data/VehicleOdometer.html" title="class in com.smartcar.sdk.data">VehicleOdometer</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Vehicle.html#odometer--">odometer</a></span>()</code>
 <div class="block">Send request to the /odometer endpoint</div>
 </td>
 </tr>
-<tr id="i20" class="altColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code><a href="../../../com/smartcar/sdk/data/ApplicationPermissions.html" title="class in com.smartcar.sdk.data">ApplicationPermissions</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Vehicle.html#permissions--">permissions</a></span>()</code>
 <div class="block">Send request to the /permissions endpoint</div>
 </td>
 </tr>
-<tr id="i21" class="rowColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/smartcar/sdk/data/ApplicationPermissions.html" title="class in com.smartcar.sdk.data">ApplicationPermissions</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Vehicle.html#permissions-com.smartcar.sdk.data.RequestPaging-">permissions</a></span>(<a href="../../../com/smartcar/sdk/data/RequestPaging.html" title="class in com.smartcar.sdk.data">RequestPaging</a>&nbsp;paging)</code>&nbsp;</td>
 </tr>
-<tr id="i22" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Vehicle.html#setAccessToken-java.lang.String-">setAccessToken</a></span>(java.lang.String&nbsp;accessToken)</code>
-<div class="block">Stores the accessToken</div>
-</td>
-</tr>
-<tr id="i23" class="rowColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Vehicle.html#setUnitSystem-com.smartcar.sdk.Vehicle.UnitSystem-">setUnitSystem</a></span>(<a href="../../../com/smartcar/sdk/Vehicle.UnitSystem.html" title="enum in com.smartcar.sdk">Vehicle.UnitSystem</a>&nbsp;unitSystem)</code>
 <div class="block">Sets the preferred unit system for subsequent API requests.</div>
 </td>
 </tr>
-<tr id="i24" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Vehicle.html#setVehicleId-java.lang.String-">setVehicleId</a></span>(java.lang.String&nbsp;vehicleId)</code>
-<div class="block">Stores the vehicleId</div>
-</td>
-</tr>
-<tr id="i25" class="rowColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/smartcar/sdk/data/ActionResponse.html" title="class in com.smartcar.sdk.data">ActionResponse</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Vehicle.html#startCharge--">startCharge</a></span>()</code>
 <div class="block">Send request to the /charge endpoint to start charging a vehicle</div>
 </td>
 </tr>
-<tr id="i26" class="altColor">
+<tr id="i20" class="altColor">
 <td class="colFirst"><code><a href="../../../com/smartcar/sdk/data/ActionResponse.html" title="class in com.smartcar.sdk.data">ActionResponse</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Vehicle.html#stopCharge--">stopCharge</a></span>()</code>
 <div class="block">Send request to the /charge endpoint to stop charging a vehicle</div>
 </td>
 </tr>
-<tr id="i27" class="rowColor">
+<tr id="i21" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/smartcar/sdk/data/WebhookSubscription.html" title="class in com.smartcar.sdk.data">WebhookSubscription</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Vehicle.html#subscribe-java.lang.String-">subscribe</a></span>(java.lang.String&nbsp;webhookId)</code>
 <div class="block">Subscribe vehicle to a webhook</div>
 </td>
 </tr>
-<tr id="i28" class="altColor">
+<tr id="i22" class="altColor">
 <td class="colFirst"><code><a href="../../../com/smartcar/sdk/data/VehicleTirePressure.html" title="class in com.smartcar.sdk.data">VehicleTirePressure</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Vehicle.html#tirePressure--">tirePressure</a></span>()</code>
 <div class="block">Send request to the /tires/pressure endpoint</div>
 </td>
 </tr>
-<tr id="i29" class="rowColor">
+<tr id="i23" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/smartcar/sdk/data/ActionResponse.html" title="class in com.smartcar.sdk.data">ActionResponse</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Vehicle.html#unlock--">unlock</a></span>()</code>
 <div class="block">Send request to the /security endpoint to unlock a vehicle</div>
 </td>
 </tr>
-<tr id="i30" class="altColor">
-<td class="colFirst"><code>void</code></td>
+<tr id="i24" class="altColor">
+<td class="colFirst"><code><a href="../../../com/smartcar/sdk/data/ActionResponse.html" title="class in com.smartcar.sdk.data">ActionResponse</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Vehicle.html#unsubscribe-java.lang.String-java.lang.String-">unsubscribe</a></span>(java.lang.String&nbsp;applicationManagementToken,
            java.lang.String&nbsp;webhookId)</code>
 <div class="block">Unsubscribe vehicle from a webhook</div>
 </td>
 </tr>
-<tr id="i31" class="rowColor">
+<tr id="i25" class="rowColor">
 <td class="colFirst"><code><a href="../../../com/smartcar/sdk/data/VehicleVin.html" title="class in com.smartcar.sdk.data">VehicleVin</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Vehicle.html#vin--">vin</a></span>()</code>
 <div class="block">Send request to the /vin endpoint</div>
@@ -541,29 +503,6 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a name="call-java.lang.String-java.lang.String-okhttp3.RequestBody-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>call</h4>
-<pre>protected&nbsp;java.lang.String&nbsp;call(java.lang.String&nbsp;path,
-                                java.lang.String&nbsp;method,
-                                okhttp3.RequestBody&nbsp;body)
-                         throws <a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
-<div class="block">Executes an API request under the VehicleIds endpoint.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>path</code> - the path to the sub-endpoint</dd>
-<dd><code>method</code> - the method of the request</dd>
-<dd><code>body</code> - the body of the request</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>the response value</dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - if the request is unsuccessful</dd>
-</dl>
-</li>
-</ul>
 <a name="attributes--">
 <!--   -->
 </a>
@@ -684,8 +623,8 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>engineOil</h4>
-<pre>public&nbsp;<a href="../../../com/smartcar/sdk/data/VehicleOil.html" title="class in com.smartcar.sdk.data">VehicleOil</a>&nbsp;engineOil()
-                     throws <a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
+<pre>public&nbsp;<a href="../../../com/smartcar/sdk/data/VehicleEngineOil.html" title="class in com.smartcar.sdk.data">VehicleEngineOil</a>&nbsp;engineOil()
+                           throws <a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
 <div class="block">Send request to the /engine/oil endpoint</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -861,9 +800,9 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>unsubscribe</h4>
-<pre>public&nbsp;void&nbsp;unsubscribe(java.lang.String&nbsp;applicationManagementToken,
-                        java.lang.String&nbsp;webhookId)
-                 throws <a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
+<pre>public&nbsp;<a href="../../../com/smartcar/sdk/data/ActionResponse.html" title="class in com.smartcar.sdk.data">ActionResponse</a>&nbsp;unsubscribe(java.lang.String&nbsp;applicationManagementToken,
+                                  java.lang.String&nbsp;webhookId)
+                           throws <a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
 <div class="block">Unsubscribe vehicle from a webhook</div>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -887,76 +826,6 @@ extends java.lang.Object</pre>
 <dd>the BatchResponse object containing the response from all the requested endpoints</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - if the request is unsuccessful</dd>
-</dl>
-</li>
-</ul>
-<a name="getVehicleId--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getVehicleId</h4>
-<pre>public&nbsp;java.lang.String&nbsp;getVehicleId()</pre>
-<div class="block">Returns the currently stored vehicle ID.</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>the vehicle ID</dd>
-</dl>
-</li>
-</ul>
-<a name="setVehicleId-java.lang.String-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setVehicleId</h4>
-<pre>public&nbsp;void&nbsp;setVehicleId(java.lang.String&nbsp;vehicleId)</pre>
-<div class="block">Stores the vehicleId</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>vehicleId</code> - the vehicle ID</dd>
-</dl>
-</li>
-</ul>
-<a name="getAccessToken--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getAccessToken</h4>
-<pre>public&nbsp;java.lang.String&nbsp;getAccessToken()</pre>
-<div class="block">Returns the currently stored access token.</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>the access token</dd>
-</dl>
-</li>
-</ul>
-<a name="setAccessToken-java.lang.String-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setAccessToken</h4>
-<pre>public&nbsp;void&nbsp;setAccessToken(java.lang.String&nbsp;accessToken)</pre>
-<div class="block">Stores the accessToken</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>accessToken</code> - the accessToken</dd>
-</dl>
-</li>
-</ul>
-<a name="getUnitSystem--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getUnitSystem</h4>
-<pre>public&nbsp;<a href="../../../com/smartcar/sdk/Vehicle.UnitSystem.html" title="enum in com.smartcar.sdk">Vehicle.UnitSystem</a>&nbsp;getUnitSystem()</pre>
-<div class="block">Returns the currently set unit system.</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>the unit system</dd>
 </dl>
 </li>
 </ul>

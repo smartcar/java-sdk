@@ -8,7 +8,6 @@ import okhttp3.Response;
 import javax.json.Json;
 
 public class User extends ApiData {
-
     private String id;
 
     /**

@@ -160,9 +160,9 @@ public class BatchResponse extends ApiData {
    * @return the engine oil status of the vehicle
    * @throws SmartcarException if the request for this endpoint returned an HTTP error code
    */
-  public VehicleOil oil()
+  public VehicleEngineOil oil()
       throws SmartcarException {
-    return get("/engine/oil", VehicleOil.class);
+    return get("/engine/oil", VehicleEngineOil.class);
   }
 
   /**

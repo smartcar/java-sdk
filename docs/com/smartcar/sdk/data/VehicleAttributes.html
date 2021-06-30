@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -119,7 +119,7 @@ var activeTableTab = "activeTableTab";
 <br>
 <pre>public class <span class="typeNameLabel">VehicleAttributes</span>
 extends <a href="../../../../com/smartcar/sdk/data/ApiData.html" title="class in com.smartcar.sdk.data">ApiData</a></pre>
-<div class="block">POJO for Smartcar /info endpoint</div>
+<div class="block">POJO for Smartcar /attributes endpoint</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../../serialized-form.html#com.smartcar.sdk.data.VehicleAttributes">Serialized Form</a></dd>
@@ -142,12 +142,7 @@ extends <a href="../../../../com/smartcar/sdk/data/ApiData.html" title="class in
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/smartcar/sdk/data/VehicleAttributes.html#VehicleAttributes-java.lang.String-java.lang.String-java.lang.String-int-">VehicleAttributes</a></span>(java.lang.String&nbsp;id,
-                 java.lang.String&nbsp;make,
-                 java.lang.String&nbsp;model,
-                 int&nbsp;year)</code>
-<div class="block">Initializes a new instance of VehicleInfo</div>
-</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../com/smartcar/sdk/data/VehicleAttributes.html#VehicleAttributes--">VehicleAttributes</a></span>()</code>&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -189,30 +184,6 @@ extends <a href="../../../../com/smartcar/sdk/data/ApiData.html" title="class in
 </td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/smartcar/sdk/data/VehicleAttributes.html#setId-java.lang.String-">setId</a></span>(java.lang.String&nbsp;id)</code>
-<div class="block">Stores the vehicle id</div>
-</td>
-</tr>
-<tr id="i5" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/smartcar/sdk/data/VehicleAttributes.html#setMake-java.lang.String-">setMake</a></span>(java.lang.String&nbsp;make)</code>
-<div class="block">Stores the vehicle make</div>
-</td>
-</tr>
-<tr id="i6" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/smartcar/sdk/data/VehicleAttributes.html#setModel-java.lang.String-">setModel</a></span>(java.lang.String&nbsp;model)</code>
-<div class="block">Stores the vehicle model</div>
-</td>
-</tr>
-<tr id="i7" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/smartcar/sdk/data/VehicleAttributes.html#setYear-int-">setYear</a></span>(int&nbsp;year)</code>
-<div class="block">Stores the year of the vehicle</div>
-</td>
-</tr>
-<tr id="i8" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../com/smartcar/sdk/data/VehicleAttributes.html#toString--">toString</a></span>()</code>
 <div class="block">Returns the stored data string.</div>
@@ -247,24 +218,13 @@ extends <a href="../../../../com/smartcar/sdk/data/ApiData.html" title="class in
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="VehicleAttributes-java.lang.String-java.lang.String-java.lang.String-int-">
+<a name="VehicleAttributes--">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>VehicleAttributes</h4>
-<pre>public&nbsp;VehicleAttributes(java.lang.String&nbsp;id,
-                         java.lang.String&nbsp;make,
-                         java.lang.String&nbsp;model,
-                         int&nbsp;year)</pre>
-<div class="block">Initializes a new instance of VehicleInfo</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>id</code> - uuid of the vehicle</dd>
-<dd><code>make</code> - make of the vehicle</dd>
-<dd><code>model</code> - model of the vehicle</dd>
-<dd><code>year</code> - year of the vehicle</dd>
-</dl>
+<pre>public&nbsp;VehicleAttributes()</pre>
 </li>
 </ul>
 </li>
@@ -289,20 +249,6 @@ extends <a href="../../../../com/smartcar/sdk/data/ApiData.html" title="class in
 </dl>
 </li>
 </ul>
-<a name="setId-java.lang.String-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setId</h4>
-<pre>public&nbsp;void&nbsp;setId(java.lang.String&nbsp;id)</pre>
-<div class="block">Stores the vehicle id</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>id</code> - the vehicle id</dd>
-</dl>
-</li>
-</ul>
 <a name="getMake--">
 <!--   -->
 </a>
@@ -314,20 +260,6 @@ extends <a href="../../../../com/smartcar/sdk/data/ApiData.html" title="class in
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>vehicle make</dd>
-</dl>
-</li>
-</ul>
-<a name="setMake-java.lang.String-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setMake</h4>
-<pre>public&nbsp;void&nbsp;setMake(java.lang.String&nbsp;make)</pre>
-<div class="block">Stores the vehicle make</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>make</code> - make of the vehicle</dd>
 </dl>
 </li>
 </ul>
@@ -345,20 +277,6 @@ extends <a href="../../../../com/smartcar/sdk/data/ApiData.html" title="class in
 </dl>
 </li>
 </ul>
-<a name="setModel-java.lang.String-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setModel</h4>
-<pre>public&nbsp;void&nbsp;setModel(java.lang.String&nbsp;model)</pre>
-<div class="block">Stores the vehicle model</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>model</code> - model of the vehicle</dd>
-</dl>
-</li>
-</ul>
 <a name="getYear--">
 <!--   -->
 </a>
@@ -370,20 +288,6 @@ extends <a href="../../../../com/smartcar/sdk/data/ApiData.html" title="class in
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>year of the vehicle</dd>
-</dl>
-</li>
-</ul>
-<a name="setYear-int-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setYear</h4>
-<pre>public&nbsp;void&nbsp;setYear(int&nbsp;year)</pre>
-<div class="block">Stores the year of the vehicle</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>year</code> - year of the vehicle</dd>
 </dl>
 </li>
 </ul>
