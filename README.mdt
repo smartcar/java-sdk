@@ -56,10 +56,14 @@ a valid access token for the target vehicle.
     boolean testMode = true;
 
     // Initialize a new AuthClient with your credentials.
-    AuthClient authClient = new AuthClient(clientId, clientSecret, redirectUri, scope, testMode);
+    AuthClient authClient = new AuthClient.Builder
+        .clientId(clientId)
+        .clientSecret(clientSecret)
+        .redirectUri(redirectUri)
+        .testMode(testMode);
 
     // Retrieve the auth URL to start the OAuth flow.
-    String authUrl = authClient.authUrlBuilder()
+    String authUrl = authClient.authUrlBuilder(scope)
             .setApprovalPrompt(true)
             .setState("some state")
             .build();
@@ -87,8 +91,8 @@ start making requests to vehicles.
 1.  Obtain a list of authorized vehicles:
 
     ```java
-    SmartcarResponse<VehicleIds> vehicleIdsResponse = AuthClient.getVehicleIds(auth.getAccessToken());
-    String[] vehicleIds = vehicleIdsResponse.getData().getVehicleIds();
+    VehicleIds response = AuthClient.getVehicleIds(auth.getAccessToken());
+    String[] vehicleIds = response.getVehicleIds();
     ```
 
 2.  Create an instance of `Vehicle`:
@@ -101,16 +105,14 @@ start making requests to vehicles.
 
     ```java
     // Retrieve the vehicle's VIN
-    String vin = vehicle.vin();
+    String vin = vehicle.vin().getVin();
 
     // Read the vehicle's odometer
-    SmartcarResponse<VehicleOdometer> odometerResponse = vehicle.odometer();
-    VehicleOdometer odometerData = odometerResponse.getData();
+    VehicleOdometer odometerData = vehicle.odometer();
     double odometer = odometerData.getDistance();
 
     // Retrieve the vehicle's location
-    SmartcarResponse<VehicleLocation> locationResponse = vehicle.location();
-    VehicleLocation locationData = locationResponse.getData();
+    VehicleLocation locationData = vehicle.location();
     String latLong = locationData.getLatitude() + ", " + locationData.getLongitude();
 
     // Lock and unlock the vehicle
