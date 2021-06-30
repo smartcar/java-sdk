@@ -1,7 +1,7 @@
 package com.smartcar.sdk;
 
 import com.smartcar.sdk.data.*;
-
+import com.smartcar.sdk.helpers.AuthHelpers;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
@@ -10,20 +10,27 @@ import org.testng.annotations.Test;
 
 /** Integration Test Suite: /vehicles/:id */
 @PowerMockIgnore("javax.net.ssl.*")
-public class VehicleTest extends IntegrationTest {
+public class VehicleIntegrationTest {
   private Vehicle vehicle;
   private Vehicle eVehicle;
 
-  /**
-   * Authenticates with the Smartcar platform and initializes a vehicle.
-   *
-   * @throws Exception
-   */
+  private Vehicle getVehicle(String make, String[] scope) throws SmartcarException {
+    AuthClient client = AuthHelpers.getConfiguredAuthClientBuilder().build();
+    String code = AuthHelpers.runAuthFlow(client.authUrlBuilder(scope).build(), make);
+    String accessToken = client.exchangeCode(code).getAccessToken();
+    String[] vehiclesIds = Smartcar.getVehicles(accessToken).getVehicleIds();
+    return new Vehicle(vehiclesIds[0], accessToken);
+  }
+
   @BeforeSuite
-  public void beforeSuite() throws Exception {
-    // we need both types of vehicles to get full coverage of all endpoints
-    this.vehicle = this.getVehicle("CHEVROLET");
-    this.eVehicle = this.getVehicle("TESLA");
+  public void beforeSuite() throws SmartcarException {
+    this.vehicle = this.getVehicle("CHEVROLET", AuthHelpers.DEFAULT_SCOPE);
+    this.eVehicle =
+        this.getVehicle(
+            "TESLA",
+            new String[] {
+              "required:control_charge", "required:control_security",
+            });
   }
 
   /** Tests that vehicle info can be obtained. */
@@ -68,10 +75,12 @@ public class VehicleTest extends IntegrationTest {
     Assert.assertTrue(response.getMeta().getDataAge() != null);
   }
 
-  /** Tests that the vehicle correctly handles imperial headers. */
+  /** Tests that the vehicle correctly handles request id headers. */
   @Test(groups = "vehicle")
   public void testRequestIdHeader() throws SmartcarException {
     VehicleOdometer response = this.vehicle.odometer();
+    Assert.assertNotNull(response.getMeta());
+    Assert.assertNotNull(response.getMeta().getRequestId());
     // Request ID is a UUID (36 characters)
     Assert.assertEquals(response.getMeta().getRequestId().length(), 36);
   }
@@ -180,8 +189,9 @@ public class VehicleTest extends IntegrationTest {
 
   @Test(dependsOnGroups = "vehicle")
   public void testSubscribeUnsubscribe() throws SmartcarException {
-    this.vehicle.subscribe("fdc63623-cd65-4a7f-8ef4-44985f9d7355");
+    this.vehicle.subscribe(AuthHelpers.getWebhookId());
 
-    this.vehicle.unsubscribe("5ae53ef0-d9ca-469e-bdcd-2b81ed17ce25", "fdc63623-cd65-4a7f-8ef4-44985f9d7355");
+    this.vehicle.unsubscribe(
+        AuthHelpers.getApplicationManagementToken(), AuthHelpers.getWebhookId());
   }
 }

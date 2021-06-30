@@ -4,7 +4,6 @@ plugins {
     id 'signing'
 
     id 'com.adarshr.test-logger' version '2.1.1'
-    id 'com.avast.gradle.docker-compose' version '0.14.0'
     id 'io.github.gradle-nexus.publish-plugin' version '1.0.0'
     id 'org.unbroken-dome.test-sets' version '3.0.1'
 }
@@ -90,16 +89,6 @@ jar {
 }
 
 /**
- * If the selenium.debug system property is set, selenium will use  a local
- * ChromeDriver instance instead of Docker.
- *
- * @plugin com.avast.gradle.docker-compose
- */
-if (!System.properties.containsKey('selenium.debug')) {
-    dockerCompose.isRequiredBy integration
-}
-
-/**
  * Configures all test tasks.
  *
  * @plugin com.adarshr.test-logger
@@ -113,27 +102,6 @@ tasks.withType(Test) {
     testlogger {
         showStandardStreams true
         theme 'mocha'
-    }
-}
-
-/**
- * Executes all integration tests.
- *
- * @plugin com.avast.gradle.docker-compose
- * @plugin org.unbroken-dome.test-sets
- * @plugin java
- */
-integration {
-    if (!System.properties.containsKey('selenium.debug')) {
-        doFirst {
-            def seleniumInfo = dockerCompose.servicesInfos['selenium-hub'].firstContainer
-
-            systemProperty 'selenium.browser', 'chrome'
-            systemProperty 'selenium.host', seleniumInfo.host
-            systemProperty 'selenium.port', seleniumInfo.ports[4444]
-        }
-    } else {
-        systemProperty 'selenium.debug', System.getProperty('selenium.debug')
     }
 }
 

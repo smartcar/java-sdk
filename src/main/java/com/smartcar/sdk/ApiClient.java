@@ -90,7 +90,7 @@ abstract class ApiClient {
       Headers headers = response.headers();
       JsonObject headerJson = new JsonObject();
       for (String header: response.headers().names()) {
-        headerJson.addProperty(header, headers.get(header));
+        headerJson.addProperty(header.toLowerCase(), headers.get(header));
       };
       String headerJsonString = headerJson.toString();
       meta = ApiClient.gson.create().fromJson(headerJsonString, Meta.class);
