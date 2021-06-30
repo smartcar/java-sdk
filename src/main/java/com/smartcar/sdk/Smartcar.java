@@ -65,7 +65,7 @@ public class Smartcar {
                 new Request.Builder()
                         .url(url + "/user")
                         .header("Authorization", "Bearer " + accessToken)
-                        .addHeader("User-Agent", AuthClient.USER_AGENT)
+                        .addHeader("User-Agent", ApiClient.USER_AGENT)
                         .build();
 
         return ApiClient.execute(request, User.class);
@@ -159,7 +159,7 @@ public class Smartcar {
                                         compatibilityRequest.getClientSecret()
                                 )
                         )
-                        .addHeader("User-Agent", AuthClient.USER_AGENT)
+                        .addHeader("User-Agent", ApiClient.USER_AGENT)
                         .get()
                         .build();
 

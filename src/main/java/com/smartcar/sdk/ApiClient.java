@@ -1,13 +1,10 @@
 package com.smartcar.sdk;
 
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.smartcar.sdk.data.ApiData;
 
 import java.io.IOException;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import com.smartcar.sdk.data.Meta;
@@ -15,7 +12,6 @@ import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import okhttp3.ResponseBody;
 import okhttp3.Headers;
 import org.apache.commons.text.CaseUtils;
 

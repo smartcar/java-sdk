@@ -10,12 +10,10 @@ import java.lang.reflect.Type;
 import java.util.Calendar;
 import java.util.List;
 
-import com.smartcar.sdk.ApiClient;
-
 import okhttp3.*;
 
 /** Smartcar OAuth 2.0 Authentication Client */
-public class AuthClient extends ApiClient {
+public class AuthClient {
   /** Custom deserializer for Auth data from the OAuth endpoint. */
   private class AuthDeserializer implements JsonDeserializer<Auth> {
     /**
@@ -97,7 +95,7 @@ public class AuthClient extends ApiClient {
     this.redirectUri = builder.redirectUri;
     this.testMode = builder.testMode;
 
-    AuthClient.gson.registerTypeAdapter(Auth.class, new AuthDeserializer());
+    ApiClient.gson.registerTypeAdapter(Auth.class, new AuthDeserializer());
   }
 
   /**
@@ -209,11 +207,11 @@ public class AuthClient extends ApiClient {
                     .url(urlBuilder.build().toString())
                     .header("Authorization", basicAuthorization)
                     .header("Content-Type", "application/x-www-form-urlencoded")
-                    .addHeader("User-Agent", AuthClient.USER_AGENT)
+                    .addHeader("User-Agent", ApiClient.USER_AGENT)
                     .post(requestBody)
                     .build();
 
-    return AuthClient.execute(request, Auth.class);
+    return ApiClient.execute(request, Auth.class);
   }
 
   /**

@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /** Smartcar Vehicle API Object */
-public class Vehicle extends ApiClient {
+public class Vehicle {
   public enum UnitSystem {
     IMPERIAL,
     METRIC,
@@ -68,12 +68,12 @@ public class Vehicle extends ApiClient {
         new Request.Builder()
             .url(url)
             .header("Authorization", "Bearer " + accessToken)
-            .addHeader("User-Agent", Vehicle.USER_AGENT)
+            .addHeader("User-Agent", ApiClient.USER_AGENT)
             .method(method, body)
             .header("sc-unit-system", this.unitSystem.name().toLowerCase())
             .build();
 
-    return Vehicle.execute(request, type);
+    return ApiClient.execute(request, type);
   }
 
   protected <T extends ApiData> T call(String path, String method, RequestBody body, Class<T> type) throws SmartcarException{
@@ -100,12 +100,12 @@ public class Vehicle extends ApiClient {
             new Request.Builder()
                     .url(url)
                     .header("Authorization", "Bearer " + accessToken)
-                    .addHeader("User-Agent", Vehicle.USER_AGENT)
+                    .addHeader("User-Agent", ApiClient.USER_AGENT)
                     .method(method, body)
                     .header("sc-unit-system", this.unitSystem.name().toLowerCase())
                     .build();
 
-    return Vehicle.execute(request, type);
+    return ApiClient.execute(request, type);
   }
 
   /**
@@ -254,7 +254,7 @@ public class Vehicle extends ApiClient {
   public ActionResponse unlock() throws SmartcarException {
     JsonObject json = Json.createObjectBuilder().add("action", "UNLOCK").build();
 
-    RequestBody body = RequestBody.create(JSON, json.toString());
+    RequestBody body = RequestBody.create(ApiClient.JSON, json.toString());
 
     return this.call("security", "POST", body, ActionResponse.class);
   }
@@ -267,7 +267,7 @@ public class Vehicle extends ApiClient {
   public ActionResponse lock() throws SmartcarException {
     JsonObject json = Json.createObjectBuilder().add("action", "LOCK").build();
 
-    RequestBody body = RequestBody.create(JSON, json.toString());
+    RequestBody body = RequestBody.create(ApiClient.JSON, json.toString());
 
     return this.call("security", "POST", body, ActionResponse.class);
   }
@@ -280,7 +280,7 @@ public class Vehicle extends ApiClient {
   public ActionResponse startCharge() throws SmartcarException {
     JsonObject json = Json.createObjectBuilder().add("action", "START").build();
 
-    RequestBody body = RequestBody.create(JSON, json.toString());
+    RequestBody body = RequestBody.create(ApiClient.JSON, json.toString());
 
     return this.call("charge", "POST", body, ActionResponse.class);
   }
@@ -293,7 +293,7 @@ public class Vehicle extends ApiClient {
   public ActionResponse stopCharge() throws SmartcarException {
     JsonObject json = Json.createObjectBuilder().add("action", "STOP").build();
 
-    RequestBody body = RequestBody.create(JSON, json.toString());
+    RequestBody body = RequestBody.create(ApiClient.JSON, json.toString());
 
     return this.call("charge", "POST", body, ActionResponse.class);
   }
@@ -334,8 +334,8 @@ public class Vehicle extends ApiClient {
 
     JsonObject json = Json.createObjectBuilder().add("requests", requests).build();
 
-    this.gson.registerTypeAdapter(BatchResponse.class, new BatchDeserializer());
-    RequestBody body = RequestBody.create(JSON, json.toString());
+    ApiClient.gson.registerTypeAdapter(BatchResponse.class, new BatchDeserializer());
+    RequestBody body = RequestBody.create(ApiClient.JSON, json.toString());
     BatchResponse response =
         this.call("batch", "POST", body, BatchResponse.class);
     BatchResponse batchResponse = response;
