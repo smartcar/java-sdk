@@ -75,10 +75,12 @@ public class VehicleIntegrationTest {
     Assert.assertTrue(response.getMeta().getDataAge() != null);
   }
 
-  /** Tests that the vehicle correctly handles imperial headers. */
+  /** Tests that the vehicle correctly handles request id headers. */
   @Test(groups = "vehicle")
   public void testRequestIdHeader() throws SmartcarException {
     VehicleOdometer response = this.vehicle.odometer();
+    Assert.assertNotNull(response.getMeta());
+    Assert.assertNotNull(response.getMeta().getRequestId());
     // Request ID is a UUID (36 characters)
     Assert.assertEquals(response.getMeta().getRequestId().length(), 36);
   }
