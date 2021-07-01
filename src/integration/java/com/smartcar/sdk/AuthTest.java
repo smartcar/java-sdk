@@ -2,6 +2,7 @@ package com.smartcar.sdk;
 
 import com.smartcar.sdk.data.Auth;
 import com.smartcar.sdk.helpers.AuthHelpers;
+import org.testng.Assert;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
@@ -38,5 +39,17 @@ public class AuthTest {
     assertNotNull(newAccess.getRefreshToken());
     assertNotNull(newAccess.getExpiration());
     assertNotNull(newAccess.getRefreshExpiration());
+  }
+
+  @Test
+  public void testOAuthError() {
+    boolean thrown = false;
+    try {
+      client.exchangeCode("bad code here");
+    } catch (SmartcarException e) {
+      thrown = true;
+      Assert.assertEquals(e.getMessage(), "invalid_request:null - Invalid code: bad code here.");
+    }
+    Assert.assertTrue(thrown);
   }
 }

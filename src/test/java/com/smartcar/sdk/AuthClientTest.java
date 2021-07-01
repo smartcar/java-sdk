@@ -2,10 +2,6 @@ package com.smartcar.sdk;
 
 import com.google.gson.*;
 import com.smartcar.sdk.data.Auth;
-
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.util.Date;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -19,6 +15,10 @@ import org.powermock.modules.testng.PowerMockTestCase;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.Date;
+
 /** Test Suite: AuthClient */
 @PrepareForTest({
   AuthClient.class,
@@ -30,7 +30,7 @@ import org.testng.annotations.Test;
   Request.class,
   Response.class,
   ResponseBody.class,
-  System.class
+
 })
 @PowerMockIgnore("javax.net.ssl.*")
 public class AuthClientTest extends PowerMockTestCase {
@@ -77,6 +77,7 @@ public class AuthClientTest extends PowerMockTestCase {
   }
 
   @Test
+  @PrepareForTest(System.class)
   public void testAuthClientBuilder() {
     PowerMockito.mockStatic(System.class);
     PowerMockito.when(System.getenv("SMARTCAR_CLIENT_ID")).thenReturn(this.sampleClientId);
@@ -91,6 +92,7 @@ public class AuthClientTest extends PowerMockTestCase {
   }
 
   @Test
+  @PrepareForTest(System.class)
   public void testExchangeCode() throws FileNotFoundException, SmartcarException, InterruptedException {
     loadAndEnqueueResponse("AuthGetTokens");
 
@@ -120,6 +122,7 @@ public class AuthClientTest extends PowerMockTestCase {
   }
 
   @Test
+  @PrepareForTest(System.class)
   public void testExchangeRefreshToken() throws FileNotFoundException, SmartcarException, InterruptedException {
     loadAndEnqueueResponse("AuthRefreshTokens");
 
@@ -144,5 +147,29 @@ public class AuthClientTest extends PowerMockTestCase {
     Assert.assertEquals(request.getRequestUrl().toString(),
             "http://localhost:" + TestExecutionListener.mockWebServer.getPort() + "/oauth/token");
     Assert.assertEquals(request.getBody().toString(), "[text=grant_type=refresh_token&refresh_token=]");
+  }
+
+  @Test
+  public void testAuthUrlBuilderDefault() {
+    AuthClient client = new AuthClient.Builder()
+            .build();
+    String authUrl = client.authUrlBuilder(this.sampleScope).build();
+    Assert.assertEquals(authUrl, "https://connect.smartcar.com/oauth/authorize?response_type=code&client_id=2cfa25d8-f912-4b1f-905a-4562336f2940&redirect_uri=https%3A%2F%2Fexample.com%2Fauth&mode=live&scope=read_vehicle_info%20read_location%20read_odometer");
+  }
+
+  @Test
+  public void testAuthUrlBuilderWithOptions() {
+    AuthClient client = new AuthClient.Builder()
+            .build();
+    String authUrl = client.authUrlBuilder(this.sampleScope)
+            .state("sampleState")
+            .approvalPrompt(true)
+            .makeBypass("TESLA")
+            .singleSelect(true)
+            .singleSelectVin("sampleVin")
+            .addFlag("foo", "bar")
+            .addFlag("test", true)
+            .build();
+    Assert.assertEquals(authUrl, "https://connect.smartcar.com/oauth/authorize?response_type=code&client_id=2cfa25d8-f912-4b1f-905a-4562336f2940&redirect_uri=https%3A%2F%2Fexample.com%2Fauth&mode=live&scope=read_vehicle_info%20read_location%20read_odometer&state=sampleState&approval_prompt=force&make=TESLA&single_select=true&single_select=true&single_select_vin=sampleVin&flags=foo%3Abar%20test%3Atrue");
   }
 }

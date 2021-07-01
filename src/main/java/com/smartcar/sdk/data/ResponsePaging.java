@@ -6,17 +6,6 @@ public class ResponsePaging extends ApiData {
   private int offset;
 
   /**
-   * Initializes a new instance of ResponsePaging
-   *
-   * @param count the number of items in the response
-   * @param offset the index to start the response list
-   */
-  public ResponsePaging(final int count, final int offset) {
-    this.count = count;
-    this.offset = offset;
-  }
-
-  /**
    * Returns the response count
    *
    * @return response count

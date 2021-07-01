@@ -1,0 +1,27 @@
+{
+  "responses":
+  [
+    {
+      "headers": {
+        "sc-unit-system": "metric"
+      },
+      "path": "/odometer",
+      "code": 200,
+      "body": {
+        "distance": 32768
+      }
+    },
+    {
+      "headers": {
+        "sc-unit-system": "metric"
+      },
+      "path": "/fuel",
+      "code": 409,
+      "body": {
+        "error": "vehicle_state_error",
+        "message": "Vehicle state cannot be determined.",
+        "code": "VS_000"
+      }
+    }
+  ]
+}

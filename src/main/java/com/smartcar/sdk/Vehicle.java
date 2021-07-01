@@ -1,14 +1,14 @@
 package com.smartcar.sdk;
 
 import com.smartcar.sdk.data.*;
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonArrayBuilder;
-import javax.json.JsonObject;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,11 +19,11 @@ public class Vehicle {
     METRIC,
   }
 
-  private String vehicleId;
-  private String accessToken;
-  private Vehicle.UnitSystem unitSystem = UnitSystem.METRIC;
-  private String version;
-  private String origin;
+  private final String vehicleId;
+  private final String accessToken;
+  private Vehicle.UnitSystem unitSystem;
+  private final String version;
+  private final String origin;
   private ApplicationPermissions permissions;
 
   /**
@@ -42,6 +42,10 @@ public class Vehicle {
     this.version = options.getVersion();
     this.unitSystem = options.getUnitSystem();
     this.origin = options.getOrigin();
+  }
+
+  public String getVersion() {
+    return this.version;
   }
 
   /**

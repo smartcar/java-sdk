@@ -1,6 +1,7 @@
 package com.smartcar.sdk;
 
 import com.smartcar.sdk.data.Compatibility;
+import com.smartcar.sdk.data.RequestPaging;
 import com.smartcar.sdk.data.User;
 import com.smartcar.sdk.data.VehicleIds;
 import com.smartcar.sdk.helpers.AuthHelpers;
@@ -34,6 +35,15 @@ public class SmartcarTest {
     public void testGetVehicles() throws SmartcarException {
         VehicleIds vehicleIds = Smartcar.getVehicles(this.accessToken);
         Assert.assertNotNull(vehicleIds.getVehicleIds());
+    }
+
+    @Test
+    public void testGetVehiclesPaging() throws SmartcarException {
+        RequestPaging paging = new RequestPaging(1, 0);
+        VehicleIds vehicleIds = Smartcar.getVehicles(this.accessToken, paging);
+        Assert.assertEquals(vehicleIds.getVehicleIds().length, 1);
+        Assert.assertTrue(vehicleIds.getPaging().getCount() > 0);
+        Assert.assertEquals(vehicleIds.getPaging().getOffset(), 0);
     }
 
     @Test

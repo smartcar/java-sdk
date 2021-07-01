@@ -1,13 +1,14 @@
 package com.smartcar.sdk;
 
-import com.google.gson.JsonObject;
+import java.util.ArrayList;
+import java.util.List;
 
 public final class SmartcarCompatibilityRequest {
     private final String vin;
     private final String[] scope;
     private final String country;
     private final String version;
-    private final JsonObject flags;
+    private final String flags;
     private final String clientId;
     private final String clientSecret;
 
@@ -16,7 +17,7 @@ public final class SmartcarCompatibilityRequest {
         private String[] scope;
         private String country;
         private String version;
-        private final JsonObject flags;
+        private final List<String> flags;
         private String clientId;
         private String clientSecret;
 
@@ -25,7 +26,7 @@ public final class SmartcarCompatibilityRequest {
             this.scope = null;
             this.country = "US";
             this.version = "1.0";
-            this.flags = new JsonObject();
+            this.flags = new ArrayList<>();
             this.clientId = System.getenv("SMARTCAR_CLIENT_ID");
             this.clientSecret = System.getenv("SMARTCAR_CLIENT_SECRET");
         }
@@ -45,18 +46,18 @@ public final class SmartcarCompatibilityRequest {
             return this;
         }
 
-        public Builder version(String country) {
+        public Builder version(String version) {
             this.version = version;
             return this;
         }
 
         public Builder addFlag(String key, String value) {
-            this.flags.addProperty(key, value);
+            this.flags.add(key + ":" + value);
             return this;
         }
 
         public Builder addFlag(String key, boolean value) {
-            this.flags.addProperty(key, value);
+            this.flags.add(key + ":" + value);
             return this;
         }
 
@@ -73,12 +74,12 @@ public final class SmartcarCompatibilityRequest {
         public SmartcarCompatibilityRequest build() throws SmartcarException {
             if (this.clientId == null) {
                 throw new SmartcarException.Builder()
-                        .type("INVALID_REQUEST")
+                        .type("INVALID_COMPATIBILITY_REQUEST")
                         .description("clientId must be defined").build();
             }
             if (this.clientSecret == null) {
                 throw new SmartcarException.Builder()
-                        .type("INVALID_REQUEST")
+                        .type("INVALID_COMPATIBILITY_REQUEST")
                         .description("clientSecret must be defined").build();
             }
             return new SmartcarCompatibilityRequest(this);
@@ -90,7 +91,12 @@ public final class SmartcarCompatibilityRequest {
         this.scope = builder.scope;
         this.country = builder.country;
         this.version = builder.version;
-        this.flags = builder.flags;
+        if (builder.flags.size() > 0) {
+            String[] flagStrings = builder.flags.toArray(new String[0]);
+            this.flags = Utils.join(flagStrings, " ");
+        } else {
+            this.flags = null;
+        }
         this.clientId = builder.clientId;
         this.clientSecret = builder.clientSecret;
     }
@@ -105,7 +111,7 @@ public final class SmartcarCompatibilityRequest {
 
     public String getVersion() { return this.version; }
 
-    public JsonObject getFlags() { return this.flags; }
+    public String getFlags() { return this.flags; }
 
     public String getClientId() { return this.clientId; }
 

@@ -58,6 +58,8 @@ public class VehicleIntegrationTest {
     ApplicationPermissions perms = this.vehicle.permissions(paging);
     String[] permissions = perms.getPermissions();
     Assert.assertTrue(permissions.length > 0);
+    // Assert.assertTrue(perms.getPaging().getCount() > 0);
+    // Assert.assertTrue(perms.getPaging().getOffset() >= 0);
   }
 
   /** Tests that the vehicle correctly handles imperial headers. */

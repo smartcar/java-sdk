@@ -48,11 +48,15 @@ public class Smartcar {
      * @return
      */
     static String getApiUrl() {
+        return getApiOrigin() + "/v" + Smartcar.API_VERSION;
+    }
+
+    static String getApiOrigin() {
         String apiOrigin = System.getenv("SMARTCAR_API_ORIGIN");
         if (apiOrigin == null) {
-            apiOrigin = "https://api.smartcar.com";
+            return "https://api.smartcar.com";
         }
-        return apiOrigin + "/v" + Smartcar.API_VERSION;
+        return apiOrigin;
     }
 
     /**
@@ -144,15 +148,20 @@ public class Smartcar {
      * @throws SmartcarException when the request is unsuccessful
      */
     public static Compatibility getCompatibility(SmartcarCompatibilityRequest compatibilityRequest) throws SmartcarException {
-        String apiUrl = Smartcar.getApiUrl();
-        HttpUrl url =
+        String apiUrl = Smartcar.getApiOrigin();
+        HttpUrl.Builder urlBuilder =
                 HttpUrl.parse(apiUrl)
                         .newBuilder()
+                        .addPathSegment("v" + compatibilityRequest.getVersion())
                         .addPathSegment("compatibility")
                         .addQueryParameter("vin", compatibilityRequest.getVin())
                         .addQueryParameter("scope", String.join(" ", compatibilityRequest.getScope()))
-                        .addQueryParameter("country", compatibilityRequest.getCountry())
-                        .build();
+                        .addQueryParameter("country", compatibilityRequest.getCountry());
+
+        if (compatibilityRequest.getFlags() != null) {
+            urlBuilder.addQueryParameter("flags", compatibilityRequest.getFlags());
+        }
+        HttpUrl url = urlBuilder.build();
 
         Request request =
                 new Request.Builder()

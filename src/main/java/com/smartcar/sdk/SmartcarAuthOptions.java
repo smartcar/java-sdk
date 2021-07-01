@@ -1,7 +1,6 @@
 package com.smartcar.sdk;
 
-import com.google.gson.JsonObject;
-
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -12,7 +11,7 @@ public final class SmartcarAuthOptions {
         private final List<String> flags;
 
         public Builder() {
-            this.flags = null;
+            this.flags = new ArrayList<>();
         }
 
         public Builder addFlag(String key, String value) {

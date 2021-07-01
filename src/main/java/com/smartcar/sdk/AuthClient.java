@@ -5,12 +5,12 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.smartcar.sdk.data.Auth;
+import okhttp3.*;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
-import okhttp3.*;
 
 /** Smartcar OAuth 2.0 Authentication Client */
 public class AuthClient {
@@ -113,7 +113,7 @@ public class AuthClient {
    */
   public class AuthUrlBuilder {
     private HttpUrl.Builder urlBuilder;
-    private List<String> flags = null;
+    private List<String> flags = new ArrayList<>();
 
     public AuthUrlBuilder(String[] scope) {
       String origin = System.getenv("SMARTCAR_CONNECT_ORIGIN");

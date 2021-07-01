@@ -4,27 +4,23 @@ import com.smartcar.sdk.data.Compatibility;
 import com.smartcar.sdk.data.User;
 import com.smartcar.sdk.data.VehicleIds;
 import okhttp3.mockwebserver.MockResponse;
+import okhttp3.mockwebserver.RecordedRequest;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.testng.PowerMockTestCase;
 import org.testng.Assert;
-import org.testng.annotations.*;
+import org.testng.annotations.Test;
 
 @PowerMockIgnore({"javax.net.ssl.*", "javax.crypto.*"})
 @PrepareForTest({
-        System.class,
         Smartcar.class,
 })
 public class SmartcarTest extends PowerMockTestCase {
     private final String sampleClientId = "cl13nt1d-t35t-46dc-aa25-bdd042f54e7d";
     private final String sampleClientSecret = "24d55382-843f-4ce9-a7a7-cl13nts3cr3t";
     private final String sampleRequestId = "2eddd02f-8aaa-2eee-bfff-012345678901";
-    private final String sampleRedirectUri = "https://example.com/";
-    private final String sampleRedirectUriEncoded = "https%3A%2F%2Fexample.com%2F";
-    private final String[] sampleScope = {"read_vehicle_info", "read_location", "read_odometer"};
-    private final boolean sampleTestMode = true;
-    private String fakeAccessToken = "F4K3_4CC355_T0K3N";
+    private final String fakeAccessToken = "F4K3_4CC355_T0K3N";
 
     @Test
     public void testGetUser() throws Exception {
@@ -66,8 +62,9 @@ public class SmartcarTest extends PowerMockTestCase {
     }
 
     @Test
+    @PrepareForTest(System.class)
     public void testGetCompatibility() throws Exception {
-        String vin = "";
+        String vin = "1234";
         String[] scope;
         scope = new String[]{"read_odometer"};
 
@@ -92,7 +89,74 @@ public class SmartcarTest extends PowerMockTestCase {
         Compatibility comp = Smartcar.getCompatibility(request);
         Assert.assertTrue(comp.getCompatible());
         Assert.assertEquals(comp.getMeta().getRequestId(), this.sampleRequestId);
-        TestExecutionListener.mockWebServer.takeRequest();
+        RecordedRequest req = TestExecutionListener.mockWebServer.takeRequest();
+        Assert.assertEquals(req.getPath(), "/v1.0/compatibility?vin=1234&scope=read_odometer&country=US");
+    }
+
+    @Test
+    @PrepareForTest(System.class)
+    public void testGetCompatibilityWithOptions() throws Exception {
+        String vin = "1234";
+        String[] scope;
+        scope = new String[]{"read_odometer"};
+
+        MockResponse response = new MockResponse()
+                .setBody("{ \"compatible\": true }")
+                .addHeader("sc-request-id", this.sampleRequestId);
+        TestExecutionListener.mockWebServer.enqueue(response);
+
+        PowerMockito.mockStatic(System.class);
+        PowerMockito.when(System.getenv("SMARTCAR_API_ORIGIN")).thenReturn(
+                "http://localhost:" + TestExecutionListener.mockWebServer.getPort()
+        );
+        PowerMockito.when(System.getenv("SMARTCAR_CLIENT_ID")).thenReturn(this.sampleClientId);
+        PowerMockito.when(System.getenv("SMARTCAR_CLIENT_SECRET")).thenReturn(this.sampleClientSecret);
+
+        SmartcarCompatibilityRequest request =  new SmartcarCompatibilityRequest.Builder()
+                .clientId(this.sampleClientId)
+                .clientSecret(this.sampleClientSecret)
+                .vin(vin)
+                .scope(scope)
+                .country("GB")
+                .version("2.0")
+                .addFlag("foo", "bar")
+                .addFlag("test", true)
+                .build();
+        Compatibility comp = Smartcar.getCompatibility(request);
+        Assert.assertTrue(comp.getCompatible());
+        Assert.assertEquals(comp.getMeta().getRequestId(), this.sampleRequestId);
+        RecordedRequest req = TestExecutionListener.mockWebServer.takeRequest();
+        Assert.assertEquals(req.getPath(), "/v2.0/compatibility?vin=1234&scope=read_odometer&country=GB&flags=foo%3Abar%20test%3Atrue");
+    }
+
+    @Test
+    @PrepareForTest(System.class)
+    public void testGetCompatibilityWithoutRequiredOptions() {
+        boolean thrown = false;
+        try {
+            new SmartcarCompatibilityRequest.Builder()
+                    .clientId(this.sampleClientId)
+                    .clientSecret(null)
+                    .build();
+        } catch (SmartcarException e) {
+            thrown = true;
+            Assert.assertEquals(e.getType(), "INVALID_COMPATIBILITY_REQUEST");
+            Assert.assertEquals(e.getDescription(), "clientSecret must be defined");
+        }
+        Assert.assertTrue(thrown);
+
+        thrown = false;
+        try {
+            SmartcarCompatibilityRequest request =  new SmartcarCompatibilityRequest.Builder()
+                    .clientId(null)
+                    .clientSecret(this.sampleClientSecret)
+                    .build();
+        } catch (SmartcarException e) {
+            thrown = true;
+            Assert.assertEquals(e.getType(), "INVALID_COMPATIBILITY_REQUEST");
+            Assert.assertEquals(e.getDescription(), "clientId must be defined");
+        }
+        Assert.assertTrue(thrown);
     }
 
     /**

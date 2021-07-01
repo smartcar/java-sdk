@@ -3,19 +3,19 @@ package com.smartcar.sdk;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.smartcar.sdk.data.*;
+import okhttp3.mockwebserver.MockResponse;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-
 import java.util.Date;
 import java.util.UUID;
-
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.testng.Assert;
-import org.testng.annotations.*;
-import okhttp3.mockwebserver.MockResponse;
 
 /** Test Suite: Vehicle */
 @PrepareForTest({Vehicle.class, SmartcarException.class})
@@ -78,6 +78,11 @@ public class VehicleTest {
     Assert.assertEquals(odometer.getMeta().getRequestId(), this.expectedRequestId);
     Assert.assertTrue(odometer.getMeta().getDataAge() instanceof Date);
     Assert.assertEquals(odometer.getMeta().getUnitSystem(), this.unitSystem);
+  }
+
+  @Test
+  public void testGetVersion() {
+    Assert.assertEquals(this.subject.getVersion(), "2.0");
   }
 
   @Test
@@ -386,6 +391,7 @@ public class VehicleTest {
     VehicleOdometer odo = batch.odometer();
     Assert.assertEquals(odo.getDistance(), 32768.0);
     Assert.assertEquals(odo.getMeta().getUnitSystem(), "metric");
+    Assert.assertEquals(odo.getMeta().getRequestId(), "67127d3a-a08a-41f0-8211-f96da36b2d6e");
   }
 
   @Test
@@ -466,6 +472,23 @@ public class VehicleTest {
           e.getMessage(),
           "VALIDATION:null - Request invalid or malformed. Please check for missing parameters,"
               + " spelling and casing mistakes, and other syntax issues.");
+    }
+
+    Assert.assertTrue(thrown);
+  }
+
+  @Test
+  public void testBatchMixedErrorsSuccess() throws FileNotFoundException, SmartcarException {
+    loadAndEnqueueResponse("BatchResponseMixed");
+    boolean thrown = false;
+
+    BatchResponse batch = this.subject.batch(new String[] {"/odometer", "/fuel"});
+    VehicleOdometer odo = batch.odometer();
+    try {
+      batch.fuel();
+    } catch (SmartcarException e) {
+      thrown = true;
+      Assert.assertEquals(e.getStatusCode(), 409);
     }
 
     Assert.assertTrue(thrown);
