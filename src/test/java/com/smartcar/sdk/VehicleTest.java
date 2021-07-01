@@ -257,10 +257,12 @@ public class VehicleTest {
   @Test
   public void testV1PermissionError() throws FileNotFoundException {
     loadAndEnqueueErrorResponse("ErrorPermissionV1", 403);
+    boolean thrown = false;
 
     try {
       this.subject.odometer();
     } catch (SmartcarException ex) {
+      thrown = true;
       Assert.assertEquals(ex.getStatusCode(), 403);
       Assert.assertEquals(ex.getDescription(), "Insufficient permissions to access requested resource.");
       Assert.assertEquals(ex.getType(), "permission_error");
@@ -268,30 +270,37 @@ public class VehicleTest {
       Assert.assertEquals(ex.getRequestId(), this.expectedRequestId);
     }
 
+    Assert.assertTrue(thrown);
   }
 
   @Test
   public void testV1VehicleStateError() throws FileNotFoundException {
     loadAndEnqueueErrorResponse("ErrorVehicleStateV1", 409);
+    boolean thrown = false;
 
     try {
       this.subject.odometer();
     } catch (SmartcarException ex) {
+      thrown = true;
       Assert.assertEquals(ex.getStatusCode(), 409);
       Assert.assertEquals(ex.getDescription(), "Vehicle state cannot be determined.");
       Assert.assertEquals(ex.getType(), "vehicle_state_error");
       Assert.assertEquals(ex.getCode(), "VS_000");
       Assert.assertEquals(ex.getRequestId(), this.expectedRequestId);
     }
+
+    Assert.assertTrue(thrown);
   }
 
   @Test
   public void testV2PermissionError() throws FileNotFoundException {
     loadAndEnqueueErrorResponse("ErrorPermissionV2", 403);
+    boolean thrown = false;
 
     try {
       this.subject.odometer();
     } catch (SmartcarException ex) {
+      thrown = true;
       Assert.assertEquals(ex.getStatusCode(), 403);
       Assert.assertEquals(ex.getDescription(), "Your application has insufficient permissions to access the requested resource. Please prompt the user to re-authenticate using Smartcar Connect.");
       Assert.assertEquals(ex.getType(), "PERMISSION");
@@ -301,15 +310,18 @@ public class VehicleTest {
       Assert.assertNull(ex.getCode());
       Assert.assertEquals(ex.getRequestId(), this.expectedRequestId);
     }
+    Assert.assertTrue(thrown);
   }
 
   @Test
   public void testV2VehicleStateError() throws FileNotFoundException  {
     loadAndEnqueueErrorResponse("ErrorVehicleStateV2", 409);
+    boolean thrown = false;
 
     try {
       this.subject.odometer();
     } catch (SmartcarException ex) {
+      thrown = true;
       Assert.assertEquals(ex.getStatusCode(), 409);
       Assert.assertEquals(ex.getDescription(), "The vehicle is in a sleep state and temporarily unable to perform your request.");
       Assert.assertEquals(ex.getType(), "VEHICLE_STATE");
@@ -318,6 +330,8 @@ public class VehicleTest {
       Assert.assertEquals(ex.getCode(), "ASLEEP");
       Assert.assertEquals(ex.getRequestId(), this.expectedRequestId);
     }
+
+    Assert.assertTrue(thrown);
   }
 
   @Test
@@ -329,27 +343,35 @@ public class VehicleTest {
             .addHeader("sc-data-age", this.dataAge)
             .addHeader("sc-unit-system", this.unitSystem);
     TestExecutionListener.mockWebServer.enqueue(mockResponse);
+    boolean thrown = false;
 
     try {
       this.subject.odometer();
     } catch (SmartcarException ex) {
+      thrown = true;
       Assert.assertEquals(ex.getDescription(), "{ \"InvalidJSON\": {");
       Assert.assertEquals(ex.getStatusCode(), 500);
       Assert.assertEquals(ex.getRequestId(), this.expectedRequestId);
       Assert.assertEquals(ex.getType(), "SDK_ERROR");
     }
+
+    Assert.assertTrue(thrown);
   }
 
   @Test
   public void testErrorResolutionObject() throws Exception {
     loadAndEnqueueErrorResponse("ErrorResolutionObject", 401);
+    boolean thrown = false;
 
     try {
       this.subject.odometer();
     } catch (SmartcarException ex) {
+      thrown = true;
       Assert.assertEquals(ex.getResolutionType(), "REAUTHENTICATE");
       Assert.assertEquals(ex.getResolutionUrl(), "https://example.com");
     }
+
+    Assert.assertTrue(thrown);
   }
 
   @Test
@@ -371,10 +393,12 @@ public class VehicleTest {
     loadAndEnqueueResponse("BatchResponseError");
 
     BatchResponse batch = this.subject.batch(new String[] {"/odometer"});
+    boolean thrown = false;
 
     try {
       batch.odometer();
     } catch (SmartcarException e) {
+      thrown = true;
       Assert.assertEquals(e.getStatusCode(), 409);
       Assert.assertEquals(e.getDescription(), "Vehicle state cannot be determined.");
       Assert.assertEquals(e.getMessage(), "vehicle_state_error:VS_000 - Vehicle state cannot be determined.");
@@ -382,6 +406,8 @@ public class VehicleTest {
       Assert.assertEquals(e.getCode(), "VS_000");
       Assert.assertEquals(e.getRequestId(), expectedRequestId);
     }
+
+    Assert.assertTrue(thrown);
   }
 
   @Test
@@ -389,10 +415,12 @@ public class VehicleTest {
     loadAndEnqueueResponse("BatchResponseErrorV2");
 
     BatchResponse batch = this.subject.batch(new String[] {"/odometer"});
+    boolean thrown = false;
 
     try {
       batch.odometer();
     } catch (SmartcarException e) {
+      thrown = true;
       Assert.assertEquals(e.getStatusCode(), 409);
       Assert.assertEquals(e.getDescription(), "Door is open.");
       Assert.assertEquals(e.getType(), "VEHICLE_STATE");
@@ -403,6 +431,7 @@ public class VehicleTest {
       Assert.assertNull(e.getDetail());
       Assert.assertEquals(e.getMessage(), "VEHICLE_STATE:DOOR_OPEN - Door is open.");
     }
+    Assert.assertTrue(thrown);
   }
 
   @Test
@@ -410,10 +439,12 @@ public class VehicleTest {
     loadAndEnqueueResponse("BatchResponseErrorV2WithDetail");
 
     BatchResponse batch = this.subject.batch(new String[] {"/odometer"});
+    boolean thrown = false;
 
     try {
       batch.odometer();
     } catch (SmartcarException e) {
+      thrown = true;
       Assert.assertEquals(e.getStatusCode(), 400);
       Assert.assertEquals(
           e.getDescription(),
@@ -436,5 +467,7 @@ public class VehicleTest {
           "VALIDATION:null - Request invalid or malformed. Please check for missing parameters,"
               + " spelling and casing mistakes, and other syntax issues.");
     }
+
+    Assert.assertTrue(thrown);
   }
 }
