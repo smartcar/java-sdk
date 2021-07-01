@@ -31,9 +31,11 @@ public final class SmartcarAuthOptions {
     }
 
     private SmartcarAuthOptions(Builder builder) {
-        if (builder.flags != null) {
+        if (builder.flags.size() > 0) {
             String[] flagStrings = builder.flags.toArray(new String[0]);
             this.flags = Utils.join(flagStrings, " ");
+        } else {
+            this.flags = null;
         }
     }
 
