@@ -123,6 +123,38 @@ public class AuthClientTest extends PowerMockTestCase {
 
   @Test
   @PrepareForTest(System.class)
+  public void testExchangeCodeOptions() throws FileNotFoundException, SmartcarException, InterruptedException {
+    loadAndEnqueueResponse("AuthGetTokens");
+
+    PowerMockito.mockStatic(System.class);
+    PowerMockito.when(System.getenv("SMARTCAR_AUTH_ORIGIN"))
+            .thenReturn("http://localhost:" + TestExecutionListener.mockWebServer.getPort());
+
+    AuthClient client = new AuthClient.Builder()
+            .clientId(this.sampleClientId)
+            .clientSecret(this.sampleClientSecret)
+            .redirectUri(this.sampleRedirectUri)
+            .build();
+
+    SmartcarAuthOptions options = new SmartcarAuthOptions.Builder().addFlag("foo", "bar").addFlag("test", true).build();
+
+    Auth auth = client.exchangeCode(this.sampleCode, options);
+
+    Assert.assertEquals(auth.getAccessToken(), "cf7ba7e9-8c5d-417d-a99f-c386cfc235cc");
+    Assert.assertNotNull(auth.getExpiration().toString());
+    Assert.assertEquals(auth.getRefreshToken(), "3e565aed-d4b2-4296-9b4c-aec35825a6aa");
+    Assert.assertNotNull(auth.getRefreshExpiration().toString());
+
+    RecordedRequest request = TestExecutionListener.mockWebServer.takeRequest();
+
+    Assert.assertEquals(request.getRequestUrl().toString(),
+            "http://localhost:" + TestExecutionListener.mockWebServer.getPort() + "/oauth/token?flags=foo%3Abar%20test%3Atrue");
+    // can only verify the truncated body :(
+    Assert.assertEquals(request.getBody().toString(), "[size=77 text=grant_type=authorization_code&code=&redirect_uri=https%3A%2F%2Fe…]");
+  }
+
+  @Test
+  @PrepareForTest(System.class)
   public void testExchangeRefreshToken() throws FileNotFoundException, SmartcarException, InterruptedException {
     loadAndEnqueueResponse("AuthRefreshTokens");
 
