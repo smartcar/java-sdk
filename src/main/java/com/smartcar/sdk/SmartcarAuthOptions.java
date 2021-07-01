@@ -5,7 +5,7 @@ import java.util.List;
 
 
 public final class SmartcarAuthOptions {
-    private String flags = null;
+    private String flags;
 
     public static class Builder {
         private final List<String> flags;
