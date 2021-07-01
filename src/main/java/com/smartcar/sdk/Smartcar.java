@@ -1,12 +1,16 @@
 package com.smartcar.sdk;
 
-import com.google.gson.JsonObject;
-import com.smartcar.sdk.data.*;
-import okhttp3.*;
+import com.smartcar.sdk.data.Compatibility;
+import com.smartcar.sdk.data.RequestPaging;
+import com.smartcar.sdk.data.User;
+import com.smartcar.sdk.data.VehicleIds;
+import okhttp3.Credentials;
+import okhttp3.HttpUrl;
+import okhttp3.Request;
+import org.apache.commons.codec.binary.Hex;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
-import java.util.Base64;
 import java.util.Date;
 
 public class Smartcar {
@@ -171,7 +175,7 @@ public class Smartcar {
             Mac sha256HMAC = Mac.getInstance("HmacSHA256");
             SecretKeySpec secret = new SecretKeySpec(key.getBytes("UTF-8"), "HmacSHA256");
             sha256HMAC.init(secret);
-            return Base64.getEncoder().encodeToString(sha256HMAC.doFinal(challenge.getBytes("UTF-8")));
+            return Hex.encodeHexString(sha256HMAC.doFinal(challenge.getBytes("UTF-8")));
         } catch (Exception ex) {
             throw new SmartcarException.Builder().type("SDK_ERROR").description(ex.getMessage()).build();
         }
@@ -196,8 +200,7 @@ public class Smartcar {
      * @return
      * @throws SmartcarException
      */
-    public static boolean verifyPayload(String applicationManagementToken, String signature, JsonObject body) throws SmartcarException {
-        String bodyString = body.getAsString();
-        return Smartcar.getHash(applicationManagementToken, bodyString) == signature;
+    public static boolean verifyPayload(String applicationManagementToken, String signature, String body) throws SmartcarException {
+        return Smartcar.getHash(applicationManagementToken, body).equals(signature);
     }
 }

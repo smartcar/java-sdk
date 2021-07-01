@@ -11,7 +11,7 @@ import org.powermock.modules.testng.PowerMockTestCase;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
-@PowerMockIgnore("javax.net.ssl.*")
+@PowerMockIgnore({"javax.net.ssl.*", "javax.crypto.*"})
 @PrepareForTest({
         System.class,
         Smartcar.class,
@@ -25,11 +25,6 @@ public class SmartcarTest extends PowerMockTestCase {
     private final String[] sampleScope = {"read_vehicle_info", "read_location", "read_odometer"};
     private final boolean sampleTestMode = true;
     private String fakeAccessToken = "F4K3_4CC355_T0K3N";
-
-    @AfterTest
-    public void afterTest() throws InterruptedException {
-        //TestExecutionListener.mockWebServer.takeRequest();
-    }
 
     @Test
     public void testGetUser() throws Exception {
@@ -110,5 +105,22 @@ public class SmartcarTest extends PowerMockTestCase {
         String url = Smartcar.getApiUrl();
         Assert.assertEquals(url, "https://api.smartcar.com/v2.0");
         Smartcar.setApiVersion("1.0");
+    }
+
+    @Test
+    public void testHashChallenge() throws SmartcarException {
+        String hash = Smartcar.hashChallenge("amt", "challenge");
+        Assert.assertEquals(hash, "9baf5a7464bd86740ad5a06e439dcf535a075022ed2c92d74efacf646d79328e");
+    }
+
+    @Test
+    public void testVerifyPayload() throws SmartcarException {
+        Assert.assertTrue(
+                Smartcar.verifyPayload(
+                        "amt",
+                        "9baf5a7464bd86740ad5a06e439dcf535a075022ed2c92d74efacf646d79328e",
+                        "challenge"
+                )
+        );
     }
 }
