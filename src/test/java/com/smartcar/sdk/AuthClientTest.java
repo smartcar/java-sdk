@@ -183,16 +183,24 @@ public class AuthClientTest extends PowerMockTestCase {
 
   @Test
   public void testAuthUrlBuilderDefault() {
-    AuthClient client = new AuthClient.Builder()
-            .build();
+    PowerMockito.mockStatic(System.class);
+    PowerMockito.when(System.getenv("SMARTCAR_CLIENT_ID")).thenReturn(this.sampleClientId);
+    PowerMockito.when(System.getenv("SMARTCAR_CLIENT_SECRET")).thenReturn(this.sampleClientSecret);
+    PowerMockito.when(System.getenv("SMARTCAR_REDIRECT_URI")).thenReturn(this.sampleRedirectUri);
+
+    AuthClient client = new AuthClient.Builder().build();
     String authUrl = client.authUrlBuilder(this.sampleScope).build();
-    Assert.assertEquals(authUrl, "https://connect.smartcar.com/oauth/authorize?response_type=code&client_id=2cfa25d8-f912-4b1f-905a-4562336f2940&redirect_uri=https%3A%2F%2Fexample.com%2Fauth&mode=live&scope=read_vehicle_info%20read_location%20read_odometer");
+    Assert.assertEquals(authUrl, "https://connect.smartcar.com/oauth/authorize?response_type=code&client_id=cl13nt1d-t35t-46dc-aa25-bdd042f54e7d&redirect_uri=https%3A%2F%2Fexample.com%2F&mode=live&scope=read_vehicle_info%20read_location%20read_odometer");
   }
 
   @Test
   public void testAuthUrlBuilderWithOptions() {
-    AuthClient client = new AuthClient.Builder()
-            .build();
+    PowerMockito.mockStatic(System.class);
+    PowerMockito.when(System.getenv("SMARTCAR_CLIENT_ID")).thenReturn(this.sampleClientId);
+    PowerMockito.when(System.getenv("SMARTCAR_CLIENT_SECRET")).thenReturn(this.sampleClientSecret);
+    PowerMockito.when(System.getenv("SMARTCAR_REDIRECT_URI")).thenReturn(this.sampleRedirectUri);
+    AuthClient client = new AuthClient.Builder().build();
+
     String authUrl = client.authUrlBuilder(this.sampleScope)
             .state("sampleState")
             .approvalPrompt(true)
@@ -202,6 +210,6 @@ public class AuthClientTest extends PowerMockTestCase {
             .addFlag("foo", "bar")
             .addFlag("test", true)
             .build();
-    Assert.assertEquals(authUrl, "https://connect.smartcar.com/oauth/authorize?response_type=code&client_id=2cfa25d8-f912-4b1f-905a-4562336f2940&redirect_uri=https%3A%2F%2Fexample.com%2Fauth&mode=live&scope=read_vehicle_info%20read_location%20read_odometer&state=sampleState&approval_prompt=force&make=TESLA&single_select=true&single_select=true&single_select_vin=sampleVin&flags=foo%3Abar%20test%3Atrue");
+    Assert.assertEquals(authUrl, "https://connect.smartcar.com/oauth/authorize?response_type=code&client_id=cl13nt1d-t35t-46dc-aa25-bdd042f54e7d&redirect_uri=https%3A%2F%2Fexample.com%2F&mode=live&scope=read_vehicle_info%20read_location%20read_odometer&state=sampleState&approval_prompt=force&make=TESLA&single_select=true&single_select=true&single_select_vin=sampleVin&flags=foo%3Abar%20test%3Atrue");
   }
 }
