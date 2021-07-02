@@ -5,7 +5,6 @@ import com.google.gson.JsonParser;
 import com.smartcar.sdk.data.*;
 import okhttp3.mockwebserver.MockResponse;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -19,7 +18,6 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 /** Test Suite: Vehicle */
-@PrepareForTest({Vehicle.class, SmartcarException.class})
 @PowerMockIgnore("javax.net.ssl.*")
 public class VehicleTest {
 
