@@ -30,7 +30,6 @@ import java.util.Date;
   Request.class,
   Response.class,
   ResponseBody.class,
-
 })
 @PowerMockIgnore("javax.net.ssl.*")
 public class AuthClientTest extends PowerMockTestCase {

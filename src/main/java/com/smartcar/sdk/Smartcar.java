@@ -16,25 +16,9 @@ import java.util.Date;
 public class Smartcar {
     public static String API_VERSION = "2.0";
     public static String API_ORIGIN = "https://api.smartcar.com";
-    private static final String SDK_VERSION = Smartcar.getSdkVersion();
 
     /**
-     * Retrieves the SDK version, falling back to DEVELOPMENT if we're not running from a jar.
-     *
-     * @return the SDK version
-     */
-    public static String getSdkVersion() {
-        String version = Smartcar.class.getPackage().getImplementationVersion();
-
-        if (version == null) {
-            version = "DEVELOPMENT";
-        }
-
-        return version;
-    }
-
-    /**
-     * Sets the API version
+     * Sets the Smartcar API version
      *
      * @param version API version to set
      */

@@ -3,26 +3,36 @@ package com.smartcar.sdk;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.smartcar.sdk.data.ApiData;
+import com.smartcar.sdk.data.Meta;
+import okhttp3.*;
+import org.apache.commons.text.CaseUtils;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
-
-import com.smartcar.sdk.data.Meta;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.Headers;
-import org.apache.commons.text.CaseUtils;
 
 /** Provides the core functionality for API client objects. */
 abstract class ApiClient {
   public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
+  /**
+   * Retrieves the SDK version, falling back to DEVELOPMENT if we're not running from a jar.
+   *
+   * @return the SDK version
+   */
+  private static String getSdkVersion() {
+    String version = ApiClient.class.getPackage().getImplementationVersion();
+
+    if (version == null) {
+      version = "DEVELOPMENT";
+    }
+
+    return version;
+  }
+
   protected static final String USER_AGENT =
       String.format(
           "Smartcar/%s (%s; %s) Java v%s %s",
-          Smartcar.getSdkVersion(),
+          getSdkVersion(),
           System.getProperty("os.name"),
           System.getProperty("os.arch"),
           System.getProperty("java.version"),

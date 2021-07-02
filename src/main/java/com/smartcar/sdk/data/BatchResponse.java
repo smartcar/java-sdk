@@ -5,10 +5,10 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.smartcar.sdk.SmartcarException;
+import org.apache.commons.text.CaseUtils;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.apache.commons.text.CaseUtils;
 
 /** Smartcar BatchResponse Object */
 public class BatchResponse extends ApiData {
@@ -90,7 +90,7 @@ public class BatchResponse extends ApiData {
   }
 
   /**
-   * Get response from the battery/capacity endpoint
+   * Get response from the /battery/capacity endpoint
    *
    * @return the battery capacity of the vehicle
    * @throws SmartcarException if the request for this endpoint returned an HTTP error code
@@ -123,9 +123,9 @@ public class BatchResponse extends ApiData {
   }
 
   /**
-   * Get response from the /info endpoint
+   * Get response from the / endpoint
    *
-   * @return VehicleInfo object
+   * @return VehicleAttributes object
    * @throws SmartcarException if the request for this endpoint +returned an HTTP error code
    */
   public VehicleAttributes attributes() throws SmartcarException {
@@ -133,9 +133,9 @@ public class BatchResponse extends ApiData {
   }
 
   /**
-   * Get response from the /vin endpoint
+   * Get response from the /location endpoint
    *
-   * @return the vin of the vehicle
+   * @return the location of the vehicle
    * @throws SmartcarException if the request for this endpoint returned an HTTP error code
    */
   public VehicleLocation location()
