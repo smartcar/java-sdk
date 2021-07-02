@@ -16,6 +16,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Date;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 /** Test Suite: Vehicle */
 @PrepareForTest({Vehicle.class, SmartcarException.class})
@@ -32,7 +33,7 @@ public class VehicleTest {
 
   @AfterMethod
   public void afterMethod() throws InterruptedException {
-    TestExecutionListener.mockWebServer.takeRequest();
+    TestExecutionListener.mockWebServer.takeRequest(1, TimeUnit.SECONDS);
   }
 
   private JsonElement loadJsonResource(String resourceName) throws FileNotFoundException {
