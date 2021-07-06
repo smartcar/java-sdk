@@ -12,6 +12,8 @@ import org.apache.commons.codec.binary.Hex;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Smartcar {
     public static String API_VERSION = "2.0";
@@ -53,12 +55,9 @@ public class Smartcar {
     public static User getUser(String accessToken) throws SmartcarException {
         // Build Request
         String url = Smartcar.getApiUrl();
-        Request request =
-                new Request.Builder()
-                        .url(url + "/user")
-                        .header("Authorization", "Bearer " + accessToken)
-                        .addHeader("User-Agent", ApiClient.USER_AGENT)
-                        .build();
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authentication", "Bearer " + accessToken);
+        Request request = ApiClient.buildRequest(HttpUrl.parse(url + "/user"), "GET", null, headers);
 
         return ApiClient.execute(request, User.class);
     }
@@ -83,12 +82,9 @@ public class Smartcar {
         }
 
         HttpUrl url = urlBuilder.build();
-        Request request =
-                new Request.Builder()
-                        .url(url)
-                        .header("Authorization", "Bearer " + accessToken)
-                        .addHeader("User-Agent", ApiClient.USER_AGENT)
-                        .build();
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authentication", "Bearer " + accessToken);
+        Request request = ApiClient.buildRequest(url, "GET", null, headers);
 
         return ApiClient.execute(request, VehicleIds.class);
     }
@@ -147,18 +143,12 @@ public class Smartcar {
         }
         HttpUrl url = urlBuilder.build();
 
-        Request request =
-                new Request.Builder()
-                        .url(url)
-                        .header("Authorization",
-                                Credentials.basic(
-                                        compatibilityRequest.getClientId(),
-                                        compatibilityRequest.getClientSecret()
-                                )
-                        )
-                        .addHeader("User-Agent", ApiClient.USER_AGENT)
-                        .get()
-                        .build();
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authentication", Credentials.basic(
+                compatibilityRequest.getClientId(),
+                compatibilityRequest.getClientSecret()
+        ));
+        Request request = ApiClient.buildRequest(url, "GET", null, headers);
 
         return ApiClient.execute(request, Compatibility.class);
     }
@@ -178,7 +168,7 @@ public class Smartcar {
      *
      * @param applicationManagementToken
      * @param challenge
-     * @return
+     * @return String
      * @throws SmartcarException
      */
     public static String hashChallenge(String applicationManagementToken, String challenge) throws SmartcarException {

@@ -8,9 +8,7 @@ import com.smartcar.sdk.data.Auth;
 import okhttp3.*;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 
 /** Smartcar OAuth 2.0 Authentication Client */
 public class AuthClient {
@@ -84,7 +82,16 @@ public class AuthClient {
       return this;
     }
 
-    public AuthClient build() {
+    public AuthClient build() throws Exception {
+      if (this.clientId == null) {
+        throw new Exception("clientId must be defined");
+      }
+      if (this.clientSecret == null) {
+        throw new Exception("clientSecret must be defined");
+      }
+      if (this.redirectUri == null) {
+        throw new Exception("redirectUri must be defined");
+      }
       return new AuthClient(this);
     }
   }
@@ -202,14 +209,10 @@ public class AuthClient {
       urlBuilder.addQueryParameter("flags", options.getFlags());
     }
 
-    Request request =
-            new Request.Builder()
-                    .url(urlBuilder.build().toString())
-                    .header("Authorization", basicAuthorization)
-                    .header("Content-Type", "application/x-www-form-urlencoded")
-                    .addHeader("User-Agent", ApiClient.USER_AGENT)
-                    .post(requestBody)
-                    .build();
+    Map<String, String> headers = new HashMap<>();
+    headers.put("Authorization", basicAuthorization);
+    headers.put("Content-Type", "application/x-www-form-urlencoded");
+    Request request = ApiClient.buildRequest(urlBuilder.build(), "POST", requestBody, headers);
 
     return ApiClient.execute(request, Auth.class);
   }

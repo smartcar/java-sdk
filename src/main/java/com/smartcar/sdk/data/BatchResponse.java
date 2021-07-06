@@ -5,7 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.smartcar.sdk.SmartcarException;
-import org.apache.commons.text.CaseUtils;
+import com.smartcar.sdk.Utils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,7 +15,7 @@ public class BatchResponse extends ApiData {
   private String requestId;
   private Map<String, JsonObject> responseData = new HashMap<>();
   private static GsonBuilder gson =
-      new GsonBuilder().setFieldNamingStrategy((field) -> toCamelCase(field.getName()));
+      new GsonBuilder().setFieldNamingStrategy((field) -> Utils.toCamelCase(field.getName()));
 
   /**
    * Initializes a new BatchResponse.
@@ -28,13 +28,6 @@ public class BatchResponse extends ApiData {
       String path = res.get("path").getAsString();
       this.responseData.put(path, res);
     }
-  }
-
-  private static String toCamelCase(String fieldName) {
-    if (fieldName.contains("_")) { // checks for snake case
-      return CaseUtils.toCamelCase(fieldName, false, '_');
-    }
-    return fieldName;
   }
 
   private <T extends ApiData> T get(String path, Class<T> dataType)

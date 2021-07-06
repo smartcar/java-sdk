@@ -15,15 +15,6 @@ public class VehicleLocation extends ApiData {
   }
 
   /**
-   * Stores the latitude of the vehicle
-   *
-   * @param latitude latitude of the vehicle
-   */
-  public void setLatitude(double latitude) {
-    this.latitude = latitude;
-  }
-
-  /**
    * Returns the longitude of the vehicle
    *
    * @return longitude of the vehicle

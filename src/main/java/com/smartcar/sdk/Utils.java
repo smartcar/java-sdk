@@ -1,7 +1,9 @@
 package com.smartcar.sdk;
 
+import org.apache.commons.text.CaseUtils;
+
 /** General package utilities. */
-class Utils {
+public class Utils {
   /**
    * Joins the elements of a string array together, delimited by a separator.
    *
@@ -21,5 +23,12 @@ class Utils {
     }
 
     return stringBuilder.toString();
+  }
+
+  public static String toCamelCase(String fieldName) {
+    if (fieldName.contains("_")) { // checks for snake case
+      return CaseUtils.toCamelCase(fieldName, false, '_');
+    }
+    return fieldName;
   }
 }

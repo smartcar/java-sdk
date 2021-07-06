@@ -71,16 +71,12 @@ public final class SmartcarCompatibilityRequest {
             return this;
         }
 
-        public SmartcarCompatibilityRequest build() throws SmartcarException {
+        public SmartcarCompatibilityRequest build() throws Exception {
             if (this.clientId == null) {
-                throw new SmartcarException.Builder()
-                        .type("INVALID_COMPATIBILITY_REQUEST")
-                        .description("clientId must be defined").build();
+                throw new Exception("clientId must be defined");
             }
             if (this.clientSecret == null) {
-                throw new SmartcarException.Builder()
-                        .type("INVALID_COMPATIBILITY_REQUEST")
-                        .description("clientSecret must be defined").build();
+                throw new Exception("clientSecret must be defined");
             }
             return new SmartcarCompatibilityRequest(this);
         }

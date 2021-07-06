@@ -68,14 +68,10 @@ public class Vehicle {
             .addPathSegments(path)
             .build();
 
-    Request request =
-        new Request.Builder()
-            .url(url)
-            .header("Authorization", "Bearer " + accessToken)
-            .addHeader("User-Agent", ApiClient.USER_AGENT)
-            .method(method, body)
-            .header("sc-unit-system", this.unitSystem.name().toLowerCase())
-            .build();
+    Map<String, String> headers = new HashMap<>();
+    headers.put("Authentication", "Bearer " + accessToken);
+    headers.put("sc-unit-system", this.unitSystem.name().toLowerCase());
+    Request request = ApiClient.buildRequest(url, method, body, headers);
 
     return ApiClient.execute(request, type);
   }
@@ -100,14 +96,10 @@ public class Vehicle {
 
     HttpUrl url = urlBuilder.build();
 
-    Request request =
-            new Request.Builder()
-                    .url(url)
-                    .header("Authorization", "Bearer " + accessToken)
-                    .addHeader("User-Agent", ApiClient.USER_AGENT)
-                    .method(method, body)
-                    .header("sc-unit-system", this.unitSystem.name().toLowerCase())
-                    .build();
+    Map<String, String> headers = new HashMap<>();
+    headers.put("Authentication", "Bearer " + accessToken);
+    headers.put("sc-unit-system", this.unitSystem.name().toLowerCase());
+    Request request = ApiClient.buildRequest(url, method, body, headers);
 
     return ApiClient.execute(request, type);
   }

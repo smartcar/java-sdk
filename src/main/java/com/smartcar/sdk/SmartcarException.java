@@ -4,13 +4,10 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import java.io.IOException;
-
 import okhttp3.Headers;
-import okhttp3.Response;
 import okhttp3.ResponseBody;
 
-import javax.json.Json;
+import java.io.IOException;
 
 /** Thrown when the Smartcar API library encounters a problem. */
 public class SmartcarException extends java.lang.Exception {
@@ -120,7 +117,17 @@ public class SmartcarException extends java.lang.Exception {
       return builder.description(body.toString()).build();
     }
 
-    JsonObject bodyJson = new Gson().fromJson(body.toString(), JsonObject.class);
+    String bodyString = null;
+    try {
+      bodyString = body.toString();
+    } catch (NullPointerException ex) {
+      return builder
+              .description("Empty response body")
+              .type("SDK_ERROR")
+              .build();
+    }
+
+    JsonObject bodyJson = new Gson().fromJson(bodyString, JsonObject.class);
     if (bodyJson.has("error")) {
       builder.type(bodyJson.get("error").getAsString());
       if (bodyJson.has("message")) {
@@ -165,7 +172,7 @@ public class SmartcarException extends java.lang.Exception {
     }
 
     return builder
-            .description(body.toString())
+            .description(bodyString)
             .type("SDK_ERROR")
             .build();
   }

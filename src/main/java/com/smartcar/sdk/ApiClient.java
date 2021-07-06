@@ -5,9 +5,9 @@ import com.google.gson.JsonObject;
 import com.smartcar.sdk.data.ApiData;
 import com.smartcar.sdk.data.Meta;
 import okhttp3.*;
-import org.apache.commons.text.CaseUtils;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /** Provides the core functionality for API client objects. */
@@ -38,19 +38,24 @@ abstract class ApiClient {
           System.getProperty("java.version"),
           System.getProperty("java.vm.name"));
 
-  private static OkHttpClient client =
+  private static final OkHttpClient client =
       new OkHttpClient.Builder().readTimeout(310, TimeUnit.SECONDS).build();
 
-  private static String toCamelCase(String fieldName) {
-    if (fieldName.contains("_")) { // checks for snake case
-      return CaseUtils.toCamelCase(fieldName, false, new char[] {'_'});
-    }
-    return fieldName;
-  }
+
 
   static GsonBuilder gson =
-      new GsonBuilder().setFieldNamingStrategy((field) -> toCamelCase(field.getName()));
+      new GsonBuilder().setFieldNamingStrategy((field) -> Utils.toCamelCase(field.getName()));
 
+  protected static Request buildRequest(HttpUrl url, String method, RequestBody body, Map<String, String> headers) {
+    Request.Builder request = new Request.Builder()
+                    .url(url)
+                    .addHeader("User-Agent", ApiClient.USER_AGENT)
+                    .method(method, body);
+
+    headers.forEach(request::addHeader);
+
+    return request.build();
+  }
 
   /**
    * Sends the specified request, returning the raw response body.
@@ -97,7 +102,7 @@ abstract class ApiClient {
       JsonObject headerJson = new JsonObject();
       for (String header: response.headers().names()) {
         headerJson.addProperty(header.toLowerCase(), headers.get(header));
-      };
+      }
       String headerJsonString = headerJson.toString();
       meta = ApiClient.gson.create().fromJson(headerJsonString, Meta.class);
       data.setMeta(meta);

@@ -138,23 +138,21 @@ public class SmartcarTest extends PowerMockTestCase {
                     .clientId(this.sampleClientId)
                     .clientSecret(null)
                     .build();
-        } catch (SmartcarException e) {
+        } catch (Exception e) {
             thrown = true;
-            Assert.assertEquals(e.getType(), "INVALID_COMPATIBILITY_REQUEST");
-            Assert.assertEquals(e.getDescription(), "clientSecret must be defined");
+            Assert.assertEquals(e.getMessage(), "clientSecret must be defined");
         }
         Assert.assertTrue(thrown);
 
         thrown = false;
         try {
-            SmartcarCompatibilityRequest request =  new SmartcarCompatibilityRequest.Builder()
+            new SmartcarCompatibilityRequest.Builder()
                     .clientId(null)
                     .clientSecret(this.sampleClientSecret)
                     .build();
-        } catch (SmartcarException e) {
+        } catch (Exception e) {
             thrown = true;
-            Assert.assertEquals(e.getType(), "INVALID_COMPATIBILITY_REQUEST");
-            Assert.assertEquals(e.getDescription(), "clientId must be defined");
+            Assert.assertEquals(e.getMessage(), "clientId must be defined");
         }
         Assert.assertTrue(thrown);
     }

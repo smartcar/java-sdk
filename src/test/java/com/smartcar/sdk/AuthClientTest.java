@@ -77,7 +77,7 @@ public class AuthClientTest extends PowerMockTestCase {
 
   @Test
   @PrepareForTest(System.class)
-  public void testAuthClientBuilder() {
+  public void testAuthClientBuilder() throws Exception {
     PowerMockito.mockStatic(System.class);
     PowerMockito.when(System.getenv("SMARTCAR_CLIENT_ID")).thenReturn(this.sampleClientId);
     PowerMockito.when(System.getenv("SMARTCAR_CLIENT_SECRET")).thenReturn(this.sampleClientSecret);
@@ -92,7 +92,7 @@ public class AuthClientTest extends PowerMockTestCase {
 
   @Test
   @PrepareForTest(System.class)
-  public void testExchangeCode() throws FileNotFoundException, SmartcarException, InterruptedException {
+  public void testExchangeCode() throws Exception {
     loadAndEnqueueResponse("AuthGetTokens");
 
     PowerMockito.mockStatic(System.class);
@@ -122,7 +122,7 @@ public class AuthClientTest extends PowerMockTestCase {
 
   @Test
   @PrepareForTest(System.class)
-  public void testExchangeCodeOptions() throws FileNotFoundException, SmartcarException, InterruptedException {
+  public void testExchangeCodeOptions() throws Exception {
     loadAndEnqueueResponse("AuthGetTokens");
 
     PowerMockito.mockStatic(System.class);
@@ -154,7 +154,7 @@ public class AuthClientTest extends PowerMockTestCase {
 
   @Test
   @PrepareForTest(System.class)
-  public void testExchangeRefreshToken() throws FileNotFoundException, SmartcarException, InterruptedException {
+  public void testExchangeRefreshToken() throws Exception {
     loadAndEnqueueResponse("AuthRefreshTokens");
 
     PowerMockito.mockStatic(System.class);
@@ -181,7 +181,7 @@ public class AuthClientTest extends PowerMockTestCase {
   }
 
   @Test
-  public void testAuthUrlBuilderDefault() {
+  public void testAuthUrlBuilderDefault() throws Exception {
     PowerMockito.mockStatic(System.class);
     PowerMockito.when(System.getenv("SMARTCAR_CLIENT_ID")).thenReturn(this.sampleClientId);
     PowerMockito.when(System.getenv("SMARTCAR_CLIENT_SECRET")).thenReturn(this.sampleClientSecret);
@@ -193,7 +193,7 @@ public class AuthClientTest extends PowerMockTestCase {
   }
 
   @Test
-  public void testAuthUrlBuilderWithOptions() {
+  public void testAuthUrlBuilderWithOptions() throws Exception {
     PowerMockito.mockStatic(System.class);
     PowerMockito.when(System.getenv("SMARTCAR_CLIENT_ID")).thenReturn(this.sampleClientId);
     PowerMockito.when(System.getenv("SMARTCAR_CLIENT_SECRET")).thenReturn(this.sampleClientSecret);
