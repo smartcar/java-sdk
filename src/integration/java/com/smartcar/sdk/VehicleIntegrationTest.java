@@ -14,7 +14,7 @@ public class VehicleIntegrationTest {
   private Vehicle vehicle;
   private Vehicle eVehicle;
 
-  private Vehicle getVehicle(String make, String[] scope) throws SmartcarException {
+  private Vehicle getVehicle(String make, String[] scope) throws Exception {
     AuthClient client = AuthHelpers.getConfiguredAuthClientBuilder().build();
     String code = AuthHelpers.runAuthFlow(client.authUrlBuilder(scope).build(), make);
     String accessToken = client.exchangeCode(code).getAccessToken();
@@ -23,7 +23,7 @@ public class VehicleIntegrationTest {
   }
 
   @BeforeSuite
-  public void beforeSuite() throws SmartcarException {
+  public void beforeSuite() throws Exception {
     this.vehicle = this.getVehicle("CHEVROLET", AuthHelpers.DEFAULT_SCOPE);
     this.eVehicle =
         this.getVehicle(

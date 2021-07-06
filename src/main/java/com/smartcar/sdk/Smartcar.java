@@ -56,7 +56,7 @@ public class Smartcar {
         // Build Request
         String url = Smartcar.getApiUrl();
         Map<String, String> headers = new HashMap<>();
-        headers.put("Authentication", "Bearer " + accessToken);
+        headers.put("Authorization", "Bearer " + accessToken);
         Request request = ApiClient.buildRequest(HttpUrl.parse(url + "/user"), "GET", null, headers);
 
         return ApiClient.execute(request, User.class);
@@ -83,7 +83,7 @@ public class Smartcar {
 
         HttpUrl url = urlBuilder.build();
         Map<String, String> headers = new HashMap<>();
-        headers.put("Authentication", "Bearer " + accessToken);
+        headers.put("Authorization", "Bearer " + accessToken);
         Request request = ApiClient.buildRequest(url, "GET", null, headers);
 
         return ApiClient.execute(request, VehicleIds.class);
@@ -144,7 +144,7 @@ public class Smartcar {
         HttpUrl url = urlBuilder.build();
 
         Map<String, String> headers = new HashMap<>();
-        headers.put("Authentication", Credentials.basic(
+        headers.put("Authorization", Credentials.basic(
                 compatibilityRequest.getClientId(),
                 compatibilityRequest.getClientSecret()
         ));

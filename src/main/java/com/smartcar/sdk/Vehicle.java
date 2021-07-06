@@ -69,7 +69,7 @@ public class Vehicle {
             .build();
 
     Map<String, String> headers = new HashMap<>();
-    headers.put("Authentication", "Bearer " + accessToken);
+    headers.put("Authorization", "Bearer " + accessToken);
     headers.put("sc-unit-system", this.unitSystem.name().toLowerCase());
     Request request = ApiClient.buildRequest(url, method, body, headers);
 
@@ -97,7 +97,7 @@ public class Vehicle {
     HttpUrl url = urlBuilder.build();
 
     Map<String, String> headers = new HashMap<>();
-    headers.put("Authentication", "Bearer " + accessToken);
+    headers.put("Authorization", "Bearer " + accessToken);
     headers.put("sc-unit-system", this.unitSystem.name().toLowerCase());
     Request request = ApiClient.buildRequest(url, method, body, headers);
 

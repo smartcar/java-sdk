@@ -18,7 +18,7 @@ public class SmartcarTest {
     private String[] scope = {"read_odometer"};
 
     @BeforeSuite
-    public void beforeSuite() throws SmartcarException {
+    public void beforeSuite() throws Exception {
         this.client = AuthHelpers.getConfiguredAuthClientBuilder().build();
         this.authorizeUrl = client.authUrlBuilder(new String[] {"read_vehicle_info"}).build();
         String code = AuthHelpers.runAuthFlow(client.authUrlBuilder(this.scope).build());
@@ -47,7 +47,7 @@ public class SmartcarTest {
     }
 
     @Test
-    public void testGetCompatibility() throws SmartcarException {
+    public void testGetCompatibility() throws Exception {
         String vin = "5YJSA1E29LF403082";
         String[] scope = {"read_odometer"};
 

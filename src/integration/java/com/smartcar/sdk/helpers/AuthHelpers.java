@@ -107,6 +107,10 @@ public class AuthHelpers {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.id("approval-button")));
     permissionsApprovalButton.click();
 
+    WebElement continueButton =
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.id("continue-button")));
+    continueButton.click();
+
     URL url = null;
     try {
       url = new URL(driver.getCurrentUrl());

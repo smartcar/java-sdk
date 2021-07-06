@@ -13,7 +13,7 @@ public class AuthTest {
   private String authorizeUrl;
 
   @BeforeSuite
-  public void beforeSuite()  {
+  public void beforeSuite() throws Exception {
     this.client = AuthHelpers.getConfiguredAuthClientBuilder().build();
     this.authorizeUrl = client.authUrlBuilder(new String[] {"read_vehicle_info"}).build();
   }
