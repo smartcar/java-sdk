@@ -93,7 +93,7 @@ abstract class ApiClient {
     Response response = ApiClient.execute(request);
     T data;
     Meta meta;
-    String bodyString = null;
+    String bodyString = "";
 
     try {
       bodyString = response.body().string();
@@ -107,6 +107,9 @@ abstract class ApiClient {
       meta = ApiClient.gson.create().fromJson(headerJsonString, Meta.class);
       data.setMeta(meta);
     } catch (Exception ex) {
+      if (bodyString.equals("")) {
+        bodyString = "Empty response body";
+      }
       throw new SmartcarException.Builder()
               .statusCode(response.code())
               .description(bodyString)

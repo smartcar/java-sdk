@@ -40,7 +40,7 @@ public class Smartcar {
     static String getApiOrigin() {
         String apiOrigin = System.getenv("SMARTCAR_API_ORIGIN");
         if (apiOrigin == null) {
-            return "https://api.smartcar.com";
+            return API_ORIGIN;
         }
         return apiOrigin;
     }

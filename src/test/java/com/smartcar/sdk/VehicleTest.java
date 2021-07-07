@@ -363,7 +363,7 @@ public class VehicleTest {
   }
 
   @Test
-  public void testNullResponse() {
+  public void testNullErrorResponse() {
     MockResponse mockResponse = new MockResponse()
             .setResponseCode(500);
     TestExecutionListener.mockWebServer.enqueue(mockResponse);
@@ -375,6 +375,25 @@ public class VehicleTest {
       thrown = true;
       Assert.assertEquals(ex.getDescription(), "Empty response body");
       Assert.assertEquals(ex.getStatusCode(), 500);
+      Assert.assertEquals(ex.getType(), "SDK_ERROR");
+    }
+
+    Assert.assertTrue(thrown);
+  }
+
+  @Test
+  public void testNull200Response() {
+    MockResponse mockResponse = new MockResponse()
+            .setResponseCode(200);
+    TestExecutionListener.mockWebServer.enqueue(mockResponse);
+    boolean thrown = false;
+
+    try {
+      this.subject.odometer();
+    } catch (SmartcarException ex) {
+      thrown = true;
+      Assert.assertEquals(ex.getDescription(), "Empty response body");
+      Assert.assertEquals(ex.getStatusCode(), 200);
       Assert.assertEquals(ex.getType(), "SDK_ERROR");
     }
 
