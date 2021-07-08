@@ -75,6 +75,7 @@ public class AuthHelpers {
    * @return auth code
    */
   public static String runAuthFlow(String authorizeURL, String make) {
+    System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
     FirefoxOptions options = new FirefoxOptions().setHeadless(HEADLESS);
 
     WebDriver driver = new FirefoxDriver(options);
@@ -106,10 +107,6 @@ public class AuthHelpers {
     WebElement permissionsApprovalButton =
         wait.until(ExpectedConditions.presenceOfElementLocated(By.id("approval-button")));
     permissionsApprovalButton.click();
-
-    WebElement continueButton =
-            wait.until(ExpectedConditions.presenceOfElementLocated(By.id("continue-button")));
-    continueButton.click();
 
     URL url = null;
     try {

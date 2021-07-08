@@ -142,6 +142,7 @@ public class Vehicle {
 
   public ApplicationPermissions permissions(RequestPaging paging) throws SmartcarException {
     if (this.permissions != null) {
+      // TODO this is a bug, it might return values that arent paged
       return this.permissions;
     }
 
@@ -158,8 +159,8 @@ public class Vehicle {
    *
    * @throws SmartcarException if the request is unsuccessful
    */
-  public ActionResponse disconnect() throws SmartcarException {
-    return this.call("application", "DELETE", null, ActionResponse.class);
+  public DisconnectResponse disconnect() throws SmartcarException {
+    return this.call("application", "DELETE", null, DisconnectResponse.class);
   }
 
   /**
@@ -309,8 +310,8 @@ public class Vehicle {
    *
    * @throws SmartcarException if the request is unsuccessful
    */
-  public ActionResponse unsubscribe(String applicationManagementToken, String webhookId) throws SmartcarException {
-    return this.call("webhooks/" + webhookId, "DELETE", null, applicationManagementToken, ActionResponse.class);
+  public UnsubscribeResponse unsubscribe(String applicationManagementToken, String webhookId) throws SmartcarException {
+    return this.call("webhooks/" + webhookId, "DELETE", null, applicationManagementToken, UnsubscribeResponse.class);
   }
 
   /**

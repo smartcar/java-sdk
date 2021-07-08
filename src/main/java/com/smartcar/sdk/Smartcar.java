@@ -180,7 +180,7 @@ public class Smartcar {
      * @param applicationManagementToken
      * @param signature
      * @param body
-     * @return
+     * @return boolean
      * @throws SmartcarException
      */
     public static boolean verifyPayload(String applicationManagementToken, String signature, String body) throws SmartcarException {

@@ -417,6 +417,38 @@ public class VehicleTest {
   }
 
   @Test
+  public void testErrorResolutionObjectNoUrl() throws Exception {
+    loadAndEnqueueErrorResponse("ErrorResolutionObject2", 401);
+    boolean thrown = false;
+
+    try {
+      this.subject.odometer();
+    } catch (SmartcarException ex) {
+      thrown = true;
+      Assert.assertEquals(ex.getResolutionType(), "REAUTHENTICATE");
+      Assert.assertNull(ex.getResolutionUrl());
+    }
+
+    Assert.assertTrue(thrown);
+  }
+
+  @Test
+  public void testErrorResolutionObjectNullType() throws Exception {
+    loadAndEnqueueErrorResponse("ErrorResolutionObject3", 401);
+    boolean thrown = false;
+
+    try {
+      this.subject.odometer();
+    } catch (SmartcarException ex) {
+      thrown = true;
+      Assert.assertNull(ex.getResolutionType());
+      Assert.assertNull(ex.getResolutionUrl());
+    }
+
+    Assert.assertTrue(thrown);
+  }
+
+  @Test
   public void testBatch() throws Exception {
     String expectedRequestId = "67127d3a-a08a-41f0-8211-f96da36b2d6e";
     loadAndEnqueueResponse("BatchResponseSuccess");

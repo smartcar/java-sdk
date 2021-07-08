@@ -42,7 +42,6 @@ abstract class ApiClient {
       new OkHttpClient.Builder().readTimeout(310, TimeUnit.SECONDS).build();
 
 
-
   static GsonBuilder gson =
       new GsonBuilder().setFieldNamingStrategy((field) -> Utils.toCamelCase(field.getName()));
 

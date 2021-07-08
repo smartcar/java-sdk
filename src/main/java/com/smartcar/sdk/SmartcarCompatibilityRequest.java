@@ -25,7 +25,7 @@ public final class SmartcarCompatibilityRequest {
             this.vin = "";
             this.scope = null;
             this.country = "US";
-            this.version = "1.0";
+            this.version = Smartcar.API_VERSION;
             this.flags = new ArrayList<>();
             this.clientId = System.getenv("SMARTCAR_CLIENT_ID");
             this.clientSecret = System.getenv("SMARTCAR_CLIENT_SECRET");

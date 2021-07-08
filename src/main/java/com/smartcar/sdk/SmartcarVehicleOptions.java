@@ -13,11 +13,7 @@ public final class SmartcarVehicleOptions {
         public Builder() {
             this.version = "2.0";
             this.unitSystem = Vehicle.UnitSystem.METRIC;
-            String apiOrigin = System.getenv("SMARTCAR_API_ORIGIN");
-            if (apiOrigin == null) {
-                apiOrigin = Smartcar.API_ORIGIN;
-            }
-            this.origin = apiOrigin;
+            this.origin = Smartcar.getApiOrigin();
         }
 
         public Builder version(String version) {

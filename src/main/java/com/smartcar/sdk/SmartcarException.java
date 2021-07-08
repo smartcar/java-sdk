@@ -126,6 +126,7 @@ public class SmartcarException extends java.lang.Exception {
               .type("SDK_ERROR")
               .build();
     }
+    System.out.println(bodyString);
 
     JsonObject bodyJson = new Gson().fromJson(bodyString, JsonObject.class);
     if (bodyJson.has("error")) {
@@ -148,8 +149,6 @@ public class SmartcarException extends java.lang.Exception {
 
       if (!bodyJson.get("code").isJsonNull()) {
         builder.code(bodyJson.get("code").getAsString());
-      } else {
-        builder.code(null);
       }
 
       JsonElement resolutionElement = bodyJson.get("resolution");
@@ -158,8 +157,14 @@ public class SmartcarException extends java.lang.Exception {
           builder.resolutionType(resolutionElement.getAsString());
         } else {
           JsonObject resolution = resolutionElement.getAsJsonObject();
-          builder.resolutionType(resolution.get("type").getAsString());
-          builder.resolutionUrl(resolution.get("url").getAsString());
+          JsonElement type = resolution.get("type");
+          if (!type.isJsonNull()) {
+            builder.resolutionType(type.getAsString());
+          }
+          JsonElement url = resolution.get("url");
+          if (url != null) {
+            builder.resolutionUrl(url.getAsString());
+          }
         }
       }
 

@@ -90,7 +90,7 @@ public class SmartcarTest extends PowerMockTestCase {
         Assert.assertTrue(comp.getCompatible());
         Assert.assertEquals(comp.getMeta().getRequestId(), this.sampleRequestId);
         RecordedRequest req = TestExecutionListener.mockWebServer.takeRequest();
-        Assert.assertEquals(req.getPath(), "/v1.0/compatibility?vin=1234&scope=read_odometer&country=US");
+        Assert.assertEquals(req.getPath(), "/v2.0/compatibility?vin=1234&scope=read_odometer&country=US");
     }
 
     @Test
@@ -118,7 +118,7 @@ public class SmartcarTest extends PowerMockTestCase {
                 .vin(vin)
                 .scope(scope)
                 .country("GB")
-                .version("2.0")
+                .version("1.0")
                 .addFlag("foo", "bar")
                 .addFlag("test", true)
                 .build();
@@ -126,7 +126,7 @@ public class SmartcarTest extends PowerMockTestCase {
         Assert.assertTrue(comp.getCompatible());
         Assert.assertEquals(comp.getMeta().getRequestId(), this.sampleRequestId);
         RecordedRequest req = TestExecutionListener.mockWebServer.takeRequest();
-        Assert.assertEquals(req.getPath(), "/v2.0/compatibility?vin=1234&scope=read_odometer&country=GB&flags=foo%3Abar%20test%3Atrue");
+        Assert.assertEquals(req.getPath(), "/v1.0/compatibility?vin=1234&scope=read_odometer&country=GB&flags=foo%3Abar%20test%3Atrue");
     }
 
     @Test
