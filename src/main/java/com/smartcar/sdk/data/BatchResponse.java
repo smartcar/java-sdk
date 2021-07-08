@@ -31,10 +31,13 @@ public class BatchResponse extends ApiData {
   }
 
   private <T extends ApiData> T get(String path, Class<T> dataType)
-      throws SmartcarException {
+          throws SmartcarException {
     JsonObject res = this.responseData.get(path);
     if (res == null) {
-      return null;
+      throw new SmartcarException.Builder()
+              .type("DATA_NOT_FOUND")
+              .description("The data you requested was not returned")
+              .build();
     }
     int statusCode = res.get("code").getAsInt();
     JsonObject body = res.get("body").getAsJsonObject();

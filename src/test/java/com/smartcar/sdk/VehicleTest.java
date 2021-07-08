@@ -455,7 +455,15 @@ public class VehicleTest {
 
     BatchResponse batch = this.subject.batch(new String[] {"/odometer"});
     Assert.assertEquals(batch.getRequestId(), expectedRequestId);
-    Assert.assertNull(batch.tirePressure());
+    boolean thrown = false;
+    try {
+      batch.tirePressure();
+    } catch (SmartcarException e) {
+      thrown = true;
+      Assert.assertEquals(e.getType(), "DATA_NOT_FOUND");
+      Assert.assertEquals(e.getDescription(), "The data you requested was not returned");
+    }
+    Assert.assertTrue(thrown);
 
     VehicleOdometer odo = batch.odometer();
     Assert.assertEquals(odo.getDistance(), 32768.0);
