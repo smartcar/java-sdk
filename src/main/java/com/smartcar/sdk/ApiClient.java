@@ -45,6 +45,14 @@ abstract class ApiClient {
   static GsonBuilder gson =
       new GsonBuilder().setFieldNamingStrategy((field) -> Utils.toCamelCase(field.getName()));
 
+  /**
+   * Builds a request object with common headers, using provided request parameters
+   * @param url url for the request, including the query parameters
+   * @param method http method
+   * @param body request body
+   * @param headers additional headers to set for the request
+   * @return
+   */
   protected static Request buildRequest(HttpUrl url, String method, RequestBody body, Map<String, String> headers) {
     Request.Builder request = new Request.Builder()
                     .url(url)

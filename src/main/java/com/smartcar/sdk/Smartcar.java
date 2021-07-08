@@ -31,12 +31,16 @@ public class Smartcar {
     /**
      * Gets the URL used for API requests
      *
-     * @return
+     * @return Smartcar API url with versioning
      */
     static String getApiUrl() {
         return getApiOrigin() + "/v" + Smartcar.API_VERSION;
     }
 
+    /**
+     *
+     * @return Smartcar API origin
+     */
     static String getApiOrigin() {
         String apiOrigin = System.getenv("SMARTCAR_API_ORIGIN");
         if (apiOrigin == null) {
@@ -96,7 +100,6 @@ public class Smartcar {
      * @return the requested vehicle IDs
      * @throws SmartcarException if the request is unsuccessful
      */
-
     public static VehicleIds getVehicles(String accessToken)
             throws SmartcarException {
         return Smartcar.getVehicles(accessToken, null);
@@ -122,8 +125,8 @@ public class Smartcar {
      *   <li>supports the permissions.
      * </ol>
      *
-     * @param compatibilityRequest
-     * @return false if the vehicle is not compatible in the specified country. true if the vehicle is
+     * @param compatibilityRequest with options for this request. See Smartcar.SmartcarCompatibilityRequest
+     * @return A Compatibility object with isCompatible set to false if the vehicle is not compatible in the specified country and true if the vehicle is
      *     likely compatible.
      * @throws SmartcarException when the request is unsuccessful
      */
@@ -153,7 +156,14 @@ public class Smartcar {
         return ApiClient.execute(request, Compatibility.class);
     }
 
-    private static String getHash(String key, String challenge) throws SmartcarException {
+    /**
+     * Performs a HmacSHA256 hash on a challenge string using the key provided
+     * @param key
+     * @param challenge
+     * @return String digest
+     * @throws SmartcarException
+     */
+    private static String hashChallenge(String key, String challenge) throws SmartcarException {
         try {
             Mac sha256HMAC = Mac.getInstance("HmacSHA256");
             SecretKeySpec secret = new SecretKeySpec(key.getBytes("UTF-8"), "HmacSHA256");
@@ -165,25 +175,14 @@ public class Smartcar {
     }
 
     /**
-     *
-     * @param applicationManagementToken
-     * @param challenge
-     * @return String
-     * @throws SmartcarException
-     */
-    public static String hashChallenge(String applicationManagementToken, String challenge) throws SmartcarException {
-        return Smartcar.getHash(applicationManagementToken, challenge);
-    }
-
-    /**
-     *
+     * Verifies as HmacSHA256 signature
      * @param applicationManagementToken
      * @param signature
-     * @param body
-     * @return boolean
+     * @param payload
+     * @return boolean whether or not the signature was verified
      * @throws SmartcarException
      */
-    public static boolean verifyPayload(String applicationManagementToken, String signature, String body) throws SmartcarException {
-        return Smartcar.getHash(applicationManagementToken, body).equals(signature);
+    public static boolean verifyPayload(String applicationManagementToken, String signature, String payload) throws SmartcarException {
+        return Smartcar.hashChallenge(applicationManagementToken, payload).equals(signature);
     }
 }

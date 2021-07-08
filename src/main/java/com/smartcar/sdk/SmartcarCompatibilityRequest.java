@@ -3,6 +3,9 @@ package com.smartcar.sdk;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class encompassing optional arguments for Smartcar compatibility requests
+ */
 public final class SmartcarCompatibilityRequest {
     private final String vin;
     private final String[] scope;

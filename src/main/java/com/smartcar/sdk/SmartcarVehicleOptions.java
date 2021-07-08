@@ -1,5 +1,6 @@
 package com.smartcar.sdk;
 
+/** Class encompassing any optional arguments for constructing a new Vehicle instance  */
 public final class SmartcarVehicleOptions {
     private final String version;
     private final Vehicle.UnitSystem unitSystem;

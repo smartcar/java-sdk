@@ -108,7 +108,7 @@ public class AuthClient {
   /**
    * Creates an AuthUrlBuilder
    *
-   * @param scope the permission scope requested
+   * @param scope the permission scope(s) requested
    * @return returns an instance of AuthUrlBuilder
    */
   public AuthUrlBuilder authUrlBuilder(String[] scope) {

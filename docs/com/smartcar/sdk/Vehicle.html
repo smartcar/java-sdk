@@ -156,7 +156,9 @@ extends java.lang.Object</pre>
 <tr class="rowColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Vehicle.html#Vehicle-java.lang.String-java.lang.String-com.smartcar.sdk.SmartcarVehicleOptions-">Vehicle</a></span>(java.lang.String&nbsp;vehicleId,
        java.lang.String&nbsp;accessToken,
-       <a href="../../../com/smartcar/sdk/SmartcarVehicleOptions.html" title="class in com.smartcar.sdk">SmartcarVehicleOptions</a>&nbsp;options)</code>&nbsp;</td>
+       <a href="../../../com/smartcar/sdk/SmartcarVehicleOptions.html" title="class in com.smartcar.sdk">SmartcarVehicleOptions</a>&nbsp;options)</code>
+<div class="block">Initializes a new Vehicle with provided options</div>
+</td>
 </tr>
 </table>
 </li>
@@ -176,7 +178,7 @@ extends java.lang.Object</pre>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code><a href="../../../com/smartcar/sdk/data/VehicleAttributes.html" title="class in com.smartcar.sdk.data">VehicleAttributes</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Vehicle.html#attributes--">attributes</a></span>()</code>
-<div class="block">Send request to the /info endpoint</div>
+<div class="block">Send request to the / endpoint</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
@@ -248,7 +250,9 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Vehicle.html#getVersion--">getVersion</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Vehicle.html#getVersion--">getVersion</a></span>()</code>
+<div class="block">Gets the version of Smartcar API that this vehicle is using</div>
+</td>
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code><a href="../../../com/smartcar/sdk/data/VehicleLocation.html" title="class in com.smartcar.sdk.data">VehicleLocation</a></code></td>
@@ -276,7 +280,9 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i16" class="altColor">
 <td class="colFirst"><code><a href="../../../com/smartcar/sdk/data/ApplicationPermissions.html" title="class in com.smartcar.sdk.data">ApplicationPermissions</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Vehicle.html#permissions-com.smartcar.sdk.data.RequestPaging-">permissions</a></span>(<a href="../../../com/smartcar/sdk/data/RequestPaging.html" title="class in com.smartcar.sdk.data">RequestPaging</a>&nbsp;paging)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Vehicle.html#permissions-com.smartcar.sdk.data.RequestPaging-">permissions</a></span>(<a href="../../../com/smartcar/sdk/data/RequestPaging.html" title="class in com.smartcar.sdk.data">RequestPaging</a>&nbsp;paging)</code>
+<div class="block">Send request to the /permissions endpoint with paging options set</div>
+</td>
 </tr>
 <tr id="i17" class="rowColor">
 <td class="colFirst"><code>void</code></td>
@@ -374,6 +380,13 @@ extends java.lang.Object</pre>
 <pre>public&nbsp;Vehicle(java.lang.String&nbsp;vehicleId,
                java.lang.String&nbsp;accessToken,
                <a href="../../../com/smartcar/sdk/SmartcarVehicleOptions.html" title="class in com.smartcar.sdk">SmartcarVehicleOptions</a>&nbsp;options)</pre>
+<div class="block">Initializes a new Vehicle with provided options</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>vehicleId</code> - vehicleId the vehicle ID</dd>
+<dd><code>accessToken</code> - accessToken the OAuth 2.0 access token</dd>
+<dd><code>options</code> - optional arguments provided with a SmartcarVehicleOptions instance</dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -391,6 +404,10 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>getVersion</h4>
 <pre>public&nbsp;java.lang.String&nbsp;getVersion()</pre>
+<div class="block">Gets the version of Smartcar API that this vehicle is using</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+</dl>
 </li>
 </ul>
 <a name="call-java.lang.String-java.lang.String-okhttp3.RequestBody-java.lang.String-java.lang.Class-">
@@ -462,7 +479,7 @@ extends java.lang.Object</pre>
 <h4>attributes</h4>
 <pre>public&nbsp;<a href="../../../com/smartcar/sdk/data/VehicleAttributes.html" title="class in com.smartcar.sdk.data">VehicleAttributes</a>&nbsp;attributes()
                              throws <a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
-<div class="block">Send request to the /info endpoint</div>
+<div class="block">Send request to the / endpoint</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>VehicleInfo object</dd>
@@ -513,9 +530,14 @@ extends java.lang.Object</pre>
 <h4>permissions</h4>
 <pre>public&nbsp;<a href="../../../com/smartcar/sdk/data/ApplicationPermissions.html" title="class in com.smartcar.sdk.data">ApplicationPermissions</a>&nbsp;permissions(<a href="../../../com/smartcar/sdk/data/RequestPaging.html" title="class in com.smartcar.sdk.data">RequestPaging</a>&nbsp;paging)
                                    throws <a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
+<div class="block">Send request to the /permissions endpoint with paging options set</div>
 <dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>paging</code> - Request paging options</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the permissons of the application</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code></dd>
+<dd><code><a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - if the request is unsuccessful</dd>
 </dl>
 </li>
 </ul>
@@ -529,6 +551,8 @@ extends java.lang.Object</pre>
                               throws <a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
 <div class="block">Send request to the /disconnect endpoint</div>
 <dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a response indicating success</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - if the request is unsuccessful</dd>
 </dl>
@@ -680,6 +704,8 @@ extends java.lang.Object</pre>
                       throws <a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
 <div class="block">Send request to the /security endpoint to unlock a vehicle</div>
 <dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a response indicating success</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - if the request is unsuccessful</dd>
 </dl>
@@ -695,6 +721,8 @@ extends java.lang.Object</pre>
                     throws <a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
 <div class="block">Send request to the /security endpoint to lock a vehicle</div>
 <dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a response indicating success</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - if the request is unsuccessful</dd>
 </dl>
@@ -710,6 +738,8 @@ extends java.lang.Object</pre>
                            throws <a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
 <div class="block">Send request to the /charge endpoint to start charging a vehicle</div>
 <dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a response indicating success</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - if the request is unsuccessful</dd>
 </dl>
@@ -725,6 +755,8 @@ extends java.lang.Object</pre>
                           throws <a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
 <div class="block">Send request to the /charge endpoint to stop charging a vehicle</div>
 <dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a response indicating success</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - if the request is unsuccessful</dd>
 </dl>
@@ -740,6 +772,8 @@ extends java.lang.Object</pre>
                               throws <a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
 <div class="block">Subscribe vehicle to a webhook</div>
 <dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>information about the webhook and vehicle subscription</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - if the request is unsuccessful</dd>
 </dl>
@@ -756,6 +790,8 @@ extends java.lang.Object</pre>
                                 throws <a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
 <div class="block">Unsubscribe vehicle from a webhook</div>
 <dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>response indicating successful removal from the subscription</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - if the request is unsuccessful</dd>
 </dl>

@@ -3,7 +3,9 @@ package com.smartcar.sdk;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Class encompassing any optional arguments for Smartcar Authorization requests
+ */
 public final class SmartcarAuthOptions {
     private String flags;
 
@@ -25,7 +27,6 @@ public final class SmartcarAuthOptions {
         }
 
         public SmartcarAuthOptions build() {
-
             return new SmartcarAuthOptions(this);
         }
     }

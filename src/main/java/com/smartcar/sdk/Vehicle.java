@@ -36,6 +36,12 @@ public class Vehicle {
     this(vehicleId, accessToken, new SmartcarVehicleOptions.Builder().build());
   }
 
+  /**
+   * Initializes a new Vehicle with provided options
+   * @param vehicleId vehicleId the vehicle ID
+   * @param accessToken accessToken the OAuth 2.0 access token
+   * @param options optional arguments provided with a SmartcarVehicleOptions instance
+   */
   public Vehicle(String vehicleId, String accessToken, SmartcarVehicleOptions options) {
     this.vehicleId = vehicleId;
     this.accessToken = accessToken;
@@ -44,6 +50,10 @@ public class Vehicle {
     this.origin = options.getOrigin();
   }
 
+  /**
+   * Gets the version of Smartcar API that this vehicle is using
+   * @return
+   */
   public String getVersion() {
     return this.version;
   }
@@ -105,7 +115,7 @@ public class Vehicle {
   }
 
   /**
-   * Send request to the /info endpoint
+   * Send request to the / endpoint
    *
    * @return VehicleInfo object
    * @throws SmartcarException if the request is unsuccessful
@@ -140,12 +150,14 @@ public class Vehicle {
     return this.permissions;
   }
 
+  /**
+   * Send request to the /permissions endpoint with paging options set
+   *
+   * @param paging Request paging options
+   * @return the permissons of the application
+   * @throws SmartcarException if the request is unsuccessful
+   */
   public ApplicationPermissions permissions(RequestPaging paging) throws SmartcarException {
-    if (this.permissions != null) {
-      // TODO this is a bug, it might return values that arent paged
-      return this.permissions;
-    }
-
     Map<String, String> pagingQuery = new HashMap<String, String>();
     pagingQuery.put("limit", String.valueOf(paging.getLimit()));
     pagingQuery.put("offset", String.valueOf(paging.getOffset()));
@@ -157,6 +169,7 @@ public class Vehicle {
   /**
    * Send request to the /disconnect endpoint
    *
+   * @return a response indicating success
    * @throws SmartcarException if the request is unsuccessful
    */
   public DisconnectResponse disconnect() throws SmartcarException {
@@ -246,6 +259,7 @@ public class Vehicle {
   /**
    * Send request to the /security endpoint to unlock a vehicle
    *
+   * @return a response indicating success
    * @throws SmartcarException if the request is unsuccessful
    */
   public ActionResponse unlock() throws SmartcarException {
@@ -259,6 +273,7 @@ public class Vehicle {
   /**
    * Send request to the /security endpoint to lock a vehicle
    *
+   * @return a response indicating success
    * @throws SmartcarException if the request is unsuccessful
    */
   public ActionResponse lock() throws SmartcarException {
@@ -272,6 +287,7 @@ public class Vehicle {
   /**
    * Send request to the /charge endpoint to start charging a vehicle
    *
+   * @return a response indicating success
    * @throws SmartcarException if the request is unsuccessful
    */
   public ActionResponse startCharge() throws SmartcarException {
@@ -285,6 +301,7 @@ public class Vehicle {
   /**
    * Send request to the /charge endpoint to stop charging a vehicle
    *
+   * @return a response indicating success
    * @throws SmartcarException if the request is unsuccessful
    */
   public ActionResponse stopCharge() throws SmartcarException {
@@ -298,6 +315,7 @@ public class Vehicle {
   /**
    * Subscribe vehicle to a webhook
    *
+   * @return information about the webhook and vehicle subscription
    * @throws SmartcarException if the request is unsuccessful
    */
   public WebhookSubscription subscribe(String webhookId) throws SmartcarException {
@@ -308,6 +326,7 @@ public class Vehicle {
   /**
    * Unsubscribe vehicle from a webhook
    *
+   * @return response indicating successful removal from the subscription
    * @throws SmartcarException if the request is unsuccessful
    */
   public UnsubscribeResponse unsubscribe(String applicationManagementToken, String webhookId) throws SmartcarException {

@@ -68,7 +68,7 @@
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
-<div class="contentContainer"><a href="#I:A">A</a>&nbsp;<a href="#I:B">B</a>&nbsp;<a href="#I:C">C</a>&nbsp;<a href="#I:D">D</a>&nbsp;<a href="#I:E">E</a>&nbsp;<a href="#I:F">F</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:H">H</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:L">L</a>&nbsp;<a href="#I:M">M</a>&nbsp;<a href="#I:O">O</a>&nbsp;<a href="#I:P">P</a>&nbsp;<a href="#I:R">R</a>&nbsp;<a href="#I:S">S</a>&nbsp;<a href="#I:T">T</a>&nbsp;<a href="#I:U">U</a>&nbsp;<a href="#I:V">V</a>&nbsp;<a href="#I:W">W</a>&nbsp;<a name="I:A">
+<div class="contentContainer"><a href="#I:A">A</a>&nbsp;<a href="#I:B">B</a>&nbsp;<a href="#I:C">C</a>&nbsp;<a href="#I:D">D</a>&nbsp;<a href="#I:E">E</a>&nbsp;<a href="#I:F">F</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:L">L</a>&nbsp;<a href="#I:M">M</a>&nbsp;<a href="#I:O">O</a>&nbsp;<a href="#I:P">P</a>&nbsp;<a href="#I:R">R</a>&nbsp;<a href="#I:S">S</a>&nbsp;<a href="#I:T">T</a>&nbsp;<a href="#I:U">U</a>&nbsp;<a href="#I:V">V</a>&nbsp;<a href="#I:W">W</a>&nbsp;<a name="I:A">
 <!--   -->
 </a>
 <h2 class="title">A</h2>
@@ -121,7 +121,7 @@
 </dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/Vehicle.html#attributes--">attributes()</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/Vehicle.html" title="class in com.smartcar.sdk">Vehicle</a></dt>
 <dd>
-<div class="block">Send request to the /info endpoint</div>
+<div class="block">Send request to the / endpoint</div>
 </dd>
 <dt><a href="com/smartcar/sdk/data/Auth.html" title="class in com.smartcar.sdk.data"><span class="typeNameLink">Auth</span></a> - Class in <a href="com/smartcar/sdk/data/package-summary.html">com.smartcar.sdk.data</a></dt>
 <dd>
@@ -514,7 +514,7 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/SmartcarException.html#getResolutionType--">getResolutionType()</a></span> - Method in exception com.smartcar.sdk.<a href="com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></dt>
 <dd>
-<div class="block">Returns the resolution message associated with the exception.</div>
+<div class="block">Returns the resolution type associated with the exception.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/SmartcarException.html#getResolutionUrl--">getResolutionUrl()</a></span> - Method in exception com.smartcar.sdk.<a href="com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></dt>
 <dd>
@@ -561,7 +561,9 @@
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/SmartcarVehicleOptions.html#getVersion--">getVersion()</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/SmartcarVehicleOptions.html" title="class in com.smartcar.sdk">SmartcarVehicleOptions</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/Vehicle.html#getVersion--">getVersion()</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/Vehicle.html" title="class in com.smartcar.sdk">Vehicle</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Gets the version of Smartcar API that this vehicle is using</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/VehicleVin.html#getVin--">getVin()</a></span> - Method in class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/VehicleVin.html" title="class in com.smartcar.sdk.data">VehicleVin</a></dt>
 <dd>
 <div class="block">Returns the vehicle vin</div>
@@ -574,14 +576,6 @@
 <dd>
 <div class="block">Returns the year of the vehicle</div>
 </dd>
-</dl>
-<a name="I:H">
-<!--   -->
-</a>
-<h2 class="title">H</h2>
-<dl>
-<dt><span class="memberNameLink"><a href="com/smartcar/sdk/Smartcar.html#hashChallenge-java.lang.String-java.lang.String-">hashChallenge(String, String)</a></span> - Static method in class com.smartcar.sdk.<a href="com/smartcar/sdk/Smartcar.html" title="class in com.smartcar.sdk">Smartcar</a></dt>
-<dd>&nbsp;</dd>
 </dl>
 <a name="I:I">
 <!--   -->
@@ -653,7 +647,9 @@
 <div class="block">Send request to the /permissions endpoint</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/Vehicle.html#permissions-com.smartcar.sdk.data.RequestPaging-">permissions(RequestPaging)</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/Vehicle.html" title="class in com.smartcar.sdk">Vehicle</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Send request to the /permissions endpoint with paging options set</div>
+</dd>
 </dl>
 <a name="I:R">
 <!--   -->
@@ -721,11 +717,15 @@
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/Smartcar.html#Smartcar--">Smartcar()</a></span> - Constructor for class com.smartcar.sdk.<a href="com/smartcar/sdk/Smartcar.html" title="class in com.smartcar.sdk">Smartcar</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/smartcar/sdk/SmartcarAuthOptions.html" title="class in com.smartcar.sdk"><span class="typeNameLink">SmartcarAuthOptions</span></a> - Class in <a href="com/smartcar/sdk/package-summary.html">com.smartcar.sdk</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Class encompassing any optional arguments for Smartcar Authorization requests</div>
+</dd>
 <dt><a href="com/smartcar/sdk/SmartcarAuthOptions.Builder.html" title="class in com.smartcar.sdk"><span class="typeNameLink">SmartcarAuthOptions.Builder</span></a> - Class in <a href="com/smartcar/sdk/package-summary.html">com.smartcar.sdk</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/smartcar/sdk/SmartcarCompatibilityRequest.html" title="class in com.smartcar.sdk"><span class="typeNameLink">SmartcarCompatibilityRequest</span></a> - Class in <a href="com/smartcar/sdk/package-summary.html">com.smartcar.sdk</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Class encompassing optional arguments for Smartcar compatibility requests</div>
+</dd>
 <dt><a href="com/smartcar/sdk/SmartcarCompatibilityRequest.Builder.html" title="class in com.smartcar.sdk"><span class="typeNameLink">SmartcarCompatibilityRequest.Builder</span></a> - Class in <a href="com/smartcar/sdk/package-summary.html">com.smartcar.sdk</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk"><span class="typeNameLink">SmartcarException</span></a> - Exception in <a href="com/smartcar/sdk/package-summary.html">com.smartcar.sdk</a></dt>
@@ -735,7 +735,9 @@
 <dt><a href="com/smartcar/sdk/SmartcarException.Builder.html" title="class in com.smartcar.sdk"><span class="typeNameLink">SmartcarException.Builder</span></a> - Class in <a href="com/smartcar/sdk/package-summary.html">com.smartcar.sdk</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/smartcar/sdk/SmartcarVehicleOptions.html" title="class in com.smartcar.sdk"><span class="typeNameLink">SmartcarVehicleOptions</span></a> - Class in <a href="com/smartcar/sdk/package-summary.html">com.smartcar.sdk</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Class encompassing any optional arguments for constructing a new Vehicle instance</div>
+</dd>
 <dt><a href="com/smartcar/sdk/SmartcarVehicleOptions.Builder.html" title="class in com.smartcar.sdk"><span class="typeNameLink">SmartcarVehicleOptions.Builder</span></a> - Class in <a href="com/smartcar/sdk/package-summary.html">com.smartcar.sdk</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/Vehicle.html#startCharge--">startCharge()</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/Vehicle.html" title="class in com.smartcar.sdk">Vehicle</a></dt>
@@ -874,7 +876,9 @@ the order they are declared.</div>
 <div class="block">Initializes a new Vehicle.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/Vehicle.html#Vehicle-java.lang.String-java.lang.String-com.smartcar.sdk.SmartcarVehicleOptions-">Vehicle(String, String, SmartcarVehicleOptions)</a></span> - Constructor for class com.smartcar.sdk.<a href="com/smartcar/sdk/Vehicle.html" title="class in com.smartcar.sdk">Vehicle</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Initializes a new Vehicle with provided options</div>
+</dd>
 <dt><a href="com/smartcar/sdk/Vehicle.UnitSystem.html" title="enum in com.smartcar.sdk"><span class="typeNameLink">Vehicle.UnitSystem</span></a> - Enum in <a href="com/smartcar/sdk/package-summary.html">com.smartcar.sdk</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/smartcar/sdk/data/VehicleAttributes.html" title="class in com.smartcar.sdk.data"><span class="typeNameLink">VehicleAttributes</span></a> - Class in <a href="com/smartcar/sdk/data/package-summary.html">com.smartcar.sdk.data</a></dt>
@@ -946,7 +950,9 @@ the order they are declared.</div>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/VehicleVin.html#VehicleVin--">VehicleVin()</a></span> - Constructor for class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/VehicleVin.html" title="class in com.smartcar.sdk.data">VehicleVin</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/Smartcar.html#verifyPayload-java.lang.String-java.lang.String-java.lang.String-">verifyPayload(String, String, String)</a></span> - Static method in class com.smartcar.sdk.<a href="com/smartcar/sdk/Smartcar.html" title="class in com.smartcar.sdk">Smartcar</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Verifies as HmacSHA256 signature</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/SmartcarCompatibilityRequest.Builder.html#version-java.lang.String-">version(String)</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/SmartcarCompatibilityRequest.Builder.html" title="class in com.smartcar.sdk">SmartcarCompatibilityRequest.Builder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/SmartcarVehicleOptions.Builder.html#version-java.lang.String-">version(String)</a></span> - Method in class com.smartcar.sdk.<a href="com/smartcar/sdk/SmartcarVehicleOptions.Builder.html" title="class in com.smartcar.sdk">SmartcarVehicleOptions.Builder</a></dt>
@@ -972,7 +978,7 @@ the order they are declared.</div>
 <dt><span class="memberNameLink"><a href="com/smartcar/sdk/data/WebhookSubscription.html#WebhookSubscription--">WebhookSubscription()</a></span> - Constructor for class com.smartcar.sdk.data.<a href="com/smartcar/sdk/data/WebhookSubscription.html" title="class in com.smartcar.sdk.data">WebhookSubscription</a></dt>
 <dd>&nbsp;</dd>
 </dl>
-<a href="#I:A">A</a>&nbsp;<a href="#I:B">B</a>&nbsp;<a href="#I:C">C</a>&nbsp;<a href="#I:D">D</a>&nbsp;<a href="#I:E">E</a>&nbsp;<a href="#I:F">F</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:H">H</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:L">L</a>&nbsp;<a href="#I:M">M</a>&nbsp;<a href="#I:O">O</a>&nbsp;<a href="#I:P">P</a>&nbsp;<a href="#I:R">R</a>&nbsp;<a href="#I:S">S</a>&nbsp;<a href="#I:T">T</a>&nbsp;<a href="#I:U">U</a>&nbsp;<a href="#I:V">V</a>&nbsp;<a href="#I:W">W</a>&nbsp;</div>
+<a href="#I:A">A</a>&nbsp;<a href="#I:B">B</a>&nbsp;<a href="#I:C">C</a>&nbsp;<a href="#I:D">D</a>&nbsp;<a href="#I:E">E</a>&nbsp;<a href="#I:F">F</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:L">L</a>&nbsp;<a href="#I:M">M</a>&nbsp;<a href="#I:O">O</a>&nbsp;<a href="#I:P">P</a>&nbsp;<a href="#I:R">R</a>&nbsp;<a href="#I:S">S</a>&nbsp;<a href="#I:T">T</a>&nbsp;<a href="#I:U">U</a>&nbsp;<a href="#I:V">V</a>&nbsp;<a href="#I:W">W</a>&nbsp;</div>
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
 <div class="bottomNav"><a name="navbar.bottom">
 <!--   -->

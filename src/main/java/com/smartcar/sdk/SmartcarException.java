@@ -252,9 +252,9 @@ public class SmartcarException extends java.lang.Exception {
   }
 
   /**
-   * Returns the resolution message associated with the exception.
+   * Returns the resolution type associated with the exception.
    *
-   * @return the resolution message
+   * @return the resolution type
    */
   public String getResolutionType() {
     return this.resolutionType;

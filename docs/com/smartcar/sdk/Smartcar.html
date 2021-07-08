@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9};
+var methods = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -195,27 +195,24 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Smartcar.html#hashChallenge-java.lang.String-java.lang.String-">hashChallenge</a></span>(java.lang.String&nbsp;applicationManagementToken,
-             java.lang.String&nbsp;challenge)</code>&nbsp;</td>
-</tr>
-<tr id="i5" class="rowColor">
 <td class="colFirst"><code>static boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Smartcar.html#isExpired-java.util.Date-">isExpired</a></span>(java.util.Date&nbsp;expiration)</code>
 <div class="block">Convenience method for determining if an auth token expiration has passed.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Smartcar.html#setApiVersion-java.lang.String-">setApiVersion</a></span>(java.lang.String&nbsp;version)</code>
 <div class="block">Sets the Smartcar API version</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>static boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../com/smartcar/sdk/Smartcar.html#verifyPayload-java.lang.String-java.lang.String-java.lang.String-">verifyPayload</a></span>(java.lang.String&nbsp;applicationManagementToken,
              java.lang.String&nbsp;signature,
-             java.lang.String&nbsp;body)</code>&nbsp;</td>
+             java.lang.String&nbsp;payload)</code>
+<div class="block">Verifies as HmacSHA256 signature</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -389,32 +386,12 @@ extends java.lang.Object</pre>
  </ol></div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>compatibilityRequest</code> - </dd>
+<dd><code>compatibilityRequest</code> - with options for this request. See Smartcar.SmartcarCompatibilityRequest</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>false if the vehicle is not compatible in the specified country. true if the vehicle is
+<dd>A Compatibility object with isCompatible set to false if the vehicle is not compatible in the specified country and true if the vehicle is
      likely compatible.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code> - when the request is unsuccessful</dd>
-</dl>
-</li>
-</ul>
-<a name="hashChallenge-java.lang.String-java.lang.String-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>hashChallenge</h4>
-<pre>public static&nbsp;java.lang.String&nbsp;hashChallenge(java.lang.String&nbsp;applicationManagementToken,
-                                             java.lang.String&nbsp;challenge)
-                                      throws <a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>applicationManagementToken</code> - </dd>
-<dd><code>challenge</code> - </dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>String</dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -426,15 +403,16 @@ extends java.lang.Object</pre>
 <h4>verifyPayload</h4>
 <pre>public static&nbsp;boolean&nbsp;verifyPayload(java.lang.String&nbsp;applicationManagementToken,
                                     java.lang.String&nbsp;signature,
-                                    java.lang.String&nbsp;body)
+                                    java.lang.String&nbsp;payload)
                              throws <a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></pre>
+<div class="block">Verifies as HmacSHA256 signature</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>applicationManagementToken</code> - </dd>
 <dd><code>signature</code> - </dd>
-<dd><code>body</code> - </dd>
+<dd><code>payload</code> - </dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>boolean</dd>
+<dd>boolean whether or not the signature was verified</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../../com/smartcar/sdk/SmartcarException.html" title="class in com.smartcar.sdk">SmartcarException</a></code></dd>
 </dl>
