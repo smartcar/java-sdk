@@ -14,6 +14,8 @@ public final class SmartcarCompatibilityRequest {
     private final String flags;
     private final String clientId;
     private final String clientSecret;
+    private final boolean testMode;
+    private final String testModeCompatibilityLevel;
 
     public static class Builder {
         private String vin;
@@ -23,6 +25,8 @@ public final class SmartcarCompatibilityRequest {
         private final List<String> flags;
         private String clientId;
         private String clientSecret;
+        private boolean testMode;
+        private String testModeCompatibilityLevel;
 
         public Builder() {
             this.vin = "";
@@ -32,6 +36,8 @@ public final class SmartcarCompatibilityRequest {
             this.flags = new ArrayList<>();
             this.clientId = System.getenv("SMARTCAR_CLIENT_ID");
             this.clientSecret = System.getenv("SMARTCAR_CLIENT_SECRET");
+            this.testMode = false;
+            this.testModeCompatibilityLevel = null;
         }
 
         public Builder vin(String vin) {
@@ -74,6 +80,17 @@ public final class SmartcarCompatibilityRequest {
             return this;
         }
 
+        public Builder testMode(boolean testMode) {
+            this.testMode = testMode;
+            return this;
+        }
+
+        public Builder testModeCompatibilityLevel(String level) {
+            this.testMode = true;
+            this.testModeCompatibilityLevel = level;
+            return this;
+        }
+
         public SmartcarCompatibilityRequest build() throws Exception {
             if (this.clientId == null) {
                 throw new Exception("clientId must be defined");
@@ -98,6 +115,8 @@ public final class SmartcarCompatibilityRequest {
         }
         this.clientId = builder.clientId;
         this.clientSecret = builder.clientSecret;
+        this.testMode = builder.testMode;
+        this.testModeCompatibilityLevel = builder.testModeCompatibilityLevel;
     }
 
     public String getVin() {
@@ -115,4 +134,8 @@ public final class SmartcarCompatibilityRequest {
     public String getClientId() { return this.clientId; }
 
     public String getClientSecret() { return this.clientSecret; }
+
+    public boolean getTestMode() { return this.testMode; }
+
+    public String getTestModeCompatibilityLevel() { return this.testModeCompatibilityLevel; }
 }

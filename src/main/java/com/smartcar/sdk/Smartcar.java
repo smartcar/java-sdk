@@ -141,8 +141,16 @@ public class Smartcar {
                         .addQueryParameter("scope", String.join(" ", compatibilityRequest.getScope()))
                         .addQueryParameter("country", compatibilityRequest.getCountry());
 
+
+
         if (compatibilityRequest.getFlags() != null) {
             urlBuilder.addQueryParameter("flags", compatibilityRequest.getFlags());
+        }
+        if (compatibilityRequest.getTestMode()) {
+            urlBuilder.addQueryParameter("mode", "test");
+        }
+        if (compatibilityRequest.getTestModeCompatibilityLevel() != null) {
+            urlBuilder.addQueryParameter("testModeCompatibilityLevel", compatibilityRequest.getTestModeCompatibilityLevel());
         }
         HttpUrl url = urlBuilder.build();
 
@@ -163,7 +171,7 @@ public class Smartcar {
      * @return String digest
      * @throws SmartcarException
      */
-    private static String hashChallenge(String key, String challenge) throws SmartcarException {
+    public static String hashChallenge(String key, String challenge) throws SmartcarException {
         try {
             Mac sha256HMAC = Mac.getInstance("HmacSHA256");
             SecretKeySpec secret = new SecretKeySpec(key.getBytes("UTF-8"), "HmacSHA256");
