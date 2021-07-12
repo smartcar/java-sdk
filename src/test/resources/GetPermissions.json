@@ -1,0 +1,9 @@
+{
+  "paging": {
+    "count": 25,
+    "offset": 10
+  },
+  "permissions": [
+    "read_vehicle_info"
+  ]
+}

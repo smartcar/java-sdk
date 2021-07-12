@@ -26,30 +26,12 @@ public class RequestPaging extends ApiData {
   }
 
   /**
-   * Stores the response limit
-   *
-   * @param limit response limit
-   */
-  public void setLimit(int limit) {
-    this.limit = limit;
-  }
-
-  /**
    * Returns the response offset
    *
    * @return response offset
    */
   public int getOffset() {
     return this.offset;
-  }
-
-  /**
-   * Stores the response offset
-   *
-   * @param offset response offset
-   */
-  public void setOffset(int offset) {
-    this.offset = offset;
   }
 
   /** @return a stringified representation of RequestPaging */

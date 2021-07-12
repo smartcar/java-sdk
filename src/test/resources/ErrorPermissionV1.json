@@ -1,0 +1,4 @@
+{
+  "error": "permission_error",
+  "message": "Insufficient permissions to access requested resource."
+}

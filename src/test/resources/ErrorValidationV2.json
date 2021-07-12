@@ -1,0 +1,23 @@
+{
+  "type": "VALIDATION",
+  "code": null,
+  "description": "Request invalid or malformed. Please check for missing parameters, spelling and casing mistakes, and other syntax issues.",
+  "docURL": "https://smartcar.com/docs/errors/v2.0/other-errors/#validation",
+  "statusCode": 400,
+  "requestId": "5dea93a1-3f79-4246-90c5-89610a20471b",
+  "resolution": null,
+  "detail": [
+    {
+      "field": [
+        "requests"
+      ],
+      "message": "\"requests\" is required"
+    },
+    {
+      "field": [
+        "request"
+      ],
+      "message": "\"request\" is not allowed"
+    }
+  ]
+}

@@ -1,45 +1,18 @@
 package com.smartcar.sdk;
 
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import com.smartcar.sdk.data.ApiData;
-import com.smartcar.sdk.data.SmartcarResponse;
+import com.smartcar.sdk.data.Meta;
+import okhttp3.*;
+
 import java.io.IOException;
-import java.time.Instant;
-import java.util.Date;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import org.apache.commons.text.CaseUtils;
 
 /** Provides the core functionality for API client objects. */
 abstract class ApiClient {
   public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-  private static final String SDK_VERSION = ApiClient.getSdkVersion();
-  private static String API_VERSION = "1.0";
-  protected static final String URL_API = "https://api.smartcar.com";
-  protected static final String USER_AGENT =
-      String.format(
-          "Smartcar/%s (%s; %s) Java v%s %s",
-          ApiClient.SDK_VERSION,
-          System.getProperty("os.name"),
-          System.getProperty("os.arch"),
-          System.getProperty("java.version"),
-          System.getProperty("java.vm.name"));
-
-  private static OkHttpClient client =
-      new OkHttpClient.Builder().readTimeout(310, TimeUnit.SECONDS).build();
-
-  private static String toCamelCase(String fieldName) {
-    if (fieldName.contains("_")) { // checks for snake case
-      return CaseUtils.toCamelCase(fieldName, false, new char[] {'_'});
-    }
-    return fieldName;
-  }
-
-  static GsonBuilder gson =
-      new GsonBuilder().setFieldNamingStrategy((field) -> toCamelCase(field.getName()));
 
   /**
    * Retrieves the SDK version, falling back to DEVELOPMENT if we're not running from a jar.
@@ -56,22 +29,39 @@ abstract class ApiClient {
     return version;
   }
 
-  /**
-   * Sets the API version
-   *
-   * @param version API version to set
-   */
-  public static void setApiVersion(String version) {
-    ApiClient.API_VERSION = version;
-  }
+  protected static final String USER_AGENT =
+      String.format(
+          "Smartcar/%s (%s; %s) Java v%s %s",
+          getSdkVersion(),
+          System.getProperty("os.name"),
+          System.getProperty("os.arch"),
+          System.getProperty("java.version"),
+          System.getProperty("java.vm.name"));
+
+  private static final OkHttpClient client =
+      new OkHttpClient.Builder().readTimeout(310, TimeUnit.SECONDS).build();
+
+
+  static GsonBuilder gson =
+      new GsonBuilder().setFieldNamingStrategy((field) -> Utils.toCamelCase(field.getName()));
 
   /**
-   * Gets the URL used for API requests
-   *
+   * Builds a request object with common headers, using provided request parameters
+   * @param url url for the request, including the query parameters
+   * @param method http method
+   * @param body request body
+   * @param headers additional headers to set for the request
    * @return
    */
-  static String getApiUrl() {
-    return ApiClient.URL_API + "/v" + ApiClient.API_VERSION;
+  protected static Request buildRequest(HttpUrl url, String method, RequestBody body, Map<String, String> headers) {
+    Request.Builder request = new Request.Builder()
+                    .url(url)
+                    .addHeader("User-Agent", ApiClient.USER_AGENT)
+                    .method(method, body);
+
+    headers.forEach(request::addHeader);
+
+    return request.build();
   }
 
   /**
@@ -86,16 +76,12 @@ abstract class ApiClient {
       Response response = ApiClient.client.newCall(request).execute();
 
       if (!response.isSuccessful()) {
-        String url = String.valueOf(request.url());
-        if (url.contains("v2.0")) {
-          throw SmartcarExceptionV2.Factory(response);
-        }
-        throw SmartcarException.Factory(response);
+        throw SmartcarException.Factory(response.code(), response.headers(), response.body());
       } else {
         return response;
       }
     } catch (IOException ex) {
-      throw new SmartcarException(ex.getMessage());
+      throw new SmartcarException.Builder().type("SDK_ERROR").description(ex.getMessage()).build();
     }
   }
 
@@ -109,32 +95,36 @@ abstract class ApiClient {
    * @return the wrapped response
    * @throws SmartcarException if the request is unsuccessful
    */
-  protected static <T extends ApiData> SmartcarResponse<T> execute(
+  protected static <T extends ApiData> T execute(
       Request request, Class<T> dataType) throws SmartcarException {
     Response response = ApiClient.execute(request);
-    String body = null;
+    T data;
+    Meta meta;
+    String bodyString = "";
 
     try {
-      body = response.body().string();
-    } catch (IOException ex) {
-      throw new SmartcarException(ex.getMessage());
+      bodyString = response.body().string();
+      data = ApiClient.gson.create().fromJson(bodyString, dataType);
+      Headers headers = response.headers();
+      JsonObject headerJson = new JsonObject();
+      for (String header: response.headers().names()) {
+        headerJson.addProperty(header.toLowerCase(), headers.get(header));
+      }
+      String headerJsonString = headerJson.toString();
+      meta = ApiClient.gson.create().fromJson(headerJsonString, Meta.class);
+      data.setMeta(meta);
+    } catch (Exception ex) {
+      if (bodyString.equals("")) {
+        bodyString = "Empty response body";
+      }
+      throw new SmartcarException.Builder()
+              .statusCode(response.code())
+              .description(bodyString)
+              .requestId(response.headers().get("sc-request-id"))
+              .type("SDK_ERROR")
+              .build();
     }
 
-    T data = ApiClient.gson.create().fromJson(body, dataType);
-
-    String unitSystem = response.header("sc-unit-system");
-    String ageHeader = response.header("sc-data-age");
-    String requestId = response.header("sc-request-id");
-
-    SmartcarResponse<T> smartcarResponse = new SmartcarResponse<T>(data);
-    smartcarResponse.setUnitSystem(unitSystem);
-    smartcarResponse.setRequestId(requestId);
-
-    if (ageHeader != null) {
-      Instant age = Instant.parse(ageHeader);
-      smartcarResponse.setAge(Date.from(age));
-    }
-
-    return smartcarResponse;
+    return data;
   }
 }

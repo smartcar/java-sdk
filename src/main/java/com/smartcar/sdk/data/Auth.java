@@ -47,30 +47,12 @@ public class Auth extends ApiData {
   }
 
   /**
-   * Stores a new access token.
-   *
-   * @param accessToken the access token to be stored
-   */
-  public void setAccessToken(final String accessToken) {
-    this.accessToken = accessToken;
-  }
-
-  /**
    * Returns the currently stored refresh token.
    *
    * @return the refresh token
    */
   public String getRefreshToken() {
     return refreshToken;
-  }
-
-  /**
-   * Stores a new refresh token.
-   *
-   * @param refreshToken the refresh token
-   */
-  public void setRefreshToken(final String refreshToken) {
-    this.refreshToken = refreshToken;
   }
 
   /**
@@ -83,30 +65,12 @@ public class Auth extends ApiData {
   }
 
   /**
-   * Stores a new expiration timestamp for the current access token.
-   *
-   * @param expiration the access token expiration timestamp
-   */
-  public void setExpiration(final Date expiration) {
-    this.expiration = expiration;
-  }
-
-  /**
    * Returns the expiration timestamp for the current refresh token.
    *
    * @return the refresh token expiration timestamp
    */
   public Date getRefreshExpiration() {
     return refreshExpiration;
-  }
-
-  /**
-   * Stores a new expiration timestamp for the current refresh token.
-   *
-   * @param refreshExpiration the refresh token expiration timestamp
-   */
-  public void setRefreshExpiration(final Date refreshExpiration) {
-    this.refreshExpiration = refreshExpiration;
   }
 
   /** @return a stringified representation of Auth */

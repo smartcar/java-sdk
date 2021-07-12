@@ -1,44 +1,30 @@
 package com.smartcar.sdk;
 
 import com.smartcar.sdk.data.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonArrayBuilder;
-import javax.json.JsonObject;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
+import java.util.HashMap;
+import java.util.Map;
+
 /** Smartcar Vehicle API Object */
-public class Vehicle extends ApiClient {
+public class Vehicle {
   public enum UnitSystem {
     IMPERIAL,
     METRIC,
   }
 
-  private String vehicleId;
-  private String accessToken;
-  private Vehicle.UnitSystem unitSystem = UnitSystem.METRIC;
-  private String[] permissions;
-
-  /**
-   * Initializes a new Vehicle.
-   *
-   * @param vehicleId the vehicle ID
-   * @param accessToken the OAuth 2.0 access token
-   * @param unitSystem the preferred unit system
-   */
-  public Vehicle(String vehicleId, String accessToken, Vehicle.UnitSystem unitSystem) {
-    this.vehicleId = vehicleId;
-    this.accessToken = accessToken;
-
-    if (unitSystem != null) {
-      this.unitSystem = unitSystem;
-    }
-  }
+  private final String vehicleId;
+  private final String accessToken;
+  private Vehicle.UnitSystem unitSystem;
+  private final String version;
+  private final String origin;
+  private ApplicationPermissions permissions;
 
   /**
    * Initializes a new Vehicle.
@@ -47,7 +33,29 @@ public class Vehicle extends ApiClient {
    * @param accessToken the OAuth 2.0 access token
    */
   public Vehicle(String vehicleId, String accessToken) {
-    this(vehicleId, accessToken, null);
+    this(vehicleId, accessToken, new SmartcarVehicleOptions.Builder().build());
+  }
+
+  /**
+   * Initializes a new Vehicle with provided options
+   * @param vehicleId vehicleId the vehicle ID
+   * @param accessToken accessToken the OAuth 2.0 access token
+   * @param options optional arguments provided with a SmartcarVehicleOptions instance
+   */
+  public Vehicle(String vehicleId, String accessToken, SmartcarVehicleOptions options) {
+    this.vehicleId = vehicleId;
+    this.accessToken = accessToken;
+    this.version = options.getVersion();
+    this.unitSystem = options.getUnitSystem();
+    this.origin = options.getOrigin();
+  }
+
+  /**
+   * Gets the version of Smartcar API that this vehicle is using
+   * @return
+   */
+  public String getVersion() {
+    return this.version;
   }
 
   /**
@@ -60,49 +68,60 @@ public class Vehicle extends ApiClient {
    * @return the parsed response
    * @throws SmartcarException if the request is unsuccessful
    */
-  protected <T extends ApiData> SmartcarResponse<T> call(
-      String path, String method, RequestBody body, Class<T> type) throws SmartcarException {
+  protected <T extends ApiData> T call(
+      String path, String method, RequestBody body, String accessToken, Class<T> type) throws SmartcarException {
     HttpUrl url =
-        HttpUrl.parse(Vehicle.getApiUrl())
-            .newBuilder()
+        HttpUrl.parse(this.origin)
+            .newBuilder().addPathSegments("v" + this.version)
             .addPathSegments("vehicles")
             .addPathSegments(this.vehicleId)
             .addPathSegments(path)
             .build();
 
-    Request request =
-        new Request.Builder()
-            .url(url)
-            .header("Authorization", "Bearer " + this.accessToken)
-            .addHeader("User-Agent", Vehicle.USER_AGENT)
-            .method(method, body)
-            .header("SC-Unit-System", this.unitSystem.name().toLowerCase())
-            .build();
+    Map<String, String> headers = new HashMap<>();
+    headers.put("Authorization", "Bearer " + accessToken);
+    headers.put("sc-unit-system", this.unitSystem.name().toLowerCase());
+    Request request = ApiClient.buildRequest(url, method, body, headers);
 
-    return Vehicle.execute(request, type);
+    return ApiClient.execute(request, type);
+  }
+
+  protected <T extends ApiData> T call(String path, String method, RequestBody body, Class<T> type) throws SmartcarException{
+    return this.call(path, method, body, this.accessToken, type);
+  }
+
+  protected <T extends ApiData> T call(String path, String method, RequestBody body, Map<String, String> query, Class<T> type)
+  throws SmartcarException {
+    HttpUrl.Builder urlBuilder =
+            HttpUrl.parse(this.origin)
+                    .newBuilder()
+                    .addPathSegments("v" + this.version)
+                    .addPathSegments("vehicles")
+                    .addPathSegments(this.vehicleId)
+                    .addPathSegments(path);
+
+    for (Map.Entry<String, String> entry: query.entrySet()) {
+      urlBuilder.addQueryParameter(entry.getKey(), entry.getValue());
+    }
+
+    HttpUrl url = urlBuilder.build();
+
+    Map<String, String> headers = new HashMap<>();
+    headers.put("Authorization", "Bearer " + accessToken);
+    headers.put("sc-unit-system", this.unitSystem.name().toLowerCase());
+    Request request = ApiClient.buildRequest(url, method, body, headers);
+
+    return ApiClient.execute(request, type);
   }
 
   /**
-   * Executes an API request under the VehicleIds endpoint.
-   *
-   * @param path the path to the sub-endpoint
-   * @param method the method of the request
-   * @param body the body of the request
-   * @return the response value
-   * @throws SmartcarException if the request is unsuccessful
-   */
-  protected String call(String path, String method, RequestBody body) throws SmartcarException {
-    return this.call(path, method, body, ApiData.class).toString();
-  }
-
-  /**
-   * Send request to the /info endpoint
+   * Send request to the / endpoint
    *
    * @return VehicleInfo object
    * @throws SmartcarException if the request is unsuccessful
    */
-  public VehicleInfo info() throws SmartcarException {
-    return this.call("", "GET", null, VehicleInfo.class).getData();
+  public VehicleAttributes attributes() throws SmartcarException {
+    return this.call("", "GET", null, VehicleAttributes.class);
   }
 
   /**
@@ -111,8 +130,8 @@ public class Vehicle extends ApiClient {
    * @return the vin of the vehicle
    * @throws SmartcarException if the request is unsuccessful
    */
-  public String vin() throws SmartcarException {
-    return this.call("vin", "GET", null, VehicleVin.class).getData().getVin();
+  public VehicleVin vin() throws SmartcarException {
+    return this.call("vin", "GET", null, VehicleVin.class);
   }
 
   /**
@@ -121,63 +140,40 @@ public class Vehicle extends ApiClient {
    * @return the permission of the application
    * @throws SmartcarException if the request is unsuccessful
    */
-  public String[] permissions() throws SmartcarException {
-    if (this.permissions == null) {
-      this.permissions =
-          this.call("permissions", "GET", null, ApplicationPermissions.class)
-              .getData()
-              .getPermissions();
+  public ApplicationPermissions permissions() throws SmartcarException {
+    if (this.permissions != null) {
+      return this.permissions;
     }
+
+    this.permissions =
+          this.call("permissions", "GET", null, ApplicationPermissions.class);
     return this.permissions;
   }
 
   /**
-   * Checks if permissions granted to a vehicle contain the specified permission.
+   * Send request to the /permissions endpoint with paging options set
    *
-   * @param permission Permission to check
-   * @return Whether the vehicle has the specified permission
+   * @param paging Request paging options
+   * @return the permissons of the application
    * @throws SmartcarException if the request is unsuccessful
    */
-  public boolean hasPermissions(String permission) throws SmartcarException {
-    try {
-      List<String> vehiclePermissions = Arrays.asList(this.permissions());
-      permission = permission.replaceFirst("^required:", "");
+  public ApplicationPermissions permissions(RequestPaging paging) throws SmartcarException {
+    Map<String, String> pagingQuery = new HashMap<String, String>();
+    pagingQuery.put("limit", String.valueOf(paging.getLimit()));
+    pagingQuery.put("offset", String.valueOf(paging.getOffset()));
 
-      return vehiclePermissions.contains(permission);
-    } catch (SmartcarException exception) {
-      throw exception;
-    }
-  }
-
-  /**
-   * Checks if permissions granted to a vehicle contain the specified permissions.
-   *
-   * @param permissions Permissions to check
-   * @return Whether the vehicle has the specified permissions
-   * @throws SmartcarException if the request is unsuccessful
-   */
-  public boolean hasPermissions(String[] permissions) throws SmartcarException {
-    try {
-      List<String> vehiclePermissions = Arrays.asList(this.permissions());
-      List<String> requestedPermissions = new ArrayList<>();
-
-      for (String permission : permissions) {
-        requestedPermissions.add(permission.replaceFirst("^required:", ""));
-      }
-
-      return vehiclePermissions.containsAll(requestedPermissions);
-    } catch (SmartcarException exception) {
-      throw exception;
-    }
+    this.permissions = this.call("permissions", "GET", null, pagingQuery, ApplicationPermissions.class);
+    return this.permissions;
   }
 
   /**
    * Send request to the /disconnect endpoint
    *
+   * @return a response indicating success
    * @throws SmartcarException if the request is unsuccessful
    */
-  public void disconnect() throws SmartcarException {
-    this.call("application", "DELETE", null);
+  public DisconnectResponse disconnect() throws SmartcarException {
+    return this.call("application", "DELETE", null, DisconnectResponse.class);
   }
 
   /**
@@ -186,7 +182,7 @@ public class Vehicle extends ApiClient {
    * @return the odometer of the vehicle
    * @throws SmartcarException if the request is unsuccessful
    */
-  public SmartcarResponse<VehicleOdometer> odometer() throws SmartcarException {
+  public VehicleOdometer odometer() throws SmartcarException {
     return this.call("odometer", "GET", null, VehicleOdometer.class);
   }
 
@@ -196,7 +192,7 @@ public class Vehicle extends ApiClient {
    * @return the fuel status of the vehicle
    * @throws SmartcarException if the request is unsuccessful
    */
-  public SmartcarResponse<VehicleFuel> fuel() throws SmartcarException {
+  public VehicleFuel fuel() throws SmartcarException {
     return this.call("fuel", "GET", null, VehicleFuel.class);
   }
 
@@ -206,8 +202,8 @@ public class Vehicle extends ApiClient {
    * @return the engine oil status of the vehicle
    * @throws SmartcarException if the request is unsuccessful
    */
-  public SmartcarResponse<VehicleOil> oil() throws SmartcarException {
-    return this.call("engine/oil", "GET", null, VehicleOil.class);
+  public VehicleEngineOil engineOil() throws SmartcarException {
+    return this.call("engine/oil", "GET", null, VehicleEngineOil.class);
   }
 
   /**
@@ -216,7 +212,7 @@ public class Vehicle extends ApiClient {
    * @return the tire pressure status of the vehicle
    * @throws SmartcarException if the request is unsuccessful
    */
-  public SmartcarResponse<VehicleTirePressure> tirePressure() throws SmartcarException {
+  public VehicleTirePressure tirePressure() throws SmartcarException {
     return this.call("tires/pressure", "GET", null, VehicleTirePressure.class);
   }
 
@@ -226,7 +222,7 @@ public class Vehicle extends ApiClient {
    * @return the battery status of the vehicle
    * @throws SmartcarException if the request is unsuccessful
    */
-  public SmartcarResponse<VehicleBattery> battery() throws SmartcarException {
+  public VehicleBattery battery() throws SmartcarException {
     return this.call("battery", "GET", null, VehicleBattery.class);
   }
 
@@ -236,7 +232,7 @@ public class Vehicle extends ApiClient {
    * @return the battery capacity of the vehicle
    * @throws SmartcarException if the request is unsuccessful
    */
-  public SmartcarResponse<VehicleBatteryCapacity> batteryCapacity() throws SmartcarException {
+  public VehicleBatteryCapacity batteryCapacity() throws SmartcarException {
     return this.call("battery/capacity", "GET", null, VehicleBatteryCapacity.class);
   }
 
@@ -246,7 +242,7 @@ public class Vehicle extends ApiClient {
    * @return the charge status of the vehicle
    * @throws SmartcarException if the request is unsuccessful
    */
-  public SmartcarResponse<VehicleCharge> charge() throws SmartcarException {
+  public VehicleCharge charge() throws SmartcarException {
     return this.call("charge", "GET", null, VehicleCharge.class);
   }
 
@@ -256,60 +252,85 @@ public class Vehicle extends ApiClient {
    * @return the location of the vehicle
    * @throws SmartcarException if the request is unsuccessful
    */
-  public SmartcarResponse<VehicleLocation> location() throws SmartcarException {
+  public VehicleLocation location() throws SmartcarException {
     return this.call("location", "GET", null, VehicleLocation.class);
   }
 
   /**
    * Send request to the /security endpoint to unlock a vehicle
    *
+   * @return a response indicating success
    * @throws SmartcarException if the request is unsuccessful
    */
-  public void unlock() throws SmartcarException {
+  public ActionResponse unlock() throws SmartcarException {
     JsonObject json = Json.createObjectBuilder().add("action", "UNLOCK").build();
 
-    RequestBody body = RequestBody.create(JSON, json.toString());
+    RequestBody body = RequestBody.create(ApiClient.JSON, json.toString());
 
-    this.call("security", "POST", body);
+    return this.call("security", "POST", body, ActionResponse.class);
   }
 
   /**
    * Send request to the /security endpoint to lock a vehicle
    *
+   * @return a response indicating success
    * @throws SmartcarException if the request is unsuccessful
    */
-  public void lock() throws SmartcarException {
+  public ActionResponse lock() throws SmartcarException {
     JsonObject json = Json.createObjectBuilder().add("action", "LOCK").build();
 
-    RequestBody body = RequestBody.create(JSON, json.toString());
+    RequestBody body = RequestBody.create(ApiClient.JSON, json.toString());
 
-    this.call("security", "POST", body);
+    return this.call("security", "POST", body, ActionResponse.class);
   }
 
   /**
    * Send request to the /charge endpoint to start charging a vehicle
    *
+   * @return a response indicating success
    * @throws SmartcarException if the request is unsuccessful
    */
-  public void startCharge() throws SmartcarException {
+  public ActionResponse startCharge() throws SmartcarException {
     JsonObject json = Json.createObjectBuilder().add("action", "START").build();
 
-    RequestBody body = RequestBody.create(JSON, json.toString());
+    RequestBody body = RequestBody.create(ApiClient.JSON, json.toString());
 
-    this.call("charge", "POST", body);
+    return this.call("charge", "POST", body, ActionResponse.class);
   }
 
   /**
    * Send request to the /charge endpoint to stop charging a vehicle
    *
+   * @return a response indicating success
    * @throws SmartcarException if the request is unsuccessful
    */
-  public void stopCharge() throws SmartcarException {
+  public ActionResponse stopCharge() throws SmartcarException {
     JsonObject json = Json.createObjectBuilder().add("action", "STOP").build();
 
-    RequestBody body = RequestBody.create(JSON, json.toString());
+    RequestBody body = RequestBody.create(ApiClient.JSON, json.toString());
 
-    this.call("charge", "POST", body);
+    return this.call("charge", "POST", body, ActionResponse.class);
+  }
+
+  /**
+   * Subscribe vehicle to a webhook
+   *
+   * @return information about the webhook and vehicle subscription
+   * @throws SmartcarException if the request is unsuccessful
+   */
+  public WebhookSubscription subscribe(String webhookId) throws SmartcarException {
+    RequestBody body = RequestBody.create(null, new byte[]{});
+    return this.call("webhooks/" + webhookId, "POST", body, WebhookSubscription.class);
+  }
+
+  /**
+   * Unsubscribe vehicle from a webhook
+   *
+   * @return response indicating successful removal from the subscription
+   * @throws SmartcarException if the request is unsuccessful
+   */
+  public UnsubscribeResponse unsubscribe(String applicationManagementToken, String webhookId) throws SmartcarException {
+    return this.call("webhooks/" + webhookId, "DELETE", null, applicationManagementToken, UnsubscribeResponse.class);
   }
 
   /**
@@ -329,58 +350,13 @@ public class Vehicle extends ApiClient {
 
     JsonObject json = Json.createObjectBuilder().add("requests", requests).build();
 
-    this.gson.registerTypeAdapter(BatchResponse.class, new BatchDeserializer());
-    RequestBody body = RequestBody.create(JSON, json.toString());
-    SmartcarResponse<BatchResponse> response =
+    ApiClient.gson.registerTypeAdapter(BatchResponse.class, new BatchDeserializer());
+    RequestBody body = RequestBody.create(ApiClient.JSON, json.toString());
+    BatchResponse response =
         this.call("batch", "POST", body, BatchResponse.class);
-    BatchResponse batchResponse = response.getData();
-    batchResponse.setRequestId(response.getRequestId());
+    BatchResponse batchResponse = response;
+    batchResponse.setRequestId(response.getMeta().getRequestId());
     return batchResponse;
-  }
-
-  /**
-   * Returns the currently stored vehicle ID.
-   *
-   * @return the vehicle ID
-   */
-  public String getVehicleId() {
-    return this.vehicleId;
-  }
-
-  /**
-   * Stores the vehicleId
-   *
-   * @param vehicleId the vehicle ID
-   */
-  public void setVehicleId(String vehicleId) {
-    this.vehicleId = vehicleId;
-  }
-
-  /**
-   * Returns the currently stored access token.
-   *
-   * @return the access token
-   */
-  public String getAccessToken() {
-    return this.accessToken;
-  }
-
-  /**
-   * Stores the accessToken
-   *
-   * @param accessToken the accessToken
-   */
-  public void setAccessToken(String accessToken) {
-    this.accessToken = accessToken;
-  }
-
-  /**
-   * Returns the currently set unit system.
-   *
-   * @return the unit system
-   */
-  public Vehicle.UnitSystem getUnitSystem() {
-    return this.unitSystem;
   }
 
   /**

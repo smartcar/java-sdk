@@ -28,15 +28,6 @@ public class ApplicationPermissions extends ApiData {
   }
 
   /**
-   * Stores the paging information of the response
-   *
-   * @param paging information of the response
-   */
-  public void setPaging(ResponsePaging paging) {
-    this.paging = paging;
-  }
-
-  /**
    * Returns the application permissions
    *
    * @return application permissions

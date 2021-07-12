@@ -1,0 +1,9 @@
+{
+  "paging": {
+    "count": 25,
+    "offset": 10
+  },
+  "vehicles": [
+    "36ab27d0-fd9d-4455-823a-ce30af709ffc"
+  ]
+}

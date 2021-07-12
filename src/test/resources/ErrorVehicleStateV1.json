@@ -1,0 +1,5 @@
+{
+  "error": "vehicle_state_error",
+  "message": "Vehicle state cannot be determined.",
+  "code": "VS_000"
+}

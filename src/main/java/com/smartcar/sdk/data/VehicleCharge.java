@@ -6,18 +6,6 @@ public class VehicleCharge extends ApiData {
   private boolean isPluggedIn;
 
   /**
-   * Initializes a new instance of the VehicleCharge
-   *
-   * @param state Indicates the current state of the charge system. Can be `FULLY_CHARGED`,
-   *     `CHARGING`, or `NOT_CHARGING`.
-   * @param isPluggedIn Indicates whether charging cable is plugged in.
-   */
-  public VehicleCharge(final String state, final boolean isPluggedIn) {
-    this.state = state;
-    this.isPluggedIn = isPluggedIn;
-  }
-
-  /**
    * Returns the charge state
    *
    * @return charge state
@@ -42,15 +30,6 @@ public class VehicleCharge extends ApiData {
    */
   public void setState(String state) {
     this.state = state;
-  }
-
-  /**
-   * Stores whether charging cable is plugged in
-   *
-   * @param isPluggedIn stores whether charging cable is plugged in
-   */
-  public void setIsPluggedIn(boolean isPluggedIn) {
-    this.isPluggedIn = isPluggedIn;
   }
 
   /** @return a stringified representation of VehicleCharge */

@@ -1,0 +1,11 @@
+{
+  "type": "PERMISSION",
+  "code": null,
+  "description": "Your application has insufficient permissions to access the requested resource. Please prompt the user to re-authenticate using Smartcar Connect.",
+  "docURL": "https://smartcar.com/docs/errors/v2.0/other-errors/#permission",
+  "statusCode": 403,
+  "requestId": "5dea93a1-3f79-4246-90c5-89610a20471b",
+  "resolution": {
+    "type": null
+  }
+}
