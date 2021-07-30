@@ -9,6 +9,9 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class SmartcarTest {
     private String accessToken;
     private String clientId = System.getenv("E2E_SMARTCAR_CLIENT_ID");
@@ -49,7 +52,12 @@ public class SmartcarTest {
     @Test
     public void testGetCompatibility() throws Exception {
         String vin = "5YJSA1E29LF403082";
-        String[] scope = {"read_odometer"};
+        String[] scope = {"read_odometer", "read_fuel"};
+        String[] paths = {"/odometer", "/fuel"};
+        String[] reasons = {null, "SMARTCAR_NOT_CAPABLE"};
+        ArrayList<String> permissionList  = new ArrayList<>(Arrays.asList(scope));
+        ArrayList<String> endpointList  = new ArrayList<>(Arrays.asList(paths));
+        ArrayList<String> reasonsList  = new ArrayList<>(Arrays.asList(reasons));
 
         SmartcarCompatibilityRequest request =  new SmartcarCompatibilityRequest.Builder()
                 .clientId(this.clientId)
@@ -58,6 +66,16 @@ public class SmartcarTest {
                 .scope(scope)
                 .build();
         Compatibility comp = Smartcar.getCompatibility(request);
+        Compatibility.Capability[] capabilities = comp.getCapabilities();
         Assert.assertTrue(comp.getCompatible());
+        Assert.assertEquals(capabilities.length, 2);
+        boolean capable = true;
+        for (Compatibility.Capability capability : capabilities){
+            capable = capable && capability.getCapable();
+            Assert.assertTrue(permissionList.contains(capability.getPermission()));
+            Assert.assertTrue(endpointList.contains(capability.getEndpoint()));
+            Assert.assertTrue(reasonsList.contains(capability.getReason()));
+        }
+        Assert.assertFalse((capable));
     }
 }
