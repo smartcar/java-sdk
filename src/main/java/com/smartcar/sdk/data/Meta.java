@@ -14,13 +14,17 @@ public class Meta {
     @SerializedName("sc-request-id")
     private String requestId;
     @SerializedName("sc-data-age")
-    private String dataAge;
+    private String dataAge = null;
     @SerializedName("sc-unit-system")
     private String unitSystem;
 
     public String getRequestId() { return this.requestId; }
 
     public Date getDataAge() throws SmartcarException {
+        if (this.dataAge == null) {
+            return null;
+        }
+
         try {
             DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
             return format.parse(this.dataAge);

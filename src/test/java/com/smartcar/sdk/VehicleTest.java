@@ -78,6 +78,20 @@ public class VehicleTest {
     Assert.assertTrue(odometer.getMeta().getDataAge() instanceof Date);
     Assert.assertEquals(odometer.getMeta().getUnitSystem(), this.unitSystem);
   }
+    
+  @Test
+  public void testMetaNull() throws SmartcarException {
+    MockResponse mockResponse = new MockResponse()
+            .setResponseCode(200)
+            .setBody("{ 'distance': 100 }")
+            .addHeader("sc-request-id", this.expectedRequestId)
+            .addHeader("sc-unit-system", this.unitSystem);
+    TestExecutionListener.mockWebServer.enqueue(mockResponse);
+
+    VehicleOdometer odo = this.subject.odometer();
+
+    Assert.assertEquals(odo.getMeta().getDataAge(), null);
+  }
 
   @Test
   public void testGetVersion() {
