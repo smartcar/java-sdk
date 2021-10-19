@@ -48,7 +48,7 @@ testSets {
  */
 dependencies {
     api 'com.google.code.gson:gson:2.8.6'
-    api 'com.squareup.okhttp3:okhttp:3.12.0'
+    api 'com.squareup.okhttp3:okhttp:4.9.1'
     implementation 'org.apache.commons:commons-text:1.2'
     implementation 'javax.json:javax.json-api:1.0'  // Java EE interfaces
     runtimeOnly 'org.glassfish:javax.json:1.1'      // implementation for above interfaces
