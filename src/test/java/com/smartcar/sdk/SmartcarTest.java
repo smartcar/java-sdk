@@ -12,6 +12,8 @@ import org.powermock.modules.testng.PowerMockTestCase;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import javax.json.JsonObject;
+
 @PowerMockIgnore({"javax.net.ssl.*", "javax.crypto.*"})
 @PrepareForTest({
         Smartcar.class,
@@ -91,6 +93,19 @@ public class SmartcarTest extends PowerMockTestCase {
         Assert.assertEquals(comp.getMeta().getRequestId(), this.sampleRequestId);
         RecordedRequest req = TestExecutionListener.mockWebServer.takeRequest();
         Assert.assertEquals(req.getPath(), "/v2.0/compatibility?vin=1234&scope=read_odometer&country=US");
+    }
+
+    @Test
+    @PrepareForTest(System.class)
+    public void testGetVehicleRequest() throws Exception {
+        SmartcarVehicleRequest request = new SmarcarVehicleRequest.Builder()
+                .method("GET")
+                .path("odometer")
+                .body(null)
+                .setHeader("sc-unit-system", "imperial")
+                .build();
+//        JsonObject odometer = Smartcar.getVehicleResponse(request);
+//        Assert.assertEquals(response.body().);
     }
 
     @Test

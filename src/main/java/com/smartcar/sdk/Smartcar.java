@@ -1,9 +1,6 @@
 package com.smartcar.sdk;
 
-import com.smartcar.sdk.data.Compatibility;
-import com.smartcar.sdk.data.RequestPaging;
-import com.smartcar.sdk.data.User;
-import com.smartcar.sdk.data.VehicleIds;
+import com.smartcar.sdk.data.*;
 import okhttp3.Credentials;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
@@ -11,6 +8,7 @@ import org.apache.commons.codec.binary.Hex;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
+import javax.json.JsonObject;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -162,6 +160,14 @@ public class Smartcar {
         Request request = ApiClient.buildRequest(url, "GET", null, headers);
 
         return ApiClient.execute(request, Compatibility.class);
+    }
+
+    public static VehicleResponse getVehicleResponse(SmartcarVehicleRequest vehicleRequest) throws SmartcarException {
+        String apiUrl = Smartcar.getApiOrigin();
+        HttpUrl.Builder urlBuilder =
+                HttpUrl.parse(apiUrl)
+                        .newBuilder()
+                        .addPathSegment("v" + vehicleRequest.getVersion());
     }
 
     /**

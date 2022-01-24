@@ -271,6 +271,15 @@ public class VehicleTest {
 
     this.subject.unsubscribe("token", "sampleId");
   }
+  /* Request Method Tests */
+  @Test
+  public void testRequestOdometer() throws Exception {
+    loadAndEnqueueResponse("GetOdometer");
+
+    VehicleOdometer odometer = this.subject.odometer();
+
+    Assert.assertEquals(odometer.getDistance(), 104.32);
+  }
 
   @Test
   public void testV1PermissionError() throws FileNotFoundException {
