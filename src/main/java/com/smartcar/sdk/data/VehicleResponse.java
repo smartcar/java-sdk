@@ -1,16 +1,31 @@
 package com.smartcar.sdk.data;
 
-import javax.json.JsonObject;
+import com.google.gson.JsonObject;
 
 /** POJO for the Response object */
 public class VehicleResponse extends ApiData {
     private JsonObject body;
-    private Meta meta;
+
+    public VehicleResponse(JsonObject body) {
+        this.body = body;
+    }
 
     /**
      * Returns the body of the response
      *
      * @return body
      */
-    public JsonObject getBody() { return this.body; }
+    public JsonObject getBody() {
+        return this.body;
+    }
+
+    /**
+     * Returns the body of the response as a Json String
+     *
+     * @return body as Json String
+     */
+    public String getBodyAsString() {
+        return this.body.toString();
+    }
+
 }
