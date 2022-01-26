@@ -97,19 +97,6 @@ public class SmartcarTest extends PowerMockTestCase {
 
     @Test
     @PrepareForTest(System.class)
-    public void testGetVehicleRequest() throws Exception {
-        SmartcarVehicleRequest request = new SmarcarVehicleRequest.Builder()
-                .method("GET")
-                .path("odometer")
-                .body(null)
-                .setHeader("sc-unit-system", "imperial")
-                .build();
-//        JsonObject odometer = Smartcar.getVehicleResponse(request);
-//        Assert.assertEquals(response.body().);
-    }
-
-    @Test
-    @PrepareForTest(System.class)
     public void testGetCompatibilityWithOptions() throws Exception {
         String vin = "1234";
         String[] scope;
