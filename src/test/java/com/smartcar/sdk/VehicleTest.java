@@ -281,6 +281,7 @@ public class VehicleTest {
             .method("GET")
             .path("odometer")
             .addHeader("sc-unit-system", "imperial")
+            .addFlag("foo", "bar")
             .build();
 
     VehicleResponse odometer = this.subject.request(request);
@@ -316,26 +317,6 @@ public class VehicleTest {
 
     Assert.assertEquals(odometer.getDistance(), 32768.0);
     Assert.assertEquals(odometer.getMeta().getUnitSystem(), "metric");
-  }
-
-  @Test
-  public void testRequestError() throws Exception {
-    loadAndEnqueueResponse("GetOdometer");
-
-    try {
-      SmartcarVehicleRequest request = new SmartcarVehicleRequest.Builder()
-              .method("GET")
-              .path("odometer")
-              .addHeader("sc-unit-system", "imperial")
-              .addHeader("Authorization", "Bearer abc")
-              .build();
-    } catch (SmartcarException e) {
-      Assert.assertEquals(e.getStatusCode(), 400);
-      Assert.assertEquals(e.getCode(), "AUTHENTICATION_FAILED");
-      Assert.assertEquals(e.getMessage(), "Smartcar was unable to authenticate " +
-              "with the user’s connected services account. Please prompt the user to " +
-              "re-authenticate using Smartcar Connect.");
-    }
   }
 
   @Test

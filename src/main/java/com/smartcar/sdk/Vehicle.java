@@ -84,7 +84,7 @@ public class Vehicle {
     headers.put("Authorization", "Bearer " + accessToken);
     headers.put("sc-unit-system", this.unitSystem.name().toLowerCase());
     Request request = ApiClient.buildRequest(url, method, body, headers);
-    System.out.println(request);
+
     return ApiClient.execute(request, type);
   }
 
@@ -370,6 +370,17 @@ public class Vehicle {
    * @throws SmartcarException if the request is unsuccessful
    */
   public VehicleResponse request(SmartcarVehicleRequest vehicleRequest) throws SmartcarException, IOException {
+    String version = this.version;
+    String vehicleId = this.vehicleId;
+
+    if(vehicleRequest.getVersion() != null) {
+      version = vehicleRequest.getVersion();
+    }
+
+    if(vehicleRequest.getVin() != null) {
+      vehicleId = vehicleRequest.getVin();
+    }
+
     HttpUrl.Builder urlBuilder =
             HttpUrl.parse(this.origin)
                     .newBuilder()
@@ -377,6 +388,10 @@ public class Vehicle {
                     .addPathSegments("vehicles")
                     .addPathSegments(this.vehicleId)
                     .addPathSegments(vehicleRequest.getPath());
+
+    if (vehicleRequest.getFlags() != null) {
+      urlBuilder.addQueryParameter("flags", vehicleRequest.getFlags());
+    }
 
     HttpUrl url = urlBuilder.build();
 

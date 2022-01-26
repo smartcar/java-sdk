@@ -1,9 +1,0 @@
-{
-  "type": "CONNECTED_SERVICES_ACCOUNT",
-  "code": "AUTHENTICATION_FAILED",
-  "description": "Smartcar was unable to authenticate with the user’s connected services account. Please prompt the user to re-authenticate using Smartcar Connect.",
-  "docURL": "https://smartcar.com/docs/errors/v2.0/connected-services-account/#authentication_failed",
-  "statusCode": 400,
-  "requestId": "5dea93a1-3f79-4246-90c5-89610a20471b",
-  "resolution": { "type":  "REAUTHENTICATE", "url": "https://connect.smartcar.com/oauth/reauthenticate?response_type=vehicle_id&client_id=8229df9f-91a0-4ff0-a1ae-a1f38ee24d07&vehicle_id=sc4a1b01e5-0497-417c-a30e-6df6ba33ba46" }
-}
