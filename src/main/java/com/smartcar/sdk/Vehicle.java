@@ -4,11 +4,13 @@ import com.smartcar.sdk.data.*;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
 import okhttp3.RequestBody;
+import okhttp3.Response;
 
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -82,7 +84,7 @@ public class Vehicle {
     headers.put("Authorization", "Bearer " + accessToken);
     headers.put("sc-unit-system", this.unitSystem.name().toLowerCase());
     Request request = ApiClient.buildRequest(url, method, body, headers);
-
+    System.out.println(request);
     return ApiClient.execute(request, type);
   }
 
@@ -357,6 +359,44 @@ public class Vehicle {
     BatchResponse batchResponse = response;
     batchResponse.setRequestId(response.getMeta().getRequestId());
     return batchResponse;
+  }
+
+  /**
+   * General purpose method to make a request to a Smartcar endpoint - can be used
+   *  to make requests to brand specific endpoints.
+   *
+   * @param vehicleRequest with options for this request. See Smartcar.SmartcarVehicleRequest
+   * @return the VehicleResponse object containing the response from the requested endpoint
+   * @throws SmartcarException if the request is unsuccessful
+   */
+  public VehicleResponse request(SmartcarVehicleRequest vehicleRequest) throws SmartcarException, IOException {
+    HttpUrl.Builder urlBuilder =
+            HttpUrl.parse(this.origin)
+                    .newBuilder()
+                    .addPathSegments("v" + this.version)
+                    .addPathSegments("vehicles")
+                    .addPathSegments(this.vehicleId)
+                    .addPathSegments(vehicleRequest.getPath());
+
+    HttpUrl url = urlBuilder.build();
+
+    Map<String, String> headers = new HashMap<>();
+    headers.put("Authorization", "Bearer " + accessToken);
+    headers.put("sc-unit-system", this.unitSystem.name().toLowerCase());
+
+    // Overrides generated headers
+    headers.putAll(vehicleRequest.getHeaders());
+
+    Request request = ApiClient.buildRequest(url,
+            vehicleRequest.getMethod(),
+            vehicleRequest.getBody(),
+            headers);
+
+    ApiClient.gson.registerTypeAdapter(VehicleResponse.class, new VehicleResponseDeserializer());
+
+    VehicleResponse vehicleResponse = ApiClient.execute(request, VehicleResponse.class);
+
+    return vehicleResponse;
   }
 
   /**
