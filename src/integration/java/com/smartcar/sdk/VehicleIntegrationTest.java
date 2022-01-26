@@ -275,7 +275,6 @@ public class VehicleIntegrationTest {
             .build();
 
     VehicleResponse odometer = this.vehicle.request(request);
-    System.out.println(odometer.getBody());
 
     Assert.assertEquals(odometer.getBody().get("distance").getClass(), JsonPrimitive.class);
     Assert.assertNotNull(odometer.getMeta().getRequestId());

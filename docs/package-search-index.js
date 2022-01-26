@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.smartcar.sdk"},{"l":"com.smartcar.sdk.data"}];updateSearchResults();
