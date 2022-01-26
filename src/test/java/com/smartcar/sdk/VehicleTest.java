@@ -1,7 +1,7 @@
 package com.smartcar.sdk;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
+import com.google.gson.internal.LinkedTreeMap;
 import com.smartcar.sdk.data.*;
 import okhttp3.mockwebserver.MockResponse;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
@@ -13,6 +13,7 @@ import org.testng.annotations.Test;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -271,14 +272,70 @@ public class VehicleTest {
 
     this.subject.unsubscribe("token", "sampleId");
   }
-  /* Request Method Tests */
+
   @Test
   public void testRequestOdometer() throws Exception {
     loadAndEnqueueResponse("GetOdometer");
 
-    VehicleOdometer odometer = this.subject.odometer();
+    SmartcarVehicleRequest request = new SmartcarVehicleRequest.Builder()
+            .method("GET")
+            .path("odometer")
+            .addHeader("sc-unit-system", "imperial")
+            .build();
 
-    Assert.assertEquals(odometer.getDistance(), 104.32);
+    VehicleResponse odometer = this.subject.request(request);
+
+    Assert.assertEquals(odometer.getBodyAsString(), "{\"distance\":104.32}");
+    Assert.assertEquals(odometer.getBody().get("distance"), new JsonPrimitive(104.32));
+    Assert.assertEquals(odometer.getMeta().getRequestId(), "67127d3a-a08a-41f0-8211-f96da36b2d6e");
+    Assert.assertEquals(odometer.getMeta().getUnitSystem(), "imperial");
+  }
+
+  @Test
+  public void testRequestBatch() throws Exception {
+    loadAndEnqueueResponse("BatchResponseSuccess");
+    String requests = "[{ \"path\" : \"/odometer\" }, { \"path\" : \"/tirePressure\" }]";
+
+    SmartcarVehicleRequest request = new SmartcarVehicleRequest.Builder()
+            .method("POST")
+            .path("batch")
+            .addBodyParameter("requests", requests)
+            .addHeader("sc-unit-system", "imperial")
+            .build();
+
+    VehicleResponse batchResponse = this.subject.request(request);
+    Assert.assertEquals(batchResponse.getMeta().getRequestId(), "67127d3a-a08a-41f0-8211-f96da36b2d6e");
+
+    JsonArray responsesArray = batchResponse.getBody().get("responses").getAsJsonArray();
+
+    BatchResponse response = new BatchResponse(responsesArray);
+
+    Assert.assertEquals(responsesArray.size(), 1);
+
+    VehicleOdometer odometer = response.odometer();
+
+    Assert.assertEquals(odometer.getDistance(), 32768.0);
+    Assert.assertEquals(odometer.getMeta().getUnitSystem(), "metric");
+  }
+
+  @Test
+  public void testRequestError() throws Exception {
+    loadAndEnqueueResponse("GetOdometer");
+
+    try {
+      SmartcarVehicleRequest request = new SmartcarVehicleRequest.Builder()
+              .method("GET")
+              .path("odometer")
+              .addHeader("sc-unit-system", "imperial")
+              .addHeader("Authorization", "Bearer abc")
+              .build();
+    } catch (SmartcarException e) {
+      Assert.assertEquals(e.getStatusCode(), 400);
+      Assert.assertEquals(e.getCode(), "AUTHENTICATION_FAILED");
+      Assert.assertEquals(e.getMessage(), "Smartcar was unable to authenticate " +
+              "with the user’s connected services account. Please prompt the user to " +
+              "re-authenticate using Smartcar Connect.");
+    }
   }
 
   @Test
