@@ -28,7 +28,7 @@ public class VehicleIntegrationTest {
     this.vehicle = this.getVehicle("CHEVROLET", AuthHelpers.DEFAULT_SCOPE);
     this.eVehicle =
             this.getVehicle(
-                    "TESLA",
+                    "FORD",
                     new String[]{
                             "required:control_charge", "required:control_security", "read_battery", "read_charge"
                     });
