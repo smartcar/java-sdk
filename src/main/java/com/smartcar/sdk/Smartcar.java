@@ -162,14 +162,6 @@ public class Smartcar {
         return ApiClient.execute(request, Compatibility.class);
     }
 
-    public static VehicleResponse getVehicleResponse(SmartcarVehicleRequest vehicleRequest) throws SmartcarException {
-        String apiUrl = Smartcar.getApiOrigin();
-        HttpUrl.Builder urlBuilder =
-                HttpUrl.parse(apiUrl)
-                        .newBuilder()
-                        .addPathSegment("v" + vehicleRequest.getVersion());
-    }
-
     /**
      * Performs a HmacSHA256 hash on a challenge string using the key provided
      * @param key
