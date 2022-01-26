@@ -1,27 +1,31 @@
 package com.smartcar.sdk;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+import javax.json.*;
 
+import okhttp3.RequestBody;
+
+/**
+ * Class encompassing optional arguments for Smartcar Vehicle general purpose requests
+ */
 public final class SmartcarVehicleRequest {
     private final String method;
     private final String path;
-    private final String body;
-    private final String headers;
-    private final String version;
-    // TODO: headers
+    private final RequestBody body;
+    private final Map<String, String> headers;
 
     public static class Builder {
         private String method;
         private String path;
-        private String body;
-        private final List<String> headers;
+        private final JsonObjectBuilder body;
+        private final Map<String, String> headers;
 
         public Builder() {
             this.method = "";
             this.path = "/";
-            this.body = "";
-            this.headers = new ArrayList<>();
+            this.body = Json.createObjectBuilder();
+            this.headers = new HashMap<>();
         }
 
         public Builder method(String method) {
@@ -34,24 +38,39 @@ public final class SmartcarVehicleRequest {
             return this;
         }
 
-        public Builder addHeader(String key, String value){
-            this.headers.add(key + ":" + value);
+        public Builder addHeader(String key, String value) {
+            this.headers.put(key, value);
             return this;
         }
 
-        public Builder addHeader(String key, Boolean value){
-            this.headers.add(key + ":" + value);
+        public Builder addBodyParameter(String key, String value) {
+            this.body.add(key, value);
             return this;
         }
 
         public SmartcarVehicleRequest build() throws Exception {
-            if (this.clientId == null) {
-                throw new Exception("clientId must be defined");
-            }
-            if (this.clientSecret == null) {
-                throw new Exception("clientSecret must be defined");
-            }
             return new SmartcarVehicleRequest(this);
         }
     }
+
+    private SmartcarVehicleRequest(Builder builder) {
+        this.method = builder.method;
+        this.path = builder.path;
+
+        JsonObject jsonBody = builder.body.build();
+
+        this.body = jsonBody.isEmpty() ? null : RequestBody.create(ApiClient.JSON, jsonBody.toString());
+
+        // Shallow clone of headers Map
+        this.headers = (HashMap<String, String>) ((HashMap<String, String>) builder.headers).clone();
+    }
+
+    public String getMethod() { return this.method; }
+
+    public String getPath() { return this.path; }
+
+    public RequestBody getBody() { return this.body; }
+
+    public Map<String, String> getHeaders() { return this.headers; }
+
 }
