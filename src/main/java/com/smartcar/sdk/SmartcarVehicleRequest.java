@@ -80,7 +80,7 @@ public final class SmartcarVehicleRequest {
         }
 
         public SmartcarVehicleRequest build() throws Exception {
-            if(this.method == null || this.method == "") {
+            if(this.method == null || this.method.equals("")) {
                 throw new Exception("method must be defined");
             }
             if(this.path == null || this.path == "") {
