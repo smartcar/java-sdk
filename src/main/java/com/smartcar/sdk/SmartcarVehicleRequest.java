@@ -83,7 +83,7 @@ public final class SmartcarVehicleRequest {
             if(this.method == null || this.method.equals("")) {
                 throw new Exception("method must be defined");
             }
-            if(this.path == null || this.path == "") {
+            if(this.path == null) {
                 throw new Exception("path must be defined");
             }
             return new SmartcarVehicleRequest(this);
