@@ -293,6 +293,21 @@ public class VehicleTest {
   }
 
   @Test
+  public void testRequestMethodException() throws Exception {
+    loadAndEnqueueResponse("GetOdometer");
+
+    try {
+      SmartcarVehicleRequest request = new SmartcarVehicleRequest.Builder()
+              .path("odometer")
+              .addHeader("sc-unit-system", "imperial")
+              .addFlag("foo", "bar")
+              .build();
+    } catch(Exception e) {
+      Assert.assertEquals(e.getMessage(), "method must be defined");
+    }
+  }
+
+  @Test
   public void testRequestBatch() throws Exception {
     loadAndEnqueueResponse("BatchResponseSuccess");
     String requests = "[{ \"path\" : \"/odometer\" }, { \"path\" : \"/tirePressure\" }]";

@@ -31,7 +31,7 @@ public final class SmartcarVehicleRequest {
 
         public Builder() {
             this.method = "";
-            this.path = "/";
+            this.path = "";
             this.body = Json.createObjectBuilder();
             this.headers = new HashMap<>();
             this.vin = null;
@@ -80,6 +80,12 @@ public final class SmartcarVehicleRequest {
         }
 
         public SmartcarVehicleRequest build() throws Exception {
+            if(this.method == null || this.method == "") {
+                throw new Exception("method must be defined");
+            }
+            if(this.path == null || this.path == "") {
+                throw new Exception("path must be defined");
+            }
             return new SmartcarVehicleRequest(this);
         }
     }
