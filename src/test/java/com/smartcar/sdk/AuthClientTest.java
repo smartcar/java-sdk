@@ -2,6 +2,9 @@ package com.smartcar.sdk;
 
 import com.google.gson.*;
 import com.smartcar.sdk.data.Auth;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.Date;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -14,10 +17,6 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.testng.PowerMockTestCase;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.util.Date;
 
 /** Test Suite: AuthClient */
 @PrepareForTest({
@@ -61,7 +60,6 @@ public class AuthClientTest extends PowerMockTestCase {
   // Subject Under Test
   private AuthClient subject;
 
-
   private JsonElement loadJsonResource(String resourceName) throws FileNotFoundException {
     String fileName = String.format("src/test/resources/%s.json", resourceName);
     return JsonParser.parseReader(new FileReader(fileName));
@@ -69,7 +67,8 @@ public class AuthClientTest extends PowerMockTestCase {
 
   private void loadAndEnqueueResponse(String resourceName) throws FileNotFoundException {
     JsonElement success = loadJsonResource(resourceName);
-    MockResponse mockResponse = new MockResponse()
+    MockResponse mockResponse =
+        new MockResponse()
             .setBody(success.toString())
             .addHeader("sc-request-id", this.expectedRequestId);
     TestExecutionListener.mockWebServer.enqueue(mockResponse);
@@ -97,9 +96,10 @@ public class AuthClientTest extends PowerMockTestCase {
 
     PowerMockito.mockStatic(System.class);
     PowerMockito.when(System.getenv("SMARTCAR_AUTH_ORIGIN"))
-            .thenReturn("http://localhost:" + TestExecutionListener.mockWebServer.getPort());
+        .thenReturn("http://localhost:" + TestExecutionListener.mockWebServer.getPort());
 
-    AuthClient client = new AuthClient.Builder()
+    AuthClient client =
+        new AuthClient.Builder()
             .clientId(this.sampleClientId)
             .clientSecret(this.sampleClientSecret)
             .redirectUri(this.sampleRedirectUri)
@@ -114,10 +114,13 @@ public class AuthClientTest extends PowerMockTestCase {
 
     RecordedRequest request = TestExecutionListener.mockWebServer.takeRequest();
 
-    Assert.assertEquals(request.getRequestUrl().toString(),
-            "http://localhost:" + TestExecutionListener.mockWebServer.getPort() + "/oauth/token");
+    Assert.assertEquals(
+        request.getRequestUrl().toString(),
+        "http://localhost:" + TestExecutionListener.mockWebServer.getPort() + "/oauth/token");
     // can only verify the truncated body :(
-    Assert.assertEquals(request.getBody().toString(), "[size=77 text=grant_type=authorization_code&code=&redirect_uri=https%3A%2F%2Fe…]");
+    Assert.assertEquals(
+        request.getBody().toString(),
+        "[size=77 text=grant_type=authorization_code&code=&redirect_uri=https%3A%2F%2Fe…]");
   }
 
   @Test
@@ -127,15 +130,17 @@ public class AuthClientTest extends PowerMockTestCase {
 
     PowerMockito.mockStatic(System.class);
     PowerMockito.when(System.getenv("SMARTCAR_AUTH_ORIGIN"))
-            .thenReturn("http://localhost:" + TestExecutionListener.mockWebServer.getPort());
+        .thenReturn("http://localhost:" + TestExecutionListener.mockWebServer.getPort());
 
-    AuthClient client = new AuthClient.Builder()
+    AuthClient client =
+        new AuthClient.Builder()
             .clientId(this.sampleClientId)
             .clientSecret(this.sampleClientSecret)
             .redirectUri(this.sampleRedirectUri)
             .build();
 
-    SmartcarAuthOptions options = new SmartcarAuthOptions.Builder().addFlag("foo", "bar").addFlag("test", true).build();
+    SmartcarAuthOptions options =
+        new SmartcarAuthOptions.Builder().addFlag("foo", "bar").addFlag("test", true).build();
 
     Auth auth = client.exchangeCode(this.sampleCode, options);
 
@@ -146,10 +151,15 @@ public class AuthClientTest extends PowerMockTestCase {
 
     RecordedRequest request = TestExecutionListener.mockWebServer.takeRequest();
 
-    Assert.assertEquals(request.getRequestUrl().toString(),
-            "http://localhost:" + TestExecutionListener.mockWebServer.getPort() + "/oauth/token?flags=foo%3Abar%20test%3Atrue");
+    Assert.assertEquals(
+        request.getRequestUrl().toString(),
+        "http://localhost:"
+            + TestExecutionListener.mockWebServer.getPort()
+            + "/oauth/token?flags=foo%3Abar%20test%3Atrue");
     // can only verify the truncated body :(
-    Assert.assertEquals(request.getBody().toString(), "[size=77 text=grant_type=authorization_code&code=&redirect_uri=https%3A%2F%2Fe…]");
+    Assert.assertEquals(
+        request.getBody().toString(),
+        "[size=77 text=grant_type=authorization_code&code=&redirect_uri=https%3A%2F%2Fe…]");
   }
 
   @Test
@@ -158,9 +168,11 @@ public class AuthClientTest extends PowerMockTestCase {
     loadAndEnqueueResponse("AuthRefreshTokens");
 
     PowerMockito.mockStatic(System.class);
-    PowerMockito.when(System.getenv("SMARTCAR_AUTH_ORIGIN")).thenReturn("http://localhost:" + TestExecutionListener.mockWebServer.getPort());
+    PowerMockito.when(System.getenv("SMARTCAR_AUTH_ORIGIN"))
+        .thenReturn("http://localhost:" + TestExecutionListener.mockWebServer.getPort());
 
-    AuthClient client = new AuthClient.Builder()
+    AuthClient client =
+        new AuthClient.Builder()
             .clientId(this.sampleClientId)
             .clientSecret(this.sampleClientSecret)
             .redirectUri(this.sampleRedirectUri)
@@ -175,9 +187,11 @@ public class AuthClientTest extends PowerMockTestCase {
 
     RecordedRequest request = TestExecutionListener.mockWebServer.takeRequest();
 
-    Assert.assertEquals(request.getRequestUrl().toString(),
-            "http://localhost:" + TestExecutionListener.mockWebServer.getPort() + "/oauth/token");
-    Assert.assertEquals(request.getBody().toString(), "[text=grant_type=refresh_token&refresh_token=]");
+    Assert.assertEquals(
+        request.getRequestUrl().toString(),
+        "http://localhost:" + TestExecutionListener.mockWebServer.getPort() + "/oauth/token");
+    Assert.assertEquals(
+        request.getBody().toString(), "[text=grant_type=refresh_token&refresh_token=]");
   }
 
   @Test
@@ -189,7 +203,9 @@ public class AuthClientTest extends PowerMockTestCase {
 
     AuthClient client = new AuthClient.Builder().build();
     String authUrl = client.authUrlBuilder(this.sampleScope).build();
-    Assert.assertEquals(authUrl, "https://connect.smartcar.com/oauth/authorize?response_type=code&client_id=cl13nt1d-t35t-46dc-aa25-bdd042f54e7d&redirect_uri=https%3A%2F%2Fexample.com%2F&mode=live&scope=read_vehicle_info%20read_location%20read_odometer");
+    Assert.assertEquals(
+        authUrl,
+        "https://connect.smartcar.com/oauth/authorize?response_type=code&client_id=cl13nt1d-t35t-46dc-aa25-bdd042f54e7d&redirect_uri=https%3A%2F%2Fexample.com%2F&mode=live&scope=read_vehicle_info%20read_location%20read_odometer");
   }
 
   @Test
@@ -200,7 +216,9 @@ public class AuthClientTest extends PowerMockTestCase {
     PowerMockito.when(System.getenv("SMARTCAR_REDIRECT_URI")).thenReturn(this.sampleRedirectUri);
     AuthClient client = new AuthClient.Builder().build();
 
-    String authUrl = client.authUrlBuilder(this.sampleScope)
+    String authUrl =
+        client
+            .authUrlBuilder(this.sampleScope)
             .state("sampleState")
             .approvalPrompt(true)
             .makeBypass("TESLA")
@@ -209,6 +227,8 @@ public class AuthClientTest extends PowerMockTestCase {
             .addFlag("foo", "bar")
             .addFlag("test", true)
             .build();
-    Assert.assertEquals(authUrl, "https://connect.smartcar.com/oauth/authorize?response_type=code&client_id=cl13nt1d-t35t-46dc-aa25-bdd042f54e7d&redirect_uri=https%3A%2F%2Fexample.com%2F&mode=live&scope=read_vehicle_info%20read_location%20read_odometer&state=sampleState&approval_prompt=force&make=TESLA&single_select=true&single_select=true&single_select_vin=sampleVin&flags=foo%3Abar%20test%3Atrue");
+    Assert.assertEquals(
+        authUrl,
+        "https://connect.smartcar.com/oauth/authorize?response_type=code&client_id=cl13nt1d-t35t-46dc-aa25-bdd042f54e7d&redirect_uri=https%3A%2F%2Fexample.com%2F&mode=live&scope=read_vehicle_info%20read_location%20read_odometer&state=sampleState&approval_prompt=force&make=TESLA&single_select=true&single_select=true&single_select_vin=sampleVin&flags=foo%3Abar%20test%3Atrue");
   }
 }

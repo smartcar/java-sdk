@@ -1,12 +1,12 @@
 package com.smartcar.sdk;
 
+import static org.testng.Assert.assertNotNull;
+
 import com.smartcar.sdk.data.Auth;
 import com.smartcar.sdk.helpers.AuthHelpers;
 import org.testng.Assert;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
-
-import static org.testng.Assert.assertNotNull;
 
 public class AuthTest {
   private AuthClient client;

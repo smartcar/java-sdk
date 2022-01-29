@@ -42,11 +42,15 @@ public class Compatibility extends ApiData {
    */
   @Override
   public String toString() {
-    return "Compatibility{" +
-            "compatible=" + compatible +
-            ", reason='" + reason + '\'' +
-            ", capabilities=" + Arrays.toString(capabilities) +
-            '}';
+    return "Compatibility{"
+        + "compatible="
+        + compatible
+        + ", reason='"
+        + reason
+        + '\''
+        + ", capabilities="
+        + Arrays.toString(capabilities)
+        + '}';
   }
 
   public static class Capability extends ApiData {
@@ -98,12 +102,19 @@ public class Compatibility extends ApiData {
      */
     @Override
     public String toString() {
-      return "Capability{" +
-              "capable=" + capable +
-              ", permission='" + permission + '\'' +
-              ", endpoint='" + endpoint + '\'' +
-              ", reason='" + reason + '\'' +
-              '}';
+      return "Capability{"
+          + "capable="
+          + capable
+          + ", permission='"
+          + permission
+          + '\''
+          + ", endpoint='"
+          + endpoint
+          + '\''
+          + ", reason='"
+          + reason
+          + '\''
+          + '}';
     }
   }
 }

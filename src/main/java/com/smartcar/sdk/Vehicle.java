@@ -1,18 +1,16 @@
 package com.smartcar.sdk;
 
 import com.smartcar.sdk.data.*;
-import okhttp3.HttpUrl;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import okhttp3.HttpUrl;
+import okhttp3.Request;
+import okhttp3.RequestBody;
 
 /** Smartcar Vehicle API Object */
 public class Vehicle {
@@ -40,6 +38,7 @@ public class Vehicle {
 
   /**
    * Initializes a new Vehicle with provided options
+   *
    * @param vehicleId vehicleId the vehicle ID
    * @param accessToken accessToken the OAuth 2.0 access token
    * @param options optional arguments provided with a SmartcarVehicleOptions instance
@@ -54,6 +53,7 @@ public class Vehicle {
 
   /**
    * Gets the version of Smartcar API that this vehicle is using
+   *
    * @return
    */
   public String getVersion() {
@@ -71,10 +71,12 @@ public class Vehicle {
    * @throws SmartcarException if the request is unsuccessful
    */
   protected <T extends ApiData> T call(
-      String path, String method, RequestBody body, String accessToken, Class<T> type) throws SmartcarException {
+      String path, String method, RequestBody body, String accessToken, Class<T> type)
+      throws SmartcarException {
     HttpUrl url =
         HttpUrl.parse(this.origin)
-            .newBuilder().addPathSegments("v" + this.version)
+            .newBuilder()
+            .addPathSegments("v" + this.version)
             .addPathSegments("vehicles")
             .addPathSegments(this.vehicleId)
             .addPathSegments(path)
@@ -88,21 +90,23 @@ public class Vehicle {
     return ApiClient.execute(request, type);
   }
 
-  protected <T extends ApiData> T call(String path, String method, RequestBody body, Class<T> type) throws SmartcarException{
+  protected <T extends ApiData> T call(String path, String method, RequestBody body, Class<T> type)
+      throws SmartcarException {
     return this.call(path, method, body, this.accessToken, type);
   }
 
-  protected <T extends ApiData> T call(String path, String method, RequestBody body, Map<String, String> query, Class<T> type)
-  throws SmartcarException {
+  protected <T extends ApiData> T call(
+      String path, String method, RequestBody body, Map<String, String> query, Class<T> type)
+      throws SmartcarException {
     HttpUrl.Builder urlBuilder =
-            HttpUrl.parse(this.origin)
-                    .newBuilder()
-                    .addPathSegments("v" + this.version)
-                    .addPathSegments("vehicles")
-                    .addPathSegments(this.vehicleId)
-                    .addPathSegments(path);
+        HttpUrl.parse(this.origin)
+            .newBuilder()
+            .addPathSegments("v" + this.version)
+            .addPathSegments("vehicles")
+            .addPathSegments(this.vehicleId)
+            .addPathSegments(path);
 
-    for (Map.Entry<String, String> entry: query.entrySet()) {
+    for (Map.Entry<String, String> entry : query.entrySet()) {
       urlBuilder.addQueryParameter(entry.getKey(), entry.getValue());
     }
 
@@ -147,8 +151,7 @@ public class Vehicle {
       return this.permissions;
     }
 
-    this.permissions =
-          this.call("permissions", "GET", null, ApplicationPermissions.class);
+    this.permissions = this.call("permissions", "GET", null, ApplicationPermissions.class);
     return this.permissions;
   }
 
@@ -164,7 +167,8 @@ public class Vehicle {
     pagingQuery.put("limit", String.valueOf(paging.getLimit()));
     pagingQuery.put("offset", String.valueOf(paging.getOffset()));
 
-    this.permissions = this.call("permissions", "GET", null, pagingQuery, ApplicationPermissions.class);
+    this.permissions =
+        this.call("permissions", "GET", null, pagingQuery, ApplicationPermissions.class);
     return this.permissions;
   }
 
@@ -321,7 +325,7 @@ public class Vehicle {
    * @throws SmartcarException if the request is unsuccessful
    */
   public WebhookSubscription subscribe(String webhookId) throws SmartcarException {
-    RequestBody body = RequestBody.create(null, new byte[]{});
+    RequestBody body = RequestBody.create(null, new byte[] {});
     return this.call("webhooks/" + webhookId, "POST", body, WebhookSubscription.class);
   }
 
@@ -331,8 +335,14 @@ public class Vehicle {
    * @return response indicating successful removal from the subscription
    * @throws SmartcarException if the request is unsuccessful
    */
-  public UnsubscribeResponse unsubscribe(String applicationManagementToken, String webhookId) throws SmartcarException {
-    return this.call("webhooks/" + webhookId, "DELETE", null, applicationManagementToken, UnsubscribeResponse.class);
+  public UnsubscribeResponse unsubscribe(String applicationManagementToken, String webhookId)
+      throws SmartcarException {
+    return this.call(
+        "webhooks/" + webhookId,
+        "DELETE",
+        null,
+        applicationManagementToken,
+        UnsubscribeResponse.class);
   }
 
   /**
@@ -354,40 +364,36 @@ public class Vehicle {
 
     ApiClient.gson.registerTypeAdapter(BatchResponse.class, new BatchDeserializer());
     RequestBody body = RequestBody.create(ApiClient.JSON, json.toString());
-    BatchResponse response =
-        this.call("batch", "POST", body, BatchResponse.class);
+    BatchResponse response = this.call("batch", "POST", body, BatchResponse.class);
     BatchResponse batchResponse = response;
     batchResponse.setRequestId(response.getMeta().getRequestId());
     return batchResponse;
   }
 
   /**
-   * General purpose method to make a request to a Smartcar endpoint - can be used
-   *  to make requests to brand specific endpoints.
+   * General purpose method to make a request to a Smartcar endpoint - can be used to make requests
+   * to brand specific endpoints.
    *
    * @param vehicleRequest with options for this request. See Smartcar.SmartcarVehicleRequest
    * @return the VehicleResponse object containing the response from the requested endpoint
    * @throws SmartcarException if the request is unsuccessful
    */
-  public VehicleResponse request(SmartcarVehicleRequest vehicleRequest) throws SmartcarException, IOException {
+  public VehicleResponse request(SmartcarVehicleRequest vehicleRequest)
+      throws SmartcarException, IOException {
     String version = this.version;
     String vehicleId = this.vehicleId;
 
-    if(vehicleRequest.getVersion() != null) {
+    if (vehicleRequest.getVersion() != null) {
       version = vehicleRequest.getVersion();
     }
 
-    if(vehicleRequest.getVin() != null) {
-      vehicleId = vehicleRequest.getVin();
-    }
-
     HttpUrl.Builder urlBuilder =
-            HttpUrl.parse(this.origin)
-                    .newBuilder()
-                    .addPathSegments("v" + this.version)
-                    .addPathSegments("vehicles")
-                    .addPathSegments(this.vehicleId)
-                    .addPathSegments(vehicleRequest.getPath());
+        HttpUrl.parse(this.origin)
+            .newBuilder()
+            .addPathSegments("v" + this.version)
+            .addPathSegments("vehicles")
+            .addPathSegments(this.vehicleId)
+            .addPathSegments(vehicleRequest.getPath());
 
     if (vehicleRequest.getFlags() != null) {
       urlBuilder.addQueryParameter("flags", vehicleRequest.getFlags());
@@ -402,10 +408,8 @@ public class Vehicle {
     // Overrides generated headers
     headers.putAll(vehicleRequest.getHeaders());
 
-    Request request = ApiClient.buildRequest(url,
-            vehicleRequest.getMethod(),
-            vehicleRequest.getBody(),
-            headers);
+    Request request =
+        ApiClient.buildRequest(url, vehicleRequest.getMethod(), vehicleRequest.getBody(), headers);
 
     ApiClient.gson.registerTypeAdapter(VehicleResponse.class, new VehicleResponseDeserializer());
 

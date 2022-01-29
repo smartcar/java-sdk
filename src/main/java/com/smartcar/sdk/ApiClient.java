@@ -4,11 +4,10 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.smartcar.sdk.data.ApiData;
 import com.smartcar.sdk.data.Meta;
-import okhttp3.*;
-
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import okhttp3.*;
 
 /** Provides the core functionality for API client objects. */
 abstract class ApiClient {
@@ -41,23 +40,25 @@ abstract class ApiClient {
   private static final OkHttpClient client =
       new OkHttpClient.Builder().readTimeout(310, TimeUnit.SECONDS).build();
 
-
   static GsonBuilder gson =
       new GsonBuilder().setFieldNamingStrategy((field) -> Utils.toCamelCase(field.getName()));
 
   /**
    * Builds a request object with common headers, using provided request parameters
+   *
    * @param url url for the request, including the query parameters
    * @param method http method
    * @param body request body
    * @param headers additional headers to set for the request
    * @return
    */
-  protected static Request buildRequest(HttpUrl url, String method, RequestBody body, Map<String, String> headers) {
-    Request.Builder request = new Request.Builder()
-                    .url(url)
-                    .addHeader("User-Agent", ApiClient.USER_AGENT)
-                    .method(method, body);
+  protected static Request buildRequest(
+      HttpUrl url, String method, RequestBody body, Map<String, String> headers) {
+    Request.Builder request =
+        new Request.Builder()
+            .url(url)
+            .addHeader("User-Agent", ApiClient.USER_AGENT)
+            .method(method, body);
 
     headers.forEach(request::addHeader);
 
@@ -95,8 +96,8 @@ abstract class ApiClient {
    * @return the wrapped response
    * @throws SmartcarException if the request is unsuccessful
    */
-  protected static <T extends ApiData> T execute(
-      Request request, Class<T> dataType) throws SmartcarException {
+  protected static <T extends ApiData> T execute(Request request, Class<T> dataType)
+      throws SmartcarException {
     Response response = ApiClient.execute(request);
     T data;
     Meta meta;
@@ -107,7 +108,7 @@ abstract class ApiClient {
       data = ApiClient.gson.create().fromJson(bodyString, dataType);
       Headers headers = response.headers();
       JsonObject headerJson = new JsonObject();
-      for (String header: response.headers().names()) {
+      for (String header : response.headers().names()) {
         headerJson.addProperty(header.toLowerCase(), headers.get(header));
       }
       String headerJsonString = headerJson.toString();
@@ -118,11 +119,11 @@ abstract class ApiClient {
         bodyString = "Empty response body";
       }
       throw new SmartcarException.Builder()
-              .statusCode(response.code())
-              .description(bodyString)
-              .requestId(response.headers().get("sc-request-id"))
-              .type("SDK_ERROR")
-              .build();
+          .statusCode(response.code())
+          .description(bodyString)
+          .requestId(response.headers().get("sc-request-id"))
+          .type("SDK_ERROR")
+          .build();
     }
 
     return data;

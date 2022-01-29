@@ -4,10 +4,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.ResponseBody;
-
-import java.io.IOException;
 
 /** Thrown when the Smartcar API library encounters a problem. */
 public class SmartcarException extends java.lang.Exception {
@@ -90,7 +89,9 @@ public class SmartcarException extends java.lang.Exception {
       return this;
     }
 
-    public SmartcarException build() { return new SmartcarException(this); }
+    public SmartcarException build() {
+      return new SmartcarException(this);
+    }
   }
 
   private SmartcarException(Builder builder) {
@@ -105,7 +106,8 @@ public class SmartcarException extends java.lang.Exception {
     this.requestId = builder.requestId;
   }
 
-  public static SmartcarException Factory(final int statusCode, JsonObject headers, JsonObject body) {
+  public static SmartcarException Factory(
+      final int statusCode, JsonObject headers, JsonObject body) {
     Builder builder = new SmartcarException.Builder().statusCode(statusCode);
 
     JsonElement requestId = headers.get("sc-request-id");
@@ -121,10 +123,7 @@ public class SmartcarException extends java.lang.Exception {
     try {
       bodyString = body.toString();
     } catch (NullPointerException ex) {
-      return builder
-              .description("Empty response body")
-              .type("SDK_ERROR")
-              .build();
+      return builder.description("Empty response body").type("SDK_ERROR").build();
     }
     System.out.println(bodyString);
 
@@ -143,9 +142,9 @@ public class SmartcarException extends java.lang.Exception {
       return builder.build();
     } else if (bodyJson.has("type")) {
       builder
-              .type(bodyJson.get("type").getAsString())
-              .description(bodyJson.get("description").getAsString())
-              .docURL(bodyJson.get("docURL").getAsString());
+          .type(bodyJson.get("type").getAsString())
+          .description(bodyJson.get("description").getAsString())
+          .docURL(bodyJson.get("docURL").getAsString());
 
       if (!bodyJson.get("code").isJsonNull()) {
         builder.code(bodyJson.get("code").getAsString());
@@ -153,7 +152,8 @@ public class SmartcarException extends java.lang.Exception {
 
       JsonElement resolutionElement = bodyJson.get("resolution");
       if (!resolutionElement.isJsonNull()) {
-        if (resolutionElement.isJsonPrimitive() && resolutionElement.getAsJsonPrimitive().isString()) {
+        if (resolutionElement.isJsonPrimitive()
+            && resolutionElement.getAsJsonPrimitive().isString()) {
           builder.resolutionType(resolutionElement.getAsString());
         } else {
           JsonObject resolution = resolutionElement.getAsJsonObject();
@@ -176,15 +176,13 @@ public class SmartcarException extends java.lang.Exception {
       return builder.build();
     }
 
-    return builder
-            .description(bodyString)
-            .type("SDK_ERROR")
-            .build();
+    return builder.description(bodyString).type("SDK_ERROR").build();
   }
 
-  public static SmartcarException Factory(final int statusCode, Headers headers, ResponseBody body) {
+  public static SmartcarException Factory(
+      final int statusCode, Headers headers, ResponseBody body) {
     JsonObject headerJson = new JsonObject();
-    for (String header: headers.names()) {
+    for (String header : headers.names()) {
       headerJson.addProperty(header, headers.get(header));
     }
 
@@ -194,22 +192,22 @@ public class SmartcarException extends java.lang.Exception {
       bodyString = body.string();
     } catch (IOException e) {
       return new SmartcarException.Builder()
-              .statusCode(statusCode)
-              .description("Unable to get request body")
-              .requestId(headers.get("sc-request-id"))
-              .type("SDK_ERROR")
-              .build();
+          .statusCode(statusCode)
+          .description("Unable to get request body")
+          .requestId(headers.get("sc-request-id"))
+          .type("SDK_ERROR")
+          .build();
     }
     try {
       bodyJson = new Gson().fromJson(bodyString, JsonObject.class);
     } catch (Exception e) {
       // Handles non 200 invalid JSON errors
       return new SmartcarException.Builder()
-              .statusCode(statusCode)
-              .description(bodyString)
-              .requestId(headers.get("sc-request-id"))
-              .type("SDK_ERROR")
-              .build();
+          .statusCode(statusCode)
+          .description(bodyString)
+          .requestId(headers.get("sc-request-id"))
+          .type("SDK_ERROR")
+          .build();
     }
 
     return SmartcarException.Factory(statusCode, headerJson, bodyJson);
@@ -227,9 +225,13 @@ public class SmartcarException extends java.lang.Exception {
     return this.description;
   }
 
-  public int getStatusCode() { return this.statusCode; }
+  public int getStatusCode() {
+    return this.statusCode;
+  }
 
-  public String getRequestId() { return this.requestId; }
+  public String getRequestId() {
+    return this.requestId;
+  }
 
   /**
    * Returns the error type associated with the SmartcarExceptionV2.
@@ -240,7 +242,9 @@ public class SmartcarException extends java.lang.Exception {
     return this.type;
   }
 
-  public String getCode() { return this.code; }
+  public String getCode() {
+    return this.code;
+  }
 
   /**
    * Returns the description associated with the exception.
@@ -265,7 +269,9 @@ public class SmartcarException extends java.lang.Exception {
    *
    * @return the resolution url
    */
-  public String getResolutionUrl() { return this.resolutionUrl; }
+  public String getResolutionUrl() {
+    return this.resolutionUrl;
+  }
 
   /**
    * Returns the documentation URL associated with the exception.
@@ -284,5 +290,4 @@ public class SmartcarException extends java.lang.Exception {
   public JsonArray getDetail() {
     return this.detail;
   }
-
 }

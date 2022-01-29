@@ -6,7 +6,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.smartcar.sdk.SmartcarException;
 import com.smartcar.sdk.Utils;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,14 +29,13 @@ public class BatchResponse extends ApiData {
     }
   }
 
-  private <T extends ApiData> T get(String path, Class<T> dataType)
-          throws SmartcarException {
+  private <T extends ApiData> T get(String path, Class<T> dataType) throws SmartcarException {
     JsonObject res = this.responseData.get(path);
     if (res == null) {
       throw new SmartcarException.Builder()
-              .type("DATA_NOT_FOUND")
-              .description("The data you requested was not returned")
-              .build();
+          .type("DATA_NOT_FOUND")
+          .description("The data you requested was not returned")
+          .build();
     }
     int statusCode = res.get("code").getAsInt();
     JsonObject body = res.get("body").getAsJsonObject();
@@ -80,8 +78,7 @@ public class BatchResponse extends ApiData {
    * @return the battery status of the vehicle
    * @throws SmartcarException if the request for this endpoint returned an HTTP error code
    */
-  public VehicleBattery battery()
-      throws SmartcarException {
+  public VehicleBattery battery() throws SmartcarException {
     return get("/battery", VehicleBattery.class);
   }
 
@@ -91,8 +88,7 @@ public class BatchResponse extends ApiData {
    * @return the battery capacity of the vehicle
    * @throws SmartcarException if the request for this endpoint returned an HTTP error code
    */
-  public VehicleBatteryCapacity batteryCapacity()
-      throws SmartcarException {
+  public VehicleBatteryCapacity batteryCapacity() throws SmartcarException {
     return get("/battery/capacity", VehicleBatteryCapacity.class);
   }
 
@@ -102,8 +98,7 @@ public class BatchResponse extends ApiData {
    * @return the charge status of the vehicle
    * @throws SmartcarException if the request for this endpoint returned an HTTP error code
    */
-  public VehicleCharge charge()
-      throws SmartcarException {
+  public VehicleCharge charge() throws SmartcarException {
     return get("/charge", VehicleCharge.class);
   }
 
@@ -113,8 +108,7 @@ public class BatchResponse extends ApiData {
    * @return the fuel status of the vehicle
    * @throws SmartcarException if the request for this endpoint returned an HTTP error code
    */
-  public VehicleFuel fuel()
-      throws SmartcarException {
+  public VehicleFuel fuel() throws SmartcarException {
     return get("/fuel", VehicleFuel.class);
   }
 
@@ -134,8 +128,7 @@ public class BatchResponse extends ApiData {
    * @return the location of the vehicle
    * @throws SmartcarException if the request for this endpoint returned an HTTP error code
    */
-  public VehicleLocation location()
-      throws SmartcarException {
+  public VehicleLocation location() throws SmartcarException {
     return get("/location", VehicleLocation.class);
   }
 
@@ -145,8 +138,7 @@ public class BatchResponse extends ApiData {
    * @return the odometer of the vehicle
    * @throws SmartcarException if the request for this endpoint returned an HTTP error code
    */
-  public VehicleOdometer odometer()
-      throws SmartcarException {
+  public VehicleOdometer odometer() throws SmartcarException {
     return get("/odometer", VehicleOdometer.class);
   }
 
@@ -156,8 +148,7 @@ public class BatchResponse extends ApiData {
    * @return the engine oil status of the vehicle
    * @throws SmartcarException if the request for this endpoint returned an HTTP error code
    */
-  public VehicleEngineOil engineOil()
-      throws SmartcarException {
+  public VehicleEngineOil engineOil() throws SmartcarException {
     return get("/engine/oil", VehicleEngineOil.class);
   }
 
@@ -177,8 +168,7 @@ public class BatchResponse extends ApiData {
    * @return the tire pressure status of the vehicle
    * @throws SmartcarException if the request for this endpoint returned an HTTP error code
    */
-  public VehicleTirePressure tirePressure()
-      throws SmartcarException {
+  public VehicleTirePressure tirePressure() throws SmartcarException {
     return get("/tires/pressure", VehicleTirePressure.class);
   }
 

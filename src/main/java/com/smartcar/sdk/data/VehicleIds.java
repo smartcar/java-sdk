@@ -1,13 +1,13 @@
 package com.smartcar.sdk.data;
 
 import com.google.gson.annotations.SerializedName;
-
 import java.util.Arrays;
 
 /** POJO for Smartcar /vehicles endpoint. */
 public class VehicleIds extends ApiData {
   @SerializedName("vehicles")
   private String[] vehicleIds;
+
   private ResponsePaging paging;
 
   /**
@@ -29,7 +29,9 @@ public class VehicleIds extends ApiData {
     return vehicleIds;
   }
 
-  public ResponsePaging getPaging() { return this.paging; }
+  public ResponsePaging getPaging() {
+    return this.paging;
+  }
 
   /** @return a stringified representation of VehicleIds */
   @Override

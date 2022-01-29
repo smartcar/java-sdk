@@ -1,22 +1,19 @@
 package com.smartcar.sdk;
 
 import com.google.gson.*;
-import com.google.gson.internal.LinkedTreeMap;
 import com.smartcar.sdk.data.*;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Date;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 import okhttp3.mockwebserver.MockResponse;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 /** Test Suite: Vehicle */
 @PowerMockIgnore("javax.net.ssl.*")
@@ -40,9 +37,11 @@ public class VehicleTest {
     return JsonParser.parseReader(new FileReader(fileName));
   }
 
-  private void loadAndEnqueueErrorResponse(String resource, int statusCode) throws FileNotFoundException {
+  private void loadAndEnqueueErrorResponse(String resource, int statusCode)
+      throws FileNotFoundException {
     JsonElement error = loadJsonResource(resource);
-    MockResponse mockResponse = new MockResponse()
+    MockResponse mockResponse =
+        new MockResponse()
             .setResponseCode(statusCode)
             .setBody(error.toString())
             .addHeader("sc-request-id", this.expectedRequestId)
@@ -52,7 +51,8 @@ public class VehicleTest {
 
   private void loadAndEnqueueResponse(String resourceName) throws FileNotFoundException {
     JsonElement success = loadJsonResource(resourceName);
-    MockResponse mockResponse = new MockResponse()
+    MockResponse mockResponse =
+        new MockResponse()
             .setBody(success.toString())
             .addHeader("sc-request-id", this.expectedRequestId)
             .addHeader("sc-data-age", this.dataAge)
@@ -63,7 +63,8 @@ public class VehicleTest {
   @BeforeMethod
   private void beforeMethod() throws IOException {
 
-    SmartcarVehicleOptions options = new SmartcarVehicleOptions.Builder()
+    SmartcarVehicleOptions options =
+        new SmartcarVehicleOptions.Builder()
             .origin("http://localhost:" + TestExecutionListener.mockWebServer.getPort())
             .build();
     this.subject = new Vehicle(this.vehicleId, this.accessToken, options);
@@ -79,10 +80,11 @@ public class VehicleTest {
     Assert.assertTrue(odometer.getMeta().getDataAge() instanceof Date);
     Assert.assertEquals(odometer.getMeta().getUnitSystem(), this.unitSystem);
   }
-    
+
   @Test
   public void testMetaNull() throws SmartcarException {
-    MockResponse mockResponse = new MockResponse()
+    MockResponse mockResponse =
+        new MockResponse()
             .setResponseCode(200)
             .setBody("{ 'distance': 100 }")
             .addHeader("sc-request-id", this.expectedRequestId)
@@ -277,7 +279,8 @@ public class VehicleTest {
   public void testRequestOdometer() throws Exception {
     loadAndEnqueueResponse("GetOdometer");
 
-    SmartcarVehicleRequest request = new SmartcarVehicleRequest.Builder()
+    SmartcarVehicleRequest request =
+        new SmartcarVehicleRequest.Builder()
             .method("GET")
             .path("odometer")
             .addHeader("sc-unit-system", "imperial")
@@ -297,12 +300,13 @@ public class VehicleTest {
     loadAndEnqueueResponse("GetOdometer");
 
     try {
-      SmartcarVehicleRequest request = new SmartcarVehicleRequest.Builder()
+      SmartcarVehicleRequest request =
+          new SmartcarVehicleRequest.Builder()
               .path("odometer")
               .addHeader("sc-unit-system", "imperial")
               .addFlag("foo", "bar")
               .build();
-    } catch(Exception e) {
+    } catch (Exception e) {
       Assert.assertEquals(e.getMessage(), "method must be defined");
     }
   }
@@ -312,7 +316,8 @@ public class VehicleTest {
     loadAndEnqueueResponse("BatchResponseSuccess");
     String requests = "[{ \"path\" : \"/odometer\" }, { \"path\" : \"/tirePressure\" }]";
 
-    SmartcarVehicleRequest request = new SmartcarVehicleRequest.Builder()
+    SmartcarVehicleRequest request =
+        new SmartcarVehicleRequest.Builder()
             .method("POST")
             .path("batch")
             .addBodyParameter("requests", requests)
@@ -320,7 +325,8 @@ public class VehicleTest {
             .build();
 
     VehicleResponse batchResponse = this.subject.request(request);
-    Assert.assertEquals(batchResponse.getMeta().getRequestId(), "67127d3a-a08a-41f0-8211-f96da36b2d6e");
+    Assert.assertEquals(
+        batchResponse.getMeta().getRequestId(), "67127d3a-a08a-41f0-8211-f96da36b2d6e");
 
     JsonArray responsesArray = batchResponse.getBody().get("responses").getAsJsonArray();
 
@@ -344,7 +350,8 @@ public class VehicleTest {
     } catch (SmartcarException ex) {
       thrown = true;
       Assert.assertEquals(ex.getStatusCode(), 403);
-      Assert.assertEquals(ex.getDescription(), "Insufficient permissions to access requested resource.");
+      Assert.assertEquals(
+          ex.getDescription(), "Insufficient permissions to access requested resource.");
       Assert.assertEquals(ex.getType(), "permission_error");
       Assert.assertNull(ex.getCode());
       Assert.assertEquals(ex.getRequestId(), this.expectedRequestId);
@@ -382,9 +389,12 @@ public class VehicleTest {
     } catch (SmartcarException ex) {
       thrown = true;
       Assert.assertEquals(ex.getStatusCode(), 403);
-      Assert.assertEquals(ex.getDescription(), "Your application has insufficient permissions to access the requested resource. Please prompt the user to re-authenticate using Smartcar Connect.");
+      Assert.assertEquals(
+          ex.getDescription(),
+          "Your application has insufficient permissions to access the requested resource. Please prompt the user to re-authenticate using Smartcar Connect.");
       Assert.assertEquals(ex.getType(), "PERMISSION");
-      Assert.assertEquals(ex.getDocURL(), "https://smartcar.com/docs/errors/v2.0/other-errors/#permission");
+      Assert.assertEquals(
+          ex.getDocURL(), "https://smartcar.com/docs/errors/v2.0/other-errors/#permission");
       Assert.assertEquals(ex.getResolutionType(), "REAUTHENTICATE");
       Assert.assertNull(ex.getResolutionUrl());
       Assert.assertNull(ex.getCode());
@@ -394,7 +404,7 @@ public class VehicleTest {
   }
 
   @Test
-  public void testV2VehicleStateError() throws FileNotFoundException  {
+  public void testV2VehicleStateError() throws FileNotFoundException {
     loadAndEnqueueErrorResponse("ErrorVehicleStateV2", 409);
     boolean thrown = false;
 
@@ -403,9 +413,12 @@ public class VehicleTest {
     } catch (SmartcarException ex) {
       thrown = true;
       Assert.assertEquals(ex.getStatusCode(), 409);
-      Assert.assertEquals(ex.getDescription(), "The vehicle is in a sleep state and temporarily unable to perform your request.");
+      Assert.assertEquals(
+          ex.getDescription(),
+          "The vehicle is in a sleep state and temporarily unable to perform your request.");
       Assert.assertEquals(ex.getType(), "VEHICLE_STATE");
-      Assert.assertEquals(ex.getDocURL(), "https://smartcar.com/docs/errors/v2.0/vehicle-state/#asleep");
+      Assert.assertEquals(
+          ex.getDocURL(), "https://smartcar.com/docs/errors/v2.0/vehicle-state/#asleep");
       Assert.assertNull(ex.getResolutionType());
       Assert.assertEquals(ex.getCode(), "ASLEEP");
       Assert.assertEquals(ex.getRequestId(), this.expectedRequestId);
@@ -416,7 +429,8 @@ public class VehicleTest {
 
   @Test
   public void testInvalidJsonResponse() {
-    MockResponse mockResponse = new MockResponse()
+    MockResponse mockResponse =
+        new MockResponse()
             .setResponseCode(500)
             .setBody("{ \"InvalidJSON\": {")
             .addHeader("sc-request-id", this.expectedRequestId)
@@ -440,8 +454,7 @@ public class VehicleTest {
 
   @Test
   public void testNullErrorResponse() {
-    MockResponse mockResponse = new MockResponse()
-            .setResponseCode(500);
+    MockResponse mockResponse = new MockResponse().setResponseCode(500);
     TestExecutionListener.mockWebServer.enqueue(mockResponse);
     boolean thrown = false;
 
@@ -459,8 +472,7 @@ public class VehicleTest {
 
   @Test
   public void testNull200Response() {
-    MockResponse mockResponse = new MockResponse()
-            .setResponseCode(200);
+    MockResponse mockResponse = new MockResponse().setResponseCode(200);
     TestExecutionListener.mockWebServer.enqueue(mockResponse);
     boolean thrown = false;
 
@@ -560,7 +572,8 @@ public class VehicleTest {
       thrown = true;
       Assert.assertEquals(e.getStatusCode(), 409);
       Assert.assertEquals(e.getDescription(), "Vehicle state cannot be determined.");
-      Assert.assertEquals(e.getMessage(), "vehicle_state_error:VS_000 - Vehicle state cannot be determined.");
+      Assert.assertEquals(
+          e.getMessage(), "vehicle_state_error:VS_000 - Vehicle state cannot be determined.");
       Assert.assertEquals(e.getType(), "vehicle_state_error");
       Assert.assertEquals(e.getCode(), "VS_000");
       Assert.assertEquals(e.getRequestId(), expectedRequestId);
@@ -585,7 +598,8 @@ public class VehicleTest {
       Assert.assertEquals(e.getType(), "VEHICLE_STATE");
       Assert.assertEquals(e.getCode(), "DOOR_OPEN");
       Assert.assertEquals(e.getRequestId(), expectedRequestId);
-      Assert.assertEquals(e.getDocURL(), "https://smartcar.com/docs/errors/v2.0/vehicle-state/#door_open");
+      Assert.assertEquals(
+          e.getDocURL(), "https://smartcar.com/docs/errors/v2.0/vehicle-state/#door_open");
       Assert.assertNull(e.getResolutionType());
       Assert.assertNull(e.getDetail());
       Assert.assertEquals(e.getMessage(), "VEHICLE_STATE:DOOR_OPEN - Door is open.");

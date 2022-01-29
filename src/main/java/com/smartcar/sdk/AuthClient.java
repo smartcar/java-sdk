@@ -5,10 +5,9 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.smartcar.sdk.data.Auth;
-import okhttp3.*;
-
 import java.lang.reflect.Type;
 import java.util.*;
+import okhttp3.*;
 
 /** Smartcar OAuth 2.0 Authentication Client */
 public class AuthClient {
@@ -45,10 +44,7 @@ public class AuthClient {
   private final String redirectUri;
   private final boolean testMode;
 
-  /**
-   * Builds a new AuthClient.
-   *
-   */
+  /** Builds a new AuthClient. */
   public static class Builder {
     private String clientId;
     private String clientSecret;
@@ -116,7 +112,8 @@ public class AuthClient {
   }
 
   /**
-   * A builder for creating Authorization URLs. Access through {@link AuthClient#authUrlBuilder(String[])}.
+   * A builder for creating Authorization URLs. Access through {@link
+   * AuthClient#authUrlBuilder(String[])}.
    */
   public class AuthUrlBuilder {
     private HttpUrl.Builder urlBuilder;
@@ -194,11 +191,9 @@ public class AuthClient {
    * @return the parsed response
    * @throws SmartcarException if the API request fails
    */
-  private Auth getTokens(RequestBody requestBody, SmartcarAuthOptions options) throws SmartcarException {
-    String basicAuthorization = Credentials.basic(
-            this.clientId,
-            this.clientSecret
-    );
+  private Auth getTokens(RequestBody requestBody, SmartcarAuthOptions options)
+      throws SmartcarException {
+    String basicAuthorization = Credentials.basic(this.clientId, this.clientSecret);
     String origin = System.getenv("SMARTCAR_AUTH_ORIGIN");
     if (origin == null) {
       origin = "https://auth.smartcar.com";
@@ -239,11 +234,11 @@ public class AuthClient {
    */
   public Auth exchangeCode(String code, SmartcarAuthOptions options) throws SmartcarException {
     RequestBody requestBody =
-            new FormBody.Builder()
-                    .add("grant_type", "authorization_code")
-                    .add("code", code)
-                    .add("redirect_uri", this.redirectUri)
-                    .build();
+        new FormBody.Builder()
+            .add("grant_type", "authorization_code")
+            .add("code", code)
+            .add("redirect_uri", this.redirectUri)
+            .build();
 
     return this.getTokens(requestBody, options);
   }
@@ -268,12 +263,13 @@ public class AuthClient {
    * @return the requested access token
    * @throws SmartcarException when the request is unsuccessful
    */
-  public Auth exchangeRefreshToken(String refreshToken, SmartcarAuthOptions options) throws SmartcarException {
+  public Auth exchangeRefreshToken(String refreshToken, SmartcarAuthOptions options)
+      throws SmartcarException {
     RequestBody requestBody =
-            new FormBody.Builder()
-                    .add("grant_type", "refresh_token")
-                    .add("refresh_token", refreshToken)
-                    .build();
+        new FormBody.Builder()
+            .add("grant_type", "refresh_token")
+            .add("refresh_token", refreshToken)
+            .build();
 
     return this.getTokens(requestBody, options);
   }
