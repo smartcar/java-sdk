@@ -30,7 +30,7 @@ import org.testng.annotations.Test;
   Response.class,
   ResponseBody.class,
 })
-@PowerMockIgnore("javax.net.ssl.*")
+@PowerMockIgnore({"javax.net.ssl.*", "jdk.internal.reflect.*"})
 public class AuthClientTest extends PowerMockTestCase {
   // Sample Constructor Args
   private final String sampleClientId = "cl13nt1d-t35t-46dc-aa25-bdd042f54e7d";

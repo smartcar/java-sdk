@@ -16,7 +16,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 /** Test Suite: Vehicle */
-@PowerMockIgnore("javax.net.ssl.*")
+@PowerMockIgnore({"javax.net.ssl.*", "jdk.internal.reflect.*"})
 public class VehicleTest {
 
   private final String vehicleId = "902da0a6-796b-4b7e-b092-639677ed1033";
@@ -293,22 +293,6 @@ public class VehicleTest {
     Assert.assertEquals(odometer.getBody().get("distance"), new JsonPrimitive(104.32));
     Assert.assertEquals(odometer.getMeta().getRequestId(), "67127d3a-a08a-41f0-8211-f96da36b2d6e");
     Assert.assertEquals(odometer.getMeta().getUnitSystem(), "imperial");
-  }
-
-  @Test
-  public void testRequestMethodException() throws Exception {
-    loadAndEnqueueResponse("GetOdometer");
-
-    try {
-      SmartcarVehicleRequest request =
-          new SmartcarVehicleRequest.Builder()
-              .path("odometer")
-              .addHeader("sc-unit-system", "imperial")
-              .addFlag("foo", "bar")
-              .build();
-    } catch (Exception e) {
-      Assert.assertEquals(e.getMessage(), "method must be defined");
-    }
   }
 
   @Test
