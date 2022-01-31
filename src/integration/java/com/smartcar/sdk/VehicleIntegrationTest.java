@@ -1,8 +1,12 @@
 package com.smartcar.sdk;
 
+import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.smartcar.sdk.data.*;
 import com.smartcar.sdk.helpers.AuthHelpers;
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
@@ -236,27 +240,35 @@ public class VehicleIntegrationTest {
     Assert.assertEquals(odometer.getMeta().getUnitSystem(), "imperial");
   }
 
-  /** Tests that a bad query parameter throws exception. */
+  /** Tests request method with post request & body. */
   @Test(groups = "vehicle")
-  public void testRequestWithQueryParams() throws Exception {
+  public void testRequestWithBody() throws Exception {
+    JsonArrayBuilder builder = Json.createArrayBuilder();
+    builder.add(Json.createObjectBuilder().add("path", "/odometer").build());
+    builder.add(Json.createObjectBuilder().add("path", "/vin").build());
+    JsonArray paths = builder.build();
+
     SmartcarVehicleRequest request =
         new SmartcarVehicleRequest.Builder()
-            .method("GET")
-            .path("odometer")
-            .vin("123") // Bad vin should cause SmartcarException
+            .method("POST")
+            .path("batch")
+            .addBodyParameter("requests", paths)
             .build();
 
-    try {
-      VehicleResponse odometer = this.vehicle.request(request);
-    } catch (SmartcarException e) {
-      Assert.assertEquals(e.getStatusCode(), 400);
-      Assert.assertEquals(e.getType(), "CONNECTED_SERVICES_ACCOUNT");
-      Assert.assertEquals(
-          e.getDescription(),
-          "This vehicle is no longer associated with "
-              + "the user’s connected services account. Please prompt the user to re-add the vehicle "
-              + "to their account.");
-    }
+    VehicleResponse response = this.vehicle.request(request);
+    com.google.gson.JsonArray responses =
+        ((com.google.gson.JsonArray) response.getBody().get("responses"));
+
+    JsonObject odo = responses.get(0).getAsJsonObject();
+    JsonObject vin = responses.get(1).getAsJsonObject();
+    Assert.assertEquals(odo.get("path").getAsString(), "/odometer");
+    Assert.assertEquals(odo.get("code").getAsString(), "200");
+    Assert.assertNotNull(odo.get("body").getAsJsonObject().get("distance"));
+
+    Assert.assertEquals(vin.get("path").getAsString(), "/vin");
+    Assert.assertEquals(vin.get("code").getAsString(), "200");
+    Assert.assertNotNull(vin.get("body").getAsJsonObject().get("vin"));
+    Assert.assertEquals(response.getMeta().getRequestId().length(), 36);
   }
 
   /** Tests that access for the current application can be revoked. */
