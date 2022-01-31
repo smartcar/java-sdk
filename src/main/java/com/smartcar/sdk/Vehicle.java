@@ -380,12 +380,6 @@ public class Vehicle {
    */
   public VehicleResponse request(SmartcarVehicleRequest vehicleRequest)
       throws SmartcarException, IOException {
-    String version = this.version;
-    String vehicleId = this.vehicleId;
-
-    if (vehicleRequest.getVersion() != null) {
-      version = vehicleRequest.getVersion();
-    }
 
     HttpUrl.Builder urlBuilder =
         HttpUrl.parse(this.origin)
