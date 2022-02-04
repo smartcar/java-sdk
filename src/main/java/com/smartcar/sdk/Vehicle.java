@@ -370,17 +370,6 @@ public class Vehicle {
    * @throws SmartcarException if the request is unsuccessful
    */
   public VehicleResponse request(SmartcarVehicleRequest vehicleRequest) throws SmartcarException, IOException {
-    String version = this.version;
-    String vehicleId = this.vehicleId;
-
-    if(vehicleRequest.getVersion() != null) {
-      version = vehicleRequest.getVersion();
-    }
-
-    if(vehicleRequest.getVin() != null) {
-      vehicleId = vehicleRequest.getVin();
-    }
-
     HttpUrl.Builder urlBuilder =
             HttpUrl.parse(this.origin)
                     .newBuilder()

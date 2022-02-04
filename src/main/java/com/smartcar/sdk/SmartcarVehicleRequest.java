@@ -16,8 +16,6 @@ public final class SmartcarVehicleRequest {
     private final String path;
     private final RequestBody body;
     private final Map<String, String> headers;
-    private final String vin;
-    private final String version;
     private final String flags;
 
     public static class Builder {
@@ -25,8 +23,6 @@ public final class SmartcarVehicleRequest {
         private String path;
         private final JsonObjectBuilder body;
         private final Map<String, String> headers;
-        private String vin;
-        private String version;
         private final List<String> flags;
 
         public Builder() {
@@ -34,8 +30,6 @@ public final class SmartcarVehicleRequest {
             this.path = "";
             this.body = Json.createObjectBuilder();
             this.headers = new HashMap<>();
-            this.vin = null;
-            this.version = null;
             this.flags = new ArrayList<>();
         }
 
@@ -59,13 +53,8 @@ public final class SmartcarVehicleRequest {
             return this;
         }
 
-        public Builder vin(String vin) {
-            this.vin = vin;
-            return this;
-        }
-
-        public Builder version(String version) {
-            this.version = version;
+        public Builder addBodyParameter(String key, JsonArray values) {
+            this.body.add(key, values);
             return this;
         }
 
@@ -101,8 +90,6 @@ public final class SmartcarVehicleRequest {
         // Shallow clone of headers Map
         this.headers = (HashMap<String, String>) ((HashMap<String, String>) builder.headers).clone();
 
-        this.vin = builder.vin;
-        this.version = builder.version;
         if (builder.flags.size() > 0) {
             String[] flagStrings = builder.flags.toArray(new String[0]);
             this.flags = Utils.join(flagStrings, " ");
@@ -118,10 +105,6 @@ public final class SmartcarVehicleRequest {
     public RequestBody getBody() { return this.body; }
 
     public Map<String, String> getHeaders() { return this.headers; }
-
-    public String getVin() { return this.vin; }
-
-    public String getVersion() { return this.version; }
 
     public String getFlags() { return this.flags; }
 
