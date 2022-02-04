@@ -1,5 +1,9 @@
 package com.smartcar.sdk;
 
+import com.smartcar.sdk.data.Compatibility;
+import com.smartcar.sdk.data.RequestPaging;
+import com.smartcar.sdk.data.User;
+import com.smartcar.sdk.data.VehicleIds;
 import com.smartcar.sdk.data.*;
 import okhttp3.Credentials;
 import okhttp3.HttpUrl;
