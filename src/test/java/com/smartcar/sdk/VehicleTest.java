@@ -1,7 +1,7 @@
 package com.smartcar.sdk;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
+import com.google.gson.internal.LinkedTreeMap;
 import com.smartcar.sdk.data.*;
 import okhttp3.mockwebserver.MockResponse;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
@@ -13,6 +13,7 @@ import org.testng.annotations.Test;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -270,6 +271,52 @@ public class VehicleTest {
     loadAndEnqueueResponse("UnsubscribeVehicle");
 
     this.subject.unsubscribe("token", "sampleId");
+  }
+
+  @Test
+  public void testRequestOdometer() throws Exception {
+    loadAndEnqueueResponse("GetOdometer");
+
+    SmartcarVehicleRequest request = new SmartcarVehicleRequest.Builder()
+            .method("GET")
+            .path("odometer")
+            .addHeader("sc-unit-system", "imperial")
+            .addFlag("foo", "bar")
+            .build();
+
+    VehicleResponse odometer = this.subject.request(request);
+
+    Assert.assertEquals(odometer.getBodyAsString(), "{\"distance\":104.32}");
+    Assert.assertEquals(odometer.getBody().get("distance"), new JsonPrimitive(104.32));
+    Assert.assertEquals(odometer.getMeta().getRequestId(), "67127d3a-a08a-41f0-8211-f96da36b2d6e");
+    Assert.assertEquals(odometer.getMeta().getUnitSystem(), "imperial");
+  }
+
+  @Test
+  public void testRequestBatch() throws Exception {
+    loadAndEnqueueResponse("BatchResponseSuccess");
+    String requests = "[{ \"path\" : \"/odometer\" }, { \"path\" : \"/tirePressure\" }]";
+
+    SmartcarVehicleRequest request = new SmartcarVehicleRequest.Builder()
+            .method("POST")
+            .path("batch")
+            .addBodyParameter("requests", requests)
+            .addHeader("sc-unit-system", "imperial")
+            .build();
+
+    VehicleResponse batchResponse = this.subject.request(request);
+    Assert.assertEquals(batchResponse.getMeta().getRequestId(), "67127d3a-a08a-41f0-8211-f96da36b2d6e");
+
+    JsonArray responsesArray = batchResponse.getBody().get("responses").getAsJsonArray();
+
+    BatchResponse response = new BatchResponse(responsesArray);
+
+    Assert.assertEquals(responsesArray.size(), 1);
+
+    VehicleOdometer odometer = response.odometer();
+
+    Assert.assertEquals(odometer.getDistance(), 32768.0);
+    Assert.assertEquals(odometer.getMeta().getUnitSystem(), "metric");
   }
 
   @Test

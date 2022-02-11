@@ -1,5 +1,10 @@
 package com.smartcar.sdk;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
 import com.smartcar.sdk.data.*;
 import com.smartcar.sdk.helpers.AuthHelpers;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
@@ -26,11 +31,11 @@ public class VehicleIntegrationTest {
   public void beforeSuite() throws Exception {
     this.vehicle = this.getVehicle("CHEVROLET", AuthHelpers.DEFAULT_SCOPE);
     this.eVehicle =
-        this.getVehicle(
-            "TESLA",
-            new String[] {
-              "required:control_charge", "required:control_security", "read_battery", "read_charge"
-            });
+            this.getVehicle(
+                    "FORD",
+                    new String[]{
+                            "required:control_charge", "required:control_security", "read_battery", "read_charge"
+                    });
   }
 
   /** Tests that vehicle info can be obtained. */
@@ -218,6 +223,53 @@ public class VehicleIntegrationTest {
     Assert.assertEquals(odo.getMeta().getUnitSystem(), "imperial");
     Assert.assertEquals(odo.getMeta().getRequestId().length(), 36);
     Assert.assertNotNull(odo.getMeta().getDataAge());
+  }
+
+  /** Tests that the request method works for get request. */
+  @Test(groups = "vehicle")
+  public void testVehicleRequest() throws Exception {
+    SmartcarVehicleRequest request = new SmartcarVehicleRequest.Builder()
+            .method("GET")
+            .path("odometer")
+            .addHeader("sc-unit-system", "imperial")
+            .build();
+
+    VehicleResponse odometer = this.vehicle.request(request);
+
+    Assert.assertEquals(odometer.getBody().get("distance").getClass(), JsonPrimitive.class);
+    Assert.assertNotNull(odometer.getMeta().getRequestId());
+    Assert.assertEquals(odometer.getMeta().getUnitSystem(), "imperial");
+  }
+
+  /** Tests request method with post request & body. */
+  @Test(groups = "vehicle")
+  public void testRequestWithBody() throws Exception {
+    JsonArrayBuilder builder = Json.createArrayBuilder();
+    builder.add(Json.createObjectBuilder().add("path", "/odometer").build());
+    builder.add(Json.createObjectBuilder().add("path", "/vin").build());
+    JsonArray paths = builder.build();
+
+    SmartcarVehicleRequest request =
+            new SmartcarVehicleRequest.Builder()
+                    .method("POST")
+                    .path("batch")
+                    .addBodyParameter("requests", paths)
+                    .build();
+
+    VehicleResponse response = this.vehicle.request(request);
+    com.google.gson.JsonArray responses =
+            ((com.google.gson.JsonArray) response.getBody().get("responses"));
+
+    JsonObject odo = responses.get(0).getAsJsonObject();
+    JsonObject vin = responses.get(1).getAsJsonObject();
+    Assert.assertEquals(odo.get("path").getAsString(), "/odometer");
+    Assert.assertEquals(odo.get("code").getAsString(), "200");
+    Assert.assertNotNull(odo.get("body").getAsJsonObject().get("distance"));
+
+    Assert.assertEquals(vin.get("path").getAsString(), "/vin");
+    Assert.assertEquals(vin.get("code").getAsString(), "200");
+    Assert.assertNotNull(vin.get("body").getAsJsonObject().get("vin"));
+    Assert.assertEquals(response.getMeta().getRequestId().length(), 36);
   }
 
   /** Tests that access for the current application can be revoked. */

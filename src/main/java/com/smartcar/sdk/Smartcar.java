@@ -4,6 +4,7 @@ import com.smartcar.sdk.data.Compatibility;
 import com.smartcar.sdk.data.RequestPaging;
 import com.smartcar.sdk.data.User;
 import com.smartcar.sdk.data.VehicleIds;
+import com.smartcar.sdk.data.*;
 import okhttp3.Credentials;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
@@ -11,6 +12,7 @@ import org.apache.commons.codec.binary.Hex;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
+import javax.json.JsonObject;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;

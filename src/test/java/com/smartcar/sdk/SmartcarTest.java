@@ -12,6 +12,8 @@ import org.powermock.modules.testng.PowerMockTestCase;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import javax.json.JsonObject;
+
 @PowerMockIgnore({"javax.net.ssl.*", "javax.crypto.*"})
 @PrepareForTest({
         Smartcar.class,
