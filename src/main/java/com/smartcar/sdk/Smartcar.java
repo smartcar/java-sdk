@@ -152,7 +152,7 @@ public class Smartcar {
             urlBuilder.addQueryParameter("mode", "test");
         }
         if (compatibilityRequest.getTestModeCompatibilityLevel() != null) {
-            urlBuilder.addQueryParameter("testModeCompatibilityLevel", compatibilityRequest.getTestModeCompatibilityLevel());
+            urlBuilder.addQueryParameter("test_mode_compatibility_level", compatibilityRequest.getTestModeCompatibilityLevel());
         }
         HttpUrl url = urlBuilder.build();
 
