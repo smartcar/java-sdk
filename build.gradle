@@ -7,6 +7,7 @@ plugins {
     id 'io.github.gradle-nexus.publish-plugin' version '1.0.0'
     id 'org.unbroken-dome.test-sets' version '3.0.1'
     id "com.diffplug.spotless" version "5.0.0"
+    id 'checkstyle'
 }
 
 apply plugin: 'com.diffplug.spotless'
