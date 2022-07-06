@@ -1,7 +1,6 @@
 package com.smartcar.sdk;
 
 import com.google.gson.*;
-import com.google.gson.internal.LinkedTreeMap;
 import com.smartcar.sdk.data.*;
 import okhttp3.mockwebserver.MockResponse;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
@@ -10,10 +9,11 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import javax.json.Json;
+import javax.json.JsonArrayBuilder;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -295,7 +295,13 @@ public class VehicleTest {
   @Test
   public void testRequestBatch() throws Exception {
     loadAndEnqueueResponse("BatchResponseSuccess");
-    String requests = "[{ \"path\" : \"/odometer\" }, { \"path\" : \"/tirePressure\" }]";
+
+    String[] paths = new String[]{"/odometer", "/tires/pressure"};
+    JsonArrayBuilder endpoints = Json.createArrayBuilder();
+    for (String path : paths) {
+      endpoints.add(Json.createObjectBuilder().add("path", path));
+    }
+    javax.json.JsonArray requests = endpoints.build();
 
     SmartcarVehicleRequest request = new SmartcarVehicleRequest.Builder()
             .method("POST")
