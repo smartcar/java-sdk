@@ -28,9 +28,6 @@ jobs:
         - ./gradlew markdown
         - test -z "$(git diff --name-only | grep '^README.md$')"
 
-        - ./gradlew javadoc
-        - test -z "$(git diff --name-only | grep 'docs/')"
-
         - ./gradlew check
 
         - ./gradlew jacocoTestReport
