@@ -1,5 +1,6 @@
 build
 out
+docs
 .gradle
 *.log
 .idea
