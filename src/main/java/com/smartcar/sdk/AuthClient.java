@@ -42,8 +42,8 @@ public class AuthClient {
 
   private final String clientId;
   private final String clientSecret;
-  private final String redirectUri;
-  private final boolean testMode;
+  private final String redirectUri;    
+  private final String mode;
 
   /**
    * Builds a new AuthClient.
@@ -53,13 +53,14 @@ public class AuthClient {
     private String clientId;
     private String clientSecret;
     private String redirectUri;
-    private boolean testMode;
+    private String mode;
+
 
     public Builder() {
       this.clientId = System.getenv("SMARTCAR_CLIENT_ID");
       this.clientSecret = System.getenv("SMARTCAR_CLIENT_SECRET");
       this.redirectUri = System.getenv("SMARTCAR_REDIRECT_URI");
-      this.testMode = false;
+      this.mode = "live";
     }
 
     public Builder clientId(String clientId) {
@@ -77,11 +78,10 @@ public class AuthClient {
       return this;
     }
 
-    public Builder testMode(boolean testMode) {
-      this.testMode = testMode;
+    public Builder mode(String mode) {
+      this.mode = mode;
       return this;
     }
-
     public AuthClient build() throws Exception {
       if (this.clientId == null) {
         throw new Exception("clientId must be defined");
@@ -100,7 +100,7 @@ public class AuthClient {
     this.clientId = builder.clientId;
     this.clientSecret = builder.clientSecret;
     this.redirectUri = builder.redirectUri;
-    this.testMode = builder.testMode;
+    this.mode = builder.mode;
 
     ApiClient.gson.registerTypeAdapter(Auth.class, new AuthDeserializer());
   }
@@ -120,6 +120,7 @@ public class AuthClient {
    */
   public class AuthUrlBuilder {
     private HttpUrl.Builder urlBuilder;
+    private String mode = AuthClient.this.mode;
     private List<String> flags = new ArrayList<>();
 
     public AuthUrlBuilder(String[] scope) {
@@ -133,8 +134,23 @@ public class AuthClient {
               .addQueryParameter("response_type", "code")
               .addQueryParameter("client_id", AuthClient.this.clientId)
               .addQueryParameter("redirect_uri", AuthClient.this.redirectUri)
-              .addQueryParameter("mode", AuthClient.this.testMode ? "test" : "live")
               .addQueryParameter("scope", Utils.join(scope, " "));
+    }
+
+    /**
+     * @deprecated use {@link AuthUrlBuilder#mode(String)} instead.
+     */
+    @Deprecated
+    public AuthUrlBuilder testMode(boolean testMode) {
+        this.mode = testMode ? "test" : "live";
+        return this;
+    }
+
+    public AuthUrlBuilder mode(String mode) {
+      if (!mode.equals("")) {
+        this.mode = mode;
+      }
+      return this;
     }
 
     public AuthUrlBuilder state(String state) {
@@ -178,6 +194,7 @@ public class AuthClient {
     }
 
     public String build() {
+      urlBuilder.addQueryParameter("mode", this.mode);
       if (this.flags != null && !this.flags.isEmpty()) {
         String[] flagStrings = this.flags.toArray(new String[0]);
         urlBuilder.addQueryParameter("flags", Utils.join(flagStrings, " "));

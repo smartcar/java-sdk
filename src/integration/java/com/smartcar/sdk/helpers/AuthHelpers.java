@@ -58,7 +58,7 @@ public class AuthHelpers {
         .clientId(getClientId())
         .clientSecret(getClientSecret())
         .redirectUri("https://example.com/auth")
-        .testMode(true);
+        .mode("test");
   }
 
   public static String runAuthFlow(String authorizeURL) {

@@ -13,6 +13,8 @@ import javax.json.JsonObject;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ArrayList;
+
 
 /** Smartcar Vehicle API Object */
 public class Vehicle {
@@ -26,6 +28,7 @@ public class Vehicle {
   private Vehicle.UnitSystem unitSystem;
   private final String version;
   private final String origin;
+  private final String flags;
   private ApplicationPermissions permissions;
 
   /**
@@ -50,6 +53,7 @@ public class Vehicle {
     this.version = options.getVersion();
     this.unitSystem = options.getUnitSystem();
     this.origin = options.getOrigin();
+    this.flags = options.getFlags();
   }
 
   /**
@@ -58,6 +62,14 @@ public class Vehicle {
    */
   public String getVersion() {
     return this.version;
+  }
+
+    /**
+   * Gets the flags that are passed to the vehicle object as a serialized string
+   * @return serialized string of the flags
+   */
+  public String getFlags(){
+    return this.flags;
   }
 
   /**
@@ -72,13 +84,19 @@ public class Vehicle {
    */
   protected <T extends ApiData> T call(
       String path, String method, RequestBody body, String accessToken, Class<T> type) throws SmartcarException {
-    HttpUrl url =
+    HttpUrl.Builder urlBuilder =
         HttpUrl.parse(this.origin)
-            .newBuilder().addPathSegments("v" + this.version)
+            .newBuilder()
+            .addPathSegments("v" + this.version)
             .addPathSegments("vehicles")
             .addPathSegments(this.vehicleId)
-            .addPathSegments(path)
-            .build();
+            .addPathSegments(path);
+
+
+    if (this.flags != null) {
+      urlBuilder.addQueryParameter("flags", this.flags);
+    }
+    HttpUrl url = urlBuilder.build();
 
     Map<String, String> headers = new HashMap<>();
     headers.put("Authorization", "Bearer " + accessToken);

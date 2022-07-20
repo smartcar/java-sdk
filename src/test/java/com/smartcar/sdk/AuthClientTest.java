@@ -189,7 +189,7 @@ public class AuthClientTest extends PowerMockTestCase {
 
     AuthClient client = new AuthClient.Builder().build();
     String authUrl = client.authUrlBuilder(this.sampleScope).build();
-    Assert.assertEquals(authUrl, "https://connect.smartcar.com/oauth/authorize?response_type=code&client_id=cl13nt1d-t35t-46dc-aa25-bdd042f54e7d&redirect_uri=https%3A%2F%2Fexample.com%2F&mode=live&scope=read_vehicle_info%20read_location%20read_odometer");
+    Assert.assertEquals(authUrl, "https://connect.smartcar.com/oauth/authorize?response_type=code&client_id=cl13nt1d-t35t-46dc-aa25-bdd042f54e7d&redirect_uri=https%3A%2F%2Fexample.com%2F&scope=read_vehicle_info%20read_location%20read_odometer&mode=live");
   }
 
   @Test
@@ -201,6 +201,7 @@ public class AuthClientTest extends PowerMockTestCase {
     AuthClient client = new AuthClient.Builder().build();
 
     String authUrl = client.authUrlBuilder(this.sampleScope)
+            .mode("simulated")
             .state("sampleState")
             .approvalPrompt(true)
             .makeBypass("TESLA")
@@ -209,6 +210,6 @@ public class AuthClientTest extends PowerMockTestCase {
             .addFlag("foo", "bar")
             .addFlag("test", true)
             .build();
-    Assert.assertEquals(authUrl, "https://connect.smartcar.com/oauth/authorize?response_type=code&client_id=cl13nt1d-t35t-46dc-aa25-bdd042f54e7d&redirect_uri=https%3A%2F%2Fexample.com%2F&mode=live&scope=read_vehicle_info%20read_location%20read_odometer&state=sampleState&approval_prompt=force&make=TESLA&single_select=true&single_select=true&single_select_vin=sampleVin&flags=foo%3Abar%20test%3Atrue");
+    Assert.assertEquals(authUrl, "https://connect.smartcar.com/oauth/authorize?response_type=code&client_id=cl13nt1d-t35t-46dc-aa25-bdd042f54e7d&redirect_uri=https%3A%2F%2Fexample.com%2F&scope=read_vehicle_info%20read_location%20read_odometer&state=sampleState&approval_prompt=force&make=TESLA&single_select=true&single_select=true&single_select_vin=sampleVin&mode=simulated&flags=foo%3Abar%20test%3Atrue");
   }
 }
