@@ -1,0 +1,32 @@
+name: Javadoc Publisher
+
+permissions:
+  contents: write
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+
+      - name: Set up JDK
+        uses: actions/setup-java@2c7a4878f5d120bd643426d54ae1209b29cc01a3
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+          cache: 'gradle'
+
+      - name: Generate Javadoc
+        run: ./gradlew javadoc
+
+      - name: Publish to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@e6d003d0839927f5a4b998bfd92ed8e448fde37a
+        with:
+          folder: docs
