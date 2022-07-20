@@ -53,7 +53,7 @@ a valid access token for the target vehicle.
     String clientSecret = "";
     String redirectUri = "";
     String[] scope = {};
-    boolean mode = "test";
+    String mode = "test";
 
     // Initialize a new AuthClient with your credentials.
     AuthClient authClient = new AuthClient.Builder
