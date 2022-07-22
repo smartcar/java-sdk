@@ -123,7 +123,9 @@ public class Vehicle {
     for (Map.Entry<String, String> entry: query.entrySet()) {
       urlBuilder.addQueryParameter(entry.getKey(), entry.getValue());
     }
-
+    if (this.flags != null) {
+      urlBuilder.addQueryParameter("flags", this.flags);
+    }
     HttpUrl url = urlBuilder.build();
 
     Map<String, String> headers = new HashMap<>();

@@ -42,7 +42,7 @@ public class AuthClient {
 
   private final String clientId;
   private final String clientSecret;
-  private final String redirectUri;    
+  private final String redirectUri;
   private final String mode;
 
   /**
@@ -53,6 +53,7 @@ public class AuthClient {
     private String clientId;
     private String clientSecret;
     private String redirectUri;
+    private boolean testMode;
     private String mode;
 
 
@@ -60,6 +61,7 @@ public class AuthClient {
       this.clientId = System.getenv("SMARTCAR_CLIENT_ID");
       this.clientSecret = System.getenv("SMARTCAR_CLIENT_SECRET");
       this.redirectUri = System.getenv("SMARTCAR_REDIRECT_URI");
+      this.testMode = false;
       this.mode = "live";
     }
 
@@ -78,10 +80,30 @@ public class AuthClient {
       return this;
     }
 
+    /**
+     * @deprecated use {@link Builder#mode(String)} instead.
+     */
+    @Deprecated
+    public Builder testMode(boolean testMode) {
+      this.mode = testMode ? "test" : "live";
+      return this;
+    }
+
     public Builder mode(String mode) {
+      final List<String> validModes = new ArrayList<String>(){
+        {add("test"); add("live");add("simulated");}
+      };
+      if (!validModes.contains(mode)) {
+        throw new java.lang.Error(
+          "The \"mode\" parameter MUST be one of the following: \"test\", \"live\", \"simulated\""
+        );
+      }
+
       this.mode = mode;
       return this;
     }
+
+
     public AuthClient build() throws Exception {
       if (this.clientId == null) {
         throw new Exception("clientId must be defined");
@@ -134,23 +156,8 @@ public class AuthClient {
               .addQueryParameter("response_type", "code")
               .addQueryParameter("client_id", AuthClient.this.clientId)
               .addQueryParameter("redirect_uri", AuthClient.this.redirectUri)
+              .addQueryParameter("mode", AuthClient.this.mode)
               .addQueryParameter("scope", Utils.join(scope, " "));
-    }
-
-    /**
-     * @deprecated use {@link AuthUrlBuilder#mode(String)} instead.
-     */
-    @Deprecated
-    public AuthUrlBuilder testMode(boolean testMode) {
-        this.mode = testMode ? "test" : "live";
-        return this;
-    }
-
-    public AuthUrlBuilder mode(String mode) {
-      if (!mode.equals("")) {
-        this.mode = mode;
-      }
-      return this;
     }
 
     public AuthUrlBuilder state(String state) {
@@ -194,7 +201,6 @@ public class AuthClient {
     }
 
     public String build() {
-      urlBuilder.addQueryParameter("mode", this.mode);
       if (this.flags != null && !this.flags.isEmpty()) {
         String[] flagStrings = this.flags.toArray(new String[0]);
         urlBuilder.addQueryParameter("flags", Utils.join(flagStrings, " "));

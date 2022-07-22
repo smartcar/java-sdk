@@ -37,7 +37,7 @@ public final class SmartcarVehicleOptions {
             this.flags.add(key + ":" + value);
             return this;
         }
-    
+
         public Builder addFlag(String key, boolean value) {
             this.flags.add(key + ":" + value);
             return this;
@@ -57,12 +57,11 @@ public final class SmartcarVehicleOptions {
         this.version = builder.version;
         this.unitSystem = builder.unitSystem;
         this.origin = builder.origin;
-        if (builder.flags.size() > 0) {
-            String[] flagStrings = builder.flags.toArray(new String[0]);
-            this.flags = Utils.join(flagStrings, " ");
+        if (!builder.flags.isEmpty()) {
+            this.flags = String.join(" ", builder.flags);
         } else {
             this.flags = null;
-        }    
+        }
     }
 
     public String getVersion() {
@@ -73,12 +72,11 @@ public final class SmartcarVehicleOptions {
         return this.unitSystem;
     }
 
-    public String getFlags() { 
-        return this.flags; 
+    public String getFlags() {
+        return this.flags;
     }
 
     public String getOrigin() {
         return this.origin;
     }
 }
-
