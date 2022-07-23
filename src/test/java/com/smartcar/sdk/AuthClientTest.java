@@ -193,42 +193,65 @@ public class AuthClientTest extends PowerMockTestCase {
   }
 
   @Test
-  public void testAuthUrlBuilderSimulatedMode() throws Exception {
+  public void testAuthUrlBuilderWithOptions() throws Exception {
+    PowerMockito.mockStatic(System.class);
+    PowerMockito.when(System.getenv("SMARTCAR_CLIENT_ID")).thenReturn(this.sampleClientId);
+    PowerMockito.when(System.getenv("SMARTCAR_CLIENT_SECRET")).thenReturn(this.sampleClientSecret);
+    PowerMockito.when(System.getenv("SMARTCAR_REDIRECT_URI")).thenReturn(this.sampleRedirectUri);
+    AuthClient client = new AuthClient.Builder().build();
+
+    String authUrl = client.authUrlBuilder(this.sampleScope)
+            .state("sampleState")
+            .approvalPrompt(true)
+            .makeBypass("TESLA")
+            .singleSelect(true)
+            .singleSelectVin("sampleVin")
+            .addFlag("foo", "bar")
+            .addFlag("test", true)
+            .build();
+    Assert.assertEquals(authUrl, "https://connect.smartcar.com/oauth/authorize?response_type=code&client_id=cl13nt1d-t35t-46dc-aa25-bdd042f54e7d&redirect_uri=https%3A%2F%2Fexample.com%2F&mode=live&scope=read_vehicle_info%20read_location%20read_odometer&state=sampleState&approval_prompt=force&make=TESLA&single_select=true&single_select=true&single_select_vin=sampleVin&flags=foo%3Abar%20test%3Atrue");
+  }
+
+  @Test
+  public void testAuthUrlBuilderWithSimulatedMode() throws Exception {
     PowerMockito.mockStatic(System.class);
     PowerMockito.when(System.getenv("SMARTCAR_CLIENT_ID")).thenReturn(this.sampleClientId);
     PowerMockito.when(System.getenv("SMARTCAR_CLIENT_SECRET")).thenReturn(this.sampleClientSecret);
     PowerMockito.when(System.getenv("SMARTCAR_REDIRECT_URI")).thenReturn(this.sampleRedirectUri);
     AuthClient client = new AuthClient.Builder().mode("simulated").build();
 
-    String authUrl = client.authUrlBuilder(this.sampleScope)
-            .state("sampleState")
-            .approvalPrompt(true)
-            .makeBypass("TESLA")
-            .singleSelect(true)
-            .singleSelectVin("sampleVin")
-            .addFlag("foo", "bar")
-            .addFlag("test", true)
-            .build();
-    Assert.assertEquals(authUrl, "https://connect.smartcar.com/oauth/authorize?response_type=code&client_id=cl13nt1d-t35t-46dc-aa25-bdd042f54e7d&redirect_uri=https%3A%2F%2Fexample.com%2F&mode=simulated&scope=read_vehicle_info%20read_location%20read_odometer&state=sampleState&approval_prompt=force&make=TESLA&single_select=true&single_select=true&single_select_vin=sampleVin&flags=foo%3Abar%20test%3Atrue");
+    String authUrl = client.authUrlBuilder(this.sampleScope).build();
+
+    Assert.assertEquals(authUrl, "https://connect.smartcar.com/oauth/authorize?response_type=code&client_id=cl13nt1d-t35t-46dc-aa25-bdd042f54e7d&redirect_uri=https%3A%2F%2Fexample.com%2F&mode=simulated&scope=read_vehicle_info%20read_location%20read_odometer");
   }
 
   @Test
-  public void testAuthUrlBuilderWithtestModeParameter() throws Exception {
+  public void testAuthUrlBuilderWithTestModeParameter() throws Exception {
     PowerMockito.mockStatic(System.class);
     PowerMockito.when(System.getenv("SMARTCAR_CLIENT_ID")).thenReturn(this.sampleClientId);
     PowerMockito.when(System.getenv("SMARTCAR_CLIENT_SECRET")).thenReturn(this.sampleClientSecret);
     PowerMockito.when(System.getenv("SMARTCAR_REDIRECT_URI")).thenReturn(this.sampleRedirectUri);
     AuthClient client = new AuthClient.Builder().testMode(true).build();
 
-    String authUrl = client.authUrlBuilder(this.sampleScope)
-            .state("sampleState")
-            .approvalPrompt(true)
-            .makeBypass("TESLA")
-            .singleSelect(true)
-            .singleSelectVin("sampleVin")
-            .addFlag("foo", "bar")
-            .addFlag("test", true)
-            .build();
-    Assert.assertEquals(authUrl, "https://connect.smartcar.com/oauth/authorize?response_type=code&client_id=cl13nt1d-t35t-46dc-aa25-bdd042f54e7d&redirect_uri=https%3A%2F%2Fexample.com%2F&mode=test&scope=read_vehicle_info%20read_location%20read_odometer&state=sampleState&approval_prompt=force&make=TESLA&single_select=true&single_select=true&single_select_vin=sampleVin&flags=foo%3Abar%20test%3Atrue");
+    String authUrl = client.authUrlBuilder(this.sampleScope).build();
+
+    Assert.assertEquals(authUrl, "https://connect.smartcar.com/oauth/authorize?response_type=code&client_id=cl13nt1d-t35t-46dc-aa25-bdd042f54e7d&redirect_uri=https%3A%2F%2Fexample.com%2F&mode=test&scope=read_vehicle_info%20read_location%20read_odometer");
+  }
+
+  @Test
+  public void testAuthUrlBuilderWithInvaildMode() {
+    PowerMockito.mockStatic(System.class);
+    PowerMockito.when(System.getenv("SMARTCAR_CLIENT_ID")).thenReturn(this.sampleClientId);
+    PowerMockito.when(System.getenv("SMARTCAR_CLIENT_SECRET")).thenReturn(this.sampleClientSecret);
+    PowerMockito.when(System.getenv("SMARTCAR_REDIRECT_URI")).thenReturn(this.sampleRedirectUri);
+
+    boolean thrown = false;
+    try{
+      AuthClient client = new AuthClient.Builder().mode("invalid").build();
+    } catch (Exception e) {
+      thrown = true;
+      Assert.assertEquals(e.getMessage(), "The \"mode\" parameter MUST be one of the following: \"test\", \"live\", \"simulated\"");
+    }
+    Assert.assertTrue(thrown);
   }
 }

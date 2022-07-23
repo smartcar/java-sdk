@@ -14,7 +14,6 @@ public final class SmartcarCompatibilityRequest {
     private final String flags;
     private final String clientId;
     private final String clientSecret;
-    private final boolean testMode;
     private final String mode;
     private final String testModeCompatibilityLevel;
 
@@ -26,7 +25,6 @@ public final class SmartcarCompatibilityRequest {
         private final List<String> flags;
         private String clientId;
         private String clientSecret;
-        private boolean testMode;
         private String mode;
         private String testModeCompatibilityLevel;
 
@@ -38,7 +36,6 @@ public final class SmartcarCompatibilityRequest {
             this.flags = new ArrayList<>();
             this.clientId = System.getenv("SMARTCAR_CLIENT_ID");
             this.clientSecret = System.getenv("SMARTCAR_CLIENT_SECRET");
-            this.testMode = false;
             this.mode = null;
             this.testModeCompatibilityLevel = null;
         }
@@ -89,7 +86,6 @@ public final class SmartcarCompatibilityRequest {
         @Deprecated
         public Builder testMode(boolean testMode) {
             this.mode = testMode ? "test" : "live";
-            this.testMode = testMode;
             return this;
         }
 
@@ -137,7 +133,6 @@ public final class SmartcarCompatibilityRequest {
         }
         this.clientId = builder.clientId;
         this.clientSecret = builder.clientSecret;
-        this.testMode = builder.testMode;
         this.mode = builder.mode;
         this.testModeCompatibilityLevel = builder.testModeCompatibilityLevel;
     }
@@ -162,7 +157,7 @@ public final class SmartcarCompatibilityRequest {
      * @deprecated use {@link Builder#getMode()} which returns the mode as a String.
      */
     @Deprecated
-    public boolean getTestMode() { return this.testMode; }
+    public boolean getTestMode() { return this.mode == "test"; }
 
     public String getMode() { return this.mode; }
 

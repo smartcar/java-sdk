@@ -93,8 +93,8 @@ public class Vehicle {
             .addPathSegments(path);
 
 
-    if (this.flags != null) {
-      urlBuilder.addQueryParameter("flags", this.flags);
+    if (this.getFlags() != null) {
+      urlBuilder.addQueryParameter("flags", this.getFlags());
     }
     HttpUrl url = urlBuilder.build();
 
@@ -123,8 +123,8 @@ public class Vehicle {
     for (Map.Entry<String, String> entry: query.entrySet()) {
       urlBuilder.addQueryParameter(entry.getKey(), entry.getValue());
     }
-    if (this.flags != null) {
-      urlBuilder.addQueryParameter("flags", this.flags);
+    if (this.getFlags() != null) {
+      urlBuilder.addQueryParameter("flags", this.getFlags());
     }
     HttpUrl url = urlBuilder.build();
 

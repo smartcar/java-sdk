@@ -9,6 +9,8 @@ import okhttp3.*;
 
 import java.lang.reflect.Type;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /** Smartcar OAuth 2.0 Authentication Client */
 public class AuthClient {
@@ -53,15 +55,13 @@ public class AuthClient {
     private String clientId;
     private String clientSecret;
     private String redirectUri;
-    private boolean testMode;
     private String mode;
-
+    private final Set<String> validModes = Stream.of("test", "live", "simulated").collect(Collectors.toSet());
 
     public Builder() {
       this.clientId = System.getenv("SMARTCAR_CLIENT_ID");
       this.clientSecret = System.getenv("SMARTCAR_CLIENT_SECRET");
       this.redirectUri = System.getenv("SMARTCAR_REDIRECT_URI");
-      this.testMode = false;
       this.mode = "live";
     }
 
@@ -89,12 +89,9 @@ public class AuthClient {
       return this;
     }
 
-    public Builder mode(String mode) {
-      final List<String> validModes = new ArrayList<String>(){
-        {add("test"); add("live");add("simulated");}
-      };
-      if (!validModes.contains(mode)) {
-        throw new java.lang.Error(
+    public Builder mode(String mode) throws Exception {
+      if (!this.validModes.contains(mode)) {
+        throw new Exception(
           "The \"mode\" parameter MUST be one of the following: \"test\", \"live\", \"simulated\""
         );
       }
