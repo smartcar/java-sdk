@@ -157,7 +157,7 @@ public final class SmartcarCompatibilityRequest {
      * @deprecated use {@link Builder#getMode()} which returns the mode as a String.
      */
     @Deprecated
-    public boolean getTestMode() { return this.mode == "test"; }
+    public boolean getTestMode() { return this.mode.equals("test"); }
 
     public String getMode() { return this.mode; }
 
