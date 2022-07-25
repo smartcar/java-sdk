@@ -93,7 +93,7 @@ public final class SmartcarCompatibilityRequest {
             return this;
         }
 
-        public Builder mode(String mode) throws Exception  {
+        public Builder mode(String mode) throws Exception {
             if (!this.validModes.contains(mode)) {
                 throw new Exception(
                 "The \"mode\" parameter MUST be one of the following: \"test\", \"live\", \"simulated\""
