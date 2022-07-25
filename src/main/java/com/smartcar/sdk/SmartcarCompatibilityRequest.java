@@ -2,6 +2,9 @@ package com.smartcar.sdk;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Class encompassing optional arguments for Smartcar compatibility requests
@@ -14,7 +17,7 @@ public final class SmartcarCompatibilityRequest {
     private final String flags;
     private final String clientId;
     private final String clientSecret;
-    private final boolean testMode;
+    private final String mode;
     private final String testModeCompatibilityLevel;
 
     public static class Builder {
@@ -25,8 +28,9 @@ public final class SmartcarCompatibilityRequest {
         private final List<String> flags;
         private String clientId;
         private String clientSecret;
-        private boolean testMode;
+        private String mode;
         private String testModeCompatibilityLevel;
+        private final Set<String> validModes = Stream.of("test", "live", "simulated").collect(Collectors.toSet());
 
         public Builder() {
             this.vin = "";
@@ -36,7 +40,7 @@ public final class SmartcarCompatibilityRequest {
             this.flags = new ArrayList<>();
             this.clientId = System.getenv("SMARTCAR_CLIENT_ID");
             this.clientSecret = System.getenv("SMARTCAR_CLIENT_SECRET");
-            this.testMode = false;
+            this.mode = null;
             this.testModeCompatibilityLevel = null;
         }
 
@@ -80,13 +84,28 @@ public final class SmartcarCompatibilityRequest {
             return this;
         }
 
+        /**
+         * @deprecated use {@link #mode(String)} instead.
+         */
+        @Deprecated
         public Builder testMode(boolean testMode) {
-            this.testMode = testMode;
+            this.mode = testMode ? "test" : "live";
+            return this;
+        }
+
+        public Builder mode(String mode) throws Exception {
+            if (!this.validModes.contains(mode)) {
+                throw new Exception(
+                "The \"mode\" parameter MUST be one of the following: \"test\", \"live\", \"simulated\""
+                );
+            }
+
+            this.mode = mode;
             return this;
         }
 
         public Builder testModeCompatibilityLevel(String level) {
-            this.testMode = true;
+            this.mode = "test";
             this.testModeCompatibilityLevel = level;
             return this;
         }
@@ -115,7 +134,7 @@ public final class SmartcarCompatibilityRequest {
         }
         this.clientId = builder.clientId;
         this.clientSecret = builder.clientSecret;
-        this.testMode = builder.testMode;
+        this.mode = builder.mode;
         this.testModeCompatibilityLevel = builder.testModeCompatibilityLevel;
     }
 
@@ -135,7 +154,13 @@ public final class SmartcarCompatibilityRequest {
 
     public String getClientSecret() { return this.clientSecret; }
 
-    public boolean getTestMode() { return this.testMode; }
+    /**
+     * @deprecated use {@link Builder#getMode()} which returns the mode as a String.
+     */
+    @Deprecated
+    public boolean getTestMode() { return this.mode.equals("test"); }
+
+    public String getMode() { return this.mode; }
 
     public String getTestModeCompatibilityLevel() { return this.testModeCompatibilityLevel; }
 }

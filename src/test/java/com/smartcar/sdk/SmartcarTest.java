@@ -135,6 +135,39 @@ public class SmartcarTest extends PowerMockTestCase {
 
     @Test
     @PrepareForTest(System.class)
+    public void testGetCompatibilitySimulatedMode() throws Exception {
+        String vin = "1234";
+        String[] scope;
+        scope = new String[]{"read_odometer"};
+
+        MockResponse response = new MockResponse()
+                .setBody("{ \"compatible\": true }")
+                .addHeader("sc-request-id", this.sampleRequestId);
+        TestExecutionListener.mockWebServer.enqueue(response);
+
+        PowerMockito.mockStatic(System.class);
+        PowerMockito.when(System.getenv("SMARTCAR_API_ORIGIN")).thenReturn(
+                "http://localhost:" + TestExecutionListener.mockWebServer.getPort()
+        );
+        PowerMockito.when(System.getenv("SMARTCAR_CLIENT_ID")).thenReturn(this.sampleClientId);
+        PowerMockito.when(System.getenv("SMARTCAR_CLIENT_SECRET")).thenReturn(this.sampleClientSecret);
+
+        SmartcarCompatibilityRequest request =  new SmartcarCompatibilityRequest.Builder()
+                .clientId(this.sampleClientId)
+                .clientSecret(this.sampleClientSecret)
+                .vin(vin)
+                .scope(scope)
+                .mode("simulated")
+                .build();
+        Compatibility comp = Smartcar.getCompatibility(request);
+        Assert.assertTrue(comp.getCompatible());
+        Assert.assertEquals(comp.getMeta().getRequestId(), this.sampleRequestId);
+        RecordedRequest req = TestExecutionListener.mockWebServer.takeRequest();
+        Assert.assertEquals(req.getPath(), "/v2.0/compatibility?vin=1234&scope=read_odometer&country=US&mode=simulated");
+    }
+
+    @Test
+    @PrepareForTest(System.class)
     public void testGetCompatibilityWithoutRequiredOptions() {
         boolean thrown = false;
         try {

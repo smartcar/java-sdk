@@ -148,8 +148,8 @@ public class Smartcar {
         if (compatibilityRequest.getFlags() != null) {
             urlBuilder.addQueryParameter("flags", compatibilityRequest.getFlags());
         }
-        if (compatibilityRequest.getTestMode()) {
-            urlBuilder.addQueryParameter("mode", "test");
+        if (compatibilityRequest.getMode() != null) {
+            urlBuilder.addQueryParameter("mode", compatibilityRequest.getMode());
         }
         if (compatibilityRequest.getTestModeCompatibilityLevel() != null) {
             urlBuilder.addQueryParameter("test_mode_compatibility_level", compatibilityRequest.getTestModeCompatibilityLevel());

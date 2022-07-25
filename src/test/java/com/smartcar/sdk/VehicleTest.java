@@ -64,6 +64,8 @@ public class VehicleTest {
   private void beforeMethod() throws IOException {
 
     SmartcarVehicleOptions options = new SmartcarVehicleOptions.Builder()
+            .addFlag("foo", "bar")
+            .addFlag("test", true)
             .origin("http://localhost:" + TestExecutionListener.mockWebServer.getPort())
             .build();
     this.subject = new Vehicle(this.vehicleId, this.accessToken, options);
@@ -97,6 +99,11 @@ public class VehicleTest {
   @Test
   public void testGetVersion() {
     Assert.assertEquals(this.subject.getVersion(), "2.0");
+  }
+
+  @Test
+  public void testFlags() {
+    Assert.assertEquals(this.subject.getFlags(), "foo:bar test:true");
   }
 
   @Test

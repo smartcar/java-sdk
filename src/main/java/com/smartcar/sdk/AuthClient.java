@@ -9,6 +9,8 @@ import okhttp3.*;
 
 import java.lang.reflect.Type;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /** Smartcar OAuth 2.0 Authentication Client */
 public class AuthClient {
@@ -43,7 +45,7 @@ public class AuthClient {
   private final String clientId;
   private final String clientSecret;
   private final String redirectUri;
-  private final boolean testMode;
+  private final String mode;
 
   /**
    * Builds a new AuthClient.
@@ -53,13 +55,14 @@ public class AuthClient {
     private String clientId;
     private String clientSecret;
     private String redirectUri;
-    private boolean testMode;
+    private String mode;
+    private final Set<String> validModes = Stream.of("test", "live", "simulated").collect(Collectors.toSet());
 
     public Builder() {
       this.clientId = System.getenv("SMARTCAR_CLIENT_ID");
       this.clientSecret = System.getenv("SMARTCAR_CLIENT_SECRET");
       this.redirectUri = System.getenv("SMARTCAR_REDIRECT_URI");
-      this.testMode = false;
+      this.mode = "live";
     }
 
     public Builder clientId(String clientId) {
@@ -77,10 +80,26 @@ public class AuthClient {
       return this;
     }
 
+    /**
+     * @deprecated use {@link Builder#mode(String)} instead.
+     */
+    @Deprecated
     public Builder testMode(boolean testMode) {
-      this.testMode = testMode;
+      this.mode = testMode ? "test" : "live";
       return this;
     }
+
+    public Builder mode(String mode) throws Exception {
+      if (!this.validModes.contains(mode)) {
+        throw new Exception(
+          "The \"mode\" parameter MUST be one of the following: \"test\", \"live\", \"simulated\""
+        );
+      }
+
+      this.mode = mode;
+      return this;
+    }
+
 
     public AuthClient build() throws Exception {
       if (this.clientId == null) {
@@ -100,7 +119,7 @@ public class AuthClient {
     this.clientId = builder.clientId;
     this.clientSecret = builder.clientSecret;
     this.redirectUri = builder.redirectUri;
-    this.testMode = builder.testMode;
+    this.mode = builder.mode;
 
     ApiClient.gson.registerTypeAdapter(Auth.class, new AuthDeserializer());
   }
@@ -120,6 +139,7 @@ public class AuthClient {
    */
   public class AuthUrlBuilder {
     private HttpUrl.Builder urlBuilder;
+    private String mode = AuthClient.this.mode;
     private List<String> flags = new ArrayList<>();
 
     public AuthUrlBuilder(String[] scope) {
@@ -133,7 +153,7 @@ public class AuthClient {
               .addQueryParameter("response_type", "code")
               .addQueryParameter("client_id", AuthClient.this.clientId)
               .addQueryParameter("redirect_uri", AuthClient.this.redirectUri)
-              .addQueryParameter("mode", AuthClient.this.testMode ? "test" : "live")
+              .addQueryParameter("mode", AuthClient.this.mode)
               .addQueryParameter("scope", Utils.join(scope, " "));
     }
 

@@ -53,12 +53,12 @@ public class AuthHelpers {
    * Creates an AuthClient builder and sets Client ID, Client Secret, and Redirect URI and also
    * enables test mode.
    */
-  public static AuthClient.Builder getConfiguredAuthClientBuilder() {
+  public static AuthClient.Builder getConfiguredAuthClientBuilder() throws Exception {
     return new AuthClient.Builder()
         .clientId(getClientId())
         .clientSecret(getClientSecret())
         .redirectUri("https://example.com/auth")
-        .testMode(true);
+        .mode("test");
   }
 
   public static String runAuthFlow(String authorizeURL) {
