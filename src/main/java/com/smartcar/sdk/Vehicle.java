@@ -398,6 +398,11 @@ public class Vehicle {
                     .addPathSegments(this.vehicleId)
                     .addPathSegments(vehicleRequest.getPath());
 
+    if (this.flags != null) {
+      urlBuilder.addQueryParameter("flags", this.flags);
+    }
+
+    // This overrides the defaults flags
     if (vehicleRequest.getFlags() != null) {
       urlBuilder.addQueryParameter("flags", vehicleRequest.getFlags());
     }
