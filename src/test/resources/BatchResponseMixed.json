@@ -12,9 +12,6 @@
       }
     },
     {
-      "headers": {
-        "sc-unit-system": "metric"
-      },
       "path": "/fuel",
       "code": 409,
       "body": {

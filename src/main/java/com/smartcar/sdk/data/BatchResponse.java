@@ -41,12 +41,13 @@ public class BatchResponse extends ApiData {
     }
     int statusCode = res.get("code").getAsInt();
     JsonObject body = res.get("body").getAsJsonObject();
+    // error requests will not have headers
+    if (statusCode != 200) {
+      throw SmartcarException.Factory(statusCode, new JsonObject(), body);
+    }
     JsonObject headers = res.get("headers").getAsJsonObject();
     headers.addProperty("sc-request-id", this.requestId);
 
-    if (statusCode != 200) {
-      throw SmartcarException.Factory(statusCode, headers, body);
-    }
 
     String bodyString = body.toString();
     T data = gson.create().fromJson(bodyString, dataType);
