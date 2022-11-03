@@ -41,7 +41,14 @@ public class BatchResponse extends ApiData {
     }
     int statusCode = res.get("code").getAsInt();
     JsonObject body = res.get("body").getAsJsonObject();
-    JsonObject headers = res.get("headers").getAsJsonObject();
+
+    JsonObject headers;
+    if (statusCode == 200) {
+      headers = res.get("headers").getAsJsonObject();
+    } else {
+      // error requests will not have headers
+      headers = new JsonObject();
+    }
     headers.addProperty("sc-request-id", this.requestId);
 
     if (statusCode != 200) {

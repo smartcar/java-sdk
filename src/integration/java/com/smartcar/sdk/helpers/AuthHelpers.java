@@ -138,7 +138,7 @@ public class AuthHelpers {
    * Wrapper around System.getenv that throws an error if the variable is not set (also caches the
    * value)
    *
-   * @return the environment variable that the the name maps to
+   * @return the environment variable that the name maps to
    */
   private static String safeGetEnv(String name) {
     if (ENV_VAR_CACHE.containsKey(name)) {
