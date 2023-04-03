@@ -92,7 +92,7 @@ public class AuthHelpers {
     WebElement brandButton =
         wait.until(
             ExpectedConditions.presenceOfElementLocated(
-                By.cssSelector("button.brand-selector-button[data-make=" + make + "]")));
+                By.cssSelector("button#" + make.toUpperCase() + ".brand-list-item")));
     brandButton.click();
 
     // Login
