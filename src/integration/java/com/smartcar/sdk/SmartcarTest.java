@@ -23,7 +23,7 @@ public class SmartcarTest {
     @BeforeSuite
     public void beforeSuite() throws Exception {
         this.client = AuthHelpers.getConfiguredAuthClientBuilder().build();
-        this.authorizeUrl = client.authUrlBuilder(new String[] {"read_vehicle_info"}).build();
+        this.authorizeUrl = client.authUrlBuilder(new String[]{"read_vehicle_info"}).build();
         String code = AuthHelpers.runAuthFlow(client.authUrlBuilder(this.scope).build());
         this.accessToken = client.exchangeCode(code).getAccessToken();
     }
@@ -55,11 +55,11 @@ public class SmartcarTest {
         String[] scope = {"read_odometer", "read_fuel"};
         String[] paths = {"/odometer", "/fuel"};
         String[] reasons = {null, "SMARTCAR_NOT_CAPABLE"};
-        ArrayList<String> permissionList  = new ArrayList<>(Arrays.asList(scope));
-        ArrayList<String> endpointList  = new ArrayList<>(Arrays.asList(paths));
-        ArrayList<String> reasonsList  = new ArrayList<>(Arrays.asList(reasons));
+        ArrayList<String> permissionList = new ArrayList<>(Arrays.asList(scope));
+        ArrayList<String> endpointList = new ArrayList<>(Arrays.asList(paths));
+        ArrayList<String> reasonsList = new ArrayList<>(Arrays.asList(reasons));
 
-        SmartcarCompatibilityRequest request =  new SmartcarCompatibilityRequest.Builder()
+        SmartcarCompatibilityRequest request = new SmartcarCompatibilityRequest.Builder()
                 .clientId(this.clientId)
                 .clientSecret(this.clientSecret)
                 .vin(vin)
@@ -70,7 +70,7 @@ public class SmartcarTest {
         Assert.assertTrue(comp.getCompatible());
         Assert.assertEquals(capabilities.length, 2);
         boolean capable = true;
-        for (Compatibility.Capability capability : capabilities){
+        for (Compatibility.Capability capability : capabilities) {
             capable = capable && capability.getCapable();
             Assert.assertTrue(permissionList.contains(capability.getPermission()));
             Assert.assertTrue(endpointList.contains(capability.getEndpoint()));
