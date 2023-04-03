@@ -21,6 +21,7 @@ public class SmartcarException extends java.lang.Exception {
   private final JsonArray detail;
   private final String docURL;
   private final String requestId;
+  private final int retryAfter;
 
   public static class Builder {
     private int statusCode;
@@ -32,6 +33,7 @@ public class SmartcarException extends java.lang.Exception {
     private JsonArray detail;
     private String docURL;
     private String requestId;
+    private  int retryAfter;
 
     public Builder() {
       this.statusCode = 0;
@@ -43,6 +45,7 @@ public class SmartcarException extends java.lang.Exception {
       this.detail = null;
       this.docURL = "";
       this.requestId = "";
+      this.retryAfter = 0;
     }
 
     public Builder statusCode(int statusCode) {
@@ -90,6 +93,11 @@ public class SmartcarException extends java.lang.Exception {
       return this;
     }
 
+    public Builder retryAfter(int retryAfter) {
+      this.retryAfter = retryAfter;
+      return this;
+    }
+
     public SmartcarException build() { return new SmartcarException(this); }
   }
 
@@ -103,6 +111,7 @@ public class SmartcarException extends java.lang.Exception {
     this.detail = builder.detail;
     this.docURL = builder.docURL;
     this.requestId = builder.requestId;
+    this.retryAfter = builder.retryAfter;
   }
 
   public static SmartcarException Factory(final int statusCode, JsonObject headers, JsonObject body) {
@@ -171,6 +180,11 @@ public class SmartcarException extends java.lang.Exception {
       if (bodyJson.has("detail")) {
         JsonArray detailJson = bodyJson.get("detail").getAsJsonArray();
         builder.detail(detailJson);
+      }
+
+      JsonElement retryAfter = headers.get("retry-after");
+      if (retryAfter != null){
+        builder.retryAfter(retryAfter.getAsInt());
       }
 
       return builder.build();
@@ -285,4 +299,12 @@ public class SmartcarException extends java.lang.Exception {
     return this.detail;
   }
 
+  /**
+   * Returns the retry-after unix timestamp (ms) upon hitting a rate limit error.
+   *
+   * @return retry-after unix timestamp (ms)
+   */
+  public int getRetryAfter() {
+    return this.retryAfter;
+  }
 }
