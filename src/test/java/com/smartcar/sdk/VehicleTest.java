@@ -50,6 +50,17 @@ public class VehicleTest {
     TestExecutionListener.mockWebServer.enqueue(mockResponse);
   }
 
+  private void loadAndEnqueueRateLimitErrorResponse(int retryAfter) throws FileNotFoundException {
+    JsonElement error = loadJsonResource("ErrorVehicleRateLimit");
+    MockResponse mockResponse = new MockResponse()
+            .setResponseCode(429)
+            .setBody(error.toString())
+            .addHeader("sc-request-id", this.expectedRequestId)
+            .addHeader("content-type", "application/json")
+            .addHeader("retry-after", retryAfter);
+    TestExecutionListener.mockWebServer.enqueue(mockResponse);
+  }
+
   private void loadAndEnqueueResponse(String resourceName) throws FileNotFoundException {
     JsonElement success = loadJsonResource(resourceName);
     MockResponse mockResponse = new MockResponse()
@@ -411,6 +422,21 @@ public class VehicleTest {
 
     Assert.assertTrue(thrown);
   }
+  @Test
+  public void testV2RateLimitError() throws FileNotFoundException  {
+    loadAndEnqueueRateLimitErrorResponse(12345);
+    boolean thrown = false;
+
+    try {
+      this.subject.odometer();
+    } catch (SmartcarException ex) {
+      thrown = true;
+      Assert.assertEquals(ex.getStatusCode(), 429);
+      Assert.assertEquals(ex.getRetryAfter(), 12345);
+    }
+
+    Assert.assertTrue(thrown);
+  }
 
   @Test
   public void testInvalidJsonResponse() {
@@ -587,6 +613,7 @@ public class VehicleTest {
       Assert.assertNull(e.getResolutionType());
       Assert.assertNull(e.getDetail());
       Assert.assertEquals(e.getMessage(), "VEHICLE_STATE:DOOR_OPEN - Door is open.");
+      Assert.assertEquals(e.getRetryAfter(), 0);
     }
     Assert.assertTrue(thrown);
   }
@@ -623,6 +650,7 @@ public class VehicleTest {
           e.getMessage(),
           "VALIDATION:null - Request invalid or malformed. Please check for missing parameters,"
               + " spelling and casing mistakes, and other syntax issues.");
+      Assert.assertEquals(e.getRetryAfter(), 0);
     }
 
     Assert.assertTrue(thrown);

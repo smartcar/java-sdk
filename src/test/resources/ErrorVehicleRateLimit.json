@@ -1,0 +1,11 @@
+{
+  "type": "RATE_LIMIT",
+  "code": "VEHICLE",
+  "description": "You have reached the throttling rate limit for this vehicle. Please see the retry-after header (seconds) for when to retry the request.",
+  "docURL": "https://smartcar.com/docs/errors/v2.0/upstream/#vehicle_rate_limit",
+  "statusCode": 429,
+  "requestId": "5dea93a1-3f79-4246-90c5-89610a20471b",
+  "resolution": {
+    "type": "RETRY_LATER"
+  }
+}
