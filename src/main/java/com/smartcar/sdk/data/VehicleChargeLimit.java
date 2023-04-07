@@ -8,7 +8,7 @@ public class VehicleChargeLimit extends ApiData {
    *
    * @return whether charging cable is plugged in
    */
-  public boolean getChargeLimit() {
+  public double getChargeLimit() {
     return this.limit;
   }
 
@@ -16,7 +16,7 @@ public class VehicleChargeLimit extends ApiData {
   /** @return a stringified representation of VehicleFuel */
   @Override
   public String toString() {
-    return this.getClass().getChargeLimit()
+    return this.getClass().getName()
         + "{"
         + "limit="
         + limit
