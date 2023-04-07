@@ -47,3 +47,4 @@ public class VehicleFuel extends ApiData {
         + '}';
   }
 }
+
