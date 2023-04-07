@@ -92,7 +92,7 @@ public class VehicleTest {
     Assert.assertTrue(odometer.getMeta().getDataAge() instanceof Date);
     Assert.assertEquals(odometer.getMeta().getUnitSystem(), this.unitSystem);
   }
-    
+
   @Test
   public void testMetaNull() throws SmartcarException {
     MockResponse mockResponse = new MockResponse()
@@ -212,6 +212,24 @@ public class VehicleTest {
     VehicleBatteryCapacity batteryCapacity = this.subject.batteryCapacity();
 
     Assert.assertEquals(batteryCapacity.getCapacity(), 28.0);
+  }
+
+  @Test
+  public void testGetChargeLimit() throws Exception {
+    loadAndEnqueueResponse("GetChargeLimit");
+
+    VehicleChargeLimit chargeLimit = this.subject.getChargeLimit();
+
+    Assert.assertTrue(chargeLimit.getChargeLimit() instanceof Double);
+  }
+
+  @Test
+  public void testSetChargeLimit() throws Exception {
+    loadAndEnqueueResponse("SetChargeLimitAction");
+
+    ActionResponse res = this.subject.setChargeLimit(0.7);
+
+    Assert.assertEquals(res.getStatus(), "success");
   }
 
   @Test

@@ -259,6 +259,31 @@ public class Vehicle {
   }
 
   /**
+   * Get a vehicle's charge limit
+   *
+   * @return the charge limit of the vehicle as a float value between 0 and 1.
+   * @throws SmartcarException if the request is unsuccessful
+   */
+  public VehicleChargeLimit getChargeLimit() throws SmartcarException {
+    return this.call("charge/limit", "GET", null, VehicleChargeLimit.class)
+  }
+
+  /**
+   * Set a vehicle's charge limit
+   *
+   * @param limit the new charge limit to set.
+   * @return a response indicating success
+   * @throws SmartcarException if the request is unsuccessful
+   */
+  public ActionResponse setChargeLimit(double limit) throws SmartcarException {
+    JsonObject json = Json.createObjectBuilder().add("limit", limit).build();
+
+    RequestBody body = RequestBody.create(ApiClient.JSON, json.toString());
+
+    return this.call("charge/limit", "POST", body, ActionResponse.class);
+  }
+
+  /**
    * Send request to the /charge endpoint
    *
    * @return the charge status of the vehicle
