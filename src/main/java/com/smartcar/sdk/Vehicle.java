@@ -265,7 +265,7 @@ public class Vehicle {
    * @throws SmartcarException if the request is unsuccessful
    */
   public VehicleChargeLimit getChargeLimit() throws SmartcarException {
-    return this.call("charge/limit", "GET", null, VehicleChargeLimit.class)
+    return this.call("charge/limit", "GET", null, VehicleChargeLimit.class);
   }
 
   /**
