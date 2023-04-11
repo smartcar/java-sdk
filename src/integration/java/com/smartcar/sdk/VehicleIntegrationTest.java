@@ -150,6 +150,23 @@ public class VehicleIntegrationTest {
         VehicleCharge response = this.vehicle.charge();
     }
 
+
+    /**
+     * Tests that the charging status can be obtained.
+     */
+    @Test(groups = "vehicle")
+    public void testGetChargeLimit() throws SmartcarException {
+        VehicleChargeLimit response = this.eVehicle.getChargeLimit();
+    }
+
+    /**
+     * Tests that the charging status can be set.
+     */
+    @Test(groups = "vehicle")
+    public void testSetChargeLimit() throws SmartcarException {
+        ActionResponse response = this.eVehicle.setChargeLimit(0.7);
+    }
+
     /**
      * Tests that the vehicle's location can be obtained.
      */
