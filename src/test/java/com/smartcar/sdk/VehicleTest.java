@@ -220,7 +220,7 @@ public class VehicleTest {
 
     VehicleChargeLimit chargeLimit = this.subject.getChargeLimit();
 
-    Assert.assertTrue(chargeLimit.getChargeLimit() instanceof Double);
+    Assert.assertTrue(Double.valueOf(chargeLimit.getChargeLimit()) instanceof Double);
   }
 
   @Test
