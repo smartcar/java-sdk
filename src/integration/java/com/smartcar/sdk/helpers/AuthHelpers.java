@@ -108,6 +108,9 @@ public class AuthHelpers {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.id("approval-button")));
     permissionsApprovalButton.click();
 
+    // Redirect
+    wait.until(ExpectedConditions.urlContains("https://example.com"));
+
     URL url = null;
     try {
       url = new URL(driver.getCurrentUrl());
