@@ -120,9 +120,9 @@ start making requests to vehicles.
     vehicle.unlock();
     ```
 
-## Supported Java Releases
+## Supported Java Releases 
 Smartcar aims to support the SDK on all LTS Java releases (and Java 8) until the "Extended Support" date as defined in the Oracle Java SE Support Roadmap
-
+ 
 In accordance with the Semantic Versioning specification, the addition of support for new Java releases would result in a MINOR version bump and the removal of support for Java releases would result in a MAJOR version bump.
 
 [1]: https://tools.ietf.org/html/rfc6749#section-1.3.1
