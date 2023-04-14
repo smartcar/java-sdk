@@ -101,8 +101,12 @@ tasks.withType(Test) {
     }
 
     testlogger {
-        showStandardStreams true
         theme 'mocha'
+        showStandardStreams true
+        showPassedStandardStreams false
+        showSkippedStandardStreams false
+        showFailedStandardStreams true
+        showFullStackTraces true
     }
 }
 

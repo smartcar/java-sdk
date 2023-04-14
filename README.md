@@ -10,7 +10,7 @@ The recommended method for obtaining the SDK is via Gradle or Maven through the 
 
 ### Gradle
 ```groovy
-compile "com.smartcar.sdk:java-sdk:3.4.0"
+compile "com.smartcar.sdk:java-sdk:3.5.0"
 ```
 
 ### Maven
@@ -18,16 +18,16 @@ compile "com.smartcar.sdk:java-sdk:3.4.0"
 <dependency>
   <groupId>com.smartcar.sdk</groupId>
   <artifactId>java-sdk</artifactId>
-  <version>3.4.0</version>
+  <version>3.5.0</version>
 </dependency>
 ```
 
 ### Jar Direct Download
-* [java-sdk-3.4.0.jar](https://search.maven.org/remotecontent?filepath=com/smartcar/sdk/java-sdk/3.4.0/java-sdk-3.4.0.jar)
-* [java-sdk-3.4.0-sources.jar](https://search.maven.org/remotecontent?filepath=com/smartcar/sdk/java-sdk/3.4.0/java-sdk-3.4.0-sources.jar)
-* [java-sdk-3.4.0-javadoc.jar](https://search.maven.org/remotecontent?filepath=com/smartcar/sdk/java-sdk/3.4.0/java-sdk-3.4.0-javadoc.jar)
+* [java-sdk-3.5.0.jar](https://search.maven.org/remotecontent?filepath=com/smartcar/sdk/java-sdk/3.5.0/java-sdk-3.5.0.jar)
+* [java-sdk-3.5.0-sources.jar](https://search.maven.org/remotecontent?filepath=com/smartcar/sdk/java-sdk/3.5.0/java-sdk-3.5.0-sources.jar)
+* [java-sdk-3.5.0-javadoc.jar](https://search.maven.org/remotecontent?filepath=com/smartcar/sdk/java-sdk/3.5.0/java-sdk-3.5.0-javadoc.jar)
 
-Signatures and other downloads available at [Maven Central](https://search.maven.org/artifact/com.smartcar.sdk/java-sdk/3.4.0/jar).
+Signatures and other downloads available at [Maven Central](https://search.maven.org/artifact/com.smartcar.sdk/java-sdk/3.5.0/jar).
 
 ## Usage
 
@@ -136,5 +136,5 @@ In accordance with the Semantic Versioning specification, the addition of suppor
 [ci-url]: https://travis-ci.com/smartcar/java-sdk
 [coverage-image]: https://codecov.io/gh/smartcar/java-sdk/branch/master/graph/badge.svg?token=nZAITx7w3X
 [coverage-url]: https://codecov.io/gh/smartcar/java-sdk
-[javadoc-image]: https://img.shields.io/badge/javadoc-3.4.0-brightgreen.svg
+[javadoc-image]: https://img.shields.io/badge/javadoc-3.5.0-brightgreen.svg
 [javadoc-url]: https://smartcar.github.io/java-sdk
