@@ -233,7 +233,7 @@ public class VehicleIntegrationTest {
                 "/tires/pressure", "/fuel"
         };
         String[] evPaths = {
-                "/battery", "/battery/capacity", "/charge", "charge/limit"
+                "/battery", "/battery/capacity", "/charge", "/charge/limit"
         };
         BatchResponse response = this.vehicle.batch(paths);
         VehicleAttributes attr = response.attributes();
