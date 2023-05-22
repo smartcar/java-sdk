@@ -233,7 +233,7 @@ public class VehicleIntegrationTest {
                 "/tires/pressure", "/fuel"
         };
         String[] evPaths = {
-                "/battery", "/battery/capacity", "/charge",
+                "/battery", "/battery/capacity", "/charge", "charge/limit"
         };
         BatchResponse response = this.vehicle.batch(paths);
         VehicleAttributes attr = response.attributes();
@@ -269,6 +269,9 @@ public class VehicleIntegrationTest {
         boolean plugged = charge.getIsPluggedIn();
         VehicleBatteryCapacity cap = evResponse.batteryCapacity();
         Assert.assertTrue(cap.getCapacity() > 0);
+
+        VehicleChargeLimit chargeLimit = evResponse.chargeLimit();
+        Assert.assertTrue(chargeLimit.getChargeLimit() > 0);
 
     }
 
