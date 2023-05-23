@@ -189,6 +189,17 @@ public class BatchResponse extends ApiData {
     return get("/tires/pressure", VehicleTirePressure.class);
   }
 
+  /**
+   * Get response from the /charge/limit endpoint
+   *
+   * @return the charge limit of the vehicle
+   * @throws SmartcarException if the request for this endpoint returned an HTTP error code
+   */
+  public VehicleChargeLimit chargeLimit()
+    throws SmartcarException {
+      return get("/charge/limit", VehicleChargeLimit.class);
+    }
+
   /** @return a stringified representation of BatchResponse */
   @Override
   public String toString() {
