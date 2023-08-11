@@ -1,0 +1,13 @@
+{
+  "connections": [
+    {
+      "connectedAt": "2023-08-10T15:00:00.000Z",
+      "vehicleId": "bcf1b859-4bd1-41c5-80bc-b8abfe3623fc",
+      "userId": "d2f64075-d0e1-45d4-aee0-72bd39088947"
+    }
+  ],
+  "paging": {
+    "cursor": "AES-256-CBC::base64::utf8::zLBjfq8xCCTKr3grfBFNXg==Oh0pX00AHjxsloC6vHMyKw==",
+    "count": 1
+  }
+}
