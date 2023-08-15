@@ -12,6 +12,8 @@ import org.apache.commons.codec.binary.Hex;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -334,5 +336,17 @@ public class Smartcar {
         throws SmartcarException {
             return Smartcar.deleteConnections(applicationManagementToken, null);
 
+    }
+
+    private static String getManagementToken(String applicationManagementToken, String username) {
+        String credentials = username + ":" + applicationManagementToken;
+        byte[] credentialsBytes = credentials.getBytes(StandardCharsets.UTF_8);
+        return Base64.getEncoder().encodeToString(credentialsBytes);
+    }
+
+    private static String getManagementToken(String applicationManagementToken) {
+        String credentials = "default:" + applicationManagementToken;
+        byte[] credentialsBytes = credentials.getBytes(StandardCharsets.UTF_8);
+        return Base64.getEncoder().encodeToString(credentialsBytes);
     }
 }
