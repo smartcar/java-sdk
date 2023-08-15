@@ -3,7 +3,7 @@ package com.smartcar.sdk.data;
 public class Connection {
     private String vehicleId;
     private String userId;
-    private String createdAt;
+    private String connectedAt;
 
     public String getVehicleId() {
         return vehicleId;
@@ -13,8 +13,8 @@ public class Connection {
         return userId;
     }
 
-    public String getCreatedAt() {
-        return createdAt;
+    public String getConnectedAt() {
+        return connectedAt;
     }
 
     @Override
@@ -22,7 +22,7 @@ public class Connection {
         return "Connection{" +
                 "vehicleId='" + vehicleId + '\'' +
                 ", userId='" + userId + '\'' +
-                ", createdAt='" + createdAt + '\'' +
+                ", createdAt='" + connectedAt + '\'' +
                 '}';
     }
 }
