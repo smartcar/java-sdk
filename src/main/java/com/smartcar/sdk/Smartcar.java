@@ -222,7 +222,9 @@ public class Smartcar {
     public static GetConnections getConnections(String applicationManagementToken, ConnectionsFilter filter, RequestPagingCursor paging)
             throws SmartcarException {
         // Build Request
-        HttpUrl.Builder urlBuilder = HttpUrl.parse(Smartcar.getManagementApiOrigin() + "/connections").newBuilder();
+        HttpUrl.Builder urlBuilder = HttpUrl
+                .parse(Smartcar.getManagementApiOrigin() + "/v" + Smartcar.API_VERSION + "/management/connections")
+                .newBuilder();
 
         if (filter != null) {
             if (filter.getUserId() != null) {
@@ -292,7 +294,9 @@ public class Smartcar {
     public static DeleteConnections deleteConnections(String applicationManagementToken, ConnectionsFilter filter)
             throws SmartcarException {
         // Build Request
-        HttpUrl.Builder urlBuilder = HttpUrl.parse(Smartcar.getManagementApiOrigin() + "/connections").newBuilder();
+        HttpUrl.Builder urlBuilder = HttpUrl
+                .parse(Smartcar.getManagementApiOrigin() + "/v" + Smartcar.API_VERSION + "/management/connections")
+                .newBuilder();
 
         if (filter != null) {
             String userId = filter.getUserId();
@@ -333,8 +337,8 @@ public class Smartcar {
      * @throws SmartcarException if the request is unsuccessful
      */
     public static DeleteConnections deleteConnections(String applicationManagementToken)
-        throws SmartcarException {
-            return Smartcar.deleteConnections(applicationManagementToken, null);
+            throws SmartcarException {
+        return Smartcar.deleteConnections(applicationManagementToken, null);
 
     }
 
