@@ -329,19 +329,6 @@ public class Smartcar {
         return ApiClient.execute(request, DeleteConnections.class);
     }
 
-    /**
-     * Deletes all the connections by vehicle or user ID and returns a list of all connections that were deleted.
-     *
-     * @param applicationManagementToken
-     * @return connections
-     * @throws SmartcarException if the request is unsuccessful
-     */
-    public static DeleteConnections deleteConnections(String applicationManagementToken)
-            throws SmartcarException {
-        return Smartcar.deleteConnections(applicationManagementToken, null);
-
-    }
-
     private static String getManagementToken(String applicationManagementToken, String username) {
         String credentials = username + ":" + applicationManagementToken;
         byte[] credentialsBytes = credentials.getBytes(StandardCharsets.UTF_8);
