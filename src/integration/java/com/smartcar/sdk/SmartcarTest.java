@@ -1,9 +1,6 @@
 package com.smartcar.sdk;
 
-import com.smartcar.sdk.data.Compatibility;
-import com.smartcar.sdk.data.RequestPaging;
-import com.smartcar.sdk.data.User;
-import com.smartcar.sdk.data.VehicleIds;
+import com.smartcar.sdk.data.*;
 import com.smartcar.sdk.helpers.AuthHelpers;
 import org.testng.Assert;
 import org.testng.annotations.BeforeSuite;
@@ -14,8 +11,10 @@ import java.util.Arrays;
 
 public class SmartcarTest {
     private String accessToken;
+    private VehicleIds vehicleIds;
     private String clientId = System.getenv("E2E_SMARTCAR_CLIENT_ID");
     private String clientSecret = System.getenv("E2E_SMARTCAR_CLIENT_SECRET");
+    private String amt = System.getenv("E2E_SMARTCAR_AMT");
     private AuthClient client;
     private String authorizeUrl;
     private String[] scope = {"read_odometer"};
@@ -26,6 +25,8 @@ public class SmartcarTest {
         this.authorizeUrl = client.authUrlBuilder(new String[]{"read_vehicle_info"}).build();
         String code = AuthHelpers.runAuthFlow(client.authUrlBuilder(this.scope).build());
         this.accessToken = client.exchangeCode(code).getAccessToken();
+        VehicleIds vehicleIds = Smartcar.getVehicles(this.accessToken);
+        this.vehicleIds = vehicleIds;
     }
 
     @Test
@@ -77,5 +78,27 @@ public class SmartcarTest {
             Assert.assertTrue(reasonsList.contains(capability.getReason()));
         }
         Assert.assertFalse((capable));
+    }
+
+    @Test
+    public void testGetConnections() throws SmartcarException {
+        String testVehicleId = this.vehicleIds.getVehicleIds()[0];
+        ConnectionsFilter filter = new ConnectionsFilter
+                .Builder()
+                .vehicleId(testVehicleId)
+                .build();
+        GetConnections connections = Smartcar.getConnections(this.amt, filter);
+        Assert.assertEquals(connections.getConnections().length, 1);
+    }
+
+    @Test
+    public void testDeleteConnections() throws SmartcarException {
+        String testVehicleId = this.vehicleIds.getVehicleIds()[0];
+        ConnectionsFilter filter = new ConnectionsFilter
+                .Builder()
+                .vehicleId(testVehicleId)
+                .build();
+        DeleteConnections connections = Smartcar.deleteConnections(this.amt, filter);
+        Assert.assertEquals(connections.getConnections().length, 1);
     }
 }

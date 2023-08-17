@@ -12,7 +12,8 @@ import org.apache.commons.codec.binary.Hex;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
-import javax.json.JsonObject;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,6 +21,7 @@ import java.util.Map;
 public class Smartcar {
     public static String API_VERSION = "2.0";
     public static String API_ORIGIN = "https://api.smartcar.com";
+    public static String MANAGEMENT_API_ORIGIN = "https://management.smartcar.com";
 
     /**
      * Sets the Smartcar API version
@@ -40,7 +42,6 @@ public class Smartcar {
     }
 
     /**
-     *
      * @return Smartcar API origin
      */
     static String getApiOrigin() {
@@ -49,6 +50,17 @@ public class Smartcar {
             return API_ORIGIN;
         }
         return apiOrigin;
+    }
+
+    /**
+     * @return Smartcar Management API origin
+     */
+    static String getManagementApiOrigin() {
+        String managementApiOrigin = System.getenv("SMARTCAR_MANAGEMENT_API_ORIGIN");
+        if (managementApiOrigin == null) {
+            return MANAGEMENT_API_ORIGIN;
+        }
+        return managementApiOrigin;
     }
 
     /**
@@ -72,7 +84,7 @@ public class Smartcar {
      * Retrieves all vehicles associated with the authenticated user.
      *
      * @param accessToken a valid access token
-     * @param paging paging parameters
+     * @param paging      paging parameters
      * @return the requested vehicle IDs
      * @throws SmartcarException if the request is unsuccessful
      */
@@ -111,7 +123,7 @@ public class Smartcar {
      * Convenience method for determining if an auth token expiration has passed.
      *
      * @param expiration the expiration date of the token
-     * @return whether or not the token has expired
+     * @return whether the token has expired
      */
     public static boolean isExpired(Date expiration) {
         return !expiration.after(new Date());
@@ -129,7 +141,7 @@ public class Smartcar {
      *
      * @param compatibilityRequest with options for this request. See Smartcar.SmartcarCompatibilityRequest
      * @return A Compatibility object with isCompatible set to false if the vehicle is not compatible in the specified country and true if the vehicle is
-     *     likely compatible.
+     * likely compatible.
      * @throws SmartcarException when the request is unsuccessful
      */
     public static Compatibility getCompatibility(SmartcarCompatibilityRequest compatibilityRequest) throws SmartcarException {
@@ -142,7 +154,6 @@ public class Smartcar {
                         .addQueryParameter("vin", compatibilityRequest.getVin())
                         .addQueryParameter("scope", String.join(" ", compatibilityRequest.getScope()))
                         .addQueryParameter("country", compatibilityRequest.getCountry());
-
 
 
         if (compatibilityRequest.getFlags() != null) {
@@ -168,6 +179,7 @@ public class Smartcar {
 
     /**
      * Performs a HmacSHA256 hash on a challenge string using the key provided
+     *
      * @param key
      * @param challenge
      * @return String digest
@@ -186,13 +198,146 @@ public class Smartcar {
 
     /**
      * Verifies as HmacSHA256 signature
+     *
      * @param applicationManagementToken
      * @param signature
      * @param payload
-     * @return boolean whether or not the signature was verified
+     * @return boolean whether the signature was verified
      * @throws SmartcarException
      */
     public static boolean verifyPayload(String applicationManagementToken, String signature, String payload) throws SmartcarException {
         return Smartcar.hashChallenge(applicationManagementToken, payload).equals(signature);
+    }
+
+    /**
+     * Returns a paged list of all the vehicles that are connected to the application associated
+     * with the management API token used sorted in descending order by connection date.
+     *
+     * @param applicationManagementToken
+     * @param filter
+     * @param paging
+     * @return connections
+     * @throws SmartcarException if the request is unsuccessful
+     */
+    public static GetConnections getConnections(String applicationManagementToken, ConnectionsFilter filter, RequestPagingCursor paging)
+            throws SmartcarException {
+        // Build Request
+        HttpUrl.Builder urlBuilder = HttpUrl
+                .parse(Smartcar.getManagementApiOrigin() + "/v" + Smartcar.API_VERSION + "/management/connections")
+                .newBuilder();
+
+        if (filter != null) {
+            if (filter.getUserId() != null) {
+                urlBuilder
+                        .addQueryParameter("user_id", String.valueOf(filter.getUserId()));
+            }
+            if (filter.getVehicleId() != null) {
+                urlBuilder
+                        .addQueryParameter("vehicle_id", String.valueOf(filter.getVehicleId()));
+            }
+        }
+        if (paging != null) {
+            if (paging.getCursor() != null) {
+                urlBuilder
+                        .addQueryParameter("cursor", String.valueOf(paging.getCursor()));
+            }
+            if (paging.getLimit() != null) {
+                urlBuilder
+                        .addQueryParameter("limit", String.valueOf(paging.getLimit()));
+            }
+        }
+
+        HttpUrl url = urlBuilder.build();
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", Credentials.basic(
+                "default",
+                applicationManagementToken
+        ));
+        Request request = ApiClient.buildRequest(url, "GET", null, headers);
+
+        return ApiClient.execute(request, GetConnections.class);
+    }
+
+    /**
+     * Returns a paged list of all the vehicles that are connected to the application associated
+     * with the management API token used sorted in descending order by connection date.
+     *
+     * @param applicationManagementToken
+     * @param filter
+     * @throws SmartcarException if the request is unsuccessful
+     */
+    public static GetConnections getConnections(String applicationManagementToken, ConnectionsFilter filter)
+            throws SmartcarException {
+        return Smartcar.getConnections(applicationManagementToken, filter, null);
+    }
+
+    /**
+     * Returns a paged list of all the vehicles that are connected to the application associated
+     * with the management API token used sorted in descending order by connection date.
+     *
+     * @param applicationManagementToken
+     * @throws SmartcarException if the request is unsuccessful
+     */
+    public static GetConnections getConnections(String applicationManagementToken)
+            throws SmartcarException {
+        return Smartcar.getConnections(applicationManagementToken, null, null);
+    }
+
+    /**
+     * Deletes all the connections by vehicle or user ID and returns a list of all connections that were deleted.
+     *
+     * @param applicationManagementToken
+     * @param filter
+     * @return connections
+     * @throws SmartcarException if the request is unsuccessful
+     */
+    public static DeleteConnections deleteConnections(String applicationManagementToken, ConnectionsFilter filter)
+            throws SmartcarException {
+        // Build Request
+        HttpUrl.Builder urlBuilder = HttpUrl
+                .parse(Smartcar.getManagementApiOrigin() + "/v" + Smartcar.API_VERSION + "/management/connections")
+                .newBuilder();
+
+        if (filter != null) {
+            String userId = filter.getUserId();
+            String vehicleId = filter.getVehicleId();
+            if (userId != null && vehicleId != null) {
+                throw new SmartcarException
+                        .Builder()
+                        .type("SDK_ERROR")
+                        .description("Filter can contain EITHER user_id OR vehicle_id, not both")
+                        .build();
+            }
+            if (userId != null) {
+                urlBuilder
+                        .addQueryParameter("user_id", String.valueOf(userId));
+            }
+            if (vehicleId != null) {
+                urlBuilder
+                        .addQueryParameter("vehicle_id", String.valueOf(vehicleId));
+            }
+        }
+
+        HttpUrl url = urlBuilder.build();
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", Credentials.basic(
+                "default",
+                applicationManagementToken
+        ));
+        Request request = ApiClient.buildRequest(url, "GET", null, headers);
+
+        return ApiClient.execute(request, DeleteConnections.class);
+    }
+
+    private static String getManagementToken(String applicationManagementToken, String username) {
+        String credentials = username + ":" + applicationManagementToken;
+        byte[] credentialsBytes = credentials.getBytes(StandardCharsets.UTF_8);
+        return Base64.getEncoder().encodeToString(credentialsBytes);
+    }
+
+    private static String getManagementToken(String applicationManagementToken) {
+        String credentials = "default:" + applicationManagementToken;
+        byte[] credentialsBytes = credentials.getBytes(StandardCharsets.UTF_8);
+        return Base64.getEncoder().encodeToString(credentialsBytes);
     }
 }
