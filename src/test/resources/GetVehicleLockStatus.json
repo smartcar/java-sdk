@@ -1,0 +1,61 @@
+{
+  "isLocked": true,
+  "doors": [
+    {
+      "type": "frontLeft",
+      "status": "LOCKED"
+    },
+    {
+      "type": "frontRight",
+      "status": "LOCKED"
+    },
+    {
+      "type": "backLeft",
+      "status": "LOCKED"
+    },
+    {
+      "type": "backRight",
+      "status": "LOCKED"
+    }
+  ],
+  "windows": [
+    {
+      "type": "frontLeft",
+      "status": "CLOSED"
+    },
+    {
+      "type": "frontRight",
+      "status": "CLOSED"
+    },
+    {
+      "type": "backLeft",
+      "status": "CLOSED"
+    },
+    {
+      "type": "backRight",
+      "status": "CLOSED"
+    }
+  ],
+  "sunroof": [
+    {
+      "type": "sunroof",
+      "status": "CLOSED"
+    }
+  ],
+  "storage": [
+    {
+      "type": "rear",
+      "status": "CLOSED"
+    },
+    {
+      "type": "front",
+      "status": "CLOSED"
+    }
+  ],
+  "chargingPort": [
+    {
+      "type": "chargingPort",
+      "status": "CLOSED"
+    }
+  ]
+}

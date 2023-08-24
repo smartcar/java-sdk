@@ -293,6 +293,69 @@ public class VehicleTest {
   }
 
   @Test
+  public void testVehicleLockStatus() throws Exception {
+    loadAndEnqueueResponse("GetVehicleLockStatus");
+
+    VehicleLockStatus lockStatus = this.subject.lockStatus();
+
+    // Lock status
+    Assert.assertTrue(lockStatus.isLocked());
+
+    // Doors
+    VehicleDoor frontLeftDoor = lockStatus.getDoors()[0];
+    Assert.assertEquals(frontLeftDoor.getType(), "frontLeft");
+    Assert.assertEquals(frontLeftDoor.getStatus(), "LOCKED");
+
+    VehicleDoor frontRightDoor = lockStatus.getDoors()[1];
+    Assert.assertEquals(frontRightDoor.getType(), "frontRight");
+    Assert.assertEquals(frontRightDoor.getStatus(), "LOCKED");
+
+    VehicleDoor backLeftDoor = lockStatus.getDoors()[2];
+    Assert.assertEquals(backLeftDoor.getType(), "backLeft");
+    Assert.assertEquals(backLeftDoor.getStatus(), "LOCKED");
+
+    VehicleDoor backRightDoor = lockStatus.getDoors()[3];
+    Assert.assertEquals(backRightDoor.getType(), "backRight");
+    Assert.assertEquals(backRightDoor.getStatus(), "LOCKED");
+
+    // Windows
+    VehicleWindow frontLeftWindow = lockStatus.getWindows()[0];
+    Assert.assertEquals(frontLeftWindow.getType(), "frontLeft");
+    Assert.assertEquals(frontLeftWindow.getStatus(), "CLOSED");
+
+    VehicleWindow frontRightWindow = lockStatus.getWindows()[1];
+    Assert.assertEquals(frontRightWindow.getType(), "frontRight");
+    Assert.assertEquals(frontRightWindow.getStatus(), "CLOSED");
+
+    VehicleWindow backLeftWindow = lockStatus.getWindows()[2];
+    Assert.assertEquals(backLeftWindow.getType(), "backLeft");
+    Assert.assertEquals(backLeftWindow.getStatus(), "CLOSED");
+
+    VehicleWindow backRightWindow = lockStatus.getWindows()[3];
+    Assert.assertEquals(backRightWindow.getType(), "backRight");
+    Assert.assertEquals(backRightWindow.getStatus(), "CLOSED");
+
+    // Sunroof
+    VehicleSunroof sunroof = lockStatus.getSunroof()[0];
+    Assert.assertEquals(sunroof.getType(), "sunroof");
+    Assert.assertEquals(sunroof.getStatus(), "CLOSED");
+
+    // Storage
+    VehicleStorage rearStorage = lockStatus.getStorage()[0];
+    Assert.assertEquals(rearStorage.getType(), "rear");
+    Assert.assertEquals(rearStorage.getStatus(), "CLOSED");
+
+    VehicleStorage frontStorage = lockStatus.getStorage()[1];
+    Assert.assertEquals(frontStorage.getType(), "front");
+    Assert.assertEquals(frontStorage.getStatus(), "CLOSED");
+
+    // Charging port
+    VehicleChargingPort chargingPort = lockStatus.getChargingPort()[0];
+    Assert.assertEquals(chargingPort.getType(), "chargingPort");
+    Assert.assertEquals(chargingPort.getStatus(), "CLOSED");
+  }
+
+  @Test
   public void testSubscribe() throws Exception {
     loadAndEnqueueResponse("SubscribeVehicle");
 
