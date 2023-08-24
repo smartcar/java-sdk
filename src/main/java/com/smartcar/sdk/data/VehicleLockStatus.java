@@ -13,7 +13,7 @@ public class VehicleLockStatus extends ApiData {
     /**
      * Check if the vehicle currently locked.
      *
-     * @return {boolean} True if the object is locked, otherwise false.
+     * @return {boolean} True if the vehicle is locked, otherwise false.
      */
     public boolean isLocked() {
         return this.isLocked;
