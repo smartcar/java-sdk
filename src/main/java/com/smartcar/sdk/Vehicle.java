@@ -360,6 +360,16 @@ public class Vehicle {
   }
 
   /**
+   * Send request to the /security endpoint to get the vehicle's lock status
+   *
+   * @return VehicleLock
+   * @throws SmartcarException
+   */
+  public VehicleLockStatus lockStatus() throws SmartcarException {
+    return this.call("security", "GET", null, VehicleLockStatus.class);
+  }
+
+  /**
    * Subscribe vehicle to a webhook
    *
    * @return information about the webhook and vehicle subscription
