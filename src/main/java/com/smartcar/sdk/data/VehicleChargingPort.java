@@ -1,6 +1,6 @@
 package com.smartcar.sdk.data;
 
-public class VehicleChargingPort {
+public class VehicleChargingPort extends ApiData {
     private String type;
     private String status;
 
