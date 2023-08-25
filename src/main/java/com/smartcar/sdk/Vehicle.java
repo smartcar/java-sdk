@@ -362,7 +362,7 @@ public class Vehicle {
   /**
    * Send request to the /security endpoint to get the vehicle's lock status
    *
-   * @return VehicleLock
+   * @return VehicleLockStatus
    * @throws SmartcarException
    */
   public VehicleLockStatus lockStatus() throws SmartcarException {
