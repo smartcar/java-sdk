@@ -12,9 +12,9 @@ import java.util.Arrays;
 public class SmartcarTest {
     private String accessToken;
     private VehicleIds vehicleIds;
-    private String clientId = System.getenv("E2E_SMARTCAR_CLIENT_ID");
-    private String clientSecret = System.getenv("E2E_SMARTCAR_CLIENT_SECRET");
-    private String amt = System.getenv("E2E_SMARTCAR_AMT");
+    private String clientId;
+    private String clientSecret;
+    private String amt;
     private AuthClient client;
     private String authorizeUrl;
     private String[] scope = {"read_odometer"};
@@ -27,6 +27,9 @@ public class SmartcarTest {
         this.accessToken = client.exchangeCode(code).getAccessToken();
         VehicleIds vehicleIds = Smartcar.getVehicles(this.accessToken);
         this.vehicleIds = vehicleIds;
+        this.clientId = AuthHelpers.getClientId();
+        this.clientSecret = AuthHelpers.getClientSecret();
+        this.amt = AuthHelpers.getApplicationManagementToken();
     }
 
     @Test

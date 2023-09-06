@@ -200,6 +200,17 @@ public class BatchResponse extends ApiData {
       return get("/charge/limit", VehicleChargeLimit.class);
     }
 
+    /**
+   * Get response from the /security endpoint
+   *
+   * @return the lock status of the vehicle
+   * @throws SmartcarException if the request for this endpoint returned an HTTP error code
+   */
+  public VehicleLockStatus lockStatus()
+    throws SmartcarException {
+      return get("/security", VehicleLockStatus.class);
+    }
+
   /** @return a stringified representation of BatchResponse */
   @Override
   public String toString() {
