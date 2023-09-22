@@ -58,6 +58,11 @@ public final class SmartcarVehicleRequest {
             return this;
         }
 
+        public Builder addBodyParameter(String key, double value) {
+            this.body.add(key, value);
+            return this;
+        }
+
         public Builder addBodyParameter(String key, JsonArray values) {
             this.body.add(key, values);
             return this;
