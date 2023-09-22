@@ -71,6 +71,11 @@ public final class SmartcarVehicleRequest {
             return this;
         }
 
+        public Builder addBodyParameter(String key, JsonObject values) {
+            this.body.add(key, values);
+            return this;
+        }
+
         public Builder addQueryParameter(String key, String value) {
             this.queryParams.put(key, value);
             return this;
