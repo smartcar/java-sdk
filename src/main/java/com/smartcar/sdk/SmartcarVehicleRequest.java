@@ -14,6 +14,7 @@ import okhttp3.RequestBody;
 public final class SmartcarVehicleRequest {
     private final String method;
     private final String path;
+    private final Map<String, String> queryParams;
     private final RequestBody body;
     private final Map<String, String> headers;
     private final String flags;
@@ -21,6 +22,7 @@ public final class SmartcarVehicleRequest {
     public static class Builder {
         private String method;
         private String path;
+        private final Map<String, String> queryParams;
         private final JsonObjectBuilder body;
         private final Map<String, String> headers;
         private final List<String> flags;
@@ -28,6 +30,7 @@ public final class SmartcarVehicleRequest {
         public Builder() {
             this.method = "";
             this.path = "";
+            this.queryParams = new HashMap<>();
             this.body = Json.createObjectBuilder();
             this.headers = new HashMap<>();
             this.flags = new ArrayList<>();
@@ -68,6 +71,11 @@ public final class SmartcarVehicleRequest {
             return this;
         }
 
+        public Builder addQueryParameter(String key, String value) {
+            this.queryParams.put(key, value);
+            return this;
+        }
+
         public Builder addFlag(String key, String value) {
             this.flags.add(key + ":" + value);
             return this;
@@ -92,6 +100,7 @@ public final class SmartcarVehicleRequest {
     private SmartcarVehicleRequest(Builder builder) {
         this.method = builder.method;
         this.path = builder.path;
+        this.queryParams = builder.queryParams;
 
         JsonObject jsonBody = builder.body.build();
 
@@ -111,6 +120,8 @@ public final class SmartcarVehicleRequest {
     public String getMethod() { return this.method; }
 
     public String getPath() { return this.path; }
+
+    public Map<String, String> getQueryParams() { return this.queryParams;}
 
     public RequestBody getBody() { return this.body; }
 
