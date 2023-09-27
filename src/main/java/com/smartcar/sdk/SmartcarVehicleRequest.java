@@ -51,17 +51,37 @@ public final class SmartcarVehicleRequest {
             return this;
         }
 
-        public Builder addBodyParameter(String key, String value) {
+        public Builder addBodyParameter(String key, short value) {
             this.body.add(key, value);
             return this;
         }
 
-        public Builder addBodyParameter(String key, Boolean value) {
+        public Builder addBodyParameter(String key, int value) {
+            this.body.add(key, value);
+            return this;
+        }
+
+        public Builder addBodyParameter(String key, long value) {
+            this.body.add(key, value);
+            return this;
+        }
+
+        public Builder addBodyParameter(String key, float value) {
             this.body.add(key, value);
             return this;
         }
 
         public Builder addBodyParameter(String key, double value) {
+            this.body.add(key, value);
+            return this;
+        }
+
+        public Builder addBodyParameter(String key, boolean value) {
+            this.body.add(key, value);
+            return this;
+        }
+
+        public Builder addBodyParameter(String key, String value) {
             this.body.add(key, value);
             return this;
         }
