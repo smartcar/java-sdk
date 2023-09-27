@@ -442,6 +442,8 @@ public class Vehicle {
       urlBuilder.addQueryParameter("flags", vehicleRequest.getFlags());
     }
 
+    vehicleRequest.getQueryParams().forEach(urlBuilder::addQueryParameter);
+
     HttpUrl url = urlBuilder.build();
 
     Map<String, String> headers = new HashMap<>();
