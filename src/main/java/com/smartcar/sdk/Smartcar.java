@@ -324,7 +324,7 @@ public class Smartcar {
                 "default",
                 applicationManagementToken
         ));
-        Request request = ApiClient.buildRequest(url, "GET", null, headers);
+        Request request = ApiClient.buildRequest(url, "DELETE", null, headers);
 
         return ApiClient.execute(request, DeleteConnections.class);
     }
