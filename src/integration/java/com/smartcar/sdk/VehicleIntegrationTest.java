@@ -224,6 +224,13 @@ public class VehicleIntegrationTest {
     }
 
     /**
+     * Test that the vehicle setNavigationDestination action works.
+     */
+    public void testActionSetNavigationDestination() throws SmartcarException {
+        this.eVehicle.setNavigationDestination(47.6205063, -122.3518523);
+    }
+
+    /**
      * Tests that the batch request method works.
      */
     @Test(groups = "vehicle")

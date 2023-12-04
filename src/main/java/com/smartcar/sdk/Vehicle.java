@@ -4,7 +4,6 @@ import com.smartcar.sdk.data.*;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
 import okhttp3.RequestBody;
-import okhttp3.Response;
 
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -13,7 +12,6 @@ import javax.json.JsonObject;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.ArrayList;
 
 
 /** Smartcar Vehicle API Object */
@@ -58,7 +56,7 @@ public class Vehicle {
 
   /**
    * Gets the version of Smartcar API that this vehicle is using
-   * @return
+   * @return String representing version
    */
   public String getVersion() {
     return this.version;
@@ -368,6 +366,43 @@ public class Vehicle {
   public VehicleLockStatus lockStatus() throws SmartcarException {
     return this.call("security", "GET", null, VehicleLockStatus.class);
   }
+
+  private static final double LATITUDE_MIN = -90.0;
+  private static final double LATITUDE_MAX = 90.0;
+  private static final double LONGITUDE_MIN = -180.0;
+  private static final double LONGITUDE_MAX = 180.0;
+
+  /**
+   * Send request to the /navigation/destination endpoint to set the navigation destination
+   *
+   * @param latitude A double representing the destination's latitude
+   * @param longitude A double representing the destination's longitude
+   * @returns a response indicating success
+   * @throws SmartcarException if the request is unsuccessful
+   * @throws IllegalArgumentException if the latitude is not between -90.0 and 90.0 or
+   *                                  if the longitude is not between -180.0 and 180.0
+   */
+  public ActionResponse setNavigationDestination(double latitude, double longitude) throws SmartcarException {
+    if (latitude < LATITUDE_MIN || latitude > LATITUDE_MAX) {
+      throw new IllegalArgumentException(
+          String.format("Latitude must be between %f and %f", LATITUDE_MIN, LATITUDE_MAX));
+    }
+    if (longitude < LONGITUDE_MIN || longitude > LONGITUDE_MAX) {
+      throw new IllegalArgumentException(
+          String.format("Longitude must be between %f and %f", LONGITUDE_MIN, LONGITUDE_MAX));
+    }
+
+    JsonObject json = Json.createObjectBuilder()
+        .add("latitude", latitude)
+        .add("longitude", longitude)
+        .build();
+
+    RequestBody requestBody = RequestBody.create(ApiClient.JSON, json.toString());
+
+    return this.call("navigation/destination", "POST", requestBody, ActionResponse.class);
+  }
+
+
 
   /**
    * Subscribe vehicle to a webhook
