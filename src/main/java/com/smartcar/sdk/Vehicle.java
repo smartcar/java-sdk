@@ -377,7 +377,7 @@ public class Vehicle {
    *
    * @param latitude A double representing the destination's latitude
    * @param longitude A double representing the destination's longitude
-   * @returns a response indicating success
+   * @return a response indicating success
    * @throws SmartcarException if the request is unsuccessful
    * @throws IllegalArgumentException if the latitude is not between -90.0 and 90.0 or
    *                                  if the longitude is not between -180.0 and 180.0
