@@ -38,7 +38,11 @@ public class VehicleIntegrationTest {
                 this.getVehicle(
                         "FORD",
                         new String[]{
-                                "required:control_charge", "required:control_security", "read_battery", "read_charge"
+                                "required:control_charge",
+                                "required:control_security",
+                                "required:control_navigation",
+                                "read_battery",
+                                "read_charge"
                         });
     }
 
