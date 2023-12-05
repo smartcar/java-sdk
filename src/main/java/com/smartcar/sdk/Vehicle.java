@@ -21,6 +21,11 @@ public class Vehicle {
     METRIC,
   }
 
+  private static final double LATITUDE_MIN = -90.0;
+  private static final double LATITUDE_MAX = 90.0;
+  private static final double LONGITUDE_MIN = -180.0;
+  private static final double LONGITUDE_MAX = 180.0;
+
   private final String vehicleId;
   private final String accessToken;
   private Vehicle.UnitSystem unitSystem;
@@ -367,11 +372,6 @@ public class Vehicle {
     return this.call("security", "GET", null, VehicleLockStatus.class);
   }
 
-  private static final double LATITUDE_MIN = -90.0;
-  private static final double LATITUDE_MAX = 90.0;
-  private static final double LONGITUDE_MIN = -180.0;
-  private static final double LONGITUDE_MAX = 180.0;
-
   /**
    * Send request to the /navigation/destination endpoint to set the navigation destination
    *
@@ -382,7 +382,7 @@ public class Vehicle {
    * @throws IllegalArgumentException if the latitude is not between -90.0 and 90.0 or
    *                                  if the longitude is not between -180.0 and 180.0
    */
-  public ActionResponse setNavigationDestination(double latitude, double longitude) throws SmartcarException {
+  public ActionResponse sendDestination(double latitude, double longitude) throws SmartcarException {
     if (latitude < LATITUDE_MIN || latitude > LATITUDE_MAX) {
       throw new IllegalArgumentException(
           String.format("Latitude must be between %f and %f", LATITUDE_MIN, LATITUDE_MAX));
