@@ -228,10 +228,10 @@ public class VehicleIntegrationTest {
     }
 
     /**
-     * Test that the vehicle setNavigationDestination action works.
+     * Test that the vehicle sendDestination action works.
      */
     @Test(groups = "vehicle")
-    public void testActionSetNavigationDestination() throws SmartcarException {
+    public void testActionSendDestination() throws SmartcarException {
         this.eVehicle.sendDestination(47.6205063, -122.3518523);
     }
 

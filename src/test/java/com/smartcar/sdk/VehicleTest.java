@@ -356,8 +356,8 @@ public class VehicleTest {
   }
 
   @Test
-  public void testSetNavigationDestination() throws Exception {
-    loadAndEnqueueResponse("SetNavigationDestination");
+  public void testSendDestination() throws Exception {
+    loadAndEnqueueResponse("SendDestination");
 
     ActionResponse res = this.subject.sendDestination(47.6205063, -122.3518523);
 
@@ -366,13 +366,13 @@ public class VehicleTest {
   }
 
   @Test
-  public void testSetNavigationDestinationIllegalArgumentLatitude() {
+  public void testSendDestinationIllegalArgumentLatitude() {
     Assert.assertThrows(IllegalArgumentException.class,
         () -> this.subject.sendDestination(147.6205063, -122.3518523));
   }
 
   @Test
-  public void testSetNavigationDestinationIllegalArgumentLongitude() {
+  public void testSendDestinationIllegalArgumentLongitude() {
     Assert.assertThrows(IllegalArgumentException.class,
             () -> this.subject.sendDestination(47.6205063, -192.3518523));
   }
