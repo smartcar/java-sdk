@@ -169,9 +169,9 @@ public class VehicleTest {
 
     VehicleFuel fuel = this.subject.fuel();
 
-    Assert.assertEquals(fuel.getAmountRemaining(), 53.2);
-    Assert.assertEquals(fuel.getPercentRemaining(), 0.3);
-    Assert.assertEquals(fuel.getRange(), 40.5);
+    Assert.assertEquals(fuel.getAmountRemaining(), Double.valueOf(53.2));
+    Assert.assertEquals(fuel.getPercentRemaining(), Double.valueOf(0.3));
+    Assert.assertEquals(fuel.getRange(), Double.valueOf(40.5));
   }
 
   @Test
