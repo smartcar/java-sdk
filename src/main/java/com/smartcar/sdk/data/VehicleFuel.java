@@ -2,16 +2,16 @@ package com.smartcar.sdk.data;
 
 /** POJO for Smartcar /fuel endpoint */
 public class VehicleFuel extends ApiData {
-  private double range;
-  private double percentRemaining;
-  private double amountRemaining;
+  private Double range;
+  private Double percentRemaining;
+  private Double amountRemaining;
 
   /**
    * Returns the fuel range
    *
    * @return fuel range
    */
-  public double getRange() {
+  public Double getRange() {
     return this.range;
   }
 
@@ -20,7 +20,7 @@ public class VehicleFuel extends ApiData {
    *
    * @return fuel percent remaining
    */
-  public double getPercentRemaining() {
+  public Double getPercentRemaining() {
     return this.percentRemaining;
   }
 
@@ -29,7 +29,7 @@ public class VehicleFuel extends ApiData {
    *
    * @return fuel amount remaining
    */
-  public double getAmountRemaining() {
+  public Double getAmountRemaining() {
     return this.amountRemaining;
   }
 
