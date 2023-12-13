@@ -38,7 +38,11 @@ public class VehicleIntegrationTest {
                 this.getVehicle(
                         "FORD",
                         new String[]{
-                                "required:control_charge", "required:control_security", "read_battery", "read_charge"
+                                "required:control_charge",
+                                "required:control_security",
+                                "required:control_navigation",
+                                "read_battery",
+                                "read_charge"
                         });
     }
 
@@ -221,6 +225,14 @@ public class VehicleIntegrationTest {
     @Test(groups = "vehicle")
     public void testActionStopCharge() throws SmartcarException {
         this.eVehicle.stopCharge();
+    }
+
+    /**
+     * Test that the vehicle sendDestination action works.
+     */
+    @Test(groups = "vehicle")
+    public void testActionSendDestination() throws SmartcarException {
+        this.eVehicle.sendDestination(47.6205063, -122.3518523);
     }
 
     /**

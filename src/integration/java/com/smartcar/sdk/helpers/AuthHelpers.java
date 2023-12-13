@@ -17,10 +17,11 @@ import java.util.UUID;
 /** Provides all shared functionality among integration tests. */
 public class AuthHelpers {
   public static final String[] DEFAULT_SCOPE = {
+    "required:control_navigation",
+    "required:control_security",
     "required:read_vehicle_info",
     "required:read_location",
     "required:read_odometer",
-    "required:control_security",
     "required:read_vin",
     "required:read_fuel",
     "required:read_battery",
