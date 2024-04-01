@@ -197,6 +197,12 @@ public class AuthClient {
       return this;
     }
 
+
+      public AuthUrlBuilder addUser(String user) {
+        urlBuilder.addQueryParameter("user", user);
+        return this;
+      }
+
     public String build() {
       if (this.flags != null && !this.flags.isEmpty()) {
         String[] flagStrings = this.flags.toArray(new String[0]);
