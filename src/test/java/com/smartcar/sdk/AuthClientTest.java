@@ -210,7 +210,7 @@ public class AuthClientTest extends PowerMockTestCase {
             .addFlag("test", true)
             .addUser("709ed6e4-cc69-4ae0-a385-6e0cf8efba8a")
             .build();
-    Assert.assertEquals(authUrl, "https://connect.smartcar.com/oauth/authorize?response_type=code&client_id=cl13nt1d-t35t-46dc-aa25-bdd042f54e7d&redirect_uri=https%3A%2F%2Fexample.com%2F&mode=live&scope=read_vehicle_info%20read_location%20read_odometer&state=sampleState&approval_prompt=force&make=TESLA&single_select=true&single_select=true&single_select_vin=sampleVin&flags=foo%3Abar%20test%3Atrue&user=709ed6e4-cc69-4ae0-a385-6e0cf8efba8a");
+    Assert.assertEquals(authUrl, "https://connect.smartcar.com/oauth/authorize?response_type=code&client_id=cl13nt1d-t35t-46dc-aa25-bdd042f54e7d&redirect_uri=https%3A%2F%2Fexample.com%2F&mode=live&scope=read_vehicle_info%20read_location%20read_odometer&state=sampleState&approval_prompt=force&make=TESLA&single_select=true&single_select=true&single_select_vin=sampleVin&user=709ed6e4-cc69-4ae0-a385-6e0cf8efba8a&flags=foo%3Abar%20test%3Atrue");
   }
 
   @Test
