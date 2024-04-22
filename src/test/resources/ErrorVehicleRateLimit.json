@@ -7,5 +7,6 @@
   "requestId": "5dea93a1-3f79-4246-90c5-89610a20471b",
   "resolution": {
     "type": "RETRY_LATER"
-  }
+  },
+  "suggestedUserMessage": "Your vehicle is temporarily unable to connect to KabobMobile. Please be patient while we’re working to resolve this issue."
 }
