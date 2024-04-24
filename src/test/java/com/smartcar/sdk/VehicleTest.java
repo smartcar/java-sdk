@@ -572,6 +572,7 @@ public class VehicleTest {
       thrown = true;
       Assert.assertEquals(ex.getStatusCode(), 429);
       Assert.assertEquals(ex.getRetryAfter(), 12345);
+      Assert.assertEquals(ex.getSuggestedUserMessage(), "Your vehicle is temporarily unable to connect to KabobMobile. Please be patient while we’re working to resolve this issue.");
     }
 
     Assert.assertTrue(thrown);

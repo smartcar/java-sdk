@@ -22,6 +22,7 @@ public class SmartcarException extends java.lang.Exception {
   private final String docURL;
   private final String requestId;
   private final int retryAfter;
+  private final String suggestedUserMessage;
 
   public static class Builder {
     private int statusCode;
@@ -34,6 +35,7 @@ public class SmartcarException extends java.lang.Exception {
     private String docURL;
     private String requestId;
     private  int retryAfter;
+    private String suggestedUserMessage;
 
     public Builder() {
       this.statusCode = 0;
@@ -46,6 +48,7 @@ public class SmartcarException extends java.lang.Exception {
       this.docURL = "";
       this.requestId = "";
       this.retryAfter = 0;
+      this.suggestedUserMessage = "";
     }
 
     public Builder statusCode(int statusCode) {
@@ -98,6 +101,11 @@ public class SmartcarException extends java.lang.Exception {
       return this;
     }
 
+    public Builder suggestedUserMessage(String suggestedUserMessage) {
+      this.suggestedUserMessage = suggestedUserMessage;
+      return this;
+    }
+
     public SmartcarException build() { return new SmartcarException(this); }
   }
 
@@ -112,6 +120,7 @@ public class SmartcarException extends java.lang.Exception {
     this.docURL = builder.docURL;
     this.requestId = builder.requestId;
     this.retryAfter = builder.retryAfter;
+    this.suggestedUserMessage = builder.suggestedUserMessage;
   }
 
   public static SmartcarException Factory(final int statusCode, JsonObject headers, JsonObject body) {
@@ -185,6 +194,10 @@ public class SmartcarException extends java.lang.Exception {
       JsonElement retryAfter = headers.get("retry-after");
       if (retryAfter != null){
         builder.retryAfter(retryAfter.getAsInt());
+      }
+
+      if (bodyJson.has("suggestedUserMessage")) {
+        builder.suggestedUserMessage(bodyJson.get("suggestedUserMessage").getAsString());
       }
 
       return builder.build();
@@ -297,6 +310,15 @@ public class SmartcarException extends java.lang.Exception {
    */
   public JsonArray getDetail() {
     return this.detail;
+  }
+
+  /**
+   * Returns the suggested user message if available for this exception.
+   *
+   * @return the suggested user message
+   */
+  public String getSuggestedUserMessage() {
+    return this.suggestedUserMessage;
   }
 
   /**
