@@ -4,6 +4,8 @@ import com.smartcar.sdk.AuthClient;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -17,21 +19,20 @@ import java.util.UUID;
 /** Provides all shared functionality among integration tests. */
 public class AuthHelpers {
   public static final String[] DEFAULT_SCOPE = {
-    "required:control_navigation",
-    "required:control_security",
-    "required:read_vehicle_info",
-    "required:read_location",
-    "required:read_odometer",
-    "required:read_vin",
-    "required:read_fuel",
-    "required:read_battery",
-    "required:read_charge",
-    "required:read_engine_oil",
-    "required:read_tires",
+      "required:control_navigation",
+      "required:control_security",
+      "required:read_vehicle_info",
+      "required:read_location",
+      "required:read_odometer",
+      "required:read_vin",
+      "required:read_fuel",
+      "required:read_battery",
+      "required:read_charge",
+      "required:read_engine_oil",
+      "required:read_tires",
   };
 
-  private static final boolean HEADLESS =
-      System.getenv("CI") != null || System.getenv("HEADLESS") != null;
+  private static final boolean HEADLESS = System.getenv("CI") != null || System.getenv("HEADLESS") != null;
   private static final HashMap<String, String> ENV_VAR_CACHE = new HashMap<>();
 
   public static String getClientId() {
@@ -50,8 +51,31 @@ public class AuthHelpers {
     return safeGetEnv("E2E_SMARTCAR_WEBHOOK_ID");
   }
 
+  public static String getBrowser() {
+    return safeGetEnv("BROWSER");
+  }
+
+  public static WebDriver setupDriver() {
+    String browser = getBrowser();
+    WebDriver driver;
+
+    if ("chrome".equalsIgnoreCase(browser)) {
+      ChromeOptions options = new ChromeOptions();
+      options.setHeadless(HEADLESS);
+      driver = new ChromeDriver(options);
+    } else {
+      // Default to Firefox
+      FirefoxOptions options = new FirefoxOptions();
+      options.setHeadless(HEADLESS);
+      driver = new FirefoxDriver(options);
+    }
+
+    return driver;
+  }
+
   /**
-   * Creates an AuthClient builder and sets Client ID, Client Secret, and Redirect URI and also
+   * Creates an AuthClient builder and sets Client ID, Client Secret, and Redirect
+   * URI and also
    * enables test mode.
    */
   public static AuthClient.Builder getConfiguredAuthClientBuilder() throws Exception {
@@ -72,41 +96,37 @@ public class AuthHelpers {
    * @throws IllegalStateException if URL is invalid
    * @throws IllegalStateException if error is returned from connect
    * @param authorizeURL - fully built authorize url
-   * @param make - which make to select
+   * @param make         - which make to select
    * @return auth code
    */
   public static String runAuthFlow(String authorizeURL, String make) {
-    System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
-    FirefoxOptions options = new FirefoxOptions().setHeadless(HEADLESS);
 
-    WebDriver driver = new FirefoxDriver(options);
+    WebDriver driver = setupDriver();
+
     WebDriverWait wait = new WebDriverWait(driver, 10);
 
     driver.get(authorizeURL);
 
     // Preamble
-    WebElement preambleButton =
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("continue-button")));
+    WebElement preambleButton = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("continue-button")));
     preambleButton.click();
 
     // Brand Selector
-    WebElement brandButton =
-        wait.until(
-            ExpectedConditions.presenceOfElementLocated(
-                By.cssSelector("button#" + make.toUpperCase() + ".brand-list-item")));
+    WebElement brandButton = wait.until(
+        ExpectedConditions.presenceOfElementLocated(
+            By.cssSelector("button#" + make.toUpperCase() + ".brand-list-item")));
     brandButton.click();
 
     // Login
     String email = UUID.randomUUID() + "@email.com";
-    WebElement signInButton =
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("sign-in-button")));
+    WebElement signInButton = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("sign-in-button")));
     driver.findElement(By.id("username")).sendKeys(email);
     driver.findElement(By.id("password")).sendKeys("password");
     signInButton.click();
 
     // Grant
-    WebElement permissionsApprovalButton =
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("approval-button")));
+    WebElement permissionsApprovalButton = wait
+        .until(ExpectedConditions.presenceOfElementLocated(By.id("approval-button")));
     permissionsApprovalButton.click();
 
     // Redirect
@@ -139,7 +159,8 @@ public class AuthHelpers {
   }
 
   /**
-   * Wrapper around System.getenv that throws an error if the variable is not set (also caches the
+   * Wrapper around System.getenv that throws an error if the variable is not set
+   * (also caches the
    * value)
    *
    * @return the environment variable that the name maps to
