@@ -52,7 +52,7 @@ public class AuthHelpers {
   }
 
   public static String getBrowser() {
-    return safeGetEnv("BROWSER");
+    return safeGetEnv("BROWSER", "firefox");
   }
 
   public static WebDriver setupDriver() {
@@ -159,22 +159,32 @@ public class AuthHelpers {
   }
 
   /**
-   * Wrapper around System.getenv that throws an error if the variable is not set
-   * (also caches the
-   * value)
+   * Wrapper around System.getenv that returns a default value if the variable is
+   * not set
+   * (also caches the value).
    *
-   * @return the environment variable that the name maps to
+   * @param name         The name of the environment variable.
+   * @param defaultValue The default value to return if the environment variable
+   *                     is not set.
+   * @return The environment variable value or the default value if the variable
+   *         is not set.
    */
-  private static String safeGetEnv(String name) {
+  private static String safeGetEnv(String name, String defaultValue) {
     if (ENV_VAR_CACHE.containsKey(name)) {
       return ENV_VAR_CACHE.get(name);
     }
 
     String value = System.getenv(name);
     if (value == null) {
-      throw new RuntimeException("\"" + name + "\" environment variable must be set");
+      value = defaultValue; // Use default value if environment variable is not set
     }
     ENV_VAR_CACHE.put(name, value);
     return value;
+  }
+
+  // Optionally, you can also maintain the original method signature as an
+  // overload
+  private static String safeGetEnv(String name) {
+    return safeGetEnv(name, null);
   }
 }
