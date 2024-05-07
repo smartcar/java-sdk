@@ -14,6 +14,8 @@ import javax.json.JsonArrayBuilder;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.Date;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -43,31 +45,31 @@ public class VehicleTest {
   private void loadAndEnqueueErrorResponse(String resource, int statusCode) throws FileNotFoundException {
     JsonElement error = loadJsonResource(resource);
     MockResponse mockResponse = new MockResponse()
-            .setResponseCode(statusCode)
-            .setBody(error.toString())
-            .addHeader("sc-request-id", this.expectedRequestId)
-            .addHeader("content-type", "application/json");
+        .setResponseCode(statusCode)
+        .setBody(error.toString())
+        .addHeader("sc-request-id", this.expectedRequestId)
+        .addHeader("content-type", "application/json");
     TestExecutionListener.mockWebServer.enqueue(mockResponse);
   }
 
   private void loadAndEnqueueRateLimitErrorResponse(int retryAfter) throws FileNotFoundException {
     JsonElement error = loadJsonResource("ErrorVehicleRateLimit");
     MockResponse mockResponse = new MockResponse()
-            .setResponseCode(429)
-            .setBody(error.toString())
-            .addHeader("sc-request-id", this.expectedRequestId)
-            .addHeader("content-type", "application/json")
-            .addHeader("retry-after", retryAfter);
+        .setResponseCode(429)
+        .setBody(error.toString())
+        .addHeader("sc-request-id", this.expectedRequestId)
+        .addHeader("content-type", "application/json")
+        .addHeader("retry-after", retryAfter);
     TestExecutionListener.mockWebServer.enqueue(mockResponse);
   }
 
   private void loadAndEnqueueResponse(String resourceName) throws FileNotFoundException {
     JsonElement success = loadJsonResource(resourceName);
     MockResponse mockResponse = new MockResponse()
-            .setBody(success.toString())
-            .addHeader("sc-request-id", this.expectedRequestId)
-            .addHeader("sc-data-age", this.dataAge)
-            .addHeader("sc-unit-system", this.unitSystem);
+        .setBody(success.toString())
+        .addHeader("sc-request-id", this.expectedRequestId)
+        .addHeader("sc-data-age", this.dataAge)
+        .addHeader("sc-unit-system", this.unitSystem);
     TestExecutionListener.mockWebServer.enqueue(mockResponse);
   }
 
@@ -75,10 +77,10 @@ public class VehicleTest {
   private void beforeMethod() throws IOException {
 
     SmartcarVehicleOptions options = new SmartcarVehicleOptions.Builder()
-            .addFlag("foo", "bar")
-            .addFlag("test", true)
-            .origin("http://localhost:" + TestExecutionListener.mockWebServer.getPort())
-            .build();
+        .addFlag("foo", "bar")
+        .addFlag("test", true)
+        .origin("http://localhost:" + TestExecutionListener.mockWebServer.getPort())
+        .build();
     this.subject = new Vehicle(this.vehicleId, this.accessToken, options);
   }
 
@@ -96,10 +98,10 @@ public class VehicleTest {
   @Test
   public void testMetaNull() throws SmartcarException {
     MockResponse mockResponse = new MockResponse()
-            .setResponseCode(200)
-            .setBody("{ 'distance': 100 }")
-            .addHeader("sc-request-id", this.expectedRequestId)
-            .addHeader("sc-unit-system", this.unitSystem);
+        .setResponseCode(200)
+        .setBody("{ 'distance': 100 }")
+        .addHeader("sc-request-id", this.expectedRequestId)
+        .addHeader("sc-unit-system", this.unitSystem);
     TestExecutionListener.mockWebServer.enqueue(mockResponse);
 
     VehicleOdometer odo = this.subject.odometer();
@@ -161,6 +163,18 @@ public class VehicleTest {
     VehicleOdometer odometer = this.subject.odometer();
 
     Assert.assertEquals(odometer.getDistance(), 104.32);
+  }
+
+  @Test
+  public void testServiceHistory() throws Exception {
+    loadAndEnqueueResponse("ServiceHistory");
+
+    OffsetDateTime startDate = OffsetDateTime.of(2023, 5, 20, 0, 0, 0, 0, ZoneOffset.UTC);
+    OffsetDateTime endDate = OffsetDateTime.of(2024, 2, 10, 0, 0, 0, 0, ZoneOffset.UTC);
+
+    ServiceHistory serviceHistory = this.subject.serviceHistory(startDate, endDate);
+
+    Assert.assertEquals(serviceHistory.getItems().size(), 3);
   }
 
   @Test
@@ -374,7 +388,7 @@ public class VehicleTest {
   @Test
   public void testSendDestinationIllegalArgumentLongitude() {
     Assert.assertThrows(IllegalArgumentException.class,
-            () -> this.subject.sendDestination(47.6205063, -192.3518523));
+        () -> this.subject.sendDestination(47.6205063, -192.3518523));
   }
 
   @Test
@@ -399,11 +413,11 @@ public class VehicleTest {
     loadAndEnqueueResponse("GetOdometer");
 
     SmartcarVehicleRequest request = new SmartcarVehicleRequest.Builder()
-            .method("GET")
-            .path("odometer")
-            .addHeader("sc-unit-system", "imperial")
-            .addFlag("foo", "bar")
-            .build();
+        .method("GET")
+        .path("odometer")
+        .addHeader("sc-unit-system", "imperial")
+        .addFlag("foo", "bar")
+        .build();
 
     VehicleResponse odometer = this.subject.request(request);
 
@@ -417,7 +431,7 @@ public class VehicleTest {
   public void testRequestBatch() throws Exception {
     loadAndEnqueueResponse("BatchResponseSuccess");
 
-    String[] paths = new String[]{"/odometer", "/tires/pressure"};
+    String[] paths = new String[] { "/odometer", "/tires/pressure" };
     JsonArrayBuilder endpoints = Json.createArrayBuilder();
     for (String path : paths) {
       endpoints.add(Json.createObjectBuilder().add("path", path));
@@ -425,11 +439,11 @@ public class VehicleTest {
     javax.json.JsonArray requests = endpoints.build();
 
     SmartcarVehicleRequest request = new SmartcarVehicleRequest.Builder()
-            .method("POST")
-            .path("batch")
-            .addBodyParameter("requests", requests)
-            .addHeader("sc-unit-system", "imperial")
-            .build();
+        .method("POST")
+        .path("batch")
+        .addBodyParameter("requests", requests)
+        .addHeader("sc-unit-system", "imperial")
+        .build();
 
     VehicleResponse batchResponse = this.subject.request(request);
     Assert.assertEquals(batchResponse.getMeta().getRequestId(), "67127d3a-a08a-41f0-8211-f96da36b2d6e");
@@ -450,7 +464,7 @@ public class VehicleTest {
   public void testLockStatusBatch() throws Exception {
     loadAndEnqueueResponse("BatchLockStatusResponseSuccess");
 
-    String[] paths = new String[]{"/security"};
+    String[] paths = new String[] { "/security" };
     JsonArrayBuilder endpoints = Json.createArrayBuilder();
     for (String path : paths) {
       endpoints.add(Json.createObjectBuilder().add("path", path));
@@ -458,10 +472,10 @@ public class VehicleTest {
     javax.json.JsonArray requests = endpoints.build();
 
     SmartcarVehicleRequest request = new SmartcarVehicleRequest.Builder()
-            .method("POST")
-            .path("batch")
-            .addBodyParameter("requests", requests)
-            .build();
+        .method("POST")
+        .path("batch")
+        .addBodyParameter("requests", requests)
+        .build();
 
     VehicleResponse batchResponse = this.subject.request(request);
     Assert.assertEquals(batchResponse.getMeta().getRequestId(), "67127d3a-a08a-41f0-8211-f96da36b2d6e");
@@ -530,7 +544,8 @@ public class VehicleTest {
     } catch (SmartcarException ex) {
       thrown = true;
       Assert.assertEquals(ex.getStatusCode(), 403);
-      Assert.assertEquals(ex.getDescription(), "Your application has insufficient permissions to access the requested resource. Please prompt the user to re-authenticate using Smartcar Connect.");
+      Assert.assertEquals(ex.getDescription(),
+          "Your application has insufficient permissions to access the requested resource. Please prompt the user to re-authenticate using Smartcar Connect.");
       Assert.assertEquals(ex.getType(), "PERMISSION");
       Assert.assertEquals(ex.getDocURL(), "https://smartcar.com/docs/errors/v2.0/other-errors/#permission");
       Assert.assertEquals(ex.getResolutionType(), "REAUTHENTICATE");
@@ -542,7 +557,7 @@ public class VehicleTest {
   }
 
   @Test
-  public void testV2VehicleStateError() throws FileNotFoundException  {
+  public void testV2VehicleStateError() throws FileNotFoundException {
     loadAndEnqueueErrorResponse("ErrorVehicleStateV2", 409);
     boolean thrown = false;
 
@@ -551,7 +566,8 @@ public class VehicleTest {
     } catch (SmartcarException ex) {
       thrown = true;
       Assert.assertEquals(ex.getStatusCode(), 409);
-      Assert.assertEquals(ex.getDescription(), "The vehicle is in a sleep state and temporarily unable to perform your request.");
+      Assert.assertEquals(ex.getDescription(),
+          "The vehicle is in a sleep state and temporarily unable to perform your request.");
       Assert.assertEquals(ex.getType(), "VEHICLE_STATE");
       Assert.assertEquals(ex.getDocURL(), "https://smartcar.com/docs/errors/v2.0/vehicle-state/#asleep");
       Assert.assertNull(ex.getResolutionType());
@@ -561,8 +577,9 @@ public class VehicleTest {
 
     Assert.assertTrue(thrown);
   }
+
   @Test
-  public void testV2RateLimitError() throws FileNotFoundException  {
+  public void testV2RateLimitError() throws FileNotFoundException {
     loadAndEnqueueRateLimitErrorResponse(12345);
     boolean thrown = false;
 
@@ -572,7 +589,8 @@ public class VehicleTest {
       thrown = true;
       Assert.assertEquals(ex.getStatusCode(), 429);
       Assert.assertEquals(ex.getRetryAfter(), 12345);
-      Assert.assertEquals(ex.getSuggestedUserMessage(), "Your vehicle is temporarily unable to connect to KabobMobile. Please be patient while we’re working to resolve this issue.");
+      Assert.assertEquals(ex.getSuggestedUserMessage(),
+          "Your vehicle is temporarily unable to connect to KabobMobile. Please be patient while we’re working to resolve this issue.");
     }
 
     Assert.assertTrue(thrown);
@@ -581,11 +599,11 @@ public class VehicleTest {
   @Test
   public void testInvalidJsonResponse() {
     MockResponse mockResponse = new MockResponse()
-            .setResponseCode(500)
-            .setBody("{ \"InvalidJSON\": {")
-            .addHeader("sc-request-id", this.expectedRequestId)
-            .addHeader("sc-data-age", this.dataAge)
-            .addHeader("sc-unit-system", this.unitSystem);
+        .setResponseCode(500)
+        .setBody("{ \"InvalidJSON\": {")
+        .addHeader("sc-request-id", this.expectedRequestId)
+        .addHeader("sc-data-age", this.dataAge)
+        .addHeader("sc-unit-system", this.unitSystem);
     TestExecutionListener.mockWebServer.enqueue(mockResponse);
     boolean thrown = false;
 
@@ -605,7 +623,7 @@ public class VehicleTest {
   @Test
   public void testNullErrorResponse() {
     MockResponse mockResponse = new MockResponse()
-            .setResponseCode(500);
+        .setResponseCode(500);
     TestExecutionListener.mockWebServer.enqueue(mockResponse);
     boolean thrown = false;
 
@@ -624,7 +642,7 @@ public class VehicleTest {
   @Test
   public void testNull200Response() {
     MockResponse mockResponse = new MockResponse()
-            .setResponseCode(200);
+        .setResponseCode(200);
     TestExecutionListener.mockWebServer.enqueue(mockResponse);
     boolean thrown = false;
 
@@ -693,7 +711,7 @@ public class VehicleTest {
     String expectedRequestId = "67127d3a-a08a-41f0-8211-f96da36b2d6e";
     loadAndEnqueueResponse("BatchResponseSuccess");
 
-    BatchResponse batch = this.subject.batch(new String[] {"/odometer"});
+    BatchResponse batch = this.subject.batch(new String[] { "/odometer" });
     Assert.assertEquals(batch.getRequestId(), expectedRequestId);
     boolean thrown = false;
     try {
@@ -715,7 +733,7 @@ public class VehicleTest {
   public void testBatchHTTPError() throws Exception {
     loadAndEnqueueResponse("BatchResponseError");
 
-    BatchResponse batch = this.subject.batch(new String[] {"/odometer"});
+    BatchResponse batch = this.subject.batch(new String[] { "/odometer" });
     boolean thrown = false;
 
     try {
@@ -737,7 +755,7 @@ public class VehicleTest {
   public void testBatchHTTPErrorV2() throws Exception {
     loadAndEnqueueResponse("BatchResponseErrorV2");
 
-    BatchResponse batch = this.subject.batch(new String[] {"/odometer"});
+    BatchResponse batch = this.subject.batch(new String[] { "/odometer" });
     boolean thrown = false;
 
     try {
@@ -762,7 +780,7 @@ public class VehicleTest {
   public void testBatchHTTPErrorV2WithDetail() throws Exception {
     loadAndEnqueueResponse("BatchResponseErrorV2WithDetail");
 
-    BatchResponse batch = this.subject.batch(new String[] {"/odometer"});
+    BatchResponse batch = this.subject.batch(new String[] { "/odometer" });
     boolean thrown = false;
 
     try {
@@ -801,7 +819,7 @@ public class VehicleTest {
     loadAndEnqueueResponse("BatchResponseMixed");
     boolean thrown = false;
 
-    BatchResponse batch = this.subject.batch(new String[] {"/odometer", "/fuel"});
+    BatchResponse batch = this.subject.batch(new String[] { "/odometer", "/fuel" });
     VehicleOdometer odo = batch.odometer();
     try {
       batch.fuel();

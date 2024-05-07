@@ -1,0 +1,64 @@
+[
+    {
+        "serviceId": 12345,
+        "serviceDate": "2022-07-10T16:20:00.000Z",
+        "odometerDistance": 50000,
+        "serviceTasks": [
+            {
+                "taskId": 1,
+                "taskDescription": "oil change"
+            }
+        ],
+        "serviceDetails": {
+            "type": "dealership"
+        },
+        "serviceCost": {
+            "totalCost": 100,
+            "currency": "USD"
+        }
+    },
+    {
+        "serviceId": 23456,
+        "serviceDate": "2023-01-15T10:30:00.000Z",
+        "odometerDistance": 62000,
+        "serviceTasks": [
+            {
+                "taskId": 2,
+                "taskDescription": "tire rotation"
+            },
+            {
+                "taskId": 3,
+                "taskDescription": "air filter replacement"
+            }
+        ],
+        "serviceDetails": {
+            "type": "independent garage"
+        },
+        "serviceCost": {
+            "totalCost": 150,
+            "currency": "USD"
+        }
+    },
+    {
+        "serviceId": 34567,
+        "serviceDate": "2023-04-20T14:45:00.000Z",
+        "odometerDistance": 73000,
+        "serviceTasks": [
+            {
+                "taskId": 4,
+                "taskDescription": "brake pad replacement"
+            },
+            {
+                "taskId": 5,
+                "taskDescription": "coolant flush"
+            }
+        ],
+        "serviceDetails": {
+            "type": "specialist"
+        },
+        "serviceCost": {
+            "totalCost": 300,
+            "currency": "USD"
+        }
+    }
+]
