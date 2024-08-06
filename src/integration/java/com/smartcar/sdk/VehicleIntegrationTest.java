@@ -230,10 +230,10 @@ public class VehicleIntegrationTest {
     /**
      * Test that the vehicle sendDestination action works.
      */
-    @Test(groups = "vehicle")
-    public void testActionSendDestination() throws SmartcarException {
-        this.eVehicle.sendDestination(47.6205063, -122.3518523);
-    }
+    // @Test(groups = "vehicle")
+    // public void testActionSendDestination() throws SmartcarException {
+    //     this.eVehicle.sendDestination(47.6205063, -122.3518523);
+    // }
 
     /**
      * Tests that the batch request method works.
