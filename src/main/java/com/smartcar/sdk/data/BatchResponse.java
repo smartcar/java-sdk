@@ -222,7 +222,7 @@ public class BatchResponse extends ApiData {
   }
 
   /**
-   * Get response from the /diagnostics/trouble_codes endpoint
+   * Get response from the /diagnostics/dtcs endpoint
    *
    * @return the diagnostic trouble codes of the vehicle
    * @throws SmartcarException if the request for this endpoint returned an HTTP error code

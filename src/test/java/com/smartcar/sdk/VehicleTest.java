@@ -542,6 +542,42 @@ public class VehicleTest {
   }
 
   @Test
+  public void testDiagnosticsBatch() throws Exception {
+    loadAndEnqueueResponse("BatchDiagnosticsResponseSuccess");
+
+    String[] paths = new String[] { "/diagnostics/system_status", "/diagnostics/dtcs" };
+    JsonArrayBuilder endpoints = Json.createArrayBuilder();
+    for (String path : paths) {
+      endpoints.add(Json.createObjectBuilder().add("path", path));
+    }
+    javax.json.JsonArray requests = endpoints.build();
+
+    SmartcarVehicleRequest request = new SmartcarVehicleRequest.Builder()
+        .method("POST")
+        .path("batch")
+        .addBodyParameter("requests", requests)
+        .build();
+
+    VehicleResponse batchResponse = this.subject.request(request);
+    Assert.assertEquals(batchResponse.getMeta().getRequestId(), "67127d3a-a08a-41f0-8211-f96da36b2d6e");
+
+    JsonArray responsesArray = batchResponse.getBody().get("responses").getAsJsonArray();
+
+    BatchResponse response = new BatchResponse(responsesArray);
+
+    Assert.assertEquals(responsesArray.size(), 2);
+
+    VehicleDiagnosticSystemStatus systemStatus = response.diagnosticSystemStatus();
+    VehicleDiagnosticTroubleCodes troubleCodes = response.diagnosticTroubleCodes();
+
+    Assert.assertNotNull(systemStatus);
+    Assert.assertTrue(systemStatus.getSystems().size() > 0);
+
+    Assert.assertNotNull(troubleCodes);
+    Assert.assertTrue(troubleCodes.getActiveCodes().size() > 0);
+  }
+
+  @Test
   public void testV1PermissionError() throws FileNotFoundException {
     loadAndEnqueueErrorResponse("ErrorPermissionV1", 403);
     boolean thrown = false;
