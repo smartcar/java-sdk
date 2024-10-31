@@ -265,6 +265,26 @@ public class Vehicle {
   }
 
   /**
+   * Retrieves the diagnostic system status of the vehicle.
+   *
+   * @return the diagnostic system status of the vehicle
+   * @throws SmartcarException if the request is unsuccessful
+   */
+  public VehicleDiagnosticSystemStatus diagnosticSystemStatus() throws SmartcarException {
+    return this.call("diagnostics/system_status", "GET", null, VehicleDiagnosticSystemStatus.class);
+  }
+
+  /**
+   * Retrieves the diagnostic trouble codes of the vehicle.
+   *
+   * @return the diagnostic trouble codes of the vehicle
+   * @throws SmartcarException if the request is unsuccessful
+   */
+  public VehicleDiagnosticTroubleCodes diagnosticTroubleCodes() throws SmartcarException {
+    return this.call("diagnostics/dtcs", "GET", null, VehicleDiagnosticTroubleCodes.class);
+  }
+
+  /**
    * Send request to the /fuel endpoint
    *
    * @return the fuel status of the vehicle
