@@ -30,6 +30,7 @@ public class AuthHelpers {
       "required:read_charge",
       "required:read_engine_oil",
       "required:read_tires",
+      "required:read_diagnostics"
   };
 
   private static final boolean HEADLESS = System.getenv("CI") != null || System.getenv("HEADLESS") != null;

@@ -178,6 +178,51 @@ public class VehicleTest {
   }
 
   @Test
+  public void testDiagnosticSystemStatus() throws Exception {
+    loadAndEnqueueResponse("GetDiagnosticSystemStatus");
+
+    VehicleDiagnosticSystemStatus systemStatus = this.subject.diagnosticSystemStatus();
+
+    Assert.assertNotNull(systemStatus);
+    Assert.assertNotNull(systemStatus.getSystems());
+    Assert.assertEquals(systemStatus.getSystems().size(), 3);
+
+    DiagnosticSystem system1 = systemStatus.getSystems().get(0);
+    Assert.assertEquals(system1.getSystemId(), "SYSTEM_ENGINE");
+    Assert.assertEquals(system1.getStatus(), "OK");
+    Assert.assertNull(system1.getDescription());
+
+    DiagnosticSystem system2 = systemStatus.getSystems().get(1);
+    Assert.assertEquals(system2.getSystemId(), "SYSTEM_TPMS");
+    Assert.assertEquals(system2.getStatus(), "ALERT");
+    Assert.assertEquals(system2.getDescription(), "Front left tire");
+
+    DiagnosticSystem system3 = systemStatus.getSystems().get(2);
+    Assert.assertEquals(system3.getSystemId(), "SYSTEM_BRAKE_FLUID");
+    Assert.assertEquals(system3.getStatus(), "OK");
+    Assert.assertNull(system3.getDescription());
+  }
+
+  @Test
+  public void testDiagnosticTroubleCodes() throws Exception {
+    loadAndEnqueueResponse("GetDiagnosticTroubleCodes");
+
+    VehicleDiagnosticTroubleCodes troubleCodes = this.subject.diagnosticTroubleCodes();
+
+    Assert.assertNotNull(troubleCodes);
+    Assert.assertNotNull(troubleCodes.getActiveCodes());
+    Assert.assertEquals(troubleCodes.getActiveCodes().size(), 2);
+
+    DiagnosticTroubleCode code1 = troubleCodes.getActiveCodes().get(0);
+    Assert.assertEquals(code1.getCode(), "P0123");
+    Assert.assertEquals(code1.getTimestamp(), "2023-11-01T10:00:00Z");
+
+    DiagnosticTroubleCode code2 = troubleCodes.getActiveCodes().get(1);
+    Assert.assertEquals(code2.getCode(), "P0456");
+    Assert.assertEquals(code2.getTimestamp(), "2023-11-02T11:30:00Z");
+  }
+
+  @Test
   public void testFuel() throws Exception {
     loadAndEnqueueResponse("GetFuel");
 

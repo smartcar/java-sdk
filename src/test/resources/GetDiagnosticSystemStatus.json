@@ -1,0 +1,20 @@
+{
+    "systems": [
+      {
+        "systemId": "SYSTEM_ENGINE",
+        "status": "OK",
+        "description": null
+      },
+      {
+        "systemId": "SYSTEM_TPMS",
+        "status": "ALERT",
+        "description": "Front left tire"
+      },
+      {
+        "systemId": "SYSTEM_BRAKE_FLUID",
+        "status": "OK",
+        "description": null
+      }
+    ]
+  }
+  
