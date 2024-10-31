@@ -211,6 +211,26 @@ public class BatchResponse extends ApiData {
       return get("/security", VehicleLockStatus.class);
     }
 
+    /**
+   * Get response from the /diagnostics/system_status endpoint
+   *
+   * @return the diagnostic system status of the vehicle
+   * @throws SmartcarException if the request for this endpoint returned an HTTP error code
+   */
+  public VehicleDiagnosticSystemStatus diagnosticSystemStatus() throws SmartcarException {
+    return get("/diagnostics/system_status", VehicleDiagnosticSystemStatus.class);
+  }
+
+  /**
+   * Get response from the /diagnostics/trouble_codes endpoint
+   *
+   * @return the diagnostic trouble codes of the vehicle
+   * @throws SmartcarException if the request for this endpoint returned an HTTP error code
+   */
+  public VehicleDiagnosticTroubleCodes diagnosticTroubleCodes() throws SmartcarException {
+    return get("/diagnostics/dtcs", VehicleDiagnosticTroubleCodes.class);
+  }
+
   /** @return a stringified representation of BatchResponse */
   @Override
   public String toString() {
