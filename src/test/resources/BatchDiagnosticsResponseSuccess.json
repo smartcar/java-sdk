@@ -1,0 +1,45 @@
+{
+  "responses": [
+    {
+      "headers": {},
+      "path": "/diagnostics/system_status",
+      "code": 200,
+      "body": {
+        "systems": [
+          {
+            "systemId": "SYSTEM_TPMS",
+            "status": "ALERT",
+            "description": "Front left tire"
+          },
+          {
+            "systemId": "SYSTEM_AIRBAG",
+            "status": "OK",
+            "description": null
+          },
+          {
+            "systemId": "SYSTEM_ABS",
+            "status": "OK",
+            "description": null
+          }
+        ]
+      }
+    },
+    {
+      "headers": {},
+      "path": "/diagnostics/dtcs",
+      "code": 200,
+      "body": {
+        "activeCodes": [
+          {
+            "code": "P0300",
+            "timestamp": "2024-09-05T14:48:00.000Z"
+          },
+          {
+            "code": "P0420",
+            "timestamp": null
+          }
+        ]
+      }
+    }
+  ]
+}

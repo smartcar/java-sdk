@@ -178,6 +178,51 @@ public class VehicleTest {
   }
 
   @Test
+  public void testDiagnosticSystemStatus() throws Exception {
+    loadAndEnqueueResponse("GetDiagnosticSystemStatus");
+
+    VehicleDiagnosticSystemStatus systemStatus = this.subject.diagnosticSystemStatus();
+
+    Assert.assertNotNull(systemStatus);
+    Assert.assertNotNull(systemStatus.getSystems());
+    Assert.assertEquals(systemStatus.getSystems().size(), 3);
+
+    DiagnosticSystem system1 = systemStatus.getSystems().get(0);
+    Assert.assertEquals(system1.getSystemId(), "SYSTEM_ENGINE");
+    Assert.assertEquals(system1.getStatus(), "OK");
+    Assert.assertNull(system1.getDescription());
+
+    DiagnosticSystem system2 = systemStatus.getSystems().get(1);
+    Assert.assertEquals(system2.getSystemId(), "SYSTEM_TPMS");
+    Assert.assertEquals(system2.getStatus(), "ALERT");
+    Assert.assertEquals(system2.getDescription(), "Front left tire");
+
+    DiagnosticSystem system3 = systemStatus.getSystems().get(2);
+    Assert.assertEquals(system3.getSystemId(), "SYSTEM_BRAKE_FLUID");
+    Assert.assertEquals(system3.getStatus(), "OK");
+    Assert.assertNull(system3.getDescription());
+  }
+
+  @Test
+  public void testDiagnosticTroubleCodes() throws Exception {
+    loadAndEnqueueResponse("GetDiagnosticTroubleCodes");
+
+    VehicleDiagnosticTroubleCodes troubleCodes = this.subject.diagnosticTroubleCodes();
+
+    Assert.assertNotNull(troubleCodes);
+    Assert.assertNotNull(troubleCodes.getActiveCodes());
+    Assert.assertEquals(troubleCodes.getActiveCodes().size(), 2);
+
+    DiagnosticTroubleCode code1 = troubleCodes.getActiveCodes().get(0);
+    Assert.assertEquals(code1.getCode(), "P0123");
+    Assert.assertEquals(code1.getTimestamp(), "2023-11-01T10:00:00Z");
+
+    DiagnosticTroubleCode code2 = troubleCodes.getActiveCodes().get(1);
+    Assert.assertEquals(code2.getCode(), "P0456");
+    Assert.assertEquals(code2.getTimestamp(), "2023-11-02T11:30:00Z");
+  }
+
+  @Test
   public void testFuel() throws Exception {
     loadAndEnqueueResponse("GetFuel");
 
@@ -494,6 +539,42 @@ public class VehicleTest {
     Assert.assertEquals(lockStatus.getSunroof().length, 1);
     Assert.assertEquals(lockStatus.getStorage().length, 2);
     Assert.assertEquals(lockStatus.getChargingPort().length, 1);
+  }
+
+  @Test
+  public void testDiagnosticsBatch() throws Exception {
+    loadAndEnqueueResponse("BatchDiagnosticsResponseSuccess");
+
+    String[] paths = new String[] { "/diagnostics/system_status", "/diagnostics/dtcs" };
+    JsonArrayBuilder endpoints = Json.createArrayBuilder();
+    for (String path : paths) {
+      endpoints.add(Json.createObjectBuilder().add("path", path));
+    }
+    javax.json.JsonArray requests = endpoints.build();
+
+    SmartcarVehicleRequest request = new SmartcarVehicleRequest.Builder()
+        .method("POST")
+        .path("batch")
+        .addBodyParameter("requests", requests)
+        .build();
+
+    VehicleResponse batchResponse = this.subject.request(request);
+    Assert.assertEquals(batchResponse.getMeta().getRequestId(), "67127d3a-a08a-41f0-8211-f96da36b2d6e");
+
+    JsonArray responsesArray = batchResponse.getBody().get("responses").getAsJsonArray();
+
+    BatchResponse response = new BatchResponse(responsesArray);
+
+    Assert.assertEquals(responsesArray.size(), 2);
+
+    VehicleDiagnosticSystemStatus systemStatus = response.diagnosticSystemStatus();
+    VehicleDiagnosticTroubleCodes troubleCodes = response.diagnosticTroubleCodes();
+
+    Assert.assertNotNull(systemStatus);
+    Assert.assertTrue(systemStatus.getSystems().size() > 0);
+
+    Assert.assertNotNull(troubleCodes);
+    Assert.assertTrue(troubleCodes.getActiveCodes().size() > 0);
   }
 
   @Test
