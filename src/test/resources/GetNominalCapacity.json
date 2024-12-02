@@ -1,0 +1,21 @@
+{
+    "availableCapacities": [
+        {
+            "capacity" :  70.9,
+            "description" : null 
+        },
+        {
+            "capacity" :  80.9,
+            "description" : null 
+        },
+        {
+            "capacity" :  90.9,
+            "description" : "BEV:Extended Range" 
+        }
+    ],
+    "capacity": { 
+	    "nominal" :  80.9,
+	    "source": "USER_SELECTED" 
+    },
+    "url" : "https://connect.smartcar.com/battery-capacity?vehicle_id=36ab27d0-fd9d-4455-823a-ce30af709ffc&client_id=8229df9f-91a0-4ff0-a1ae-a1f38ee24d07&token=90abecb6-e7ab-4b85-864a-e1c8bf67f2ad&response_type=vehicle_id&redirect_uri="
+} 
