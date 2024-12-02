@@ -1,5 +1,8 @@
 package com.smartcar.sdk.data;
 
+import java.util.Arrays;
+import java.util.List;
+
 /** POJO for Smartcar /battery/nominal_capacity endpoint */
 public class VehicleNominalCapacity extends ApiData {
   private List<AvailableCapacity> availableCapacities;
@@ -19,19 +22,5 @@ public class VehicleNominalCapacity extends ApiData {
   /** Returns the url. */
   public String getUrl() {
     return this.url;
-  }
-
-  /**
-   * Returns a stringified representation of the VehicleNominalCapacity object.
-   *
-   * @return A string describing the vehicle nominal capacity object.
-   */
-  @Override
-  public String toString() {
-      return this.getClass().getName() + "{" +
-              "availableCapacities=" + Arrays.toString(this.availableCapacities) +
-              ", capacity=" + this.capacity) +
-              ", url=" + this.url +
-              '}';
   }
 }
