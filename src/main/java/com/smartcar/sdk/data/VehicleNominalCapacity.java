@@ -1,6 +1,5 @@
 package com.smartcar.sdk.data;
 
-import java.util.Arrays;
 import java.util.List;
 
 /** POJO for Smartcar /battery/nominal_capacity endpoint */
