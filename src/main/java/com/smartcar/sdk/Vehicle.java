@@ -333,6 +333,16 @@ public class Vehicle {
   public VehicleBatteryCapacity batteryCapacity() throws SmartcarException {
     return this.call("battery/capacity", "GET", null, VehicleBatteryCapacity.class);
   }
+  
+  /**
+   * Send request to the /battery/nominal_capacity endpoint
+   *
+   * @return Returns a list of nominal rated battery capacities for a vehicle
+   * @throws SmartcarException if the request is unsuccessful
+   */
+  public VehicleNominalCapacity nominalCapacity() throws SmartcarException {
+    return this.call("battery/nominal_capacity", "GET", null, VehicleNominalCapacity.class);
+  }
 
   /**
    * Get a vehicle's charge limit

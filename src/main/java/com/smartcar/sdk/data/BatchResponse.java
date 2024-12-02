@@ -102,6 +102,16 @@ public class BatchResponse extends ApiData {
       throws SmartcarException {
     return get("/battery/capacity", VehicleBatteryCapacity.class);
   }
+  
+  /**
+   * Send request to the /battery/nominal_capacity endpoint
+   *
+   * @return Returns a list of nominal rated battery capacities for a vehicle
+   * @throws SmartcarException if the request is unsuccessful
+   */
+  public VehicleNominalCapacity nominalCapacity() throws SmartcarException {
+    return get("battery/nominal_capacity", VehicleNominalCapacity.class);
+  }
 
   /**
    * Get response from the /charge endpoint
