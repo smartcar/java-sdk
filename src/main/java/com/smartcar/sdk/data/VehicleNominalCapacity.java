@@ -2,7 +2,7 @@ package com.smartcar.sdk.data;
 
 import java.util.List;
 
-/** POJO for Smartcar /battery/nominal_capacity endpoint */
+/** Data class for Smartcar /battery/nominal_capacity endpoint */
 public class VehicleNominalCapacity extends ApiData {
   private List<AvailableCapacity> availableCapacities;
   private SelectedCapacity capacity;
