@@ -271,6 +271,33 @@ public class VehicleTest {
     VehicleBatteryCapacity batteryCapacity = this.subject.batteryCapacity();
 
     Assert.assertEquals(batteryCapacity.getCapacity(), 28.0);
+  } 
+
+  @Test
+  public void testNominalCapacity() throws Exception {
+    loadAndEnqueueResponse("GetNominalCapacity");
+
+    VehicleNominalCapacity nominalCapacity = this.subject.nominalCapacity();
+
+    Assert.assertNotNull(nominalCapacity);
+    Assert.assertNotNull(nominalCapacity.getCapacity());
+    Assert.assertEquals(nominalCapacity.getCapacity().getNominal(), 80.9);
+    Assert.assertEquals(nominalCapacity.getCapacity().getSource(), "USER_SELECTED");
+    Assert.assertEquals(nominalCapacity.getAvailableCapacities().size(), 3);
+    
+    AvailableCapacity capacity1 = nominalCapacity.getAvailableCapacities().get(0);
+    Assert.assertEquals(capacity1.getCapacity(), 70.9);
+    Assert.assertNull(capacity1.getDescription());
+    
+    AvailableCapacity capacity2 = nominalCapacity.getAvailableCapacities().get(1);
+    Assert.assertEquals(capacity2.getCapacity(), 80.9);
+    Assert.assertNull(capacity2.getDescription());
+    
+    AvailableCapacity capacity3 = nominalCapacity.getAvailableCapacities().get(2);
+    Assert.assertEquals(capacity3.getCapacity(), 90.9);
+    Assert.assertEquals(capacity3.getDescription(), "BEV:Extended Range");
+    
+    Assert.assertNotNull(nominalCapacity.getUrl());
   }
 
   @Test
