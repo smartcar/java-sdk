@@ -49,7 +49,13 @@ abstract class ApiClient {
 
   private static final OkHttpClient client = new OkHttpClient.Builder().readTimeout(310, TimeUnit.SECONDS).build();
 
-  static GsonBuilder gson = new GsonBuilder().setFieldNamingStrategy((field) -> Utils.toCamelCase(field.getName()));
+  private static final Gson GSON_CAMEL_CASE = new GsonBuilder()
+      .setFieldNamingStrategy(field -> Utils.toCamelCase(field.getName()))
+      .create();
+
+  private static final Gson GSON_LOWER_CASE_WITH_UNDERSCORES = new GsonBuilder()
+      .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+      .create();
 
   /**
    * Builds a request object with common headers, using provided request
@@ -115,7 +121,6 @@ abstract class ApiClient {
       bodyString = response.body().string();
 
       JsonElement jsonElement = JsonParser.parseString(bodyString);
-      Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
 
       if (jsonElement.isJsonArray()) {
         Field itemsField = dataType.getDeclaredField("items");
@@ -129,7 +134,7 @@ abstract class ApiClient {
             Type listTypeArgument = fieldArgTypes[0];
 
             Type listType = TypeToken.getParameterized(List.class, listTypeArgument).getType();
-            List<?> list = gson.fromJson(jsonElement, listType);
+            List<?> list = GSON_LOWER_CASE_WITH_UNDERSCORES.fromJson(jsonElement, listType);
 
             T dataInstance = dataType.getDeclaredConstructor().newInstance();
             itemsField.set(dataInstance, list);
@@ -137,7 +142,7 @@ abstract class ApiClient {
           }
         }
       } else {
-        data = ApiClient.gson.create().fromJson(bodyString, dataType);
+        data = GSON_CAMEL_CASE.fromJson(bodyString, dataType);
       }
 
       Headers headers = response.headers();
@@ -146,7 +151,7 @@ abstract class ApiClient {
         headerJson.addProperty(header.toLowerCase(), headers.get(header));
       }
       String headerJsonString = headerJson.toString();
-      meta = ApiClient.gson.create().fromJson(headerJsonString, Meta.class);
+      meta = GSON_CAMEL_CASE.fromJson(headerJsonString, Meta.class);
       data.setMeta(meta);
       return data;
     } catch (Exception ex) {
