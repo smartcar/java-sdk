@@ -14,33 +14,6 @@ import java.util.stream.Stream;
 
 /** Smartcar OAuth 2.0 Authentication Client */
 public class AuthClient {
-  /** Custom deserializer for Auth data from the OAuth endpoint. */
-  private class AuthDeserializer implements JsonDeserializer<Auth> {
-    /**
-     * Deserializes the OAuth auth endpoint JSON into a new Auth object.
-     *
-     * @param json the Json data being deserialized
-     * @param typeOfT the type of the Object to deserialize to
-     * @param context the deserialization context
-     * @return the newly created Auth object
-     */
-    public Auth deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
-      JsonObject jsonObject = json.getAsJsonObject();
-
-      // Get timestamp for expiration.
-      Calendar expiration = Calendar.getInstance();
-      expiration.add(Calendar.SECOND, jsonObject.get("expires_in").getAsInt());
-
-      Calendar refreshExpiration = Calendar.getInstance();
-      refreshExpiration.add(Calendar.DAY_OF_YEAR, 60);
-
-      return new Auth(
-          jsonObject.get("access_token").getAsString(),
-          jsonObject.get("refresh_token").getAsString(),
-          expiration.getTime(),
-          refreshExpiration.getTime());
-    }
-  }
 
   private final String clientId;
   private final String clientSecret;
@@ -120,8 +93,6 @@ public class AuthClient {
     this.clientSecret = builder.clientSecret;
     this.redirectUri = builder.redirectUri;
     this.mode = builder.mode;
-
-    ApiClient.gson.registerTypeAdapter(Auth.class, new AuthDeserializer());
   }
 
   /**

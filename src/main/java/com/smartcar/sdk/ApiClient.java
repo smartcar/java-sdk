@@ -7,8 +7,10 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
-import com.smartcar.sdk.data.ApiData;
-import com.smartcar.sdk.data.Meta;
+import com.smartcar.sdk.data.*;
+import com.smartcar.sdk.deserializer.AuthDeserializer;
+import com.smartcar.sdk.deserializer.BatchDeserializer;
+import com.smartcar.sdk.deserializer.VehicleResponseDeserializer;
 import okhttp3.*;
 
 import java.io.IOException;
@@ -51,6 +53,9 @@ abstract class ApiClient {
 
   private static final Gson GSON_CAMEL_CASE = new GsonBuilder()
       .setFieldNamingStrategy(field -> Utils.toCamelCase(field.getName()))
+      .registerTypeAdapter(Auth.class, new AuthDeserializer())
+      .registerTypeAdapter(BatchResponse.class, new BatchDeserializer())
+      .registerTypeAdapter(VehicleResponse.class, new VehicleResponseDeserializer())
       .create();
 
   private static final Gson GSON_LOWER_CASE_WITH_UNDERSCORES = new GsonBuilder()

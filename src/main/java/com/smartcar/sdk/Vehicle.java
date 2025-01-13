@@ -528,7 +528,6 @@ public class Vehicle {
 
     JsonObject json = Json.createObjectBuilder().add("requests", requests).build();
 
-    ApiClient.gson.registerTypeAdapter(BatchResponse.class, new BatchDeserializer());
     RequestBody body = RequestBody.create(ApiClient.JSON, json.toString());
     BatchResponse response = this.call("batch", "POST", body, BatchResponse.class);
     BatchResponse batchResponse = response;
@@ -578,8 +577,6 @@ public class Vehicle {
         vehicleRequest.getMethod(),
         vehicleRequest.getBody(),
         headers);
-
-    ApiClient.gson.registerTypeAdapter(VehicleResponse.class, new VehicleResponseDeserializer());
 
     VehicleResponse vehicleResponse = ApiClient.execute(request, VehicleResponse.class);
 
