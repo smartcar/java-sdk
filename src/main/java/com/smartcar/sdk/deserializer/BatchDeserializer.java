@@ -1,9 +1,11 @@
-package com.smartcar.sdk.data;
+package com.smartcar.sdk.deserializer;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.smartcar.sdk.data.BatchResponse;
+
 import java.lang.reflect.Type;
 
 /**
