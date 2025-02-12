@@ -164,6 +164,7 @@ abstract class ApiClient {
         bodyString = "Empty response body";
       }
       throw new SmartcarException.Builder()
+          .cause(ex)
           .statusCode(response.code())
           .description(bodyString)
           .requestId(response.headers().get("sc-request-id"))
