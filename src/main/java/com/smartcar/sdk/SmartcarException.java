@@ -36,6 +36,7 @@ public class SmartcarException extends java.lang.Exception {
     private String requestId;
     private  int retryAfter;
     private String suggestedUserMessage;
+    private Throwable cause;
 
     public Builder() {
       this.statusCode = 0;
@@ -49,6 +50,7 @@ public class SmartcarException extends java.lang.Exception {
       this.requestId = "";
       this.retryAfter = 0;
       this.suggestedUserMessage = "";
+      this.cause = null;
     }
 
     public Builder statusCode(int statusCode) {
@@ -106,10 +108,16 @@ public class SmartcarException extends java.lang.Exception {
       return this;
     }
 
+    public Builder cause(Throwable throwable) {
+      this.cause = throwable;
+      return this;
+    }
+
     public SmartcarException build() { return new SmartcarException(this); }
   }
 
   private SmartcarException(Builder builder) {
+    super(builder.cause);
     this.statusCode = builder.statusCode;
     this.type = builder.type;
     this.code = builder.code;
