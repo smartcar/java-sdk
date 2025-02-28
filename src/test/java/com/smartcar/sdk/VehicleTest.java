@@ -29,6 +29,7 @@ public class VehicleTest {
   private final String expectedRequestId = "67127d3a-a08a-41f0-8211-f96da36b2d6e";
   private final String dataAge = "2018-06-20T01:33:37.078Z";
   private final String unitSystem = "imperial";
+  private final String fetchedAt = "2022-07-15T08:23:45.123Z";
 
   private Vehicle subject;
 
@@ -69,7 +70,8 @@ public class VehicleTest {
         .setBody(success.toString())
         .addHeader("sc-request-id", this.expectedRequestId)
         .addHeader("sc-data-age", this.dataAge)
-        .addHeader("sc-unit-system", this.unitSystem);
+        .addHeader("sc-unit-system", this.unitSystem)
+        .addHeader("sc-fetched-at", this.fetchedAt);
     TestExecutionListener.mockWebServer.enqueue(mockResponse);
   }
 
@@ -93,6 +95,7 @@ public class VehicleTest {
     Assert.assertEquals(odometer.getMeta().getRequestId(), this.expectedRequestId);
     Assert.assertTrue(odometer.getMeta().getDataAge() instanceof Date);
     Assert.assertEquals(odometer.getMeta().getUnitSystem(), this.unitSystem);
+    Assert.assertTrue(odometer.getMeta().getFetchedAt() instanceof Date);
   }
 
   @Test
@@ -107,6 +110,7 @@ public class VehicleTest {
     VehicleOdometer odo = this.subject.odometer();
 
     Assert.assertEquals(odo.getMeta().getDataAge(), null);
+    Assert.assertEquals(odo.getMeta().getFetchedAt(), null);
   }
 
   @Test
