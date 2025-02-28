@@ -14,6 +14,7 @@ import javax.json.JsonArrayBuilder;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.Date;
@@ -29,6 +30,7 @@ public class VehicleTest {
   private final String expectedRequestId = "67127d3a-a08a-41f0-8211-f96da36b2d6e";
   private final String dataAge = "2018-06-20T01:33:37.078Z";
   private final String unitSystem = "imperial";
+  private final String fetchedAt = "2022-07-15T08:23:45.123Z";
 
   private Vehicle subject;
 
@@ -69,7 +71,8 @@ public class VehicleTest {
         .setBody(success.toString())
         .addHeader("sc-request-id", this.expectedRequestId)
         .addHeader("sc-data-age", this.dataAge)
-        .addHeader("sc-unit-system", this.unitSystem);
+        .addHeader("sc-unit-system", this.unitSystem)
+        .addHeader("sc-fetched-at", this.fetchedAt);
     TestExecutionListener.mockWebServer.enqueue(mockResponse);
   }
 
@@ -93,6 +96,7 @@ public class VehicleTest {
     Assert.assertEquals(odometer.getMeta().getRequestId(), this.expectedRequestId);
     Assert.assertTrue(odometer.getMeta().getDataAge() instanceof Date);
     Assert.assertEquals(odometer.getMeta().getUnitSystem(), this.unitSystem);
+    Assert.assertTrue(odometer.getMeta().getFetchedAt() instanceof Date);
   }
 
   @Test
@@ -107,6 +111,7 @@ public class VehicleTest {
     VehicleOdometer odo = this.subject.odometer();
 
     Assert.assertEquals(odo.getMeta().getDataAge(), null);
+    Assert.assertEquals(odo.getMeta().getFetchedAt(), null);
   }
 
   @Test
@@ -937,5 +942,26 @@ public class VehicleTest {
     }
 
     Assert.assertTrue(thrown);
+  }
+
+  @Test
+  public void testMetaInvalidFetchedAt() throws Exception {
+    // Create a Meta object directly with an invalid date format
+    Meta meta = new Meta();
+    
+    // Use reflection to set the private field with invalid date
+    Field fetchedAtField = Meta.class.getDeclaredField("fetchedAt");
+    fetchedAtField.setAccessible(true);
+    fetchedAtField.set(meta, "invalid-date-format");
+    
+    try {
+      // Attempt to get the parsed date
+      meta.getFetchedAt();
+      Assert.fail("Expected SmartcarException to be thrown");
+    } catch (SmartcarException e) {
+      // Verify the exception details
+      Assert.assertEquals("SDK_ERROR", e.getType());
+      Assert.assertTrue(e.getMessage().contains("SDK_ERROR"));
+    }
   }
 }
