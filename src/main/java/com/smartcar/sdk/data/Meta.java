@@ -14,12 +14,14 @@ public class Meta {
     @SerializedName("sc-request-id")
     private String requestId;
     
+    // Timestamp of when the data was originally created/reported by the vehicle
     @SerializedName("sc-data-age")
     private String dataAge = null;
     
     @SerializedName("sc-unit-system")
     private String unitSystem;
     
+    // Timestamp of when Smartcar's system last processed/fetched the data
     @SerializedName("sc-fetched-at")
     private String fetchedAt = null;
 
