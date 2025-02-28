@@ -14,6 +14,7 @@ import javax.json.JsonArrayBuilder;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.Date;
@@ -941,5 +942,26 @@ public class VehicleTest {
     }
 
     Assert.assertTrue(thrown);
+  }
+
+  @Test
+  public void testMetaInvalidFetchedAt() throws Exception {
+    // Create a Meta object directly with an invalid date format
+    Meta meta = new Meta();
+    
+    // Use reflection to set the private field with invalid date
+    Field fetchedAtField = Meta.class.getDeclaredField("fetchedAt");
+    fetchedAtField.setAccessible(true);
+    fetchedAtField.set(meta, "invalid-date-format");
+    
+    try {
+      // Attempt to get the parsed date
+      meta.getFetchedAt();
+      Assert.fail("Expected SmartcarException to be thrown");
+    } catch (SmartcarException e) {
+      // Verify the exception details
+      Assert.assertEquals("SDK_ERROR", e.getType());
+      Assert.assertTrue(e.getMessage().contains("SDK_ERROR"));
+    }
   }
 }
