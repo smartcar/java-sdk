@@ -27,6 +27,6 @@ jobs:
         run: ./gradlew javadoc
 
       - name: Publish to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@ba1486788b0490a235422264426c45848eac35c6
+        uses: JamesIves/github-pages-deploy-action@6c2d9db40f9296374acc17b90404b6e8864128c8
         with:
           folder: docs
