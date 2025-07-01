@@ -1,0 +1,85 @@
+- pipeline: cd
+  name: CD
+  events:
+  - type: PUSH
+    refs:
+    - refs/heads/master
+  fail_on_prepare_env_warning: true
+  actions:
+  - action: deploy
+    type: BUILD
+    docker_image_name: library/gradle
+    docker_image_tag: 6-jdk8
+    execute_commands:
+    - "set -e  # Exit on any error"
+    - ""
+    - git config --global user.email "ci@smartcar.com"
+    - git config --global user.name "CI User"
+    - ""
+    - "# Extract version from gradle.properties"
+    - export SDK_VERSION=$(cat gradle.properties | grep -E '^libVersion=.*$' | sed 's/^libVersion=//')
+    - "echo \"SDK version: ${SDK_VERSION}\""
+    - ""
+    - "# Only proceed if on master branch"
+    - CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+    - "if [ \"${CURRENT_BRANCH}\" != \"master\" ]; then"
+    - "    echo \"Not on master branch. Current branch: ${CURRENT_BRANCH}\""
+    - '    echo "Skipping deployment."'
+    - '    exit 0'
+    - fi
+    - ""
+    - "# Check if tag already exists"
+    - "if git rev-parse \"v${SDK_VERSION}\" >/dev/null 2>&1; then"
+    - "    echo \"Tag v${SDK_VERSION} already exists. Skipping deployment.\""
+    - '    exit 0'
+    - fi
+    - ""
+    - "# Check for changes since last tag"
+    - LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "none")
+    - "if [ \"$LAST_TAG\" != \"none\" ]; then"
+    - '    CHANGES=$(git log $LAST_TAG..HEAD --oneline)'
+    - "    if [ -z \"$CHANGES\" ]; then"
+    - '        echo "No changes since last tag. Skipping deployment."'
+    - '        exit 0'
+    - '    fi'
+    - fi
+    - ""
+    - "# Verify that signing key is available"
+    - "if [ -z \"$ORG_GRADLE_PROJECT_signingKey_encoded\" ]; then"
+    - "    echo \"Error: No signing key found in environment variables.\""
+    - '    exit 1'
+    - fi
+    - ""
+    - "# Decode signing key"
+    - echo "Decoding signing key..."
+    - export ORG_GRADLE_PROJECT_signingKey="$(echo $ORG_GRADLE_PROJECT_signingKey_encoded | base64 -d)"
+    - "if [ $? -ne 0 ]; then"
+    - '    echo "Failed to decode signing key."'
+    - '    exit 1'
+    - fi
+    - ""
+    - "# Create git tag"
+    - "echo \"Creating tag v${SDK_VERSION}...\""
+    - "git tag -a \"v${SDK_VERSION}\" -m \"CI Generated Tag\""
+    - ""
+    - "# Publish to Maven"
+    - echo "Publishing to Maven repository..."
+    - ./gradlew publish closeAndReleaseStagingRepository
+    - "if [ $? -ne 0 ]; then"
+    - '    echo "Failed to publish to Maven repository."'
+    - "    git tag -d \"v${SDK_VERSION}\"  # Remove tag if publishing fails"
+    - '    exit 1'
+    - fi
+    - ""
+    - "# Push tag to GitHub"
+    - "if [ -z \"$GH_TOKEN\" ]; then"
+    - "    echo \"Error: GitHub token not found in environment variables.\""
+    - '    exit 1'
+    - fi
+    - ""
+    - echo "Setting up GitHub credentials and pushing tag..."
+    - echo -e "machine github.com\n  login $GH_TOKEN" >> ~/.netrc
+    - "git push origin \"v${SDK_VERSION}\""
+    - ""
+    - echo "Deployment completed successfully!"
+    shell: BASH

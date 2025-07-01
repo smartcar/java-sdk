@@ -35,18 +35,18 @@ jobs:
 
         - ./gradlew jacocoIntegrationReport
         - bash <(curl -s https://codecov.io/bash) -cF integration
-    - stage: publish
-      jdk: openjdk8
-      script:
-        - git config --global user.email "ci@smartcar.com"
-        - git config --global user.name "Travis CI User"
-        - export SDK_VERSION=$(cat gradle.properties | grep -E '^libVersion=.*$' | sed 's/^libVersion=//')
-        - if [ "${TRAVIS_BRANCH}" = "master" ]; then git tag -a "v${SDK_VERSION}" -m "Travis Generated Tag"; fi
-      before_deploy:
-        - export ORG_GRADLE_PROJECT_signingKey="$(echo $ORG_GRADLE_PROJECT_signingKey_encoded | base64 -d)"
-      deploy:
-        - provider: script
-          skip_cleanup: true
-          script: ./gradlew publish closeAndReleaseStagingRepository && echo -e "machine github.com\n  login $GH_TOKEN" >> ~/.netrc && git push origin "v${SDK_VERSION}"
-          on:
-            branch: master
+    # - stage: publish
+    #   jdk: openjdk8
+    #   script:
+    #     - git config --global user.email "ci@smartcar.com"
+    #     - git config --global user.name "Travis CI User"
+    #     - export SDK_VERSION=$(cat gradle.properties | grep -E '^libVersion=.*$' | sed 's/^libVersion=//')
+    #     - if [ "${TRAVIS_BRANCH}" = "master" ]; then git tag -a "v${SDK_VERSION}" -m "Travis Generated Tag"; fi
+    #   before_deploy:
+    #     - export ORG_GRADLE_PROJECT_signingKey="$(echo $ORG_GRADLE_PROJECT_signingKey_encoded | base64 -d)"
+    #   deploy:
+    #     - provider: script
+    #       skip_cleanup: true
+    #       script: ./gradlew publish closeAndReleaseStagingRepository && echo -e "machine github.com\n  login $GH_TOKEN" >> ~/.netrc && git push origin "v${SDK_VERSION}"
+    #       on:
+    #         branch: master
