@@ -1,0 +1,111 @@
+- pipeline: ci
+  name: CI
+  events:
+  - type: PUSH
+    refs:
+    - refs/heads/*
+  fail_on_prepare_env_warning: true
+  actions:
+  - action: Run tests
+    type: BUILD
+    docker_image_name: library/gradle
+    docker_image_tag: 6-jdk8
+    execute_commands:
+    - set -e
+    - ""
+    - "# Set Firefox environment variables to help with headless operation"
+    - Xvfb :99 -screen 0 1280x1024x24 &
+    - export DISPLAY=:99.0
+    - export MOZ_HEADLESS=1
+    - export MOZ_NO_REMOTE=1
+    - "export PATH=${HOME}/firefox-latest/firefox:$PATH"
+    - firefox --version
+    - firefox &
+    - ""
+    - "export PATH=${HOME}/geckodriver:$PATH"
+    - geckodriver --version
+    - ""
+    - "# First, create a Gradle properties file if it doesn't exist"
+    - GRADLE_PROPS="$HOME/.gradle/gradle.properties"
+    - mkdir -p "$HOME/.gradle"
+    - ""
+    - "# Enable build cache if not already enabled"
+    - if ! grep -q "org.gradle.caching=true" "$GRADLE_PROPS" 2>/dev/null; then
+    - '  echo "org.gradle.caching=true" >> "$GRADLE_PROPS"'
+    - '  echo "Build cache enabled in $GRADLE_PROPS"'
+    - fi
+    - ""
+    - "# Similar to Travis before_cache, clean up lock files before caching"
+    - "before_cache() {"
+    - '  rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock'
+    - '  rm -fr $HOME/.gradle/caches/*/plugin-resolution/'
+    - '  mkdir -p $HOME/.gradle/caches'
+    - '  mkdir -p $HOME/.gradle/wrapper'
+    - "}"
+    - ""
+    - "# Clean up before caching"
+    - before_cache
+    - ""
+    - "# Run markdown and check if README has changed"
+    - echo "Generating markdown documentation..."
+    - ./gradlew markdown
+    - "if [ -n \"$(git diff --name-only | grep '^README.md$')\" ]; then"
+    - "  echo \"ERROR: README.md has uncommitted changes after running markdown task\""
+    - '  exit 1'
+    - fi
+    - ""
+    - "# Run checks"
+    - echo "Running checks..."
+    - ./gradlew check
+    - ""
+    - "# Run tests and upload coverage reports"
+    - echo "Generating test coverage report..."
+    - ./gradlew jacocoTestReport
+    - echo "Generating integration test coverage report..."
+    - ./gradlew jacocoIntegrationReport
+    - ""
+    - "# bash <(curl -s https://codecov.io/bash) -cF test"
+    - "# bash <(curl -s https://codecov.io/bash) -cF integration"
+    - ""
+    - echo "CI completed successfully!"
+    - ""
+    - ""
+    setup_commands:
+    - apt-get update
+    - apt-get install -y \
+    - '  libgtk-3-0 \'
+    - '  libdbus-glib-1-2 \'
+    - '  libx11-xcb1 \'
+    - '  libxt6 \'
+    - '  libnss3 \'
+    - '  libxtst6 \'
+    - '  libxss1 \'
+    - '  libpci3 \'
+    - '  libatk1.0-0 \'
+    - '  libatk-bridge2.0-0 \'
+    - '  libcups2 \'
+    - '  libdrm2 \'
+    - '  libxcomposite1 \'
+    - '  libxdamage1 \'
+    - '  libxfixes3 \'
+    - '  libxkbcommon0 \'
+    - '  libxrandr2 \'
+    - '  xvfb \'
+    - '  xz-utils \'
+    - '  libasound2'
+    - ""
+    - ""
+    - "# Download the latest Firefox"
+    - wget -O /tmp/firefox-latest.tar.xz 'https://download.mozilla.org/?product=firefox-latest&lang=en-US&os=linux64'
+    - "mkdir -p ${HOME}/firefox-latest"
+    - "tar -xJf /tmp/firefox-latest.tar.xz -C ${HOME}/firefox-latest"
+    - ""
+    - "# Download Geckodriver"
+    - wget -O /tmp/geckodriver.tar.xz 'https://github.com/mozilla/geckodriver/releases/download/v0.26.0/geckodriver-v0.26.0-linux64.tar.gz'
+    - "mkdir -p ${HOME}/geckodriver"
+    - "tar -xzf /tmp/geckodriver.tar.xz -C ${HOME}/geckodriver"
+    services:
+    - type: SELENIUM_FIREFOX
+      connection:
+        host: selenium-ff
+    shell: BASH
