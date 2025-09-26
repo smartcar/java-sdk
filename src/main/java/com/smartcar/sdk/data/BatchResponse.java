@@ -110,7 +110,7 @@ public class BatchResponse extends ApiData {
    * @throws SmartcarException if the request is unsuccessful
    */
   public VehicleNominalCapacity nominalCapacity() throws SmartcarException {
-    return get("battery/nominal_capacity", VehicleNominalCapacity.class);
+    return get("/battery/nominal_capacity", VehicleNominalCapacity.class);
   }
 
   /**
