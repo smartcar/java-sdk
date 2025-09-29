@@ -13,6 +13,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -62,12 +63,16 @@ public class AuthHelpers {
 
     if ("chrome".equalsIgnoreCase(browser)) {
       ChromeOptions options = new ChromeOptions();
-      options.setHeadless(HEADLESS);
+      if (HEADLESS) {
+        options.addArguments("--headless");
+      }
       driver = new ChromeDriver(options);
     } else {
       // Default to Firefox
       FirefoxOptions options = new FirefoxOptions();
-      options.setHeadless(HEADLESS);
+      if (HEADLESS) {
+        options.addArguments("--headless");
+      }
       driver = new FirefoxDriver(options);
     }
 
@@ -104,7 +109,7 @@ public class AuthHelpers {
 
     WebDriver driver = setupDriver();
 
-    WebDriverWait wait = new WebDriverWait(driver, 10);
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
     driver.get(authorizeURL);
 
