@@ -19,6 +19,7 @@
     - export MOZ_HEADLESS=1
     - export MOZ_NO_REMOTE=1
     - "export PATH=${HOME}/firefox-latest/firefox:$PATH"
+    - "export FIREFOX_BINARY_PATH=${HOME}/firefox-latest/firefox/firefox"
     - firefox --version
     - firefox &
     - ""
@@ -101,9 +102,9 @@
     - "tar -xJf /tmp/firefox-latest.tar.xz -C ${HOME}/firefox-latest"
     - ""
     - "# Download Geckodriver"
-    - wget -O /tmp/geckodriver.tar.xz 'https://github.com/mozilla/geckodriver/releases/download/v0.26.0/geckodriver-v0.26.0-linux64.tar.gz'
+    - wget -O /tmp/geckodriver.tar.gz 'https://github.com/mozilla/geckodriver/releases/download/v0.36.0/geckodriver-v0.36.0-linux64.tar.gz'
     - "mkdir -p ${HOME}/geckodriver"
-    - "tar -xzf /tmp/geckodriver.tar.xz -C ${HOME}/geckodriver"
+    - "tar -xzf /tmp/geckodriver.tar.gz -C ${HOME}/geckodriver"
     services:
     - type: SELENIUM_FIREFOX
       connection:

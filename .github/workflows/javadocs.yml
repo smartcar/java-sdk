@@ -14,10 +14,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
 
       - name: Set up JDK
-        uses: actions/setup-java@1df8dbefe2a8cbc99770194893dd902763bee34b
+        uses: actions/setup-java@dded0888837ed1f317902acf8a20df0ad188d165
         with:
           distribution: 'temurin'
           java-version: '11'
@@ -27,6 +27,6 @@ jobs:
         run: ./gradlew javadoc
 
       - name: Publish to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@ba1486788b0490a235422264426c45848eac35c6
+        uses: JamesIves/github-pages-deploy-action@6c2d9db40f9296374acc17b90404b6e8864128c8
         with:
           folder: docs

@@ -11,8 +11,10 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -62,12 +64,40 @@ public class AuthHelpers {
 
     if ("chrome".equalsIgnoreCase(browser)) {
       ChromeOptions options = new ChromeOptions();
-      options.setHeadless(HEADLESS);
+      if (HEADLESS) {
+        options.addArguments("--headless");
+      }
       driver = new ChromeDriver(options);
     } else {
       // Default to Firefox
       FirefoxOptions options = new FirefoxOptions();
-      options.setHeadless(HEADLESS);
+      if (HEADLESS) {
+        options.addArguments("--headless");
+      }
+      
+      // Set Firefox binary path if available (for CI environments)
+      String firefoxPath = System.getenv("FIREFOX_BINARY_PATH");
+      if (firefoxPath == null) {
+        // Try common CI locations
+        String homeDir = System.getProperty("user.home");
+        String[] candidatePaths = {
+          homeDir + "/firefox-latest/firefox/firefox",
+          "/usr/bin/firefox",
+          "/usr/lib/firefox/firefox"
+        };
+        
+        for (String path : candidatePaths) {
+          if (new File(path).exists()) {
+            firefoxPath = path;
+            break;
+          }
+        }
+      }
+      if (firefoxPath != null) {
+        System.out.println("Using Firefox binary: " + firefoxPath);
+        options.setBinary(firefoxPath);
+      }
+      
       driver = new FirefoxDriver(options);
     }
 
@@ -104,7 +134,7 @@ public class AuthHelpers {
 
     WebDriver driver = setupDriver();
 
-    WebDriverWait wait = new WebDriverWait(driver, 10);
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
     driver.get(authorizeURL);
 

@@ -21,9 +21,8 @@
     - "echo \"SDK version: ${SDK_VERSION}\""
     - ""
     - "# Only proceed if on master branch"
-    - CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
-    - "if [ \"${CURRENT_BRANCH}\" != \"master\" ]; then"
-    - "    echo \"Not on master branch. Current branch: ${CURRENT_BRANCH}\""
+    - "if [ \"${BUDDY_RUN_BRANCH}\" != \"master\" ]; then"
+    - "    echo \"Not on master branch. Current branch: ${BUDDY_RUN_BRANCH}\""
     - '    echo "Skipping deployment."'
     - '    exit 0'
     - fi

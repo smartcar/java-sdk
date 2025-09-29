@@ -19,8 +19,10 @@ public class AuthTest {
   }
 
   @Test
-  public void testExchangeCode() throws SmartcarException {
+  public void testExchangeCode() throws SmartcarException, InterruptedException {
     String code = AuthHelpers.runAuthFlow(this.authorizeUrl);
+    // Add delay to prevent rate limiting
+    Thread.sleep(5000);
     Auth access = client.exchangeCode(code);
 
     assertNotNull(access.getAccessToken());
@@ -30,9 +32,13 @@ public class AuthTest {
   }
 
   @Test
-  public void testExchangeRefreshToken() throws SmartcarException {
+  public void testExchangeRefreshToken() throws SmartcarException, InterruptedException {
     String code = AuthHelpers.runAuthFlow(this.authorizeUrl);
+    // Add delay to prevent rate limiting
+    Thread.sleep(5000);
     Auth oldAccess = client.exchangeCode(code);
+    // Add delay between token exchange calls
+    Thread.sleep(5000);
     Auth newAccess = client.exchangeRefreshToken(oldAccess.getRefreshToken());
 
     assertNotNull(newAccess.getAccessToken());
@@ -42,7 +48,9 @@ public class AuthTest {
   }
 
   @Test
-  public void testOAuthError() {
+  public void testOAuthError() throws InterruptedException {
+    // Add delay to prevent rate limiting
+    Thread.sleep(5000);
     boolean thrown = false;
     try {
       client.exchangeCode("bad code here");
