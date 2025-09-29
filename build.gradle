@@ -4,7 +4,6 @@ plugins {
     id 'signing'
 
     id 'com.adarshr.test-logger' version '2.1.1'
-    id 'io.github.gradle-nexus.publish-plugin' version '1.0.0'
     id 'org.unbroken-dome.test-sets' version '4.0.0'
 }
 
@@ -220,22 +219,7 @@ publishing {
 
 }
 
-/**
- * Requires the following environment variables to be set:
- *  - ORG_GRADLE_PROJECT_sonatypeUsername
- *  - ORG_GRADLE_PROJECT_sonatypePassword
- *
- * @see https://github.com/gradle-nexus/publish-plugin
- */
-nexusPublishing {
-    repositories {
-        sonatype {
-            nexusUrl.set uri('https://s01.oss.sonatype.org/service/local/')
-            snapshotRepositoryUrl.set uri('https://s01.oss.sonatype.org/content/repositories/snapshots/')
-            stagingProfileId = '117eb260e0ad59'
-        }
-    }
-}
+
 
 /**
  * Requires the following environment variables to be set:
@@ -248,11 +232,138 @@ signing {
     def signingKey = findProperty("signingKey")
     def signingPassword = findProperty("signingPassword")
     
-    // Only require signing if both key and password are available
+    // Always set up signing but only require it if keys are available
     required { signingKey != null && signingPassword != null }
     
     if (signingKey != null && signingPassword != null) {
         useInMemoryPgpKeys signingKey, signingPassword
-        sign publishing.publications.main
+    }
+    
+    sign publishing.publications.main
+}
+
+/**
+ * Custom task to upload artifacts to Sonatype Central
+ * Requires the following environment variables to be set:
+ *  - ORG_GRADLE_PROJECT_sonatypeUsername (Central Portal username)
+ *  - ORG_GRADLE_PROJECT_sonatypePassword (Central Portal password)
+ */
+task uploadToSonatypeCentral {
+    group = 'publishing'
+    description = 'Uploads signed artifacts to Sonatype Central Portal'
+    
+    dependsOn 'signMainPublication'
+    
+    doLast {
+        def username = findProperty("sonatypeUsername")
+        def password = findProperty("sonatypePassword")
+        
+        if (!username || !password) {
+            throw new GradleException("Missing Sonatype Central credentials. Set ORG_GRADLE_PROJECT_sonatypeUsername and ORG_GRADLE_PROJECT_sonatypePassword")
+        }
+        
+        // Get the published artifacts from local repository
+        def localRepo = "${System.getProperty('user.home')}/.m2/repository"
+        def groupPath = libGroup.replace('.', '/')
+        def artifactPath = "${localRepo}/${groupPath}/${libName}/${libVersion}"
+        
+        println "Preparing upload bundle for ${libGroup}:${libName}:${libVersion}"
+        
+        // Create a temporary directory for the bundle with proper Maven structure
+        def bundleDir = file("${buildDir}/sonatype-bundle")
+        def mavenDir = file("${bundleDir}/${groupPath}/${libName}/${libVersion}")
+        mavenDir.mkdirs()
+        
+        // Copy all artifacts to proper Maven directory structure
+        copy {
+            from artifactPath
+            into mavenDir
+            include '*.jar', '*.pom', '*.module', '*.asc', '*.md5', '*.sha1'
+        }
+        
+        // Generate missing checksums and signatures if needed
+        def artifactFiles = fileTree(mavenDir).matching {
+            include '*.jar', '*.pom', '*.module'
+            exclude '*.asc', '*.md5', '*.sha1'
+        }
+        
+        artifactFiles.each { file ->
+            def fileName = file.name
+            
+            // Generate MD5 checksum
+            def md5File = new File(mavenDir, "${fileName}.md5")
+            if (!md5File.exists()) {
+                def md5Hash = java.security.MessageDigest.getInstance("MD5")
+                    .digest(file.bytes)
+                    .encodeHex()
+                    .toString()
+                md5File.text = md5Hash
+                println "Generated MD5 for ${fileName}: ${md5Hash}"
+            }
+            
+            // Generate SHA1 checksum
+            def sha1File = new File(mavenDir, "${fileName}.sha1")
+            if (!sha1File.exists()) {
+                def sha1Hash = java.security.MessageDigest.getInstance("SHA-1")
+                    .digest(file.bytes)
+                    .encodeHex()
+                    .toString()
+                sha1File.text = sha1Hash
+                println "Generated SHA1 for ${fileName}: ${sha1Hash}"
+            }
+            
+            // Check for signature
+            def sigFile = new File(mavenDir, "${fileName}.asc")
+            if (!sigFile.exists()) {
+                println "Warning: Missing signature for ${fileName}"
+            }
+        }
+        
+        // List all files in the bundle
+        println "Bundle contents:"
+        fileTree(bundleDir).each { file ->
+            def relativePath = bundleDir.toPath().relativize(file.toPath()).toString()
+            println "  ${relativePath}"
+        }
+        
+        // Create the upload bundle (zip file)
+        def bundleFile = file("${buildDir}/sonatype-bundle.zip")
+        ant.zip(destfile: bundleFile) {
+            fileset(dir: bundleDir)
+        }
+        
+        println "Created bundle: ${bundleFile.absolutePath} (${bundleFile.length()} bytes)"
+        
+        // Upload to Sonatype Central using curl
+        def curlCommand = [
+            'curl', '-X', 'POST',
+            '--header', 'accept: application/json',
+            '--form', "bundle=@${bundleFile.absolutePath}",
+            '--user', "${username}:${password}",
+            '--silent', '--show-error',
+            'https://central.sonatype.com/api/v1/publisher/upload'
+        ]
+        
+        println "Uploading to Sonatype Central..."
+        def process = curlCommand.execute()
+        
+        def outputStream = new ByteArrayOutputStream()
+        def errorStream = new ByteArrayOutputStream()
+        
+        process.consumeProcessOutput(outputStream, errorStream)
+        process.waitFor()
+        
+        def output = outputStream.toString()
+        def error = errorStream.toString()
+        
+        if (process.exitValue() == 0) {
+            println "Upload successful!"
+            println "Response: ${output}"
+        } else {
+            println "Upload failed!"
+            println "Error: ${error}"
+            println "Output: ${output}"
+            throw new GradleException("Failed to upload to Sonatype Central")
+        }
     }
 }

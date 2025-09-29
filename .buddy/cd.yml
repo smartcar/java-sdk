@@ -61,9 +61,9 @@
     - "echo \"Creating tag v${SDK_VERSION}...\""
     - "git tag -a \"v${SDK_VERSION}\" -m \"CI Generated Tag\""
     - ""
-    - "# Publish to Maven"
-    - echo "Publishing to Maven repository..."
-    - ./gradlew publish closeAndReleaseStagingRepository
+    - "# Publish to Maven Central via Sonatype Central Portal"
+    - echo "Publishing to Sonatype Central..."
+    - ./gradlew uploadToSonatypeCentral
     - "if [ $? -ne 0 ]; then"
     - '    echo "Failed to publish to Maven repository."'
     - "    git tag -d \"v${SDK_VERSION}\"  # Remove tag if publishing fails"
