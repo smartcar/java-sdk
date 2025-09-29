@@ -10,7 +10,7 @@ The recommended method for obtaining the SDK is via Gradle or Maven through the 
 
 ### Gradle
 ```groovy
-compile "com.smartcar.sdk:java-sdk:4.5.3"
+compile "com.smartcar.sdk:java-sdk:4.7.4"
 ```
 
 ### Maven
@@ -18,16 +18,16 @@ compile "com.smartcar.sdk:java-sdk:4.5.3"
 <dependency>
   <groupId>com.smartcar.sdk</groupId>
   <artifactId>java-sdk</artifactId>
-  <version>4.5.3</version>
+  <version>4.7.4</version>
 </dependency>
 ```
 
 ### Jar Direct Download
-* [java-sdk-4.5.3.jar](https://repo1.maven.org/maven2/com/smartcar/sdk/java-sdk/4.5.3/java-sdk-4.5.3.jar)
-* [java-sdk-4.5.3-sources.jar](https://repo1.maven.org/maven2/com/smartcar/sdk/java-sdk/4.5.3/java-sdk-4.5.3-sources.jar)
-* [java-sdk-4.5.3-javadoc.jar](https://repo1.maven.org/maven2/com/smartcar/sdk/java-sdk/4.5.3/java-sdk-4.5.3-javadoc.jar)
+* [java-sdk-4.7.4.jar](https://repo1.maven.org/maven2/com/smartcar/sdk/java-sdk/4.7.4/java-sdk-4.7.4.jar)
+* [java-sdk-4.7.4-sources.jar](https://repo1.maven.org/maven2/com/smartcar/sdk/java-sdk/4.7.4/java-sdk-4.7.4-sources.jar)
+* [java-sdk-4.7.4-javadoc.jar](https://repo1.maven.org/maven2/com/smartcar/sdk/java-sdk/4.7.4/java-sdk-4.7.4-javadoc.jar)
 
-Signatures and other downloads available at [Maven Central](https://central.sonatype.com/artifact/com.smartcar.sdk/java-sdk/4.5.3).
+Signatures and other downloads available at [Maven Central](https://central.sonatype.com/artifact/com.smartcar.sdk/java-sdk/4.7.4).
 
 ## Usage
 
@@ -136,7 +136,7 @@ In accordance with the Semantic Versioning specification, the addition of suppor
 [ci-url]: https://travis-ci.com/smartcar/java-sdk
 [coverage-image]: https://codecov.io/gh/smartcar/java-sdk/branch/master/graph/badge.svg?token=nZAITx7w3X
 [coverage-url]: https://codecov.io/gh/smartcar/java-sdk
-[javadoc-image]: https://img.shields.io/badge/javadoc-4.5.3-brightgreen.svg
+[javadoc-image]: https://img.shields.io/badge/javadoc-4.7.4-brightgreen.svg
 [javadoc-url]: https://smartcar.github.io/java-sdk
 [maven-image]: https://img.shields.io/maven-central/v/com.smartcar.sdk/java-sdk.svg?label=Maven%20Central
 [maven-url]: https://central.sonatype.com/artifact/com.smartcar.sdk/java-sdk
