@@ -26,6 +26,8 @@ public class VehicleIntegrationTest {
     private Vehicle getVehicle(String make, String[] scope) throws Exception {
         AuthClient client = AuthHelpers.getConfiguredAuthClientBuilder().build();
         String code = AuthHelpers.runAuthFlow(client.authUrlBuilder(scope).build(), make);
+        // Add delay to prevent rate limiting
+        Thread.sleep(5000);
         String accessToken = client.exchangeCode(code).getAccessToken();
         String[] vehiclesIds = Smartcar.getVehicles(accessToken).getVehicleIds();
         return new Vehicle(vehiclesIds[0], accessToken);

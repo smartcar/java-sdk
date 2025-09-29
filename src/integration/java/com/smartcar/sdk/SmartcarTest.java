@@ -24,6 +24,8 @@ public class SmartcarTest {
         this.client = AuthHelpers.getConfiguredAuthClientBuilder().build();
         this.authorizeUrl = client.authUrlBuilder(new String[]{"read_vehicle_info"}).build();
         String code = AuthHelpers.runAuthFlow(client.authUrlBuilder(this.scope).build());
+        // Add delay to prevent rate limiting
+        Thread.sleep(5000);
         this.accessToken = client.exchangeCode(code).getAccessToken();
         VehicleIds vehicleIds = Smartcar.getVehicles(this.accessToken);
         this.vehicleIds = vehicleIds;
