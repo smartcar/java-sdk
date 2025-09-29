@@ -245,6 +245,14 @@ nexusPublishing {
  * @see https://docs.gradle.org/current/userguide/signing_plugin.html#sec:in-memory-keys
  */
 signing {
-    useInMemoryPgpKeys findProperty("signingKey"), findProperty("signingPassword")
-    sign publishing.publications.main
+    def signingKey = findProperty("signingKey")
+    def signingPassword = findProperty("signingPassword")
+    
+    // Only require signing if both key and password are available
+    required { signingKey != null && signingPassword != null }
+    
+    if (signingKey != null && signingPassword != null) {
+        useInMemoryPgpKeys signingKey, signingPassword
+        sign publishing.publications.main
+    }
 }
