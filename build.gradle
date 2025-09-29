@@ -58,7 +58,7 @@ dependencies {
     testImplementation 'org.powermock:powermock-release-with-testng-mockito-dependencies:1.6.2'
     testImplementation 'org.testng:testng:7.4.0'
 
-    integrationImplementation 'org.seleniumhq.selenium:selenium-java:4.11.0'
+    integrationImplementation 'org.seleniumhq.selenium:selenium-java:4.15.0'
 }
 
 /**
