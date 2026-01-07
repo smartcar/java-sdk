@@ -94,6 +94,14 @@ public class CompatibilityMatrix extends ApiData {
   }
 
   /**
+   * Sets the make compatibility map
+   * @param makeCompatibilityMap makeCompatibilityMap
+   */
+  public void setMakeCompatibilityMap(Map<String, List<CompatibilityEntry>> makeCompatibilityMap) {
+    this.makeCompatibilityMap = makeCompatibilityMap;
+  }
+
+  /**
    * Return the string representation
    *
    * @return String representation

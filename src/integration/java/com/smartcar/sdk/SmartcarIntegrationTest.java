@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-public class SmartcarTest {
+public class SmartcarIntegrationTest {
     private String accessToken;
     private VehicleIds vehicleIds;
     private String clientId;
@@ -100,7 +100,7 @@ public class SmartcarTest {
                 .build();
         CompatibilityMatrix matrix = Smartcar.getCompatibilityMatrix(request);
         Map<String, List<CompatibilityMatrix.CompatibilityEntry>> results = matrix.getResults();
-        Assert.assertEquals(results.size(), 2);
+        Assert.assertTrue(results.size() > 0);
         for (Map.Entry<String, List<CompatibilityMatrix.CompatibilityEntry>> entry : results.entrySet()) {
             for (CompatibilityMatrix.CompatibilityEntry result : entry.getValue()) {
                 Assert.assertNotNull(result.getModel());

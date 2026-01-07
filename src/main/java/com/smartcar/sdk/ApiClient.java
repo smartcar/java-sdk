@@ -10,6 +10,7 @@ import com.google.gson.reflect.TypeToken;
 import com.smartcar.sdk.data.*;
 import com.smartcar.sdk.deserializer.AuthDeserializer;
 import com.smartcar.sdk.deserializer.BatchDeserializer;
+import com.smartcar.sdk.deserializer.CompatibilityMatrixDeserializer;
 import com.smartcar.sdk.deserializer.SignalsDeserializer;
 import com.smartcar.sdk.deserializer.VehicleResponseDeserializer;
 import okhttp3.*;
@@ -58,6 +59,7 @@ abstract class ApiClient {
       .registerTypeAdapter(BatchResponse.class, new BatchDeserializer())
       .registerTypeAdapter(VehicleResponse.class, new VehicleResponseDeserializer())
       .registerTypeAdapter(Signals.class, new SignalsDeserializer())
+      .registerTypeAdapter(CompatibilityMatrix.class, new CompatibilityMatrixDeserializer())
       .create();
 
   private static final Gson GSON_LOWER_CASE_WITH_UNDERSCORES = new GsonBuilder()

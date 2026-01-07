@@ -35,7 +35,7 @@ public class Smartcar {
     }
 
     /**
-     * Gets the URL used for API requests
+     * Gets the URL used for API requests   
      *
      * @return Smartcar API url with versioning
      */
@@ -210,7 +210,8 @@ public class Smartcar {
                 HttpUrl.parse(apiUrl)
                         .newBuilder()
                         .addPathSegment("v" + compatibilityMatrixRequest.getVersion())
-                        .addPathSegment("compatibility-matrix");
+                        .addPathSegment("compatibility")
+                        .addPathSegment("matrix");
 
         Optional.ofNullable(compatibilityMatrixRequest.getMake())
                 .ifPresent(make -> urlBuilder.addQueryParameter("make", make));
