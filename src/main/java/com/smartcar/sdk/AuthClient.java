@@ -4,8 +4,6 @@ import com.smartcar.sdk.data.Auth;
 import okhttp3.*;
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /** Smartcar OAuth 2.0 Authentication Client */
 public class AuthClient {
@@ -24,12 +22,16 @@ public class AuthClient {
     private String clientSecret;
     private String redirectUri;
     private String mode;
-    private final Set<String> validModes = Stream.of("test", "live", "simulated").collect(Collectors.toSet());
 
     public Builder() {
       this.clientId = System.getenv("SMARTCAR_CLIENT_ID");
       this.clientSecret = System.getenv("SMARTCAR_CLIENT_SECRET");
-      this.redirectUri = System.getenv("SMARTCAR_REDIRECT_URI");
+      String redirectUri = System.getenv("SMARTCAR_REDIRECT_URI");
+      if (redirectUri != null && !redirectUri.equals("")) {
+        this.redirectUri = redirectUri;
+      } else {
+        this.redirectUri = null;
+      }
       this.mode = "live";
     }
 
@@ -58,11 +60,7 @@ public class AuthClient {
     }
 
     public Builder mode(String mode) throws Exception {
-      if (!this.validModes.contains(mode)) {
-        throw new Exception(
-          "The \"mode\" parameter MUST be one of the following: \"test\", \"live\", \"simulated\""
-        );
-      }
+      Utils.validateMode(mode);
 
       this.mode = mode;
       return this;
@@ -76,9 +74,6 @@ public class AuthClient {
       if (this.clientSecret == null) {
         throw new Exception("clientSecret must be defined");
       }
-      if (this.redirectUri == null) {
-        throw new Exception("redirectUri must be defined");
-      }
       return new AuthClient(this);
     }
   }
@@ -88,6 +83,10 @@ public class AuthClient {
     this.clientSecret = builder.clientSecret;
     this.redirectUri = builder.redirectUri;
     this.mode = builder.mode;
+  }
+
+  public AuthUrlBuilder authUrlBuilder() {
+    return new AuthUrlBuilder();
   }
 
   /**
@@ -105,22 +104,41 @@ public class AuthClient {
    */
   public class AuthUrlBuilder {
     private HttpUrl.Builder urlBuilder;
-    private String mode = AuthClient.this.mode;
     private List<String> flags = new ArrayList<>();
+
+    public AuthUrlBuilder() {
+      String origin = System.getenv("SMARTCAR_CONNECT_ORIGIN");
+      if (origin == null) {
+        origin = "https://connect.smartcar.com";
+      }
+      urlBuilder = createUrlBuilder();
+    }
 
     public AuthUrlBuilder(String[] scope) {
       String origin = System.getenv("SMARTCAR_CONNECT_ORIGIN");
       if (origin == null) {
         origin = "https://connect.smartcar.com";
       }
-      urlBuilder =
+      urlBuilder = createUrlBuilder()
+          .addQueryParameter("scope", Utils.join(scope, " "));
+    }
+
+    private HttpUrl.Builder createUrlBuilder() {
+      String origin = System.getenv("SMARTCAR_CONNECT_ORIGIN");
+      if (origin == null) {
+        origin = "https://connect.smartcar.com";
+      }
+      HttpUrl.Builder urlBuilder =
           HttpUrl.parse(origin + "/oauth/authorize")
               .newBuilder()
               .addQueryParameter("response_type", "code")
               .addQueryParameter("client_id", AuthClient.this.clientId)
-              .addQueryParameter("redirect_uri", AuthClient.this.redirectUri)
-              .addQueryParameter("mode", AuthClient.this.mode)
-              .addQueryParameter("scope", Utils.join(scope, " "));
+              .addQueryParameter("mode", AuthClient.this.mode);
+
+      Optional.ofNullable(AuthClient.this.redirectUri)
+          .ifPresent(uri -> urlBuilder.addQueryParameter("redirect_uri", uri));
+
+      return urlBuilder;
     }
 
     public AuthUrlBuilder state(String state) {
@@ -230,12 +248,15 @@ public class AuthClient {
    * @throws SmartcarException when the request is unsuccessful
    */
   public Auth exchangeCode(String code, SmartcarAuthOptions options) throws SmartcarException {
-    RequestBody requestBody =
+    FormBody.Builder requestBodyBuilder =
             new FormBody.Builder()
                     .add("grant_type", "authorization_code")
-                    .add("code", code)
-                    .add("redirect_uri", this.redirectUri)
-                    .build();
+                    .add("code", code);
+
+    Optional.ofNullable(this.redirectUri)
+          .ifPresent(uri -> requestBodyBuilder.add("redirect_uri", this.redirectUri));
+
+    RequestBody requestBody = requestBodyBuilder.build();
 
     return this.getTokens(requestBody, options);
   }
