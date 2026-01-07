@@ -2,9 +2,6 @@ package com.smartcar.sdk;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Class encompassing optional arguments for Smartcar compatibility requests
@@ -30,7 +27,6 @@ public final class SmartcarCompatibilityRequest {
         private String clientSecret;
         private String mode;
         private String testModeCompatibilityLevel;
-        private final Set<String> validModes = Stream.of("test", "live", "simulated").collect(Collectors.toSet());
 
         public Builder() {
             this.vin = "";
@@ -94,11 +90,7 @@ public final class SmartcarCompatibilityRequest {
         }
 
         public Builder mode(String mode) throws Exception {
-            if (!this.validModes.contains(mode)) {
-                throw new Exception(
-                "The \"mode\" parameter MUST be one of the following: \"test\", \"live\", \"simulated\""
-                );
-            }
+            Utils.validateMode(mode);
 
             this.mode = mode;
             return this;
