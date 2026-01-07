@@ -10,6 +10,7 @@ import com.google.gson.reflect.TypeToken;
 import com.smartcar.sdk.data.*;
 import com.smartcar.sdk.deserializer.AuthDeserializer;
 import com.smartcar.sdk.deserializer.BatchDeserializer;
+import com.smartcar.sdk.deserializer.SignalsDeserializer;
 import com.smartcar.sdk.deserializer.VehicleResponseDeserializer;
 import okhttp3.*;
 
@@ -56,6 +57,7 @@ abstract class ApiClient {
       .registerTypeAdapter(Auth.class, new AuthDeserializer())
       .registerTypeAdapter(BatchResponse.class, new BatchDeserializer())
       .registerTypeAdapter(VehicleResponse.class, new VehicleResponseDeserializer())
+      .registerTypeAdapter(Signals.class, new SignalsDeserializer())
       .create();
 
   private static final Gson GSON_LOWER_CASE_WITH_UNDERSCORES = new GsonBuilder()
@@ -65,7 +67,7 @@ abstract class ApiClient {
   /**
    * Builds a request object with common headers, using provided request
    * parameters
-   * 
+   *
    * @param url     url for the request, including the query parameters
    * @param method  http method
    * @param body    request body
@@ -116,7 +118,7 @@ abstract class ApiClient {
    * @throws SmartcarException if the request is unsuccessful
    */
   protected static <T extends ApiData> T execute(
-      Request request, Class<T> dataType) throws SmartcarException {
+      Request request, Class<T> dataType, String version) throws SmartcarException {
     Response response = ApiClient.execute(request);
     T data = null;
     Meta meta;
@@ -127,7 +129,28 @@ abstract class ApiClient {
 
       JsonElement jsonElement = JsonParser.parseString(bodyString);
 
+      if (dataType == Signals.class && jsonElement.isJsonObject()) {
+        JsonElement dataElement = jsonElement.getAsJsonObject().get("data");
+        JsonObject jsonObject = jsonElement.getAsJsonObject();
+        jsonObject.remove("data");
+        jsonObject.add("signals", dataElement);
+        jsonElement = jsonObject;
+      }
+
+      // if (version.equals("3")) {
+      //   Headers headers = response.headers();
+      //   JsonObject metaJson = jsonElement.getAsJsonObject().get("meta").getAsJsonObject();
+      //   for (String header : headers.names()) {
+      //     metaJson.addProperty(header.toLowerCase(), headers.get(header));
+      //   }
+      //   jsonElement.getAsJsonObject().add("meta", metaJson);
+      // }
+
       if (jsonElement.isJsonArray()) {
+        // This block is for handling the service history api
+        // This should be refactored to a specific deserializer if more
+        // endpoints return arrays at the top level. I can foresee this
+        // being an issue down the line.
         Field itemsField = dataType.getDeclaredField("items");
         itemsField.setAccessible(true);
 
@@ -150,14 +173,17 @@ abstract class ApiClient {
         data = GSON_CAMEL_CASE.fromJson(bodyString, dataType);
       }
 
-      Headers headers = response.headers();
-      JsonObject headerJson = new JsonObject();
-      for (String header : headers.names()) {
-        headerJson.addProperty(header.toLowerCase(), headers.get(header));
+      if (!version.equals("3")) {
+        Headers headers = response.headers();
+        JsonObject headerJson = new JsonObject();
+        for (String header : headers.names()) {
+          headerJson.addProperty(header.toLowerCase(), headers.get(header));
+        }
+        String headerJsonString = headerJson.toString();
+        meta = GSON_CAMEL_CASE.fromJson(headerJsonString, Meta.class);
+        data.setMeta(meta);
       }
-      String headerJsonString = headerJson.toString();
-      meta = GSON_CAMEL_CASE.fromJson(headerJsonString, Meta.class);
-      data.setMeta(meta);
+
       return data;
     } catch (Exception ex) {
       if (bodyString.equals("")) {
@@ -171,5 +197,10 @@ abstract class ApiClient {
           .type("SDK_ERROR")
           .build();
     }
+  }
+
+  protected static <T extends ApiData> T execute(
+      Request request, Class<T> dataType) throws SmartcarException {
+    return ApiClient.execute(request, dataType, "2");
   }
 }

@@ -4,9 +4,6 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.Serializable;
-import java.lang.reflect.Type;
-
-import okhttp3.Response;
 
 /** The base object representing parsed API response data. */
 public class ApiData<T> implements Serializable {

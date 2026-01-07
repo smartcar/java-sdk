@@ -6,24 +6,25 @@ import com.smartcar.sdk.SmartcarException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.util.Date;
-import java.util.TimeZone;
 
 public class Meta {
     @SerializedName("sc-request-id")
     private String requestId;
-    
+
     // Timestamp of when the data was originally created/reported by the vehicle
     @SerializedName("sc-data-age")
     private String dataAge = null;
-    
+
     @SerializedName("sc-unit-system")
     private String unitSystem;
-    
+
     // Timestamp of when Smartcar's system last processed/fetched the data
     @SerializedName("sc-fetched-at")
     private String fetchedAt = null;
+
+    private Long retrievedAt;
+    private Long oemUpdatedAt;
 
     public String getRequestId() { return this.requestId; }
 
@@ -41,7 +42,7 @@ public class Meta {
     }
 
     public String getUnitSystem() { return this.unitSystem; }
-    
+
     public Date getFetchedAt() throws SmartcarException {
         if (this.fetchedAt == null) {
             return null;
@@ -53,5 +54,19 @@ public class Meta {
         } catch (ParseException ex) {
             throw new SmartcarException.Builder().type("SDK_ERROR").description(ex.getMessage()).build();
         }
+    }
+
+    public Date getRetrievedAt() {
+        if (this.retrievedAt == null) {
+            return null;
+        }
+        return new Date(this.retrievedAt);
+    }
+
+    public Date getOemUpdatedAt() {
+        if (this.oemUpdatedAt == null) {
+            return null;
+        }
+        return new Date(this.oemUpdatedAt);
     }
 }

@@ -2,6 +2,8 @@ package com.smartcar.sdk;
 
 import com.google.gson.*;
 import com.smartcar.sdk.data.*;
+import com.smartcar.sdk.data.Signals.SignalsMeta;
+
 import okhttp3.mockwebserver.MockResponse;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.testng.Assert;
@@ -83,6 +85,7 @@ public class VehicleTest {
         .addFlag("foo", "bar")
         .addFlag("test", true)
         .origin("http://localhost:" + TestExecutionListener.mockWebServer.getPort())
+        .v3Origin("http://localhost:" + TestExecutionListener.mockWebServer.getPort())
         .build();
     this.subject = new Vehicle(this.vehicleId, this.accessToken, options);
   }
@@ -276,7 +279,7 @@ public class VehicleTest {
     VehicleBatteryCapacity batteryCapacity = this.subject.batteryCapacity();
 
     Assert.assertEquals(batteryCapacity.getCapacity(), 28.0);
-  } 
+  }
 
   @Test
   public void testNominalCapacity() throws Exception {
@@ -289,19 +292,19 @@ public class VehicleTest {
     Assert.assertEquals(nominalCapacity.getCapacity().getNominal(), 80.9);
     Assert.assertEquals(nominalCapacity.getCapacity().getSource(), "USER_SELECTED");
     Assert.assertEquals(nominalCapacity.getAvailableCapacities().size(), 3);
-    
+
     AvailableCapacity capacity1 = nominalCapacity.getAvailableCapacities().get(0);
     Assert.assertEquals(capacity1.getCapacity(), 70.9);
     Assert.assertNull(capacity1.getDescription());
-    
+
     AvailableCapacity capacity2 = nominalCapacity.getAvailableCapacities().get(1);
     Assert.assertEquals(capacity2.getCapacity(), 80.9);
     Assert.assertNull(capacity2.getDescription());
-    
+
     AvailableCapacity capacity3 = nominalCapacity.getAvailableCapacities().get(2);
     Assert.assertEquals(capacity3.getCapacity(), 90.9);
     Assert.assertEquals(capacity3.getDescription(), "BEV:Extended Range");
-    
+
     Assert.assertNotNull(nominalCapacity.getUrl());
   }
 
@@ -948,12 +951,12 @@ public class VehicleTest {
   public void testMetaInvalidFetchedAt() throws Exception {
     // Create a Meta object directly with an invalid date format
     Meta meta = new Meta();
-    
+
     // Use reflection to set the private field with invalid date
     Field fetchedAtField = Meta.class.getDeclaredField("fetchedAt");
     fetchedAtField.setAccessible(true);
     fetchedAtField.set(meta, "invalid-date-format");
-    
+
     try {
       // Attempt to get the parsed date
       meta.getFetchedAt();
@@ -963,5 +966,56 @@ public class VehicleTest {
       Assert.assertEquals("SDK_ERROR", e.getType());
       Assert.assertTrue(e.getMessage().contains("SDK_ERROR"));
     }
+  }
+
+  @Test
+  public void testGetSignals() throws Exception {
+    loadAndEnqueueResponse("SignalsV3");
+
+    Signals signals = this.subject.getSignals();
+    Assert.assertNotNull(signals);
+    Assert.assertTrue(signals.getSignals().size() > 0);
+
+    Meta meta = signals.getMeta();
+    Assert.assertTrue(meta instanceof SignalsMeta);
+    Assert.assertEquals(((SignalsMeta) meta).getTotalCount().intValue(), signals.getSignals().size());
+    Assert.assertEquals(((SignalsMeta) meta).getPageSize().intValue(), signals.getSignals().size());
+    Assert.assertEquals(((SignalsMeta) meta).getPage().intValue(), 1);
+
+    Assert.assertNotNull(signals.getLinks());
+    Assert.assertNotNull(signals.getIncluded());
+
+    Signal signal = signals.getSignals().stream()
+            .filter(s -> s.getAttributes().getCode().equals("odometer-traveleddistance"))
+            .findFirst()
+            .orElse(null);
+    Assert.assertNotNull(signal);
+    Assert.assertNotNull(signal);
+    Assert.assertEquals(signal.getAttributes().getCode(), "odometer-traveleddistance");
+    Assert.assertNotNull(signal.getAttributes().getBody());
+    Assert.assertNotNull(signal.getAttributes().getStatus());
+
+    Meta signalMeta = signal.getMeta();
+    Assert.assertNotNull(signalMeta);
+    Assert.assertNotNull(signalMeta.getRetrievedAt());
+    Assert.assertNotNull(signalMeta.getOemUpdatedAt());
+  }
+
+  @Test
+  public void testGetSignal() throws Exception {
+    loadAndEnqueueResponse("SignalV3");
+
+    Signal signal = this.subject.getSignal("odometer-traveleddistance");
+    Assert.assertNotNull(signal);
+    Assert.assertEquals(signal.getAttributes().getCode(), "odometer-traveleddistance");
+    Assert.assertNotNull(signal.getAttributes().getBody());
+    Assert.assertNotNull(signal.getAttributes().getStatus());
+
+    Assert.assertEquals(signal.getAttributes().getBody().get("value").getAsDouble(), 115071.50046584333, 0.0001);
+
+    Meta signalMeta = signal.getMeta();
+    Assert.assertNotNull(signalMeta);
+    Assert.assertNotNull(signalMeta.getRetrievedAt());
+    Assert.assertNotNull(signalMeta.getOemUpdatedAt());
   }
 }

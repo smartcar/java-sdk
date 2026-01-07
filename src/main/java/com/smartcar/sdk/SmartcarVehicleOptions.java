@@ -8,18 +8,21 @@ public final class SmartcarVehicleOptions {
     private final String version;
     private final Vehicle.UnitSystem unitSystem;
     private final String origin;
+    private final String v3Origin;
     private final String flags;
 
     public static class Builder {
         private String version;
         private Vehicle.UnitSystem unitSystem;
         private String origin;
+        private String v3Origin;
         private final List<String> flags;
 
         public Builder() {
             this.version = "2.0";
             this.unitSystem = Vehicle.UnitSystem.METRIC;
             this.origin = Smartcar.getApiOrigin();
+            this.v3Origin = Smartcar.getApiOrigin("3");
             this.flags = new ArrayList<>();
         }
 
@@ -48,6 +51,11 @@ public final class SmartcarVehicleOptions {
             return this;
         }
 
+        public Builder v3Origin(String v3Origin) {
+            this.v3Origin = v3Origin;
+            return this;
+        }
+
         public SmartcarVehicleOptions build() {
             return new SmartcarVehicleOptions(this);
         }
@@ -57,6 +65,7 @@ public final class SmartcarVehicleOptions {
         this.version = builder.version;
         this.unitSystem = builder.unitSystem;
         this.origin = builder.origin;
+        this.v3Origin = builder.v3Origin;
         if (!builder.flags.isEmpty()) {
             this.flags = String.join(" ", builder.flags);
         } else {
@@ -78,5 +87,9 @@ public final class SmartcarVehicleOptions {
 
     public String getOrigin() {
         return this.origin;
+    }
+
+    public String getV3Origin() {
+        return this.v3Origin;
     }
 }

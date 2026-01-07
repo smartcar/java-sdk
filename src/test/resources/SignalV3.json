@@ -1,0 +1,23 @@
+{
+  "id": "odometer-traveleddistance",
+  "type": "signal",
+  "attributes": {
+    "code": "odometer-traveleddistance",
+    "name": "TraveledDistance",
+    "group": "Odometer",
+    "status": {
+      "value": "SUCCESS"
+    },
+    "body": {
+      "unit": "kilometers",
+      "value": 115071.50046584333
+    }
+  },
+  "meta": {
+    "retrievedAt": 1752104218549,
+    "oemUpdatedAt": 1752104118549
+  },
+  "links": {
+    "self": "/vehicles/tst2e255-d3c8-4f90-9fec-e6e68b98e9cb/signals/odometer-traveleddistance"
+  }
+}
