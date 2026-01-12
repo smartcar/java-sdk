@@ -17,6 +17,7 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class Smartcar {
     public static String API_VERSION = "2.0";
@@ -175,6 +176,55 @@ public class Smartcar {
         Request request = ApiClient.buildRequest(url, "GET", null, headers);
 
         return ApiClient.execute(request, Compatibility.class);
+    }
+
+    /**
+     * Retrieves the compatibility matrix for a given region. Provides the ability to filter by
+     * scope, make and type.
+     *
+     * A compatible vehicle is a vehicle that:
+     * <ol>
+     *  <li>has the hardware required for internet connectivity,
+     *  <li>belongs to the makes and models Smartcar supports, and
+     *  <li>supports the permissions.
+     * </ol>
+     *
+     * <b>To use this function, please contact us!</b>
+     *
+     * @param compatibilityMatrixRequest with options for this request. See Smartcar.SmartcarCompatibilityMatrixRequest
+     * @return A CompatibilityMatrix object with the compatibility information.
+     * @throws SmartcarException when the request is unsuccessful
+     */
+    public static CompatibilityMatrix getCompatibilityMatrix(SmartcarCompatibilityMatrixRequest compatibilityMatrixRequest) throws SmartcarException {
+        String apiUrl = Smartcar.getApiOrigin();
+        HttpUrl.Builder urlBuilder =
+                HttpUrl.parse(apiUrl)
+                        .newBuilder()
+                        .addPathSegment("v" + compatibilityMatrixRequest.getVersion())
+                        .addPathSegment("compatibility")
+                        .addPathSegment("matrix");
+
+        Optional.ofNullable(compatibilityMatrixRequest.getMake())
+                .ifPresent(make -> urlBuilder.addQueryParameter("make", make));
+        Optional.ofNullable(compatibilityMatrixRequest.getMode())
+                .ifPresent(mode -> urlBuilder.addQueryParameter("mode", mode));
+        Optional.ofNullable(compatibilityMatrixRequest.getRegion())
+                .ifPresent(region -> urlBuilder.addQueryParameter("region", region));
+        Optional.ofNullable(compatibilityMatrixRequest.getScope())
+                .ifPresent(scope -> urlBuilder.addQueryParameter("scope", String.join(" ", scope)));
+        Optional.ofNullable(compatibilityMatrixRequest.getType())
+                .ifPresent(type -> urlBuilder.addQueryParameter("type", type));
+
+        HttpUrl url = urlBuilder.build();
+
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", Credentials.basic(
+                compatibilityMatrixRequest.getClientId(),
+                compatibilityMatrixRequest.getClientSecret()
+        ));
+        Request request = ApiClient.buildRequest(url, "GET", null, headers);
+
+        return ApiClient.execute(request, CompatibilityMatrix.class);
     }
 
     /**

@@ -85,6 +85,36 @@ public class SmartcarTest {
         Assert.assertFalse((capable));
     }
 
+    @Test
+    public void testGetCompatibilityMatrix() throws Exception {
+        String[] scope = {"read_battery", "read_charge"};
+
+        SmartcarCompatibilityMatrixRequest request = new SmartcarCompatibilityMatrixRequest.Builder()
+                .clientId(this.clientId)
+                .clientSecret(this.clientSecret)
+                .make("NISSAN")
+                .type("BEV")
+                .scope(scope)
+                .build();
+        CompatibilityMatrix matrix = Smartcar.getCompatibilityMatrix(request);
+        Map<String, List<CompatibilityMatrix.CompatibilityEntry>> results = matrix.getResults();
+        Assert.assertTrue(results.size() > 0);
+        for (Map.Entry<String, List<CompatibilityMatrix.CompatibilityEntry>> entry : results.entrySet()) {
+            for (CompatibilityMatrix.CompatibilityEntry result : entry.getValue()) {
+                Assert.assertNotNull(result.getModel());
+                Assert.assertNotNull(result.getStartYear());
+                Assert.assertNotNull(result.getEndYear());
+                Assert.assertNotNull(result.getType());
+                Assert.assertNotNull(result.getEndpoints());
+                Assert.assertNotNull(result.getPermissions());
+
+                Assert.assertEquals(result.getType(), "BEV");
+                List<String> permissions = Arrays.asList(result.getPermissions());
+                Assert.assertTrue(permissions.containsAll(Arrays.asList(scope)));
+            }
+        }
+    }
+
     // TODO uncomment when test mode connections are returned
     // @Test
     // public void testGetConnections() throws SmartcarException {

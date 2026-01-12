@@ -10,6 +10,7 @@ import com.google.gson.reflect.TypeToken;
 import com.smartcar.sdk.data.*;
 import com.smartcar.sdk.deserializer.AuthDeserializer;
 import com.smartcar.sdk.deserializer.BatchDeserializer;
+import com.smartcar.sdk.deserializer.CompatibilityMatrixDeserializer;
 import com.smartcar.sdk.deserializer.VehicleResponseDeserializer;
 import okhttp3.*;
 
@@ -55,6 +56,7 @@ abstract class ApiClient {
       .setFieldNamingStrategy(field -> Utils.toCamelCase(field.getName()))
       .registerTypeAdapter(Auth.class, new AuthDeserializer())
       .registerTypeAdapter(BatchResponse.class, new BatchDeserializer())
+      .registerTypeAdapter(CompatibilityMatrix.class, new CompatibilityMatrixDeserializer())
       .registerTypeAdapter(VehicleResponse.class, new VehicleResponseDeserializer())
       .create();
 

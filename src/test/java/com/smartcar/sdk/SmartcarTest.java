@@ -1,6 +1,7 @@
 package com.smartcar.sdk;
 
 import com.smartcar.sdk.data.Compatibility;
+import com.smartcar.sdk.data.CompatibilityMatrix;
 import com.smartcar.sdk.data.User;
 import com.smartcar.sdk.data.VehicleIds;
 import okhttp3.mockwebserver.MockResponse;
@@ -192,6 +193,39 @@ public class SmartcarTest extends PowerMockTestCase {
             Assert.assertEquals(e.getMessage(), "clientId must be defined");
         }
         Assert.assertTrue(thrown);
+    }
+
+    @Test
+    @PrepareForTest(System.class)
+    public void testGetCompatibilityMatrix() {
+        PowerMockito.mockStatic(System.class);
+        PowerMockito.when(System.getenv("SMARTCAR_API_ORIGIN")).thenReturn(
+                "http://localhost:" + TestExecutionListener.mockWebServer.getPort()
+        );
+
+        MockResponse response = new MockResponse()
+                .setBody("{}")
+                .addHeader("sc-request-id", this.sampleRequestId);
+        TestExecutionListener.mockWebServer.enqueue(response);
+
+        SmartcarCompatibilityMatrixRequest compatibilityMatrixRequest = new SmartcarCompatibilityMatrixRequest.Builder()
+                .clientId(this.sampleClientId)
+                .clientSecret(this.sampleClientSecret)
+                .build();
+
+        try {
+            CompatibilityMatrix matrix = Smartcar.getCompatibilityMatrix(compatibilityMatrixRequest);
+            Assert.assertNotNull(matrix);
+            Assert.assertEquals(matrix.getResults().size(), 0);
+            Assert.assertEquals(matrix.getMeta().getRequestId(), this.sampleRequestId);
+        } catch (SmartcarException e) {
+            Assert.fail("Exception thrown during getCompatibilityMatrix: " + e.getMessage());
+        }
+        try {
+            TestExecutionListener.mockWebServer.takeRequest();
+        } catch (InterruptedException e) {
+            Assert.fail("Request was not made to mock server");
+        }
     }
 
     /**
