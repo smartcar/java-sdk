@@ -1,7 +1,9 @@
 package com.smartcar.sdk.helpers;
 
 import com.smartcar.sdk.AuthClient;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -38,6 +40,10 @@ public class AuthHelpers {
   private static final boolean HEADLESS = System.getenv("CI") != null || System.getenv("HEADLESS") != null;
   private static final HashMap<String, String> ENV_VAR_CACHE = new HashMap<>();
 
+  public static String getSeleniumRemoteUrl() {
+    return safeGetEnv("SELENIUM_REMOTE_URL");
+  }
+
   public static String getClientId() {
     return safeGetEnv("E2E_SMARTCAR_CLIENT_ID");
   }
@@ -62,6 +68,21 @@ public class AuthHelpers {
     String browser = getBrowser();
     WebDriver driver;
 
+    if (getSeleniumRemoteUrl() != null) {
+      Capabilities capabilities = "chrome".equalsIgnoreCase(browser)
+        ? new ChromeOptions()
+        : new FirefoxOptions();
+      try {
+        driver = new RemoteWebDriver(
+            java.net.URI.create(getSeleniumRemoteUrl()).toURL(),
+            capabilities
+        );
+      } catch (MalformedURLException e) {
+        throw new RuntimeException("Invalid SELENIUM_REMOTE_URL", e);
+      }
+      return driver;
+    }
+
     if ("chrome".equalsIgnoreCase(browser)) {
       ChromeOptions options = new ChromeOptions();
       if (HEADLESS) {
@@ -74,7 +95,7 @@ public class AuthHelpers {
       if (HEADLESS) {
         options.addArguments("--headless");
       }
-      
+
       // Set Firefox binary path if available (for CI environments)
       String firefoxPath = System.getenv("FIREFOX_BINARY_PATH");
       if (firefoxPath == null) {
@@ -85,7 +106,7 @@ public class AuthHelpers {
           "/usr/bin/firefox",
           "/usr/lib/firefox/firefox"
         };
-        
+
         for (String path : candidatePaths) {
           if (new File(path).exists()) {
             firefoxPath = path;
@@ -97,7 +118,7 @@ public class AuthHelpers {
         System.out.println("Using Firefox binary: " + firefoxPath);
         options.setBinary(firefoxPath);
       }
-      
+
       driver = new FirefoxDriver(options);
     }
 
