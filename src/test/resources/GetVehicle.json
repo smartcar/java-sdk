@@ -1,0 +1,12 @@
+{
+  "id": "36ab27d0-fd9d-4455-823a-ce30af709ffc",
+  "type": "vehicle",
+  "attributes": {
+    "make": "TESLA",
+    "model": "Model 3",
+    "year": 2019
+  },
+  "links": {
+    "self": "/vehicles/36ab27d0-fd9d-4455-823a-ce30af709ffc"
+  }
+}

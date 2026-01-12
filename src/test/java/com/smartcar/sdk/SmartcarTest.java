@@ -4,6 +4,8 @@ import com.smartcar.sdk.data.Compatibility;
 import com.smartcar.sdk.data.CompatibilityMatrix;
 import com.smartcar.sdk.data.User;
 import com.smartcar.sdk.data.VehicleIds;
+import com.smartcar.sdk.data.v3.VehicleAttributes;
+
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.RecordedRequest;
 import org.powermock.api.mockito.PowerMockito;
@@ -13,7 +15,8 @@ import org.powermock.modules.testng.PowerMockTestCase;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import javax.json.JsonObject;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 @PowerMockIgnore({"javax.net.ssl.*", "javax.crypto.*"})
 @PrepareForTest({
@@ -62,6 +65,32 @@ public class SmartcarTest extends PowerMockTestCase {
         Assert.assertNotNull(vIds);
         Assert.assertEquals(vIds[0], vehicleId);
         TestExecutionListener.mockWebServer.takeRequest();
+    }
+
+    @Test
+    @PrepareForTest(System.class)
+    public void testGetVehicle() throws Exception {
+        PowerMockito.mockStatic(System.class);
+        PowerMockito.when(System.getenv("SMARTCAR_API_V3_ORIGIN")).thenReturn(
+                "http://localhost:" + TestExecutionListener.mockWebServer.getPort()
+        );
+
+        String fileName = "src/test/resources/GetVehicle.json";
+        String body = new String(Files.readAllBytes(Paths.get(fileName)));
+
+        MockResponse response = new MockResponse()
+                .setBody(body)
+                .addHeader("sc-request-id", this.sampleRequestId);
+        TestExecutionListener.mockWebServer.enqueue(response);
+
+        String vehicleId = "36ab27d0-fd9d-4455-823a-ce30af709ffc";
+
+        VehicleAttributes vehicle = Smartcar.getVehicle(this.fakeAccessToken, vehicleId);
+        Assert.assertNotNull(vehicle);
+        Assert.assertEquals(vehicle.getId(), vehicleId);
+        Assert.assertEquals(vehicle.getMake(), "TESLA");
+        Assert.assertEquals(vehicle.getModel(), "Model 3");
+        Assert.assertEquals(vehicle.getYear().intValue(), 2019);
     }
 
     @Test

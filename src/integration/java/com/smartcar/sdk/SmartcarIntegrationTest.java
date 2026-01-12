@@ -1,6 +1,7 @@
 package com.smartcar.sdk;
 
 import com.smartcar.sdk.data.*;
+import com.smartcar.sdk.data.v3.VehicleAttributes;
 import com.smartcar.sdk.helpers.AuthHelpers;
 import org.testng.Assert;
 import org.testng.annotations.BeforeSuite;
@@ -8,8 +9,13 @@ import org.testng.annotations.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
-public class SmartcarTest {
+public class SmartcarIntegrationTest {
+    private static final String V3_VEHICLE_ID = "tst2e255-d3c8-4f90-9fec-e6e68b98e9cb";
+    private static final String V3_TEST_TOKEN = "test-data-token";
+
     private String accessToken;
     private VehicleIds vehicleIds;
     private String clientId;
@@ -53,6 +59,17 @@ public class SmartcarTest {
         Assert.assertEquals(vehicleIds.getVehicleIds().length, 1);
         Assert.assertTrue(vehicleIds.getPaging().getCount() > 0);
         Assert.assertEquals(vehicleIds.getPaging().getOffset(), 0);
+    }
+
+    @Test
+    public void testGetVehicle() throws SmartcarException {
+        VehicleAttributes vehicle = Smartcar.getVehicle(V3_TEST_TOKEN, V3_VEHICLE_ID);
+
+        Assert.assertNotNull(vehicle);
+        Assert.assertEquals(vehicle.getId(), V3_VEHICLE_ID);
+        Assert.assertEquals(vehicle.getMake(), "TESLA");
+        Assert.assertEquals(vehicle.getModel(), "Model Y");
+        Assert.assertEquals(vehicle.getYear().intValue(), 2021);
     }
 
     @Test

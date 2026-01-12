@@ -4,6 +4,7 @@ import com.smartcar.sdk.data.Compatibility;
 import com.smartcar.sdk.data.RequestPaging;
 import com.smartcar.sdk.data.User;
 import com.smartcar.sdk.data.VehicleIds;
+import com.smartcar.sdk.data.v3.VehicleAttributes;
 import com.smartcar.sdk.data.*;
 import okhttp3.Credentials;
 import okhttp3.HttpUrl;
@@ -22,6 +23,7 @@ import java.util.Optional;
 public class Smartcar {
     public static String API_VERSION = "2.0";
     public static String API_ORIGIN = "https://api.smartcar.com";
+    public static String API_V3_ORIGIN = "https://vehicle.api.smartcar.com";
     public static String MANAGEMENT_API_ORIGIN = "https://management.smartcar.com";
 
     /**
@@ -51,6 +53,14 @@ public class Smartcar {
             return API_ORIGIN;
         }
         return apiOrigin;
+    }
+
+    static String getApiOrigin(String version) {
+        if (version.equals("3")) {
+            String apiV3Origin = System.getenv("SMARTCAR_API_V3_ORIGIN");
+            return Optional.ofNullable(apiV3Origin).orElse(API_V3_ORIGIN);
+        }
+        return getApiOrigin();
     }
 
     /**
@@ -118,6 +128,17 @@ public class Smartcar {
     public static VehicleIds getVehicles(String accessToken)
             throws SmartcarException {
         return Smartcar.getVehicles(accessToken, null);
+    }
+
+    public static VehicleAttributes getVehicle(String accessToken, String id) throws SmartcarException {
+        String apiUrl = Smartcar.getApiOrigin("3");
+        HttpUrl url = HttpUrl.parse(apiUrl + "/v3/vehicles/" + id);
+
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "Bearer " + accessToken);
+        Request request = ApiClient.buildRequest(url, "GET", null, headers);
+
+        return ApiClient.execute(request, VehicleAttributes.class);
     }
 
     /**
