@@ -1,6 +1,7 @@
 package com.smartcar.sdk;
 
 import com.smartcar.sdk.data.*;
+import com.smartcar.sdk.data.v3.VehicleAttributes;
 import com.smartcar.sdk.helpers.AuthHelpers;
 import org.testng.Assert;
 import org.testng.annotations.BeforeSuite;
@@ -8,8 +9,13 @@ import org.testng.annotations.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
-public class SmartcarTest {
+public class SmartcarIntegrationTest {
+    private static final String V3_VEHICLE_ID = "tst2e255-d3c8-4f90-9fec-e6e68b98e9cb";
+    private static final String V3_TEST_TOKEN = "test-data-token";
+
     private String accessToken;
     private VehicleIds vehicleIds;
     private String clientId;
@@ -56,6 +62,17 @@ public class SmartcarTest {
     }
 
     @Test
+    public void testGetVehicle() throws SmartcarException {
+        VehicleAttributes vehicle = Smartcar.getVehicle(V3_TEST_TOKEN, V3_VEHICLE_ID);
+
+        Assert.assertNotNull(vehicle);
+        Assert.assertEquals(vehicle.getId(), V3_VEHICLE_ID);
+        Assert.assertEquals(vehicle.getMake(), "TESLA");
+        Assert.assertEquals(vehicle.getModel(), "Model Y");
+        Assert.assertEquals(vehicle.getYear().intValue(), 2021);
+    }
+
+    @Test
     public void testGetCompatibility() throws Exception {
         String vin = "5YJSA1E29LF403082";
         String[] scope = {"read_odometer", "read_fuel"};
@@ -83,6 +100,36 @@ public class SmartcarTest {
             Assert.assertTrue(reasonsList.contains(capability.getReason()));
         }
         Assert.assertFalse((capable));
+    }
+
+    @Test
+    public void testGetCompatibilityMatrix() throws Exception {
+        String[] scope = {"read_battery", "read_charge"};
+
+        SmartcarCompatibilityMatrixRequest request = new SmartcarCompatibilityMatrixRequest.Builder()
+                .clientId(this.clientId)
+                .clientSecret(this.clientSecret)
+                .make("NISSAN")
+                .type("BEV")
+                .scope(scope)
+                .build();
+        CompatibilityMatrix matrix = Smartcar.getCompatibilityMatrix(request);
+        Map<String, List<CompatibilityMatrix.CompatibilityEntry>> results = matrix.getResults();
+        Assert.assertTrue(results.size() > 0);
+        for (Map.Entry<String, List<CompatibilityMatrix.CompatibilityEntry>> entry : results.entrySet()) {
+            for (CompatibilityMatrix.CompatibilityEntry result : entry.getValue()) {
+                Assert.assertNotNull(result.getModel());
+                Assert.assertNotNull(result.getStartYear());
+                Assert.assertNotNull(result.getEndYear());
+                Assert.assertNotNull(result.getType());
+                Assert.assertNotNull(result.getEndpoints());
+                Assert.assertNotNull(result.getPermissions());
+
+                Assert.assertEquals(result.getType(), "BEV");
+                List<String> permissions = Arrays.asList(result.getPermissions());
+                Assert.assertTrue(permissions.containsAll(Arrays.asList(scope)));
+            }
+        }
     }
 
     // TODO uncomment when test mode connections are returned

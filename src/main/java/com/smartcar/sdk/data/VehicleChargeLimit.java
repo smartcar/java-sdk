@@ -12,7 +12,6 @@ public class VehicleChargeLimit extends ApiData {
     return this.limit;
   }
 
-  // TODO: add .toString()
   /** @return a stringified representation of VehicleFuel */
   @Override
   public String toString() {

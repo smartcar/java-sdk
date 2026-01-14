@@ -8,6 +8,9 @@ import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 
 import com.smartcar.sdk.data.*;
+import com.smartcar.sdk.data.v3.Signal;
+import com.smartcar.sdk.data.v3.Signals;
+import com.smartcar.sdk.data.v3.Signals.SignalsMeta;
 import com.smartcar.sdk.helpers.AuthHelpers;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.testng.Assert;
@@ -20,6 +23,9 @@ import org.testng.annotations.Test;
  */
 @PowerMockIgnore("javax.net.ssl.*")
 public class VehicleIntegrationTest {
+    private static final String V3_VEHICLE_ID = "tst2e255-d3c8-4f90-9fec-e6e68b98e9cb";
+    private static final String V3_TEST_TOKEN = "test-data-token";
+
     private Vehicle vehicle;
     private Vehicle eVehicle;
 
@@ -370,5 +376,48 @@ public class VehicleIntegrationTest {
 
         this.vehicle.unsubscribe(
                 AuthHelpers.getApplicationManagementToken(), AuthHelpers.getWebhookId());
+    }
+
+    @Test
+    public void testVehicleSignals() throws SmartcarException {
+        Vehicle vehicle = new Vehicle(V3_VEHICLE_ID, V3_TEST_TOKEN);
+        Signals signals = vehicle.getSignals();
+        Assert.assertNotNull(signals);
+        Assert.assertTrue(signals.getSignals().size() > 0);
+
+        Meta meta = signals.getMeta();
+        Assert.assertTrue(meta instanceof SignalsMeta);
+        Assert.assertEquals(((SignalsMeta) meta).getTotalCount().intValue(), signals.getSignals().size());
+        Assert.assertEquals(((SignalsMeta) meta).getPageSize().intValue(), signals.getSignals().size());
+        Assert.assertEquals(((SignalsMeta) meta).getPage().intValue(), 1);
+
+        Assert.assertNotNull(signals.getLinks());
+        Assert.assertNotNull(signals.getIncluded());
+
+        Signal signal = signals.getSignals().stream()
+                .filter(s -> s.getCode().equals("odometer-traveleddistance"))
+                .findFirst()
+                .orElse(null);
+        Assert.assertNotNull(signal);
+        Assert.assertNotNull(signal);
+        Assert.assertEquals(signal.getCode(), "odometer-traveleddistance");
+        Assert.assertNotNull(signal.getBody());
+        Assert.assertNotNull(signal.getStatus());
+
+        Meta signalMeta = signal.getMeta();
+        Assert.assertNotNull(signalMeta);
+        Assert.assertNotNull(signalMeta.getRetrievedAt());
+        Assert.assertNotNull(signalMeta.getOemUpdatedAt());
+    }
+
+    @Test
+    public void testVehicleSignal() throws SmartcarException {
+        Vehicle vehicle = new Vehicle(V3_VEHICLE_ID, V3_TEST_TOKEN);
+        Signal signal = vehicle.getSignal("odometer-traveleddistance");
+        Assert.assertNotNull(signal);
+        Assert.assertEquals(signal.getCode(), "odometer-traveleddistance");
+        Assert.assertNotNull(signal.getBody());
+        Assert.assertNotNull(signal.getStatus());
+        Assert.assertNotNull(signal.getMeta());
     }
 }

@@ -1,0 +1,139 @@
+{
+  "data": [
+    {
+      "id": "charge-chargetimers",
+      "type": "signal",
+      "attributes": {
+        "code": "charge-chargetimers",
+        "name": "ChargeTimers",
+        "group": "Charge",
+        "status": {
+          "value": "SUCCESS"
+        },
+        "body": {
+          "values": [
+            {
+              "type": "location",
+              "condition": {
+                "name": "Home",
+                "address": "123 Main St, Anytown, USA",
+                "latitude": 37.7749,
+                "longitude": -122.4194,
+                "connectorType": "J1772"
+              },
+              "schedules": [
+                {
+                  "start": "22:00:00",
+                  "end": "06:00:00",
+                  "days": [
+                    "MONDAY",
+                    "TUESDAY",
+                    "WEDNESDAY",
+                    "THURSDAY",
+                    "FRIDAY"
+                  ]
+                }
+              ],
+              "departureTimers": [
+                {
+                  "days": [
+                    "MONDAY",
+                    "TUESDAY",
+                    "WEDNESDAY"
+                  ],
+                  "time": "07:30:00"
+                }
+              ],
+              "isOEMOptimizationEnabled": true
+            },
+            {
+              "type": "global",
+              "condition": {
+                "name": "Work",
+                "address": "456 Office Park, Bigcity, USA",
+                "latitude": 40.7128,
+                "longitude": -74.006,
+                "connectorType": "CCS"
+              },
+              "schedules": [
+                {
+                  "start": "08:00:00",
+                  "end": "17:00:00",
+                  "days": [
+                    "MONDAY",
+                    "TUESDAY",
+                    "WEDNESDAY",
+                    "THURSDAY",
+                    "FRIDAY"
+                  ]
+                }
+              ],
+              "departureTimers": [
+                {
+                  "days": [
+                    "FRIDAY"
+                  ],
+                  "time": "17:30:00"
+                }
+              ],
+              "isOEMOptimizationEnabled": false
+            }
+          ]
+        }
+      },
+      "meta": {
+        "retrievedAt": 1752104218549,
+        "oemUpdatedAt": 1752104118549
+      },
+      "links": {
+        "self": "/vehicles/tst2e255-d3c8-4f90-9fec-e6e68b98e9cb/signals/charge-chargetimers",
+        "values": "/vehicles/tst2e255-d3c8-4f90-9fec-e6e68b98e9cb/signals/charge-chargetimers/values"
+      }
+    },
+    {
+      "id": "odometer-traveleddistance",
+      "type": "signal",
+      "attributes": {
+        "code": "odometer-traveleddistance",
+        "name": "TraveledDistance",
+        "group": "Odometer",
+        "status": {
+          "value": "SUCCESS"
+        },
+        "body": {
+          "unit": "kilometers",
+          "value": 115071.50046584333
+        }
+      },
+      "meta": {
+        "retrievedAt": 1752104218549,
+        "oemUpdatedAt": 1752104118549
+      },
+      "links": {
+        "self": "/vehicles/tst2e255-d3c8-4f90-9fec-e6e68b98e9cb/signals/odometer-traveleddistance"
+      }
+    }
+  ],
+  "meta": {
+    "totalCount": 2,
+    "pageSize": 2,
+    "page": 1
+  },
+  "links": {
+    "self": "/vehicles/tst2e255-d3c8-4f90-9fec-e6e68b98e9cb/signals"
+  },
+  "included": {
+    "vehicle": {
+      "id": "tst2e255-d3c8-4f90-9fec-e6e68b98e9cb",
+      "type": "vehicle",
+      "attributes": {
+        "make": "TESLA",
+        "model": "Model Y",
+        "year": "2021"
+      },
+      "links": {
+        "self": "/vehicles/tst2e255-d3c8-4f90-9fec-e6e68b98e9cb"
+      }
+    }
+  }
+}

@@ -17,6 +17,7 @@ public class TestExecutionListener implements IExecutionListener {
             e.printStackTrace();
         }
         Smartcar.API_ORIGIN = "http://" + mockWebServer.getHostName() + ":" + mockWebServer.getPort();
+        Smartcar.API_V3_ORIGIN = "http://" + mockWebServer.getHostName() + ":" + mockWebServer.getPort();
     }
 
     @Override

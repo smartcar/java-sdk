@@ -1,6 +1,9 @@
 package com.smartcar.sdk;
 
 import com.smartcar.sdk.data.*;
+import com.smartcar.sdk.data.v3.Signal;
+import com.smartcar.sdk.data.v3.Signals;
+
 import okhttp3.HttpUrl;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -36,6 +39,7 @@ public class Vehicle {
   private Vehicle.UnitSystem unitSystem;
   private final String version;
   private final String origin;
+  private final String v3Origin;
   private final String flags;
   private ApplicationPermissions permissions;
 
@@ -51,7 +55,7 @@ public class Vehicle {
 
   /**
    * Initializes a new Vehicle with provided options
-   * 
+   *
    * @param vehicleId   vehicleId the vehicle ID
    * @param accessToken accessToken the OAuth 2.0 access token
    * @param options     optional arguments provided with a SmartcarVehicleOptions
@@ -63,12 +67,13 @@ public class Vehicle {
     this.version = options.getVersion();
     this.unitSystem = options.getUnitSystem();
     this.origin = options.getOrigin();
+    this.v3Origin = options.getV3Origin();
     this.flags = options.getFlags();
   }
 
   /**
    * Gets the version of Smartcar API that this vehicle is using
-   * 
+   *
    * @return String representing version
    */
   public String getVersion() {
@@ -77,11 +82,18 @@ public class Vehicle {
 
   /**
    * Gets the flags that are passed to the vehicle object as a serialized string
-   * 
+   *
    * @return serialized string of the flags
    */
   public String getFlags() {
     return this.flags;
+  }
+
+  protected String getOrigin(String version) {
+    if (version.equals("3")) {
+      return this.v3Origin;
+    }
+    return this.origin;
   }
 
   /**
@@ -95,10 +107,10 @@ public class Vehicle {
    * @throws SmartcarException if the request is unsuccessful
    */
   protected <T extends ApiData> T call(
-      String path, String method, RequestBody body, String accessToken, Class<T> type) throws SmartcarException {
-    HttpUrl.Builder urlBuilder = HttpUrl.parse(this.origin)
+      String path, String version, String method, RequestBody body, String accessToken, Class<T> type) throws SmartcarException {
+    HttpUrl.Builder urlBuilder = HttpUrl.parse(this.getOrigin(version))
         .newBuilder()
-        .addPathSegments("v" + this.version)
+        .addPathSegments("v" + version)
         .addPathSegments("vehicles")
         .addPathSegments(this.vehicleId)
         .addPathSegments(path);
@@ -113,12 +125,17 @@ public class Vehicle {
     headers.put("sc-unit-system", this.unitSystem.name().toLowerCase());
     Request request = ApiClient.buildRequest(url, method, body, headers);
 
-    return ApiClient.execute(request, type);
+    return ApiClient.execute(request, type, version);
+  }
+
+  protected <T extends ApiData> T call(
+      String path, String method, RequestBody body, String accessToken, Class<T> type) throws SmartcarException {
+    return this.call(path, this.version, method, body, accessToken, type);
   }
 
   protected <T extends ApiData> T call(String path, String method, RequestBody body, Class<T> type)
       throws SmartcarException {
-    return this.call(path, method, body, this.accessToken, type);
+    return this.call(path, this.version, method, body, this.accessToken, type);
   }
 
   protected <T extends ApiData> T call(String path, String method, RequestBody body, Map<String, String> query,
@@ -145,6 +162,10 @@ public class Vehicle {
     Request request = ApiClient.buildRequest(url, method, body, headers);
 
     return ApiClient.execute(request, type);
+  }
+
+  protected <T extends ApiData> T callGet(String path, String version, Class<T> type) throws SmartcarException {
+    return this.call(path, version, "GET", null, this.accessToken, type);
   }
 
   /**
@@ -255,7 +276,7 @@ public class Vehicle {
   /**
    * Overload without parameters to handle no input case, calling the full method
    * with nulls
-   * 
+   *
    * @return service history records
    * @throws SmartcarException            if the request is unsuccessful
    * @throws UnsupportedEncodingException
@@ -333,7 +354,7 @@ public class Vehicle {
   public VehicleBatteryCapacity batteryCapacity() throws SmartcarException {
     return this.call("battery/capacity", "GET", null, VehicleBatteryCapacity.class);
   }
-  
+
   /**
    * Send request to the /battery/nominal_capacity endpoint
    *
@@ -364,7 +385,7 @@ public class Vehicle {
   public ActionResponse setChargeLimit(double limit) throws SmartcarException {
     JsonObject json = Json.createObjectBuilder().add("limit", limit).build();
 
-    RequestBody body = RequestBody.create(ApiClient.JSON, json.toString());
+    RequestBody body = RequestBody.create(json.toString(), ApiClient.JSON);
 
     return this.call("charge/limit", "POST", body, ActionResponse.class);
   }
@@ -398,7 +419,7 @@ public class Vehicle {
   public ActionResponse unlock() throws SmartcarException {
     JsonObject json = Json.createObjectBuilder().add("action", "UNLOCK").build();
 
-    RequestBody body = RequestBody.create(ApiClient.JSON, json.toString());
+    RequestBody body = RequestBody.create(json.toString(), ApiClient.JSON);
 
     return this.call("security", "POST", body, ActionResponse.class);
   }
@@ -412,7 +433,7 @@ public class Vehicle {
   public ActionResponse lock() throws SmartcarException {
     JsonObject json = Json.createObjectBuilder().add("action", "LOCK").build();
 
-    RequestBody body = RequestBody.create(ApiClient.JSON, json.toString());
+    RequestBody body = RequestBody.create(json.toString(), ApiClient.JSON);
 
     return this.call("security", "POST", body, ActionResponse.class);
   }
@@ -426,7 +447,7 @@ public class Vehicle {
   public ActionResponse startCharge() throws SmartcarException {
     JsonObject json = Json.createObjectBuilder().add("action", "START").build();
 
-    RequestBody body = RequestBody.create(ApiClient.JSON, json.toString());
+    RequestBody body = RequestBody.create(json.toString(), ApiClient.JSON);
 
     return this.call("charge", "POST", body, ActionResponse.class);
   }
@@ -440,7 +461,7 @@ public class Vehicle {
   public ActionResponse stopCharge() throws SmartcarException {
     JsonObject json = Json.createObjectBuilder().add("action", "STOP").build();
 
-    RequestBody body = RequestBody.create(ApiClient.JSON, json.toString());
+    RequestBody body = RequestBody.create(json.toString(), ApiClient.JSON);
 
     return this.call("charge", "POST", body, ActionResponse.class);
   }
@@ -483,7 +504,7 @@ public class Vehicle {
         .add("longitude", longitude)
         .build();
 
-    RequestBody requestBody = RequestBody.create(ApiClient.JSON, json.toString());
+    RequestBody requestBody = RequestBody.create(json.toString(), ApiClient.JSON);
 
     return this.call("navigation/destination", "POST", requestBody, ActionResponse.class);
   }
@@ -495,7 +516,7 @@ public class Vehicle {
    * @throws SmartcarException if the request is unsuccessful
    */
   public WebhookSubscription subscribe(String webhookId) throws SmartcarException {
-    RequestBody body = RequestBody.create(null, new byte[] {});
+    RequestBody body = RequestBody.create(new byte[] {});
     return this.call("webhooks/" + webhookId, "POST", body, WebhookSubscription.class);
   }
 
@@ -528,7 +549,7 @@ public class Vehicle {
 
     JsonObject json = Json.createObjectBuilder().add("requests", requests).build();
 
-    RequestBody body = RequestBody.create(ApiClient.JSON, json.toString());
+    RequestBody body = RequestBody.create(json.toString(), ApiClient.JSON);
     BatchResponse response = this.call("batch", "POST", body, BatchResponse.class);
     BatchResponse batchResponse = response;
     batchResponse.setRequestId(response.getMeta().getRequestId());
@@ -590,5 +611,28 @@ public class Vehicle {
    */
   public void setUnitSystem(Vehicle.UnitSystem unitSystem) {
     this.unitSystem = unitSystem;
+  }
+
+  /**
+   * Send request to the V3 /signals endpoint for retrieving
+   * all of the available signals for the vehicle
+   *
+   * @return the signals of the vehicle
+   * @throws SmartcarException if the request is unsuccessful
+   */
+  public Signals getSignals() throws SmartcarException {
+    return this.callGet("signals", "3", Signals.class);
+  }
+
+  /**
+   * Send request to the V3 /signals/{signal_code} endpoint for retrieving
+   * a specific signal for the vehicle
+   *
+   * @param signalCode the code of the signal to retrieve
+   * @return the signal of the vehicle
+   * @throws SmartcarException if the request is unsuccessful
+   */
+  public Signal getSignal(String signalCode) throws SmartcarException {
+    return this.callGet("signals/" + signalCode, "3", Signal.class);
   }
 }

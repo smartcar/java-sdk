@@ -131,8 +131,8 @@ public final class SmartcarVehicleRequest {
 
         this.body = jsonBody.isEmpty() ? null : RequestBody.create(ApiClient.JSON, jsonBody.toString());
 
-        // Shallow clone of headers Map
-        this.headers = (HashMap<String, String>) ((HashMap<String, String>) builder.headers).clone();
+        // Shallow copy of headers Map
+        this.headers = new HashMap<>(builder.headers);
 
         if (builder.flags.size() > 0) {
             String[] flagStrings = builder.flags.toArray(new String[0]);
