@@ -325,6 +325,58 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </li>
 </ul>
 </li>
+<li class="blockList"><a id="com.smartcar.sdk.data.CompatibilityMatrix">
+<!--   -->
+</a>
+<h3>Class <a href="com/smartcar/sdk/data/CompatibilityMatrix.html" title="class in com.smartcar.sdk.data">com.smartcar.sdk.data.CompatibilityMatrix</a> extends <a href="com/smartcar/sdk/data/ApiData.html" title="class in com.smartcar.sdk.data">ApiData</a> implements Serializable</h3>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockListLast">
+<h4>makeCompatibilityMap</h4>
+<pre>java.util.Map&lt;java.lang.String,&#8203;java.util.List&lt;<a href="com/smartcar/sdk/data/CompatibilityMatrix.CompatibilityEntry.html" title="class in com.smartcar.sdk.data">CompatibilityMatrix.CompatibilityEntry</a>&gt;&gt; makeCompatibilityMap</pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a id="com.smartcar.sdk.data.CompatibilityMatrix.CompatibilityEntry">
+<!--   -->
+</a>
+<h3>Class <a href="com/smartcar/sdk/data/CompatibilityMatrix.CompatibilityEntry.html" title="class in com.smartcar.sdk.data">com.smartcar.sdk.data.CompatibilityMatrix.CompatibilityEntry</a> extends <a href="com/smartcar/sdk/data/ApiData.html" title="class in com.smartcar.sdk.data">ApiData</a> implements Serializable</h3>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>endpoints</h4>
+<pre>java.lang.String[] endpoints</pre>
+</li>
+<li class="blockList">
+<h4>endYear</h4>
+<pre>java.lang.String endYear</pre>
+</li>
+<li class="blockList">
+<h4>model</h4>
+<pre>java.lang.String model</pre>
+</li>
+<li class="blockList">
+<h4>permissions</h4>
+<pre>java.lang.String[] permissions</pre>
+</li>
+<li class="blockList">
+<h4>startYear</h4>
+<pre>java.lang.String startYear</pre>
+</li>
+<li class="blockListLast">
+<h4>type</h4>
+<pre>java.lang.String type</pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="blockList"><a id="com.smartcar.sdk.data.DeleteConnections">
 <!--   -->
 </a>
@@ -922,6 +974,113 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockListLast">
 <h4>webhookId</h4>
 <pre>java.lang.String webhookId</pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+</li>
+<li class="blockList">
+<section>
+<h2 title="Package">Package&nbsp;com.smartcar.sdk.data.v3</h2>
+<ul class="blockList">
+<li class="blockList"><a id="com.smartcar.sdk.data.v3.JsonApiData">
+<!--   -->
+</a>
+<h3>Class <a href="com/smartcar/sdk/data/v3/JsonApiData.html" title="class in com.smartcar.sdk.data.v3">com.smartcar.sdk.data.v3.JsonApiData</a> extends <a href="com/smartcar/sdk/data/ApiData.html" title="class in com.smartcar.sdk.data">ApiData</a>&lt;<a href="com/smartcar/sdk/data/v3/JsonApiData.html" title="type parameter in JsonApiData">T</a>&gt; implements Serializable</h3>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>links</h4>
+<pre>java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt; links</pre>
+</li>
+<li class="blockListLast">
+<h4>response</h4>
+<pre>com.google.gson.JsonObject response</pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a id="com.smartcar.sdk.data.v3.Signal">
+<!--   -->
+</a>
+<h3>Class <a href="com/smartcar/sdk/data/v3/Signal.html" title="class in com.smartcar.sdk.data.v3">com.smartcar.sdk.data.v3.Signal</a> extends <a href="com/smartcar/sdk/data/v3/JsonApiData.html" title="class in com.smartcar.sdk.data.v3">JsonApiData</a> implements Serializable</h3>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>body</h4>
+<pre>com.google.gson.JsonObject body</pre>
+</li>
+<li class="blockList">
+<h4>code</h4>
+<pre>java.lang.String code</pre>
+</li>
+<li class="blockList">
+<h4>group</h4>
+<pre>java.lang.String group</pre>
+</li>
+<li class="blockList">
+<h4>id</h4>
+<pre>java.lang.String id</pre>
+</li>
+<li class="blockList">
+<h4>name</h4>
+<pre>java.lang.String name</pre>
+</li>
+<li class="blockListLast">
+<h4>status</h4>
+<pre>com.google.gson.JsonObject status</pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a id="com.smartcar.sdk.data.v3.Signals">
+<!--   -->
+</a>
+<h3>Class <a href="com/smartcar/sdk/data/v3/Signals.html" title="class in com.smartcar.sdk.data.v3">com.smartcar.sdk.data.v3.Signals</a> extends <a href="com/smartcar/sdk/data/v3/JsonApiData.html" title="class in com.smartcar.sdk.data.v3">JsonApiData</a> implements Serializable</h3>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockListLast">
+<h4>signals</h4>
+<pre>java.util.List&lt;<a href="com/smartcar/sdk/data/v3/Signal.html" title="class in com.smartcar.sdk.data.v3">Signal</a>&gt; signals</pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="blockList"><a id="com.smartcar.sdk.data.v3.VehicleAttributes">
+<!--   -->
+</a>
+<h3>Class <a href="com/smartcar/sdk/data/v3/VehicleAttributes.html" title="class in com.smartcar.sdk.data.v3">com.smartcar.sdk.data.v3.VehicleAttributes</a> extends <a href="com/smartcar/sdk/data/v3/JsonApiData.html" title="class in com.smartcar.sdk.data.v3">JsonApiData</a> implements Serializable</h3>
+<ul class="blockList">
+<li class="blockList">
+<h3>Serialized Fields</h3>
+<ul class="blockList">
+<li class="blockList">
+<h4>id</h4>
+<pre>java.lang.String id</pre>
+</li>
+<li class="blockList">
+<h4>make</h4>
+<pre>java.lang.String make</pre>
+</li>
+<li class="blockList">
+<h4>model</h4>
+<pre>java.lang.String model</pre>
+</li>
+<li class="blockListLast">
+<h4>year</h4>
+<pre>java.lang.Integer year</pre>
 </li>
 </ul>
 </li>

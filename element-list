@@ -1,3 +1,5 @@
 com.smartcar.sdk
 com.smartcar.sdk.data
+com.smartcar.sdk.data.v3
 com.smartcar.sdk.deserializer
+com.smartcar.sdk.deserializer.v3

@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"com.smartcar.sdk"},{"l":"com.smartcar.sdk.data"},{"l":"com.smartcar.sdk.deserializer"}]
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"com.smartcar.sdk"},{"l":"com.smartcar.sdk.data"},{"l":"com.smartcar.sdk.data.v3"},{"l":"com.smartcar.sdk.deserializer"},{"l":"com.smartcar.sdk.deserializer.v3"}]
