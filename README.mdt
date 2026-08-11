@@ -1,5 +1,7 @@
 # Smartcar Java SDK [![Build Status][ci-image]][ci-url] [![Code Coverage][coverage-image]][coverage-url] [![JavaDoc][javadoc-image]][javadoc-url] [![Maven Central][maven-image]][maven-url]
 
+> **Maintenance mode.** This SDK receives security patches through December 1, 2026, then no further updates, including security. The package stays published and existing integrations keep working. For new integrations, call the Smartcar API directly over HTTP: [Making API Requests](https://smartcar.com/docs/getting-started/how-to/making-api-requests).
+
 ## Resources
  * [Smartcar Developer Dashboard][smartcar-developer]
  * [Smartcar API Reference][smartcar-docs-api]
